@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>MANUAL ADMIN</title>
+
+</head>
+<body>
+
+<form method="post" target="reply" action="manualadmin.php">
+New Manual Text:
+<input type="submit" value="upload html">
+<textarea name="manual" style="width:100%"></textarea>
+</form>
+<iframe name="reply"></iframe>
+<iframe id="manualStuff" src="manual.htm"></iframe>
+<script>
+function Reload () {
+var f = document.getElementById('manualStuff');
+f.src = f.src;
+setTimeout("Reload()",5000);
+}
+Reload();
+</script>
+</body>
+</html>
