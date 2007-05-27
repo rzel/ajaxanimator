@@ -130,34 +130,26 @@ document.getElementById("richdraw"+currentCanvas).style.display = "";
 }
 
 
-
-function frameForward(){
-hideCurrentCanvas();
-currentCanvas++;
-showCurrentCanvas();
-}
-
-function frameBack(){
-hideCurrentCanvas();
-currentCanvas  = currentCanvas - 1;
-showCurrentCanvas();
-}
-
 function genFlash(){
 $('swfGenBtn').disabled = true;
-$('export').innerHTML = ''
+$('swfGenBtn').value = 'generating...';
+$('export').innerHTML = '';
 var swfgen = generateAnimationXML();
 ajaxpack.postAjaxRequest("freemovie/swfgen.php", "svg=" + swfgen , genFlashEvent, "txt")
 }
 
+function generateSWFResponse(responsedata){
+$('export').innerHTML = '<a href="' + responsedata.replace('files','freemovie/files') + '>Download</a>';
+$('swfGenBtn').disabled = false;
+$('swfGenBtn').value = 'Generate SWF';
+}
 
 function genFlashEvent(){
 var myajax=ajaxpack.ajaxobj
 var myfiletype=ajaxpack.filetype
 if (myajax.readyState == 4){ //if request of file completed
 if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-$('export').innerHTML = '<a href="' + myajax.responseText.replace('files','freemovie/files') + '>Download</a>';
-$('swfGenBtn').disabled = false;
+setTimeout('generateSWFResponse("'+myajax.responseText+'")',500)
 }
 }
 }
