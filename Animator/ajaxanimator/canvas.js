@@ -144,6 +144,8 @@ showCurrentCanvas();
 }
 
 function genFlash(){
+$('swfGenBtn').disabled = true;
+$('export').innerHTML = ''
 var swfgen = generateAnimationXML();
 ajaxpack.postAjaxRequest("freemovie/swfgen.php", "svg=" + swfgen , genFlashEvent, "txt")
 }
@@ -155,6 +157,7 @@ var myfiletype=ajaxpack.filetype
 if (myajax.readyState == 4){ //if request of file completed
 if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
 $('export').innerHTML = '<a href="' + myajax.responseText.replace('files','freemovie/files') + '>Download</a>';
+$('swfGenBtn').disabled = false;
 }
 }
 }
