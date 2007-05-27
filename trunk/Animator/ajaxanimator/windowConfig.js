@@ -49,7 +49,7 @@
     AnimationModel.createWindowModelFromMarkUp('AnimationWindow');
     var AnimationWin = new DHTMLSuite.windowWidget();
     AnimationWin.addWindowModel(AnimationModel);
-   AnimationWin.init();
+    AnimationWin.init();
     AnimationWin.setStatusBarText('Animation');
 
 
