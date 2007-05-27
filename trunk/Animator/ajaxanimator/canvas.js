@@ -6,6 +6,7 @@ var AnimationFramerate = 12;
 var totalFrames = 2;
 AnimationPlay = true;
 canvasIssueResolved = false;
+
 function makeCanvas(){
 
 var richdrawCanvas = document.createElement('div');
@@ -22,7 +23,6 @@ canvasDisplayStyle = "none";
 initDraw();
 currentCanvas++;
 }
-
 
 function makeCanvasIE(){
 var canvasString;
@@ -60,8 +60,6 @@ AnimationFramerate = document.getElementById('cFramerate').value;
 function genxml(){
 $('jsQuery').value = generateAnimationXML();
 }
-
-
 
 function generateAnimationXML(){
 var zAnimationXML = "<AnimationXML>";
@@ -132,13 +130,14 @@ document.getElementById("richdraw"+currentCanvas).style.display = "";
 }
 
 
-function layerForward(){
+
+function frameForward(){
 hideCurrentCanvas();
 currentCanvas++;
 showCurrentCanvas();
 }
 
-function layerBack(){
+function frameBack(){
 hideCurrentCanvas();
 currentCanvas  = currentCanvas - 1;
 showCurrentCanvas();
