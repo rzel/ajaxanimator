@@ -159,13 +159,16 @@
    		  <div id="CanvasContainer" style="width: 480px; height: 272px;overflow:scrolling">
 		 </div>
 		  <br>
-		  <img alt="<--" src="images/player_rew.png" onclick="frameForward();;">
+		  
+		  <img alt="<--" src="images/player_rew.png" onclick="gotoframe(currentFrameSelection-1,1);">
 		  <img alt="play" src="images/player_play.png" onclick="playAnimation();">
 		  <img alt="stop" src="images/player_stop.png" onclick="stopAnimation();">
-		  <img alt="-->" src="images/player_fwd.png" onclick="frameForward();;">
-		  <div id="export"></div>
+		  <img alt="-->" src="images/player_fwd.png" onclick="gotoframe(currentFrameSelection+1,1);">
+<!--		 
+		 <div id="export"></div>
 		  <input type="button" id="swfGenBtn" value="Generate SWF" onclick="genFlash()">
-		<br>
+		  -->
+		  <br>
 		  <div style="font-size:x-small" id="status"></div>
         </center>
       </div>
@@ -194,7 +197,19 @@
     <div id="ColorPalette" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Color Palette">
       </div>
     </div>
-    <script type="text/javascript" src="ajaxanimator/paneSplitterConfig.js"></script>
+	<div id="AnimationWindow"  windowproperties="title:Animation,resizable:true,closable:true,dragable:true,cookieName:cookieWindowAnimation,xPos:30,yPos:40,minWidth:350,minHeight:150,activeTabId:windowContent1">
+          <div id="AnimationPreview" style="overflow:hidden" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Preview">
+          </div>
+		  <div id="AnimationExport" style="overflow:hidden" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Export">
+<center>    		
+				<div id="export"></div>
+				 <input type="button" id="swfGenBtn" value="Generate SWF" onclick="genFlash()">
+	</center>      
+	<br>
+		  </div>
+    </div>
+   
+   <script type="text/javascript" src="ajaxanimator/paneSplitterConfig.js"></script>
     <script type="text/javascript" src="ajaxanimator/menuConfig.js"></script>
     <script type="text/javascript" src="ajaxanimator/windowConfig.js"></script>
     <script type="text/javascript" src="ajaxanimator/colorConfig.js"></script>
