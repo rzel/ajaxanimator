@@ -177,8 +177,9 @@ asdf = asdf + (" cellspacing='0' border='1' onmouseover=\"document.body.style.cu
 
 asdf = asdf + ("<tr>")
 
-asdf = asdf + ("<td onmouseover=\"document.body.style.cursor='default';\" height='5' bgcolor='"+LayerBGColor+"'");
-asdf = asdf + ("title=\"header=[Layer "+layers+"] body=[] fade=[on] fadespeed=[.1]\" ")
+asdf = asdf + ("<td onmouseover=\"document.body.style.cursor='default';Tip('Layer "+layers+"');\" height='5' bgcolor='"+LayerBGColor+"'");
+
+
 asdf = asdf + (">Layer" + layers + "</td>")
 for (var x = 1; x <= totalFramesPerLayer; x++) //Start adding frames
 {
@@ -191,7 +192,6 @@ asdf = asdf + ("onmousedown='gotoframe(" + x +", " + layers +");'"); //Start Jav
 
 asdf = asdf + ("onmouseover=\"Tip(setTooltipData('"+x+"','"+layers+"'),TITLE, 'Frame "+x+"');\" "); 
 
-//asdf = asdf + ("title=\"header=[Frame "+x+"] body=[<div id='ToolTipData' style='z-index: 10001'> </div>] fade=[on] fadespeed=[.05]\" ");
 
 asdf = asdf + (">" + x);//Text in each frame
 

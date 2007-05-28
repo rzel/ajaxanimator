@@ -6,13 +6,13 @@ $xml = new SimpleXMLElement(stripslashes($xmlstr));
 require_once("freemoviecompilertoolbox.php");
 
 //header("Content-Type: application/x-shockwave-flash");
-$height = 272;
-$width = 480;
-
+$height = $_REQUEST['height'];
+$width = $_REQUEST['height'];
+$framerate = $_REQUEST['framerate'];
 $swf = new FreeMovieCompilerToolbox;
 $swf->SetSWFVersion(5);
 $swf->SetFrameSize($width*20, $height*20);
-$swf->SetFrameRate(12);
+$swf->SetFrameRate($framerate);
 $swf->SetBackgroundColor(255, 255, 255);
 $swf->BeginMovie();
 
