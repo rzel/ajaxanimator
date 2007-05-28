@@ -36,7 +36,8 @@
 	setTimeout("adblockCheck()",3000)
 	setTimeout("canvasFix();",1000);
 	initCanvas();
-    }
+	}
+	
 	function adblockCheck(){
 	var adblock = new Boolean();
 	adblock = false;
@@ -166,6 +167,20 @@
 		  <div style="font-size:x-small" id="status"></div>
         </center>
       </div>
+	  <div id="FlashPreview">
+	  <center>
+
+<table border = "0">
+<tr>
+<td><input type="button" id="swfPreBtn" onclick="preFlash();" value="Preview">
+<input type="button" id="swfGenBtn" value="Generate SWF" onclick="genFlash()"></td>
+<td><div id="export"></div></td>
+</tr>
+</table>
+	 		
+<iframe id="previewIframe" style="width:480px;height:272px;" frameborder=""></iframe>
+</center>
+	  </div>
     <div id="HELP" windowproperties="title:Help,resizable:true,closable:true,dragable:true,cookieName:cookieWindowDemo2_1,xPos:300,yPos:400,minWidth:350,minHeight:150,activeTabId:FAQMain">
 	 <div id="AboutMain" style="height:99%" class="DHTMLSuite_windowContent" tabproperties="tabTitle:About">
         <div id="aboutdiv" style="width: 99%; height:99%"></div>
@@ -191,26 +206,7 @@
     <div id="ColorPalette" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Color Palette">
       </div>
     </div>
-	<div id="AnimationWindow"  windowproperties="title:Animation,resizable:true,closable:true,dragable:true,cookieName:cookieWindowAnimation,xPos:30,yPos:40,minWidth:350,minHeight:150,activeTabId:windowContent1">
-          <div id="AnimationPreview" style="overflow:hidden" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Preview">
- 				<center>
-		<input type="button" id="swfPreBtn" onclick="preFlash();" value="Preview">		  
-</center>
-<center>   
-		<iframe id="previewIframe" frameborder="1"></iframe>
-				</center>
 
-
-
-		  </div>
-		  <div id="AnimationExport" style="overflow:hidden" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Export">
-<center>    		
-				<div id="export"></div>
-				 <input type="button" id="swfGenBtn" value="Generate SWF" onclick="genFlash()">
-	</center>      
-	<br>
-		  </div>
-    </div>
    <script type="text/javascript" src="ajaxanimator/paneSplitterConfig.js"></script>
     <script type="text/javascript" src="ajaxanimator/menuConfig.js"></script>
     <script type="text/javascript" src="ajaxanimator/windowConfig.js"></script>

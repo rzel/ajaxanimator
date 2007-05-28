@@ -45,11 +45,3 @@
     ColorWin.setStatusBarText('Color');
     ColorWin.close();
 	
-    var AnimationModel = new DHTMLSuite.windowModel();
-    AnimationModel.createWindowModelFromMarkUp('AnimationWindow');
-    var AnimationWin = new DHTMLSuite.windowWidget();
-    AnimationWin.addWindowModel(AnimationModel);
-    AnimationWin.init();
-    AnimationWin.setStatusBarText('Animation');
-
-

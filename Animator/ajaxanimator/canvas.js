@@ -3,7 +3,7 @@ var canvasDisplayStyle = "";
 var canvasIssueResolved = new Boolean();
 var AnimationPlay = new Boolean();
 var AnimationFramerate = 12; 
-var totalFrames = 2;
+var totalFrames = 1;
 var canvasHeight = 272;
 var canvasWidth = 480;
 AnimationPlay = true;
@@ -51,10 +51,12 @@ initDraw();
 }
 
 function setCanvasProperties(){
-document.getElementById('CanvasContainer').style.height = getElementById('cHeight').value + 'px';
-document.getElementById('CanvasContainer').style.width = getElementById('cWidth').value + 'px'
-canvasHeight =getElementById('cHeight').value;
-canvasWidth = getElementById('cWidth').value;
+document.getElementById('CanvasContainer').style.height = $('cHeight').value + 'px';
+document.getElementById('CanvasContainer').style.width = $('cWidth').value + 'px'
+canvasHeight =$('cHeight').value;
+canvasWidth = $('cWidth').value;
+$('previewIframe').style.height = canvasHeight + 'px';
+$('previewIframe').style.width = canvasWidth + 'px';
 }
 
 function setFramerate(){
