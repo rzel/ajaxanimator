@@ -22,11 +22,19 @@ var paneModel = new DHTMLSuite.paneSplitterModel();
     paneModel.addPane(paneNorth);
 
     // Creating center pane
-    var paneCenter = new DHTMLSuite.paneSplitterPaneModel( { position : "center", id:"centerPane"} );
+    var paneCenter = new DHTMLSuite.paneSplitterPaneModel( { position : "center", id:"centerPane",callbackOnTabSwitch:'CenterCallback' } );
     paneCenter.addContent( new DHTMLSuite.paneSplitterContentModel( {closable: false, id: 'center',htmlElementId:'centerContent',title:'',tabTitle: 'Canvas' } ) );
+    paneCenter.addContent( new DHTMLSuite.paneSplitterContentModel( {closable: false, id: 'swfpreview',htmlElementId:'FlashPreview',title:'',tabTitle: 'Preview/Export'} ) );
      
     paneModel.addPane(paneCenter);
 
     var paneSplitter = new DHTMLSuite.paneSplitter();
     paneSplitter.addModel(paneModel); // Add the data model to the pane splitter
     paneSplitter.init(); // Add the data model to the pane splitter
+	
+	function CenterCallback(modelObj,action,contentObj)
+	{
+	if(contentObj.id == 'swfpreview'){
+	preFlash();
+	}
+	}
