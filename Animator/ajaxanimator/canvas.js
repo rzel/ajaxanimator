@@ -4,6 +4,8 @@ var canvasIssueResolved = new Boolean();
 var AnimationPlay = new Boolean();
 var AnimationFramerate = 12; 
 var totalFrames = 2;
+var canvasHeight = 272;
+var canvasWidth = 480;
 AnimationPlay = true;
 canvasIssueResolved = false;
 
@@ -51,6 +53,8 @@ initDraw();
 function setCanvasProperties(){
 document.getElementById('CanvasContainer').style.height = getElementById('cHeight').value + 'px';
 document.getElementById('CanvasContainer').style.width = getElementById('cWidth').value + 'px'
+canvasHeight =getElementById('cHeight').value;
+canvasWidth = getElementById('cWidth').value;
 }
 
 function setFramerate(){
@@ -135,13 +139,35 @@ $('swfGenBtn').disabled = true;
 $('swfGenBtn').value = 'generating...';
 $('export').innerHTML = '';
 var swfgen = generateAnimationXML();
-ajaxpack.postAjaxRequest("freemovie/swfgen.php", "svg=" + swfgen , genFlashEvent, "txt")
+ajaxpack.postAjaxRequest("freemovie/swfgen.php", "height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , genFlashEvent, "txt")
+}
+
+function preFlash(){
+$('previewIframe').style.height = canvasHeight + 'px';
+$('previewIframe').style.width = canvasWidth + 'px';
+$('swfPreBtn').disabled = true;
+$('swfPreBtn').value = 'generating...';
+var swfgen = generateAnimationXML();
+ajaxpack.postAjaxRequest("freemovie/swfgen.php", "height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , preFlashEvent, "txt")
 }
 
 function generateSWFResponse(responsedata){
 $('export').innerHTML = '<a href="' + responsedata.replace('files','freemovie/files') + '>Download</a>';
 $('swfGenBtn').disabled = false;
 $('swfGenBtn').value = 'Generate SWF';
+}
+
+
+function preFlashEvent(){
+var myajax=ajaxpack.ajaxobj
+var myfiletype=ajaxpack.filetype
+if (myajax.readyState == 4){ //if request of file completed
+if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
+$('previewIframe').src = myajax.responseText.replace('files','freemovie/files')
+$('swfPreBtn').disabled = false;
+$('swfPreBtn').value = 'Preview';
+}
+}
 }
 
 function genFlashEvent(){
