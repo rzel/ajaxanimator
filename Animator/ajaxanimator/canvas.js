@@ -55,8 +55,8 @@ document.getElementById('CanvasContainer').style.height = $('cHeight').value + '
 document.getElementById('CanvasContainer').style.width = $('cWidth').value + 'px'
 canvasHeight =$('cHeight').value;
 canvasWidth = $('cWidth').value;
-$('previewIframe').style.height = canvasHeight + 'px';
-$('previewIframe').style.width = canvasWidth + 'px';
+$('zFlashPreviewDiv').style.height = canvasHeight + 'px';
+$('zFlashPreviewDiv').style.width = canvasWidth + 'px';
 }
 
 function setFramerate(){
@@ -145,8 +145,8 @@ ajaxpack.postAjaxRequest("freemovie/swfgen.php", "height="+canvasHeight+"&width=
 }
 
 function preFlash(){
-$('previewIframe').style.height = canvasHeight + 'px';
-$('previewIframe').style.width = canvasWidth + 'px';
+$('zFlashPreviewDiv').style.height = canvasHeight + 'px';
+$('zFlashPreviewDiv').style.width = canvasWidth + 'px';
 $('swfPreBtn').disabled = true;
 $('swfPreBtn').value = 'generating...';
 var swfgen = generateAnimationXML();
@@ -165,7 +165,13 @@ var myajax=ajaxpack.ajaxobj
 var myfiletype=ajaxpack.filetype
 if (myajax.readyState == 4){ //if request of file completed
 if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-$('previewIframe').src = myajax.responseText.replace('files','freemovie/files')
+//$('previewIframe').src = myajax.responseText.replace('files','freemovie/files')
+
+var flashHTML = "";
+var FLASHfilename=myajax.responseText.replace('files','freemovie/files');
+flashHTML+='<object width="480" height="272"><param name="movie" value="'+FLASHfilename+'">'
+flashHTML+='<embed src="'+FLASHfilename+'" width="480" height="272"></embed></object>'
+document.getElementById("zFlashPreviewDiv").innerHTML = flashHTML;
 $('swfPreBtn').disabled = false;
 $('swfPreBtn').value = 'Preview';
 }
