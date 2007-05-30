@@ -30,8 +30,8 @@
     DrawCanvas[currentCanvas].editCommand('linecolor', 'black');
     DrawCanvas[currentCanvas].editCommand('linewidth', '1px');
     setMode('rect', 'Rectangle');
-    $('fillcolor').style.backgroundColor = 'red';
-    $('linecolor').style.backgroundColor = 'black';
+    $('fillcolor').style.backgroundColor = 'rgb(255,0,0)';
+    $('linecolor').style.backgroundColor = 'rgb(0,0,0)';
   }
   
     function setCanvasProperties(){

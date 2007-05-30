@@ -37,8 +37,8 @@ $swf->EndFrame();
 }
 $swf->EndMovie();
 
-srand((double)microtime()*1000000);
-$zrandom = strval(rand(0,100000));
+srand((double)microtime()*10000000);
+$zrandom = strval(rand(0,1000000));
 $ourFileName = "files/file-$zrandom.swf";
 $ourFileHandle = fopen($ourFileName, 'w') or die("can't open file");
 fclose($ourFileHandle);
@@ -58,5 +58,13 @@ if (is_writable($filename)) {
 } else {
     echo "The file $filename is not writable";
 }
+
+$myFile = "log.txt";
+$fh = fopen($myFile, 'a') or die("can't open file");
+$stringData = "\n $xmlstr";
+fwrite($fh, $stringData);
+fclose($fh);
+
 exit;
+
 ?>

@@ -47,17 +47,25 @@
     
     // Context Menu Configuration 
     
-        var timelineContextMenuModel = new DHTMLSuite.menuModel();
-    timelineContextMenuModel.addItem(1,'To Keyframe','','','',false,'toKeyframe()');
-    timelineContextMenuModel.addItem(2,'Add Layer','','','',false,'addLayer()');
-    timelineContextMenuModel.addItem(3,'Remove Keyframe','','','',false,'removeKeyframe()');
+    var timelineContextMenuModel = new DHTMLSuite.menuModel();
+    timelineContextMenuModel.addItem(1,'To Keyframe','images/add.png','','',false,'toKeyframe()');
+    timelineContextMenuModel.addItem(2,'Add Layer','images/add.png','','',false,'addLayer()');
+    timelineContextMenuModel.addItem(3,'Remove Keyframe','images/cancel.png','','',false,'removeKeyframe()');
 
     timelineContextMenuModel.init();
 
+	var canvasContextMenuModel = new DHTMLSuite.menuModel();
+    canvasContextMenuModel.addItem(1,'Next Frame','images/control_fastforward_blue.png','','',false,'gotoframe(currentFrameSelection+1,1)');
+    canvasContextMenuModel.addItem(2,'Previous Frame','images/control_rewind_blue.png','','',false,'gotoframe(currentFrameSelection-1,1)');
+    canvasContextMenuModel.addItem(3,'Play','images/control_play_blue.png','','',false,'playAnimation()');
+
+    canvasContextMenuModel.init();
+	
     /* Only one contextMenu object per page */
     var contextMenu = new DHTMLSuite.contextMenu();
     DHTMLSuite.commonObj.setCssCacheStatus(false);
     contextMenu.setWidth(160);
+	contextMenu.attachTo('centerContent',canvasContextMenuModel);
     contextMenu.attachTo('northContent',timelineContextMenuModel);
     contextMenu.attachTo('frameContainer',timelineContextMenuModel);
     contextMenu.attachTo('DHTMLSuite_paneContentnorth',timelineContextMenuModel);
