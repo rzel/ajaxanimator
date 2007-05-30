@@ -7,7 +7,7 @@ require_once("freemoviecompilertoolbox.php");
 
 //header("Content-Type: application/x-shockwave-flash");
 $height = $_REQUEST['height'];
-$width = $_REQUEST['height'];
+$width = $_REQUEST['width'];
 $framerate = $_REQUEST['framerate'];
 $swf = new FreeMovieCompilerToolbox;
 $swf->SetSWFVersion(5);

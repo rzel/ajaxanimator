@@ -1,9 +1,9 @@
  var DrawCanvas = new Array();
  var currentCanvas = 1;
- 
-  function initDraw() {
-    var renderer;
 
+
+ function initDraw() {
+    var renderer;
     ie = navigator.appVersion.match(/MSIE (\d\.\d)/);
     opera = (navigator.userAgent.toLowerCase().indexOf("opera") != -1);
     if ((!ie) || (opera)) {
@@ -12,17 +12,15 @@
     else {
       renderer = new VMLRenderer();
     }
-
     DrawCanvas[currentCanvas] = new RichDrawEditor(document.getElementById('richdraw'+currentCanvas), renderer);
     DrawCanvas[currentCanvas].onselect = onSelect;
     DrawCanvas[currentCanvas].onunselect = onUnselect;
+	if(totalFrames == 1){
 	setCanvasDefaults();
-	if(isinit == false){
-		setTimeout("canvasFix();",1000);
+	}else{
+		setCanvasProperties();
 	}
 	isinit = true;
-	
-	
   }
   
   
@@ -36,11 +34,15 @@
     $('linecolor').style.backgroundColor = 'black';
   }
   
+    function setCanvasProperties(){
+    DrawCanvas[currentCanvas].editCommand('fillcolor', $('fillcolor').style.backgroundColor);
+    DrawCanvas[currentCanvas].editCommand('linecolor', $('linecolor').style.backgroundColor);
+    DrawCanvas[currentCanvas].editCommand('linewidth', '1px');
+	DrawCanvas[currentCanvas].editCommand('mode', DrawCanvas[currentCanvas - 1].mode);
+  }
+  
   function setMode(mode, status) {
     DrawCanvas[currentCanvas].editCommand('mode', mode);
-   
-
-    
     if (mode == 'select')
       $('status').innerHTML = 'Mode: Select/Move' ;
     else
@@ -77,7 +79,6 @@
   }
 
   function showMarkup() {
-
     alert(value=DrawCanvas[currentCanvas].renderer.getMarkup());
   }
   

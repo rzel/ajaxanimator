@@ -1,4 +1,4 @@
-var canvasNumber = 0;
+var canvasNumber = 1;
 var canvasDisplayStyle = "";
 var canvasIssueResolved = new Boolean();
 var AnimationPlay = new Boolean();
@@ -10,15 +10,12 @@ AnimationPlay = true;
 canvasIssueResolved = false;
 
 function makeCanvas(){
-
 var richdrawCanvas = document.createElement('div');
 var richdrawCanvasStyle = "border:1px solid black;position:relative;"
 richdrawCanvasStyle += "top:0px;width:99%;height:99%;background-color:white;"
 richdrawCanvasStyle += "-moz-user-select:none;"
-
 richdrawCanvas.setAttribute('id','richdraw'+canvasNumber);
 richdrawCanvas.setAttribute('style',richdrawCanvasStyle+"display:"+canvasDisplayStyle);
-
 document.getElementById('CanvasContainer').appendChild(richdrawCanvas);
 canvasNumber++;
 canvasDisplayStyle = "none";
@@ -26,17 +23,6 @@ initDraw();
 currentCanvas++;
 }
 
-function makeCanvasIE(){
-var canvasString;
-canvasString='<div id="richdraw'+canvasNumber+'" style="';
-canvasString+='border:1px solid black;position:relative;top:0px'
-canvasString+='width:99%;height:99%;background-color:white;'
-canvasString+='-moz-user-select:none;display:'+canvasDisplayStyle+'"></div>';
-document.getElementById("CanvasContainer").innerHTML+=canvasString;
-canvasNumber++;
-canvasDisplayStyle = 'none'
-
-}
 
 function makeCanvasFromId(CanvasId){
 var richdrawCanvas = document.createElement('div');
@@ -80,26 +66,10 @@ zAnimationXML += "</AnimationXML>";
 return zAnimationXML;
 }
 
-function initCanvasIE(){
-
-	for(var xwp = 0; xwp <=  100;xwp++){
-	makeCanvasIE();
-	}
-canvasFix();
-}
-
-function canvasFix(){
-	gotoframe(2,1)
-	setTimeout("gotoframe(1,1)",100);
-}
 
 function initCanvas(){
-	if(navigator.userAgent.toLowerCase().indexOf("msie")!= -1 || navigator.userAgent.toLowerCase().indexOf("6")!= -1){
-	setTimeout("initCanvasIE();",100);
-	}else{
 	makeCanvas();
-	}
-	
+	gotoframe(1,1);
 }
 
 function playAnimation(){
@@ -137,20 +107,34 @@ document.getElementById("richdraw"+currentCanvas).style.display = "";
 
 
 function genFlash(){
+flashVerification()
 $('swfGenBtn').disabled = true;
 $('swfGenBtn').value = 'generating...';
 $('export').innerHTML = '';
 var swfgen = generateAnimationXML();
+if(generateAnimationXML() != '<AnimationXML><svg></svg></AnimationXML>'){
 ajaxpack.postAjaxRequest("freemovie/swfgen.php", "height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , genFlashEvent, "txt")
 }
 
+}
+
+function flashVerification(){
+if(generateAnimationXML() != '<AnimationXML><svg></svg></AnimationXML>'){
+
+}
+}
+
 function preFlash(){
+flashVerification()
 $('zFlashPreviewDiv').style.height = canvasHeight + 'px';
 $('zFlashPreviewDiv').style.width = canvasWidth + 'px';
+$('zFlashPreviewDiv').innerHTML = "";
 $('swfPreBtn').disabled = true;
 $('swfPreBtn').value = 'generating...';
 var swfgen = generateAnimationXML();
+if(generateAnimationXML() != '<AnimationXML><svg></svg></AnimationXML>'){
 ajaxpack.postAjaxRequest("freemovie/swfgen.php", "height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , preFlashEvent, "txt")
+}else{$('zFlashPreviewDiv').innerHTML = "Sorry No Preview Availiable:<br> Empty Animation";}
 }
 
 function generateSWFResponse(responsedata){
