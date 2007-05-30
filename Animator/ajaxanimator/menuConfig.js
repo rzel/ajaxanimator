@@ -18,7 +18,7 @@
 
     menuModel.addItem(13 , 'Clear Timeline' ,'images/cancel.png' ,'',4,'','ClearAllKeyframes()');
 	menuModel.addItem(53 , 'Color Picker' ,'images/color_wheel.png' ,'',4,'','FillColorChange()');
-    menuModel.addItem(14 , 'Terminal Interface','images/application_xp_terminal.png' ,'' ,4,'','paneSplitter.showContent("southAdvanced")');
+    menuModel.addItem(14 , 'Terminal Interface','images/application_xp_terminal.png' ,'' ,4,'','paneSplitter.showContent("advancedContent")');
 
     menuModel.addItem(15 , 'To Keyframe','images/add.png' ,'',5,'','toKeyframe()');
     menuModel.addItem(16 , 'Delete Keyframe','images/cancel.png' ,'',5,'','removeKeyframe()');
@@ -29,6 +29,9 @@
     menuModel.addItem(20 , 'Stop' ,'images/control_stop_blue.png' ,'',40,'','stopAnimation()');
     menuModel.addItem(21, 'Next Frame','images/control_fastforward_blue.png' ,'',40,'','gotoframe(currentFrameSelection+1,1)');
     menuModel.addItem(22, 'Previous Frame','images/control_rewind_blue.png' ,'',40,'','gotoframe(currentFrameSelection-1,1)');
+    menuModel.addItem(55, 'Last Frame','images/resultset_last.png' ,'',40,'','gotoframe(totalFrames,1)');
+    menuModel.addItem(54, 'First Frame','images/resultset_first.png' ,'',40,'','gotoframe(1,1)');
+
 	
     menuModel.addItem(30 , 'About','' ,'',6,'','showWin("AboutMain")');
     menuModel.addItem(31 , 'Manual' ,'images/help.png' ,'',6,'','showWin("ManualMain")');
