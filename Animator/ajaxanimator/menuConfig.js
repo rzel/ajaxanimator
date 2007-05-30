@@ -29,8 +29,8 @@
     menuModel.addItem(20 , 'Stop' ,'images/control_stop_blue.png' ,'',40,'','stopAnimation()');
     menuModel.addItem(21, 'Next Frame','images/control_fastforward_blue.png' ,'',40,'','gotoframe(currentFrameSelection+1,1)');
     menuModel.addItem(22, 'Previous Frame','images/control_rewind_blue.png' ,'',40,'','gotoframe(currentFrameSelection-1,1)');
-    menuModel.addItem(55, 'Last Frame','images/resultset_last.png' ,'',40,'','gotoframe(totalFrames,1)');
-    menuModel.addItem(54, 'First Frame','images/resultset_first.png' ,'',40,'','gotoframe(1,1)');
+    menuModel.addItem(55, 'Last Frame','images/control_end_blue.png' ,'',40,'','gotoframe(totalFrames,1)');
+    menuModel.addItem(54, 'First Frame','images/control_start_blue.png' ,'',40,'','gotoframe(1,1)');
 
 	
     menuModel.addItem(30 , 'About','' ,'',6,'','showWin("AboutMain")');

@@ -107,12 +107,9 @@ function gotoframe(framenumber, layer) //Function to change the current selected
 	if(framenumber > totalFrames){
 	totalFrames = framenumber;
 	}
-
 	gotoframeInterface(framenumber,layer);
 	hideCurrentCanvas();
-	document.getElementById("richdraw0").style.display = "none";
 	currentCanvas = framenumber ;
-	
 	if(DrawCanvas[currentCanvas]==null){
 	makeCanvasFromId(framenumber);
 	}
