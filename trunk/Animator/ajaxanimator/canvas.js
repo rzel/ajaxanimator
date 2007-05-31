@@ -1,4 +1,5 @@
 var canvasNumber = 1;
+var previousCanvas = 1;
 var canvasDisplayStyle = "";
 var canvasIssueResolved = new Boolean();
 var AnimationPlay = new Boolean();
@@ -112,7 +113,7 @@ $('swfGenBtn').disabled = true;
 $('swfGenBtn').value = 'generating...';
 $('export').innerHTML = '';
 var swfgen = generateAnimationXML();
-if(generateAnimationXML() != '<AnimationXML><svg></svg></AnimationXML>'){
+if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></AnimationXML>'){
 ajaxpack.postAjaxRequest("freemovie/swfgen.php", "height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , genFlashEvent, "txt")
 }
 
@@ -132,7 +133,7 @@ $('zFlashPreviewDiv').innerHTML = "";
 $('swfPreBtn').disabled = true;
 $('swfPreBtn').value = 'generating...';
 var swfgen = generateAnimationXML();
-if(generateAnimationXML() != '<AnimationXML><svg></svg></AnimationXML>'){
+if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></AnimationXML>'){
 ajaxpack.postAjaxRequest("freemovie/swfgen.php", "height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , preFlashEvent, "txt")
 }else{$('zFlashPreviewDiv').innerHTML = "Sorry No Preview Availiable:<br> Empty Animation";}
 }

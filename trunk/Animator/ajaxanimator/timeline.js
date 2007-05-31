@@ -104,12 +104,13 @@ function gotoframeInterface(framenumber,layer){
 function gotoframe(framenumber, layer) //Function to change the current selected frame
 {
 
+	previousCanvas = currentCanvas;
 	if(framenumber > totalFrames){
 	totalFrames = framenumber;
 	}
 	gotoframeInterface(framenumber,layer);
 	hideCurrentCanvas();
-	currentCanvas = framenumber ;
+	currentCanvas = framenumber;
 	if(DrawCanvas[currentCanvas]==null){
 	makeCanvasFromId(framenumber);
 	}

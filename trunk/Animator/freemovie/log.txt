@@ -1,0 +1,5 @@
+
+ <AnimationXML><svg></svg><svg></svg></AnimationXML>
+ <AnimationXML><svg></svg><svg></svg></AnimationXML>
+ <AnimationXML><svg><rect id="shape:572d69d0-c944-b807-037a-2df9166b7c2f" stroke-width="1px" stroke="black" fill="red" style="position: absolute;" height="100px" width="130px" y="130px" x="150px"></rect></svg></AnimationXML>
+ <AnimationXML><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg></AnimationXML>

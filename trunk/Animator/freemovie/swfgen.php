@@ -1,11 +1,11 @@
 <?php
 
-$xmlstr = $_REQUEST['svg'];
+$xmlstr = stripslashes($_REQUEST['svg']);
 $xml = new SimpleXMLElement(stripslashes($xmlstr));
 //Flash:
 require_once("freemoviecompilertoolbox.php");
 
-//header("Content-Type: application/x-shockwave-flash");
+header("Content-Type: text/plain");
 $height = $_REQUEST['height'];
 $width = $_REQUEST['width'];
 $framerate = $_REQUEST['framerate'];
