@@ -38,7 +38,7 @@
     DrawCanvas[currentCanvas].editCommand('fillcolor', $('fillcolor').style.backgroundColor);
     DrawCanvas[currentCanvas].editCommand('linecolor', $('linecolor').style.backgroundColor);
     DrawCanvas[currentCanvas].editCommand('linewidth', '1px');
-	DrawCanvas[currentCanvas].editCommand('mode', DrawCanvas[currentCanvas - 1].mode);
+	DrawCanvas[currentCanvas].editCommand('mode', DrawCanvas[previousCanvas].mode);
   }
   
   function setMode(mode, status) {
