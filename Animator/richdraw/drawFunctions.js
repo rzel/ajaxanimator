@@ -26,8 +26,8 @@
   
   
   function setCanvasDefaults(){
-    DrawCanvas[currentCanvas].editCommand('fillcolor', 'red');
-    DrawCanvas[currentCanvas].editCommand('linecolor', 'black');
+    DrawCanvas[currentCanvas].editCommand('fillcolor', 'rgb(255,0,0)');
+    DrawCanvas[currentCanvas].editCommand('linecolor', 'rgb(0,0,0)');
     DrawCanvas[currentCanvas].editCommand('linewidth', '1px');
     setMode('rect', 'Rectangle');
     $('fillcolor').style.backgroundColor = 'rgb(255,0,0)';
