@@ -16,18 +16,28 @@ $swf->SetFrameRate($framerate);
 $swf->SetBackgroundColor(255, 255, 255);
 $swf->BeginMovie();
 
+function rgbConvert($rgb_str){
+$rgb = $rgb_str;
+$rgb = str_replace("rgb(","",$rgb);
+$rgb = str_replace(")","",$rgb);
+$rgbArray = explode(",", $rgb);
+return $rgbArray;
+}
+
 foreach ($xml->svg as $svg) {
 if($charid != null||$chardepth != null){
 $swf->RemoveObjectFromLayer($charid, $chardepth);
 }
 foreach ($svg->line as $line) {
-$CharacterInfo = $swf->DefineStraightLine($line['x1']*20, $height*20 - $line['y1']*20, $line['x2']*20, $height*20 - $line['y2']*20, $line['stroke-width']*20, false, 0, 0, 0, 0);
+$linefillColor = rgbConvert($line['stroke']);
+$CharacterInfo = $swf->DefineStraightLine($line['x1']*20, $height*20 - $line['y1']*20, $line['x2']*20, $height*20 - $line['y2']*20, $line['stroke-width']*20, false, $linefillColor[0], $linefillColor[1], $linefillColor[2], 0);
 $CharacterDepth = $swf->EasyPlaceObject($CharacterInfo["CharacterID"]);
 $charid = $CharacterInfo["CharacterID"];
 $chardepth = $CharacterDepth;
 }
 foreach ($svg->rect as $rect) {
-$CharacterInfo = $swf->DefineRectangle($rect['x']*20, $height*20 - $rect['y']*20, $rect['x']*20 + $rect['width']*20, $height*20 -($rect['y']*20 + $rect['height']*20), $rect['stroke-width']*20, false, 0, 0, 0, 0);
+$rectfillColor = rgbConvert($rect['fill']);
+$CharacterInfo = $swf->DefineRectangle($rect['x']*20, $height*20 - $rect['y']*20, $rect['x']*20 + $rect['width']*20, $height*20 -($rect['y']*20 + $rect['height']*20), $rect['stroke-width']*20, false, $rectfillColor[0], $rectfillColor[1], $rectfillColor[2], 0);
 $CharacterDepth = $swf->EasyPlaceObject($CharacterInfo["CharacterID"]);
 $charid = $CharacterInfo["CharacterID"];
 $chardepth = $CharacterDepth;
