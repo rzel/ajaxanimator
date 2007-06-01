@@ -73,6 +73,9 @@ function initCanvas(){
 	gotoframe(1,1);
 }
 
+Event.observe(document, 'keypress', function(event){ if(event.keyCode == Event.KEY_TAB) alert('Tab Pressed');});
+
+
 function playAnimation(){
 AnimationPlay = true;
 doAnimation();
