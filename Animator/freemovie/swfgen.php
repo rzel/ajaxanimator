@@ -24,26 +24,36 @@ $rgbArray = explode(",", $rgb);
 return $rgbArray;
 }
 
+$totalSWFObjects = 0;
+
 foreach ($xml->svg as $svg) {
+
 if($charid != null||$chardepth != null){
-$swf->RemoveObjectFromLayer($charid, $chardepth);
+for ($p = 0; $p <= $totalSWFObjects - 1; $p++) {
+$swf->RemoveObjectFromLayer($charid[$p], $chardepth[$p]);
 }
+}
+
 foreach ($svg->line as $line) {
+
 $linefillColor = rgbConvert($line['stroke']);
 $CharacterInfo = $swf->DefineStraightLine($line['x1']*20, $height*20 - $line['y1']*20, $line['x2']*20, $height*20 - $line['y2']*20, $line['stroke-width']*20, false, $linefillColor[0], $linefillColor[1], $linefillColor[2], 0);
 $CharacterDepth = $swf->EasyPlaceObject($CharacterInfo["CharacterID"]);
-$charid = $CharacterInfo["CharacterID"];
-$chardepth = $CharacterDepth;
+$charid[$totalSWFObjects] = $CharacterInfo["CharacterID"];
+$chardepth[$totalSWFObjects] = $CharacterDepth;
+$totalSWFObjects++;
+
 }
 foreach ($svg->rect as $rect) {
+
 $rectfillColor = rgbConvert($rect['fill']);
 $CharacterInfo = $swf->DefineRectangle($rect['x']*20, $height*20 - $rect['y']*20, $rect['x']*20 + $rect['width']*20, $height*20 -($rect['y']*20 + $rect['height']*20), $rect['stroke-width']*20, false, $rectfillColor[0], $rectfillColor[1], $rectfillColor[2], 0);
 $CharacterDepth = $swf->EasyPlaceObject($CharacterInfo["CharacterID"]);
-$charid = $CharacterInfo["CharacterID"];
-$chardepth = $CharacterDepth;
+$charid[$totalSWFObjects] = $CharacterInfo["CharacterID"];
+$chardepth[$totalSWFObjects] = $CharacterDepth;
+$totalSWFObjects++;
 }
 $swf->EndFrame();
-
 }
 $swf->EndMovie();
 
@@ -74,6 +84,10 @@ $fh = fopen($myFile, 'a') or die("can't open file");
 $stringData = "\n $xmlstr";
 fwrite($fh, $stringData);
 fclose($fh);
+
+//temp
+//$poopy = $charid[3];
+//echo "\n $totalSWFObjects \n $poopy";
 
 exit;
 
