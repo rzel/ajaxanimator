@@ -34,6 +34,7 @@ var paneModel = new DHTMLSuite.paneSplitterModel();
 	
 	function CenterCallback(modelObj,action,contentObj)
 	{
+	$('export').innerHTML = "";
 	if(contentObj.id == 'swfpreview'){
 	preFlash();
 	}

@@ -75,7 +75,6 @@ function initCanvas(){
 
 function playAnimation(){
 AnimationPlay = true;
-gotoframe(1,1);
 doAnimation();
 }
 
