@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
     <meta name="Author" content="Antimatter15">
@@ -19,6 +18,19 @@
     <script type="text/javascript" src="richdraw/drawFunctions.js"></script>
     <script type="text/javascript">
     window.onload = startUp;
+	onkeydown = isKeyPressed;
+	function isKeyPressed(event)
+	{
+  if (event.keyCode==39)
+    {
+gotoframe(currentFrameSelection+1,1)
+    }
+	if (event.keyCode==37)
+    {
+gotoframe(currentFrameSelection-1,1)
+    }
+	return false
+  }
     function startUp(){
     addLayer();
 	try{
@@ -150,19 +162,43 @@
 <div style="border: 1px black solid;" id="zFlashPreviewDiv"></div>
 </center>
 	  </div>
-	     <script type="text/javascript">
-		 ajaxpack.getAjaxRequest("html/windows.htm", "" , windowHTML, "txt")
-function windowHTML(){var myajax=ajaxpack.ajaxobj;var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ if (myajax.status==200 || window.location.href.indexOf("http")==-1){
-document.write(myajax.responseText)}}}
-		 </script>
+	  
+    <div id="HELP" windowproperties="title:Help,resizable:true,closable:true,dragable:true,cookieName:HelpWindowCookie,xPos:300,yPos:400,minWidth:350,minHeight:150,activeTabId:AboutMain">
+	 <div id="AboutMain" style="height:99%" class="DHTMLSuite_windowContent" tabproperties="tabTitle:About">
+        <div id="aboutdiv" style="width: 99%; height:99%"></div>
+	</div>
+	 <div id="FAQMain" style="height:99%" class="DHTMLSuite_windowContent" tabproperties="tabTitle:FAQ">
+        <div id="FAQDiv" style="width: 99%; height:99%"></div>
+      </div>
+      <div id="ManualMain" style="height:99%" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Manual">
+        <div id="ManualDiv"style="width: 99%; height:99%"></div>
+      </div>
+      <div id="SeizureMain" style="height:99%" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Seizure">
+        <div id="seizurediv" style="width: 99%; height:99%">
+		<div style="position: relative;left: 40%; top: 40%"><font  face="Verdana" size="20">SEIZURE!</font></div>
+		</div>
+      </div>
+      <div id="SupportMain" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Support Development">
+       <div id="supportdiv" style="width: 99%; height:99%"></div>
+      </div>
+    </div>
+    <div id="ColorWindow" windowproperties="title:Color,resizable:false,closable:true,dragable:true,cookieName:ColorWindowCookie,xPos:300,yPos:400,minWidth:425,minHeight:350,activeTabId:AdvancedColorPicker">
+          <div id="AdvancedColorPicker" style="overflow:hidden" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Advanced Color Picker">
+              </div>
+    <div id="ColorPalette" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Color Palette">
+      </div>
+    </div>
+	
+		 <script type="text/javascript" src="ajaxanimator/windowConfig.js"></script>
+<script type="text/javascript" src="ajaxanimator/colorConfig.js"></script>
+
 	  
 
 
    <script type="text/javascript" src="ajaxanimator/paneSplitterConfig.js"></script>
     <script type="text/javascript" src="ajaxanimator/menuConfig.js"></script>
-	 <script type="text/javascript" src="ajaxanimator/windowConfig.js"></script>
-    <script type="text/javascript" src="ajaxanimator/colorConfig.js"></script>
+
+
     <script type="text/javascript" src="ajaxanimator/seizure.js"></script>
   </body>
 </html>

@@ -103,7 +103,7 @@ function gotoframeInterface(framenumber,layer){
 
 function gotoframe(framenumber, layer) //Function to change the current selected frame
 {
-
+	if(framenumber > 0){
 	previousCanvas = currentCanvas;
 	if(framenumber > totalFrames){
 	totalFrames = framenumber;
@@ -115,6 +115,7 @@ function gotoframe(framenumber, layer) //Function to change the current selected
 	makeCanvasFromId(framenumber);
 	}
 	showCurrentCanvas();
+	}
 }
 
 
