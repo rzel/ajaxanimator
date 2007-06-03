@@ -18,18 +18,27 @@
     <script type="text/javascript" src="richdraw/drawFunctions.js"></script>
     <script type="text/javascript">
     window.onload = startUp;
-	onkeydown = isKeyPressed;
-	function isKeyPressed(event)
-	{
+	onkeydown = keypressFunction;
+	function keypressFunction(event){
   if (event.keyCode==39)
     {
 gotoframe(currentFrameSelection+1,1)
+return false
     }
 	if (event.keyCode==37)
     {
 gotoframe(currentFrameSelection-1,1)
+return false
     }
-	return false
+	if (event.keyCode==80)
+    {
+playAnimation()
+    }
+		if (event.keyCode==83)
+    {
+stopAnimation();
+    }
+	//return false
   }
     function startUp(){
     addLayer();
