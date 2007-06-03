@@ -17,12 +17,14 @@ ColorWin.show();
 ColorWin.maximizeWindow();
 Colorobj = document.getElementById('linecolor');	
 }
+
 function FillColorChange(){
 ColorWin.close();
 ColorWin.show();
 ColorWin.maximizeWindow();
 Colorobj = document.getElementById('fillcolor');	
 }	
+
 function setColor(color)
 {
 
