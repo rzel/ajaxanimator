@@ -36,7 +36,7 @@
     menuModel.addItem(30 , 'About','' ,'',6,'','showWin("AboutMain")');
     menuModel.addItem(31 , 'Manual' ,'images/help.png' ,'',6,'','showWin("ManualMain")');
     menuModel.addItem(32 , 'FAQ','images/help.png' ,'',6,'','showWin("FAQMain")');
-    menuModel.addItem(33, 'Seizure','' ,'',6,'','showWin("SeizureMain")');
+    menuModel.addItem(33, 'Seizure','' ,'',6,'','showSeizure()');
     menuModel.addItem(34 , 'Support','images/money.png','',6,'','showWin("SupportMain")');
     menuModel.init();
 
