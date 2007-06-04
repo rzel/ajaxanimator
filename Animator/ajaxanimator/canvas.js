@@ -1,5 +1,5 @@
 var canvasNumber = 1;
-var previousCanvas = 1;
+var previousCanvas = 0;
 var canvasDisplayStyle = "";
 var canvasIssueResolved = new Boolean();
 var AnimationPlay = new Boolean();
@@ -38,10 +38,12 @@ initDraw();
 }
 
 function setCanvasProperties(){
-document.getElementById('CanvasContainer').style.height = $('cHeight').value + 'px';
-document.getElementById('CanvasContainer').style.width = $('cWidth').value + 'px'
-canvasHeight =$('cHeight').value;
+canvasHeight = $('cHeight').value;
 canvasWidth = $('cWidth').value;
+
+document.getElementById('CanvasContainer').style.height = '' + canvasHeight + 'px';
+document.getElementById('CanvasContainer').style.width = '' + canvasWidth + 'px';
+
 $('zFlashPreviewDiv').style.height = canvasHeight + 'px';
 $('zFlashPreviewDiv').style.width = canvasWidth + 'px';
 }

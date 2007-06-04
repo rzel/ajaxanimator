@@ -35,13 +35,16 @@ function setColor(color)
 	}else{
 	Colorobj.innerHTML = color.rgb;
 	}
+
 	if(isinit == true){
 	setFillColor();
 	setLineColor();
 	}
+
 	if(isinit == false){
 	FillColorChange();
 	}
+	
 }
 
 var colorWidget = new DHTMLSuite.colorWidget({ callbackOnChangeRgb : 'setColor',hueSliderPosition:'vertical' });
