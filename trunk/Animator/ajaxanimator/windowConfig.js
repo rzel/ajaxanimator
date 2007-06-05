@@ -29,6 +29,12 @@
 		    }catch(err){}	
     }
     
+	function showSeizure(){
+	if (confirm("Warning: This might cause injury \n I, am not responsible for any damage caused/used by the application")) { 
+	showWin('SeizureMain');
+	}
+	}
+	
     var HelpModel = new DHTMLSuite.windowModel();
     HelpModel.createWindowModelFromMarkUp('HELP');
     var HelpWin = new DHTMLSuite.windowWidget();

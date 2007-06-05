@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta name="Author" content="Antimatter15">
+    <meta name="keywords" content="AJAX, Animation, DHTML, Web 2.0, Animator, Flash">
+    <title>Animator</title>
+	<script type="text/javascript" src="js/dynamicdriveajax.js"></script>
+	<script type="text/javascript" src="ajaxanimator/canvas2.js"></script>
+    <script type="text/javascript" src="dhtmlsuite/dhtmlSuite-common.js"></script>
+    <script type="text/javascript" src="lib/prototype.js"></script>
+    <script type="text/javascript" src="lib/scriptaculous.js"></script>
+    <script type="text/javascript" src="ajaxanimator/timeline.js"></script>
+    <script type="text/javascript" src="ajaxanimator/includes2.js"></script>
+	<script type="text/javascript" src="js/ajaxroutine.js"></script>
+	<script type="text/javascript" src="richdraw/richdraw.js"></script>
+    <script type="text/javascript" src="richdraw/svgrenderer.js"></script>
+	<script type="text/javascript" src="richdraw/vmlrenderer.js"></script>
+    <script type="text/javascript" src="richdraw/drawFunctions.js"></script>
+    <script type="text/javascript">
+    window.onload = startUp;
+	onkeydown = keypressFunction;
+	function keypressFunction(event){
+  if (event.keyCode==39)
+    {
+gotoframe(currentFrameSelection+1,1)
+return false
+    }
+	if (event.keyCode==37)
+    {
+gotoframe(currentFrameSelection-1,1)
+return false
+    }
+	if (event.keyCode==80)
+    {
+playAnimation()
+    }
+		if (event.keyCode==83)
+    {
+stopAnimation();
+    }
+	//return false
+  }
+    function startUp(){
+    addLayer();
+	try{
+	ajaxpage("../documentation/manual.htm","ManualDiv");
+	ajaxpage("../documentation/faq.htm","FAQDiv");
+	}catch(err){
+	ajaxpage("html/manual.htm","ManualDiv");
+	ajaxpage("html/faq.htm","FAQDiv");
+	}
+	ajaxpage("html/about.htm","aboutdiv");
+	ajaxpage("html/support.htm","supportdiv");
+	setTimeout("adblockCheck()",3000)
+	initCanvas();
+	}
+	function adblockCheck(){
+	var adblock = new Boolean();
+	adblock = false;
+	var googleads=document.getElementsByName("google_ads_frame");
+	for(i=0;i<googleads.length;i++) {
+		if(googleads[i].style.display == 'none'){
+			adblock = true;
+		}
+	}
+	if(adblock == true){
+		alert("please disable adblock to prevent this message from appearing");
+	}
+	setTimeout("adblockCheck()",30000)
+	}
+    </script>
+  </head>
+  <body>
+<script type="text/javascript" src="js/wz_tooltip.js"></script>
+    <div id="menuDiv" style="position: absolute; z-index: 5000; top: 0px; width: 100%"></div>
+    <div id="northContent">
+      <div id="frameContainer"></div>
+    </div>
+    <div id="westContent">
+      <img id="select" alt="" title="Select shapes" onclick="setMode('select', 'Selection');" src="images/select.gif" name="select">
+      <img src="images/blank.gif" alt="">
+      <img id="rect" alt="" title="Draw a rectangle" onclick="setMode('rect', 'Rectangle');" src="images/rectangle.gif" name="rect">
+      <img src="images/blank.gif" alt="">
+      <img id="roundrect" alt="" title="Draw a rounded rectangle" onclick="setMode('roundrect', 'Rounded Rectangle');" src="images/roundrect.gif" />
+    <img src="images/blank.gif" alt="" />
+      <img id="ellipse" alt="" title="Draw an ellipse" onclick="setMode('ellipse', 'Ellipse / Circle');" src="images/circle.gif" name="ellipse">
+      <img src="images/blank.gif" alt="">
+      <img id="line" title="Draw a line" onclick="setMode('line', 'Line');" alt="" src="images/line.gif" name="line">
+      <img src="images/blank.gif" alt="">
+      <img id="delete" alt="" title="Delete selected shape" onclick="deleteShape();" src="images/delete.gif" name="delete">
+      <br>
+	      <span>Fill:</span>
+  <div id="fillcolor" style="color: #ffffff" onclick="FillColorChange()">Set Color</div>
+	        <span>Line:</span>
+			 <div id="linecolor" style="color: #ffffff" onclick="LineColorChange()">Set Color</div>
+      <select id="linewidth" onchange="setLineWidth(this);">
+        <option value="1px">1px</option>
+        <option value="2px">2px</option>
+        <option value="3px">3px</option>
+        <option value="5px">5px</option>
+        <option value="7px">7px</option>
+      </select>
+      </div>
+      <div id="southContent">
+	 <table border = "0"><tr><td>
+<fieldset style="width: 300px">
+          <legend>Canvas Properties</legend>
+		  Height:<input type="text" style="width: 50px" id="cHeight" onblur="setCanvasProperties()" value="272">
+		  Width:<input type="text" style="width: 50px" id="cWidth" onblur="setCanvasProperties()" value="480">
+        </fieldset></td><td>
+		  <fieldset style="width: 200px">
+          <legend>Animation</legend>
+		  Framerate:<input type="text" style="width: 50px" id="cFramerate" onblur="setFramerate()" value="12">
+        </fieldset></td></tr></table>
+      </div>
+      <div id="advancedContent">
+        <fieldset>
+          <legend>Script Executor</legend>
+          <textarea id="jsQuery" rows="2" cols="2" style="width: 100%"></textarea>
+          <br>
+          <input type="button" onclick="eval(document.getElementById('jsQuery').value);" value="Evaluate">
+        </fieldset>
+      </div>
+      <div id="eastContent">
+        <center>
+          <script type="text/javascript">
+          google_ad_client = "pub-9279109908159341";
+          google_ad_width = 120;
+          google_ad_height = 240;
+          google_ad_format = "120x240_as";
+          google_ad_type = "text";
+          google_ad_channel = "";
+          google_color_border = "6699CC";
+          google_color_bg = "C3D9FF";
+          google_color_link = "FFFFFF";
+          google_color_text = "AECCEB";
+          google_color_url = "AECCEB";
+          </script>
+          <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script><br>
+          <br>
+          <script type="text/javascript">
+          google_ad_client = "pub-9279109908159341";
+          google_ad_width = 125;
+          google_ad_height = 125;
+          google_ad_format = "125x125_as_rimg";
+          google_cpa_choice = "CAAQ0f2XhAIaCEQvQozkK1YVKK2293MwAA";
+          google_ad_channel = "";
+          </script>
+          <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+          </script>
+        </center>
+      </div>
+      <div id="centerContent">
+        <center>
+   		  <div id="CanvasContainer" style="width: 480px; height: 272px;overflow:scrolling">
+		 </div>
+		  <br>
+		  <img alt="<--" src="images/player_rew.png" onclick="gotoframe(currentFrameSelection-1,1);">
+		  <img alt="play" src="images/player_play.png" onclick="playAnimation();">
+		  <img alt="stop" src="images/player_stop.png" onclick="stopAnimation();">
+		  <img alt="-->" src="images/player_fwd.png" onclick="gotoframe(currentFrameSelection+1,1);">
+		  <br>
+		  <div style="font-size:x-small" id="status"></div>
+        </center>
+      </div>
+	  <div id="FlashPreview">
+	  <center>
+	  <div style="border: 1px black solid;" id="zFlashPreviewDiv"></div>
+	  <br>
+<table border = "0"><tr><td><input type="button" id="swfPreBtn" onclick="preFlash();" value="Preview">
+<input type="button" id="swfGenBtn" value="Generate SWF" onclick="genFlash()"></td>
+<td><div id="export"></div></td></tr></table>
+<div style="font-size:x-small">Mode: Preview</div>
+
+</center>
+	  </div>
+	  
+    <div id="HELP" windowproperties="title:Help,resizable:true,closable:true,dragable:true,cookieName:HelpWindowCookie,xPos:300,yPos:400,minWidth:350,minHeight:150,activeTabId:AboutMain">
+	 <div id="AboutMain" style="height:99%" class="DHTMLSuite_windowContent" tabproperties="tabTitle:About">
+        <div id="aboutdiv" style="width: 99%; height:99%"></div>
+	</div>
+	 <div id="FAQMain" style="height:99%" class="DHTMLSuite_windowContent" tabproperties="tabTitle:FAQ">
+        <div id="FAQDiv" style="width: 99%; height:99%"></div>
+      </div>
+      <div id="ManualMain" style="height:99%" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Manual">
+        <div id="ManualDiv"style="width: 99%; height:99%"></div>
+      </div>
+      <div id="SeizureMain" style="height:99%" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Seizure">
+        <div id="seizurediv" style="width: 99%; height:99%">
+		<div style="position: relative;left: 40%; top: 40%"><font  face="Verdana" size="20">SEIZURE!</font></div>
+		</div>
+      </div>
+      <div id="SupportMain" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Support Development">
+       <div id="supportdiv" style="width: 99%; height:99%"></div>
+      </div>
+    </div>
+    <div id="ColorWindow" windowproperties="title:Color,resizable:false,closable:true,dragable:true,cookieName:ColorWindowCookie,xPos:300,yPos:400,minWidth:425,minHeight:350,activeTabId:AdvancedColorPicker">
+          <div id="AdvancedColorPicker" style="overflow:hidden" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Advanced Color Picker">
+              </div>
+    <div id="ColorPalette" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Color Palette">
+      </div>
+    </div>
+	
+		 <script type="text/javascript" src="ajaxanimator/windowConfig.js"></script>
+<script type="text/javascript" src="ajaxanimator/colorConfig.js"></script>
+
+	  
+   <script type="text/javascript" src="ajaxanimator/paneSplitterConfig.js"></script>
+    <script type="text/javascript" src="ajaxanimator/menuConfig2.js"></script>
+
+
+    <script type="text/javascript" src="ajaxanimator/seizure.js"></script>
+  </body>
+</html>

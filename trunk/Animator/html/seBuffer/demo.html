@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+	<title>seBuffer</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link href="/global/styles/basic-page.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+#loadTo {
+	width : 90%;
+	height : 200px;
+	margin : auto;
+	padding : 2px;
+	overflow : auto;
+	border : 1px solid;
+	background : #efefef;
+}
+
+img {
+	position : static;
+}
+</style>
+<script src="seBuffer.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+</script>
+</head>
+
+<body>
+
+<h1>Buffer Demo</h1>
+
+<div style="padding:10px;">
+<a href="page0.html" onclick="return setBuffer('loadTo', this.href)">Page 1</a>
+<a href="page1.html" onclick="return setBuffer('loadTo', this.href)">Page 2</a>
+<a href="page2.html" onclick="return setBuffer('loadTo', this.href)">Page 3</a>
+<a href="page3.html" onclick="return setBuffer('loadTo', this.href)">Page 4</a>
+</div>
+
+<iframe src="page0.html" name="seBufferBox" id="seBufferBox" width="1" height="1" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="position:absolute;left:-1px;top:-1px;z-index:0"></iframe>
+
+<div id="loadTo"></div>
+
+</body>
+</html>
