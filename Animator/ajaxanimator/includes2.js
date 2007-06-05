@@ -1,7 +1,7 @@
   //Includes
     DHTML_SUITE_THEME='light-cyan';
-    DHTML_SUITE_THEME_FOLDER='../themes/';
-    DHTML_SUITE_JS_FOLDER='../dhtmlsuite/';
+    DHTML_SUITE_THEME_FOLDER='themes/';
+    DHTML_SUITE_JS_FOLDER='dhtmlsuite/';
 
 	//source: http://javascript.about.com/library/blqs1.htm
 	var qsParm = new Array();

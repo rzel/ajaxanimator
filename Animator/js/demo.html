@@ -2,7 +2,7 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-	<title>Ajax Animator</title>
+	<title>seLoader</title>
 <style type="text/css">
 
 #seLoader
@@ -35,13 +35,10 @@
 	font : 10px Verdana,Geneva,sans-serif;
 }
 </style>
-<script src="js/seLoader.js" type="text/javascript"></script>
+<script src="seLoader.js" type="text/javascript"></script>
 <script type="text/javascript">
-function gotoAnimator(){
-window.location = "html/ajaxanimator.htm";
-}
-load = new seLoader('images/') // make loader object and set the directory (dir optional)
-load.runAtEnd('gotoAnimator()') // run a script after loading (optional)
+load = new seLoader('../images/') // make loader object and set the directory (dir optional)
+load.runAtEnd('alert("Done Loading Images")') // run a script after loading (optional)
 load.setImgs // set the images
 (
 'action_refresh.gif' ,'add.png' ,'AnimatorOnLynx.PNG' ,'application_xp_terminal.png' ,'arrow_undo.png' ,'blank.gif' ,'built_with_aptana.gif' ,'calendar.gif' ,'cancel.png' ,'circle.gif' ,'color_wheel.png' ,'control_end_blue.png' ,'control_fastforward_blue.png' ,'control_play_blue.png' ,'control_rewind_blue.png' ,'control_start_blue.png' ,'control_stop_blue.png' ,'delete.gif' ,'disk.gif' ,'flash.gif' ,'help.png' ,'line.gif' ,'logo.png' ,'money.png' ,'notepad-plus.png' ,'open.gif' ,'page_white_code.png' ,'page_white_flash.png' ,'player_fwd.png' ,'player_pause.png' ,'player_play.png' ,'player_rew.png' ,'player_stop.png' ,'pspad_90x32.png' ,'readme.html' ,'rectangle.gif' ,'roundrect.gif' ,'screenshot.png' ,'select.gif' ,'viewcode.gif'
@@ -58,8 +55,7 @@ onload=initLoader
 <body>
 <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
 <div align="center">
-<img src="images/logo.png"></img>
-<br>
+<img src="../../archived/v1/gfx/title_sm.gif" width="200" height="57" border="0" alt="" />
 <script>load.drawLoader('loading...')</script>
 </div>
 </body>

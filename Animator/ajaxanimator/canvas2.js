@@ -115,7 +115,7 @@ $('swfGenBtn').value = 'generating...';
 $('export').innerHTML = '';
 var swfgen = generateAnimationXML();
 if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></AnimationXML>'){
-ajaxpack.postAjaxRequest("../freemovie/swfgen.php", "height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , genFlashEvent, "txt")
+ajaxpack.postAjaxRequest("freemovie/swfgen.php", "height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , genFlashEvent, "txt")
 }
 
 }
@@ -135,12 +135,12 @@ $('swfPreBtn').disabled = true;
 $('swfPreBtn').value = 'generating...';
 var swfgen = generateAnimationXML();
 if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></AnimationXML>'){
-ajaxpack.postAjaxRequest("../freemovie/swfgen.php", "height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , preFlashEvent, "txt")
+ajaxpack.postAjaxRequest("freemovie/swfgen.php", "height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , preFlashEvent, "txt")
 }else{$('zFlashPreviewDiv').innerHTML = "Sorry No Preview Availiable:<br> Empty Animation";}
 }
 
 function generateSWFResponse(responsedata){
-$('export').innerHTML = '<a href="' + responsedata.replace('files','../freemovie/files') + '>Download</a>';
+$('export').innerHTML = '<a href="' + responsedata.replace('files','freemovie/files') + '>Download</a>';
 $('swfGenBtn').disabled = false;
 $('swfGenBtn').value = 'Generate SWF';
 }
@@ -154,7 +154,7 @@ if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if reques
 //$('previewIframe').src = myajax.responseText.replace('files','freemovie/files')
 
 var flashHTML = "";
-var FLASHfilename=myajax.responseText.replace('files','../freemovie/files');
+var FLASHfilename=myajax.responseText.replace('files','freemovie/files');
 flashHTML+='<object width="480" height="272"><param name="movie" value="'+FLASHfilename+'">'
 flashHTML+='<embed src="'+FLASHfilename+'" width="480" height="272"></embed></object>'
 document.getElementById("zFlashPreviewDiv").innerHTML = flashHTML;

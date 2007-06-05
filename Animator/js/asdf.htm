@@ -1,0 +1,38 @@
+<html>
+<head>
+<script type="text/javascript">
+function importJS(url)
+{
+var getheadTag = document.getElementsByTagName('head')[0];
+setjs = document.createElement('script');
+setjs.setAttribute('type', 'text/javascript');
+getheadTag.appendChild(setjs);
+var loader= (window.ActiveXObject) ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
+loader.open('GET', url, false);
+loader.send(null);
+
+//loader.onreadystatechange = function() {
+//if (loader.readyState == 4 && loader.status == 200) {
+setjs.text = loader.responseText;
+//}
+//}
+}
+
+importJS("../js/dynamicdriveajax.js");
+importJS("../ajaxanimator/canvas.js");
+importJS("../dhtmlsuite/dhtmlSuite-common.js");
+importJS("../lib/prototype.js");
+importJS("../lib/scriptaculous.js");
+importJS("../ajaxanimator/timeline.js");
+importJS("../ajaxanimator/includes.js");
+importJS("../js/ajaxroutine.js");
+importJS("../richdraw/richdraw.js");
+importJS("../richdraw/svgrenderer.js");
+importJS("../richdraw/vmlrenderer.js");
+importJS("../richdraw/drawFunctions.js");
+</script>
+</head>
+<body>
+asdf
+</body>
+</html>

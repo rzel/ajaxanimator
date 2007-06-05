@@ -36,6 +36,10 @@ var paneModel = new DHTMLSuite.paneSplitterModel();
 	{
 	$('export').innerHTML = "";
 	if(contentObj.id == 'swfpreview'){
+	if(document.all){
+	alert('VML not yet supported by the compiler, so if you use IE-you\'re out of luck');
+	}
 	preFlash();
+	
 	}
 	}
