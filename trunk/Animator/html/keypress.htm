@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE = "JavaScript">
+function showKey(e) {
+  alert("You pressed: " + String.fromCharCode(e.which) + ".");
+}
+window.captureEvents(Event.KEYPRESS); 
+window.onKeyPress = showKey;
+</SCRIPT>
+</HEAD>
+<BODY>
+<TABLE WIDTH = "100%" HEIGHT = "100%" BORDER = "0">
+<TR>
+<TD ALIGN = "CENTER" VALIGN = "MIDDLE">
+<DIV STYLE = "font-size: 12px;">
+A Simple Demo of Events and Keys in Navigator 4
+</DIV>
+<DIV STYLE = "font-size: 72px; color: darkgreen;">
+Press A Key
+</DIV>
+</TD>
+</TR>
+</TABLE>
+</BODY>
+</HTML>
+
