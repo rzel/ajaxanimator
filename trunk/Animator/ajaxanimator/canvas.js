@@ -25,8 +25,7 @@ currentCanvas++;
 
 
 
-function makeCanvasFromId(CanvasId){
-if(document.all){//if ie...
+function makeCanvasFromIE(CanvasId){
 var canvasString;
 canvasString='<div id="richdraw'+CanvasId+'" style="';
 canvasString+='border:1px solid black;position:relative;top:0px'
@@ -35,7 +34,9 @@ canvasString+='-moz-user-select:none;display:'+canvasDisplayStyle+'"></div>';
 document.getElementById("CanvasContainer").innerHTML+=canvasString;
 canvasDisplayStyle = "none";
 initDraw();
-}else{
+}
+
+function makeCanvasFromId(CanvasId){
 var richdrawCanvas = document.createElement('div');
 var richdrawCanvasStyle = "border:1px solid black;position:relative;"
 richdrawCanvasStyle += "top:0px;width:99%;height:99%;background-color:white;"
@@ -45,7 +46,6 @@ richdrawCanvas.setAttribute('style',richdrawCanvasStyle+"display:"+canvasDisplay
 document.getElementById('CanvasContainer').appendChild(richdrawCanvas);
 canvasDisplayStyle = 'none'
 initDraw();
-}
 }
 
 function setCanvasProperties(){
