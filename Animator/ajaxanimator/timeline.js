@@ -35,8 +35,9 @@ function toKeyframe() //Function to convert normal frames to keyframes
 	zframe.style.backgroundColor=KeyframeColor;
 	KeyFrames[kFrameCount] = currentFrameSelection + "," + currentLayerSelection
 	kFrameCount = kFrameCount + 1
-	currentFrameSelection = 1;
-	currentLayerSelection = 1;
+	currentFrameSelection = currentFrameSelection;
+	currentLayerSelection = currentLayerSelection;
+	gotoframe(currentFrameSelection,currentLayerSelection);
 }
 
 
@@ -103,7 +104,7 @@ function gotoframeInterface(framenumber,layer){
 
 function gotoframe(framenumber, layer) //Function to change the current selected frame
 {
-	if(framenumber > 0){
+	if(framenumber > 0||framenumber < totalFramesPerLayer - 2){
 	previousCanvas = currentCanvas;
 	if(framenumber > totalFrames){
 	totalFrames = framenumber;
@@ -113,9 +114,9 @@ function gotoframe(framenumber, layer) //Function to change the current selected
 	currentCanvas = framenumber;
 	if(DrawCanvas[currentCanvas]==null){
 	makeCanvasFromId(framenumber);
-	}
 	showCurrentCanvas();
 	}
+}
 }
 
 

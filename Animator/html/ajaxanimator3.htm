@@ -4,22 +4,27 @@
     <meta name="Author" content="Antimatter15">
     <meta name="keywords" content="AJAX, Animation, DHTML, Web 2.0, Animator, Flash">
     <title>Animator</title>
-	<script type="text/javascript" src="js/dynamicdriveajax.js"></script>
-	<script type="text/javascript" src="ajaxanimator/canvas2.js"></script>
-    <script type="text/javascript" src="dhtmlsuite/dhtmlSuite-common.js"></script>
-    <script type="text/javascript" src="lib/prototype.js"></script>
-    <script type="text/javascript" src="lib/scriptaculous.js"></script>
-    <script type="text/javascript" src="ajaxanimator/timeline.js"></script>
-    <script type="text/javascript" src="ajaxanimator/includes2.js"></script>
-	<script type="text/javascript" src="js/ajaxroutine.js"></script>
-	<script type="text/javascript" src="richdraw/richdraw.js"></script>
-    <script type="text/javascript" src="richdraw/svgrenderer.js"></script>
-	<script type="text/javascript" src="richdraw/vmlrenderer.js"></script>
-    <script type="text/javascript" src="richdraw/drawFunctions.js"></script>
+
+	<script type="text/javascript" src="../js/dynamicdriveajax.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/canvas.js"></script>
+    <script type="text/javascript" src="../dhtmlsuite/dhtmlSuite-common.js"></script>
+    <script type="text/javascript" src="../lib/prototype.js"></script>
+    <script type="text/javascript" src="../lib/scriptaculous.js"></script>
+    <script type="text/javascript" src="../ajaxanimator/timeline.js"></script>
+    <script type="text/javascript" src="../ajaxanimator/includes.js"></script>
+	<script type="text/javascript" src="../js/ajaxroutine.js"></script>
+	<script type="text/javascript" src="../richdraw/richdraw.js"></script>
+    <script type="text/javascript" src="../richdraw/svgrenderer.js"></script>
+	<script type="text/javascript" src="../richdraw/vmlrenderer.js"></script>
+    <script type="text/javascript" src="../richdraw/drawFunctions.js"></script>
+
     <script type="text/javascript">
-    window.onload = startUp;
-	onkeydown = keypressFunction;
-	function keypressFunction(event){
+	
+window.onload = startUp;
+
+onkeydown = keypressFunction;
+	
+function keypressFunction(event){
   if (event.keyCode==39)
     {
 gotoframe(currentFrameSelection+1,1)
@@ -43,14 +48,14 @@ stopAnimation();
     function startUp(){
     addLayer();
 	try{
-	ajaxpage("../documentation/manual.htm","ManualDiv");
-	ajaxpage("../documentation/faq.htm","FAQDiv");
+	ajaxpage("../../documentation/manual.htm","ManualDiv");
+	ajaxpage("../../documentation/faq.htm","FAQDiv");
 	}catch(err){
-	ajaxpage("html/manual.htm","ManualDiv");
-	ajaxpage("html/faq.htm","FAQDiv");
+	ajaxpage("../html/manual.htm","ManualDiv");
+	ajaxpage("../html/faq.htm","FAQDiv");
 	}
-	ajaxpage("html/about.htm","aboutdiv");
-	ajaxpage("html/support.htm","supportdiv");
+	ajaxpage("../html/about.htm","aboutdiv");
+	ajaxpage("../html/support.htm","supportdiv");
 	setTimeout("adblockCheck()",3000)
 	initCanvas();
 	}
@@ -68,26 +73,26 @@ stopAnimation();
 	}
 	setTimeout("adblockCheck()",30000)
 	}
-    </script>
+	</script>
   </head>
   <body>
-<script type="text/javascript" src="js/wz_tooltip.js"></script>
+<script type="text/javascript" src="../js/wz_tooltip.js"></script>
     <div id="menuDiv" style="position: absolute; z-index: 5000; top: 0px; width: 100%"></div>
     <div id="northContent">
       <div id="frameContainer"></div>
     </div>
     <div id="westContent">
-      <img id="select" alt="" title="Select shapes" onclick="setMode('select', 'Selection');" src="images/select.gif" name="select">
-      <img src="images/blank.gif" alt="">
-      <img id="rect" alt="" title="Draw a rectangle" onclick="setMode('rect', 'Rectangle');" src="images/rectangle.gif" name="rect">
-      <img src="images/blank.gif" alt="">
-      <img id="roundrect" alt="" title="Draw a rounded rectangle" onclick="setMode('roundrect', 'Rounded Rectangle');" src="images/roundrect.gif" />
-    <img src="images/blank.gif" alt="" />
-      <img id="ellipse" alt="" title="Draw an ellipse" onclick="setMode('ellipse', 'Ellipse / Circle');" src="images/circle.gif" name="ellipse">
-      <img src="images/blank.gif" alt="">
-      <img id="line" title="Draw a line" onclick="setMode('line', 'Line');" alt="" src="images/line.gif" name="line">
-      <img src="images/blank.gif" alt="">
-      <img id="delete" alt="" title="Delete selected shape" onclick="deleteShape();" src="images/delete.gif" name="delete">
+      <img id="select" alt="" title="Select shapes" onclick="setMode('select', 'Selection');" src="../images/select.gif" name="select">
+      <img src="../images/blank.gif" alt="">
+      <img id="rect" alt="" title="Draw a rectangle" onclick="setMode('rect', 'Rectangle');" src="../images/rectangle.gif" name="rect">
+      <img src="../images/blank.gif" alt="">
+      <img id="roundrect" alt="" title="Draw a rounded rectangle" onclick="setMode('roundrect', 'Rounded Rectangle');" src="../images/roundrect.gif" />
+    <img src="../images/blank.gif" alt="" />
+      <img id="ellipse" alt="" title="Draw an ellipse" onclick="setMode('ellipse', 'Ellipse / Circle');" src="../images/circle.gif" name="ellipse">
+      <img src="../images/blank.gif" alt="">
+      <img id="line" title="Draw a line" onclick="setMode('line', 'Line');" alt="" src="../images/line.gif" name="line">
+      <img src="../images/blank.gif" alt="">
+      <img id="delete" alt="" title="Delete selected shape" onclick="deleteShape();" src="../images/delete.gif" name="delete">
       <br>
 	      <span>Fill:</span>
   <div id="fillcolor" style="color: #ffffff" onclick="FillColorChange()">Set Color</div>
@@ -155,10 +160,10 @@ stopAnimation();
    		  <div id="CanvasContainer" style="width: 480px; height: 272px;overflow:scrolling">
 		 </div>
 		  <br>
-		  <img alt="<--" src="images/player_rew.png" onclick="gotoframe(currentFrameSelection-1,1);">
-		  <img alt="play" src="images/player_play.png" onclick="playAnimation();">
-		  <img alt="stop" src="images/player_stop.png" onclick="stopAnimation();">
-		  <img alt="-->" src="images/player_fwd.png" onclick="gotoframe(currentFrameSelection+1,1);">
+		  <img alt="<--" src="../images/player_rew.png" onclick="gotoframe(currentFrameSelection-1,1);">
+		  <img alt="play" src="../images/player_play.png" onclick="playAnimation();">
+		  <img alt="stop" src="../images/player_stop.png" onclick="stopAnimation();">
+		  <img alt="-->" src="../images/player_fwd.png" onclick="gotoframe(currentFrameSelection+1,1);">
 		  <br>
 		  <div style="font-size:x-small" id="status"></div>
         </center>
@@ -201,14 +206,14 @@ stopAnimation();
       </div>
     </div>
 	
-		 <script type="text/javascript" src="ajaxanimator/windowConfig.js"></script>
-<script type="text/javascript" src="ajaxanimator/colorConfig.js"></script>
+		 <script type="text/javascript" src="../ajaxanimator/windowConfig.js"></script>
+<script type="text/javascript" src="../ajaxanimator/colorConfig.js"></script>
 
 	  
-   <script type="text/javascript" src="ajaxanimator/paneSplitterConfig.js"></script>
-    <script type="text/javascript" src="ajaxanimator/menuConfig2.js"></script>
+   <script type="text/javascript" src="../ajaxanimator/paneSplitterConfig.js"></script>
+    <script type="text/javascript" src="../ajaxanimator/menuConfig.js"></script>
 
 
-    <script type="text/javascript" src="ajaxanimator/seizure.js"></script>
+    <script type="text/javascript" src="../ajaxanimator/seizure.js"></script>
   </body>
 </html>

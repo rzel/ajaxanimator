@@ -11,13 +11,12 @@ AnimationPlay = true;
 canvasIssueResolved = false;
 
 function makeCanvas(){
-var richdrawCanvas = document.createElement('div');
-var richdrawCanvasStyle = "border:1px solid black;position:relative;"
-richdrawCanvasStyle += "top:0px;width:99%;height:99%;background-color:white;"
-richdrawCanvasStyle += "-moz-user-select:none;"
-richdrawCanvas.setAttribute('id','richdraw'+canvasNumber);
-richdrawCanvas.setAttribute('style',richdrawCanvasStyle+"display:"+canvasDisplayStyle);
-document.getElementById('CanvasContainer').appendChild(richdrawCanvas);
+var canvasString;
+canvasString='<div id="richdraw'+canvasNumber+'" style="';
+canvasString+='border:1px solid black;position:relative;top:0px'
+canvasString+='width:99%;height:99%;background-color:white;'
+canvasString+='-moz-user-select:none;display:'+canvasDisplayStyle+'"></div>';
+document.getElementById("CanvasContainer").innerHTML+=canvasString;
 canvasNumber++;
 canvasDisplayStyle = "none";
 initDraw();
@@ -25,7 +24,18 @@ currentCanvas++;
 }
 
 
+
 function makeCanvasFromId(CanvasId){
+if(document.all){//if ie...
+var canvasString;
+canvasString='<div id="richdraw'+CanvasId+'" style="';
+canvasString+='border:1px solid black;position:relative;top:0px'
+canvasString+='width:99%;height:99%;background-color:white;'
+canvasString+='-moz-user-select:none;display:'+canvasDisplayStyle+'"></div>';
+document.getElementById("CanvasContainer").innerHTML+=canvasString;
+canvasDisplayStyle = "none";
+initDraw();
+}else{
 var richdrawCanvas = document.createElement('div');
 var richdrawCanvasStyle = "border:1px solid black;position:relative;"
 richdrawCanvasStyle += "top:0px;width:99%;height:99%;background-color:white;"
@@ -35,6 +45,7 @@ richdrawCanvas.setAttribute('style',richdrawCanvasStyle+"display:"+canvasDisplay
 document.getElementById('CanvasContainer').appendChild(richdrawCanvas);
 canvasDisplayStyle = 'none'
 initDraw();
+}
 }
 
 function setCanvasProperties(){
@@ -71,7 +82,9 @@ return zAnimationXML;
 
 
 function initCanvas(){
+	//for(var zxCanvas = 0; zxCanvas > 10; zxCanvas++){
 	makeCanvas();
+	//}
 	gotoframe(1,1);
 }
 

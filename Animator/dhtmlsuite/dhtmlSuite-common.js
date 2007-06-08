@@ -1,5 +1,11 @@
 if(!window.DHTMLSuite)var DHTMLSuite=new Object();/************************************************************************************************************
 	@fileoverview
+	//------------------------------------------------------------------------------------------------------
+	//NOTE: THIS WAS HACKED BECAUSE I THOUGHT IT DIDN'T USE ENOUGH AJAX!
+											--antimatter15 2007
+	//------------------------------------------------------------------------------------------------------
+	
+	
 	DHTML Suite for Applications.
 	Copyright (C)2006  Alf Magne Kalleland(post@dhtmlgoodies.com)<br>
 	<br>
@@ -109,14 +115,27 @@ DHTMLSuite.include=function(widget)
 	var files=widgetDep[widget];
 	for(var no=0;no<files.length;no++){
 	if(!depCache[files[no]]){
-	    document.write('<'+'script');
+/*	   
+	   document.write('<'+'script');
 	    document.write(' language="javascript"');
 	    document.write(' type="text/javascript"');
 	    document.write(' src="'+DHTML_SUITE_JS_FOLDER+files[no]+'">');
 	    document.write('</'+'script'+'>');
+*/
+		
+
+var getheadTag = document.getElementsByTagName('head')[0];
+setjs = document.createElement('script');
+setjs.setAttribute('type', 'text/javascript');
+getheadTag.appendChild(setjs);
+var loader= (window.ActiveXObject) ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
+loader.open('GET', DHTML_SUITE_JS_FOLDER+files[no], false);
+loader.send(null);
+setjs.text = loader.responseText;
 	    depCache[files[no]]=true;
 	}
 	}
+
 }
 
 DHTMLSuite.discardElement=function(element){ 
