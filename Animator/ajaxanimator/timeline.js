@@ -104,7 +104,7 @@ function gotoframeInterface(framenumber,layer){
 
 function gotoframe(framenumber, layer) //Function to change the current selected frame
 {
-	if(framenumber > 0||framenumber < totalFramesPerLayer - 2){
+	if(framenumber > 0 && framenumber < totalFramesPerLayer){
 	previousCanvas = currentCanvas;
 	if(framenumber > totalFrames){
 	totalFrames = framenumber;
@@ -112,10 +112,17 @@ function gotoframe(framenumber, layer) //Function to change the current selected
 	gotoframeInterface(framenumber,layer);
 	hideCurrentCanvas();
 	currentCanvas = framenumber;
+
 	if(DrawCanvas[currentCanvas]==null){
+	if(document.all){
+	makeCanvasFromIE(framenumber);	
+	}else{
 	makeCanvasFromId(framenumber);
-	showCurrentCanvas();
 	}
+	}
+	showCurrentCanvas();
+
+
 }
 }
 
