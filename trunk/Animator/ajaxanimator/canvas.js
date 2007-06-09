@@ -71,16 +71,32 @@ function generateAnimationXML(){
 var zAnimationXML = "<AnimationXML>";
 for(var pzxy = 1; pzxy <= totalFrames;pzxy++){
 if(DrawCanvas[pzxy] != null){
-zAnimationXML += DrawCanvas[pzxy].renderer.getMarkup();
+var zCurrentAnimationXMLFrame;
+
+//zCurrentAnimationXMLFrame = DrawCanvas[pzxy].renderer.getMarkup() this fails in IE so do it the hard way...
+zCurrentAnimationXMLFrame = $('richdraw' + pzxy).innerHTML;
+
+zCurrentAnimationXMLFrame = zCurrentAnimationXMLFrame.replace('<?xml:namespace prefix = v ns = "urn:schemas-microsoft-com:vml" />',"<svg>");
+zAnimationXML += zCurrentAnimationXMLFrame;
+zAnimationXML += "</svg>"
 }else{
 zAnimationXML += "<svg></svg>"
 }
 }
+
 zAnimationXML += "</AnimationXML>";
+
+//the above code is to make the vml less crappy
 return zAnimationXML;
 }
 
+/*
+<AnimationXML>
 
+<?xml:namespace prefix = v ns = "urn:schemas-microsoft-com:vml" />
+
+<v:rect id=shape:5145ebd5-2c43-a41f-58ab-b4718c2fa542 style="LEFT: 10px; WIDTH: 460px; POSITION: absolute; TOP: 10px; HEIGHT: 250px" coordsize = "21600,21600" filled = "t" fillcolor = "red" stroked = "t" strokecolor = "black" strokeweight = ".75pt"></v:rect></AnimationXML>
+*/
 function initCanvas(){
 	//for(var zxCanvas = 0; zxCanvas > 10; zxCanvas++){
 	makeCanvas();
@@ -168,6 +184,9 @@ if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if reques
 
 var flashHTML = "";
 var FLASHfilename=myajax.responseText.replace('files','../freemovie/files');
+if(myajax.responseText.indexOf('files') == -1){
+document.getElementById("zFlashPreviewDiv").innerHTML = myajax.responseText ;
+}
 flashHTML+='<object width="480" height="272"><param name="movie" value="'+FLASHfilename+'">'
 flashHTML+='<embed src="'+FLASHfilename+'" width="480" height="272"></embed></object>'
 document.getElementById("zFlashPreviewDiv").innerHTML = flashHTML;
