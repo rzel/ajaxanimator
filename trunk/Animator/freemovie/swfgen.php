@@ -1,7 +1,12 @@
 <?php
 
 $xmlstr = stripslashes($_REQUEST['svg']);
-$xml = new SimpleXMLElement(stripslashes($xmlstr));
+$zhash = md5($xmlstr);
+
+if (file_exists("files/file-$zhash.swf")) { 
+exit("files/file-$zhash.swf");
+}
+$xml = new SimpleXMLElement($xmlstr);
 //Flash:
 require_once("freemoviecompilertoolbox.php");
 
@@ -70,12 +75,12 @@ $swf->EndFrame();
 }
 $swf->EndMovie();
 
-srand((double)microtime()*10000000);
-$zrandom = strval(rand(0,1000000));
-$ourFileName = "files/file-$zrandom.swf";
+
+
+$ourFileName = "files/file-$zhash.swf";
 $ourFileHandle = fopen($ourFileName, 'w') or die("can't open file");
 fclose($ourFileHandle);
-$filename = "files/file-$zrandom.swf";
+$filename = "files/file-$zhash.swf";
 $somecontent = $swf->GetMovie();
 if (is_writable($filename)) {
     if (!$handle = fopen($filename, 'a')) {
