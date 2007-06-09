@@ -7,6 +7,8 @@ var AnimationFramerate = 12;
 var totalFrames = 1;
 var canvasHeight = 272;
 var canvasWidth = 480;
+var revisionNumber = 1;
+var animationRevision = new Array();
 AnimationPlay = true;
 canvasIssueResolved = false;
 
@@ -75,10 +77,14 @@ var zCurrentAnimationXMLFrame;
 
 //zCurrentAnimationXMLFrame = DrawCanvas[pzxy].renderer.getMarkup() this fails in IE so do it the hard way...
 zCurrentAnimationXMLFrame = $('richdraw' + pzxy).innerHTML;
-
+if(document.all){
 zCurrentAnimationXMLFrame = zCurrentAnimationXMLFrame.replace('<?xml:namespace prefix = v ns = "urn:schemas-microsoft-com:vml" />',"<svg>");
+}
+
 zAnimationXML += zCurrentAnimationXMLFrame;
+if(document.all){
 zAnimationXML += "</svg>"
+}
 }else{
 zAnimationXML += "<svg></svg>"
 }
@@ -176,6 +182,9 @@ $('swfGenBtn').value = 'Generate SWF';
 
 
 function preFlashEvent(){
+
+animationRevision[revisionNumber] = generateAnimationXML();
+revisionNumber++;
 var myajax=ajaxpack.ajaxobj
 var myfiletype=ajaxpack.filetype
 if (myajax.readyState == 4){ //if request of file completed
@@ -184,14 +193,18 @@ if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if reques
 
 var flashHTML = "";
 var FLASHfilename=myajax.responseText.replace('files','../freemovie/files');
-if(myajax.responseText.indexOf('files') == -1){
-document.getElementById("zFlashPreviewDiv").innerHTML = myajax.responseText ;
-}
+
+
 flashHTML+='<object width="480" height="272"><param name="movie" value="'+FLASHfilename+'">'
 flashHTML+='<embed src="'+FLASHfilename+'" width="480" height="272"></embed></object>'
 document.getElementById("zFlashPreviewDiv").innerHTML = flashHTML;
 $('swfPreBtn').disabled = false;
 $('swfPreBtn').value = 'Preview';
+if(myajax.responseText.indexOf('Warning') != -1 || myajax.responseText.indexOf('Error') != -1 ){
+if(myajax.responseText.indexOf('<br>') != -1 || myajax.responseText.indexOf('<b>') != -1 ){
+document.getElementById("zFlashPreviewDiv").innerHTML = myajax.responseText ;
+}
+}
 }
 }
 }
