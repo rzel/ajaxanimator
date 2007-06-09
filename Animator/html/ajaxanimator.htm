@@ -18,10 +18,16 @@
     <script type="text/javascript" src="../richdraw/drawFunctions.js"></script>
     <script type="text/javascript">
     window.onload = startUp;
-	onkeydown = keypressFunction;
-	function keypressFunction(event){
-	eventkeyCode = event.keyCode
-  if (eventkeyCode==39||eventkeyCode == 33){
+
+  nn=(document.layers)?true:false;
+  ie=(document.all)?true:false;
+  
+  function keyDown(e) { 
+  var evt=(e)?e:(window.event)?window.event:null;
+  if(evt){ 
+  var eventkeyCode=(evt.charCode)?evt.charCode: ((evt.keyCode)?evt.keyCode:((evt.which)?evt.which:0));
+  
+    if (eventkeyCode==39||eventkeyCode == 33){
 gotoframe(currentFrameSelection+1,1)
 return false
     }
@@ -34,15 +40,17 @@ return false
 toKeyframe();
 return false
     }
-
-
 	if (eventkeyCode==80){
 playAnimation()
     }
 	if (eventkeyCode==83){
 stopAnimation();
     }
+  
   }
+  } 
+  document.onkeydown=keyDown;
+  if(nn) document.captureEvents(Event.KEYDOWN);
     function startUp(){
     addLayer();
 	try{
