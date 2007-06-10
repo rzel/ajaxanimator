@@ -9,6 +9,8 @@ var canvasHeight = 272;
 var canvasWidth = 480;
 var revisionNumber = 1;
 var animationRevision = new Array();
+var animationRevisionURL = new Array();
+var lastAnimationURL = '';
 AnimationPlay = true;
 canvasIssueResolved = false;
 
@@ -161,7 +163,28 @@ if(generateAnimationXML() != '<AnimationXML><svg></svg></AnimationXML>'){
 }
 }
 
+function embedAnimationPreview(){
+$('previewStatus').innerHTML = "Mode: Preview (Revision " + revisionNumber + ")"
+var zflashHTML = "";
+zflashHTML='<object width="480" height="272"><embed src="'+lastAnimationURL+'" width="480" height="272"></embed></object>'
+document.getElementById("zFlashPreviewDiv").innerHTML = zflashHTML;
+}
+
+function PreviewRevision(revision){
+$('previewStatus').innerHTML = "Mode: Preview (Revision " + revisionNumber + ")"
+var zflashHTML = "";
+zflashHTML='<object width="480" height="272"><embed src="'+animationRevisionURL[revision]+'" width="480" height="272"></embed></object>'
+document.getElementById("zFlashPreviewDiv").innerHTML = zflashHTML;
+}
+
 function preFlash(){
+$('previewStatus').innerHTML = "Mode: Preview (Revision " + revisionNumber + ")"
+
+if(animationRevision[revisionNumber -1] == generateAnimationXML()){
+
+setTimeout("embedAnimationPreview()",100);//hack to make it work right...
+
+}else{
 flashVerification()
 $('zFlashPreviewDiv').style.height = canvasHeight + 'px';
 $('zFlashPreviewDiv').style.width = canvasWidth + 'px';
@@ -173,6 +196,7 @@ if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></Animatio
 ajaxpack.postAjaxRequest("../freemovie/swfgen.php", "height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , preFlashEvent, "txt")
 }else{$('zFlashPreviewDiv').innerHTML = "Sorry No Preview Availiable:<br> Empty Animation";}
 }
+}
 
 function generateSWFResponse(responsedata){
 $('export').innerHTML = '<a href="' + responsedata.replace('files','../freemovie/files') + '>Download</a>';
@@ -182,21 +206,19 @@ $('swfGenBtn').value = 'Generate SWF';
 
 
 function preFlashEvent(){
-
-animationRevision[revisionNumber] = generateAnimationXML();
-revisionNumber++;
+$('previewStatus').innerHTML = "Mode: Preview (Revision " + revisionNumber + ")"
 var myajax=ajaxpack.ajaxobj
 var myfiletype=ajaxpack.filetype
 if (myajax.readyState == 4){ //if request of file completed
 if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
+animationRevision[revisionNumber] = generateAnimationXML();
 //$('previewIframe').src = myajax.responseText.replace('files','freemovie/files')
-
 var flashHTML = "";
 var FLASHfilename=myajax.responseText.replace('files','../freemovie/files');
-
-
-flashHTML+='<object width="480" height="272"><param name="movie" value="'+FLASHfilename+'">'
-flashHTML+='<embed src="'+FLASHfilename+'" width="480" height="272"></embed></object>'
+lastAnimationURL = FLASHfilename;
+animationRevisionURL[revisionNumber] = FLASHfilename;
+revisionNumber++;
+flashHTML='<object width="480" height="272"><embed src="'+FLASHfilename+'" width="480" height="272"></embed></object>'
 document.getElementById("zFlashPreviewDiv").innerHTML = flashHTML;
 $('swfPreBtn').disabled = false;
 $('swfPreBtn').value = 'Preview';
@@ -207,6 +229,7 @@ document.getElementById("zFlashPreviewDiv").innerHTML = myajax.responseText ;
 }
 }
 }
+
 }
 
 function genFlashEvent(){
