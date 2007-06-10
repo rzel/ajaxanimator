@@ -70,6 +70,10 @@ AnimationFramerate = document.getElementById('cFramerate').value;
 function genxml(){
 $('jsQuery').value = generateAnimationXML();
 }
+function gencleanxml(){
+$('jsQuery').value = removeUnusedAttributes();
+}
+
 
 function generateAnimationXML(){
 var zAnimationXML = "<AnimationXML>";
@@ -95,7 +99,7 @@ zAnimationXML += "<svg></svg>"
 zAnimationXML += "</AnimationXML>";
 
 //the above code is to make the vml less crappy
-return zAnimationXML;
+return removeUnusedAttributes(zAnimationXML);
 }
 
 /*
@@ -175,6 +179,25 @@ $('previewStatus').innerHTML = "Mode: Preview (Revision " + revisionNumber + ")"
 var zflashHTML = "";
 zflashHTML='<object width="480" height="272"><embed src="'+animationRevisionURL[revision]+'" width="480" height="272"></embed></object>'
 document.getElementById("zFlashPreviewDiv").innerHTML = zflashHTML;
+}
+function xmlError(e) {alert(e);}
+
+function removeUnusedAttributes(zxml){
+//var zxml = "" + generateAnimationXML();
+var newXml = zxml;
+var wobjDom = new XMLDoc(zxml, xmlError);
+var wdomTree = wobjDom.docNode;
+for(var wzFrames = 0; wzFrames < wdomTree.getElements("svg").length; wzFrames++){
+var wframeNode = wdomTree.getElements("svg")[wzFrames];
+for(var wzFrameObj = 0; wzFrameObj < wframeNode.getElements().length; wzFrameObj++){
+var wframeNodeObj = wframeNode.getElements()[wzFrameObj];
+var wframeObjId = wframeNodeObj.getAttribute("id");
+newXml = newXml.replace(wframeObjId,"")
+}
+}
+newXml = newXml.replace('id=""',"")
+newXml = newXml.replace('style="position: absolute;"',"")
+return newXml
 }
 
 function preFlash(){
