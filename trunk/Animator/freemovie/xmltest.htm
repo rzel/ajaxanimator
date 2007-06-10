@@ -1,0 +1,39 @@
+<html>
+<head>
+<script type="text/javascript" src="../../xml_for_script-3.1/jsXMLParser/xmldom.js"></script>
+</head>
+<body>
+<script>
+var xml = ""
++ "<AnimationXML>"
++ "<svg>"
++ '<rect id="shape:92badf03-6e7f-bf89-dcb0-d327be7a73cc" stroke-width="1px" stroke="rgb(0,0,0)" fill="rgb(255,0,0)" style="position: absolute;" height="70px" width="120px" y="90px" x="160px">'
++ "</rect>"
++ '<rect id="shape:00bcdb68-a131-15e4-dbe1-8411e37e8c51" stroke-width="1px" stroke="rgb(0,0,0)" fill="rgb(255,0,0)" style="position: absolute;" height="40px" width="40px" y="150px" x="300px">'
++ "</rect>"
++ "</svg>"
++ "</AnimationXML>"
+function xmlError(e) {
+//there was an error, show the user
+alert(e);
+} 
+var objDom = new XMLDoc(xml, xmlError);
+//first find the node to get an attribute from, in this case, TAG1
+var domTree = objDom.docNode;
+for(var zFrames = 0; zFrames < domTree.getElements("svg").length; zFrames++){
+var frameNode = domTree.getElements("svg")[zFrames];
+for(var zFrameObj = 0; zFrameObj < frameNode.getElements().length; zFrameObj++){
+var frameNodeObj = frameNode.getElements()[zFrameObj];
+var frameObj = frameNodeObj.getAttribute("id");
+frameNodeObj.removeAttribute("id");
+alert(frameObj);
+}
+}
+alert(domTree.getUnderlyingXMLText());
+alert(xml);
+
+
+
+</script>
+</body>
+</html>
