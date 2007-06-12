@@ -37,14 +37,12 @@
 </style>
 <script src="js/seLoader.js" type="text/javascript"></script>
 <script type="text/javascript">
-function gotoAnimator(){
-window.location = "html/ajaxanimator.htm";
-}
+
 load = new seLoader('images/') // make loader object and set the directory (dir optional)
-load.runAtEnd('gotoAnimator()') // run a script after loading (optional)
+load.runAtEnd('window.location = "html/ajaxanimator.htm"') // run a script after loading (optional)
 load.setImgs // set the images
 (
-'action_refresh.gif' ,'add.png' ,'AnimatorOnLynx.PNG' ,'application_xp_terminal.png' ,'arrow_undo.png' ,'blank.gif' ,'built_with_aptana.gif' ,'calendar.gif' ,'cancel.png' ,'circle.gif' ,'color_wheel.png' ,'control_end_blue.png' ,'control_fastforward_blue.png' ,'control_play_blue.png' ,'control_rewind_blue.png' ,'control_start_blue.png' ,'control_stop_blue.png' ,'delete.gif' ,'disk.gif' ,'flash.gif' ,'help.png' ,'line.gif' ,'logo.png' ,'money.png' ,'notepad-plus.png' ,'open.gif' ,'page_white_code.png' ,'page_white_flash.png' ,'player_fwd.png' ,'player_pause.png' ,'player_play.png' ,'player_rew.png' ,'player_stop.png' ,'pspad_90x32.png' ,'readme.html' ,'rectangle.gif' ,'roundrect.gif' ,'screenshot.png' ,'select.gif' ,'viewcode.gif'
+'action_refresh.gif' ,'add.png' ,'application_xp_terminal.png' ,'arrow_undo.png' ,'blank.gif' ,'built_with_aptana.gif' ,'calendar.gif' ,'cancel.png' ,'circle.gif' ,'color_wheel.png' ,'control_end_blue.png' ,'control_fastforward_blue.png' ,'control_play_blue.png' ,'control_rewind_blue.png' ,'control_start_blue.png' ,'control_stop_blue.png' ,'delete.gif' ,'disk.gif' ,'flash.gif' ,'help.png' ,'line.gif' ,'logo.png' ,'money.png' ,'notepad-plus.png' ,'open.gif' ,'page_white_code.png' ,'page_white_flash.png' ,'player_fwd.png' ,'player_pause.png' ,'player_play.png' ,'player_rew.png' ,'player_stop.png' ,'pspad_90x32.png' ,'readme.html' ,'rectangle.gif' ,'roundrect.gif' ,'screenshot.png' ,'select.gif' ,'viewcode.gif'
 )
 
 function initLoader()
@@ -52,6 +50,102 @@ function initLoader()
 	load.load()
 }
 onload=initLoader
+
+/*
+This file retrieved from the JS-Examples archives
+http://www.js-examples.com
+1000s of free ready to use scripts, tutorials, forums.
+Author: JS-Examples - http://www.js-examples.com/ 
+*/
+
+var TEST_ONLY = false;// set to false to not run this in test mode
+
+
+/// BEGIN COOKIE CONSTRUCT
+function Cookie(document,name,hours,path,domain,secure) {
+// any VAR in "this" that does not start with a "$" will
+// be written into the cookie (read from also)
+this.$doc = document
+this.$name = name
+if (hours) this.$expiration=new Date((new Date()).getTime()+hours*3600000); else this.$expiration = null
+if (path) this.$path = path; else this.$path = null
+if (domain) this.$domain = domain; else this.$domain = null
+if (secure) this.$secure = true; else this.$secure = false
+}
+
+function CookieWrite() {
+var cookieval=""
+for(var prop in this) {
+if ((prop.charAt(0) == '$') || ((typeof this[prop]) == 'function') || prop == '') continue
+if (cookieval != "") cookieval += '&'
+cookieval+=prop+":"+escape(this[prop])
+}
+var cookie=this.$name+"="+cookieval
+if (this.$expiration) cookie+='; expires=' + this.$expiration.toGMTString()
+if (this.$path) cookie+='; path=' + this.$path
+if (this.$domain) cookie+='; domain=' + this.$domain
+if (this.$secure) cookie+='; secure'
+this.$doc.cookie=cookie
+}
+
+function CookieRead() {
+var allcookies=this.$doc.cookie
+if (allcookies=="") {
+return false
+}
+var start= allcookies.indexOf(this.$name+'=')
+if (start== -1) {
+return false
+}
+start += this.$name.length+1
+var end=allcookies.indexOf(';',start)
+if (end == -1) end=allcookies.length
+var cookieval = allcookies.substring(start,end)
+var a = cookieval.split('&')
+for (var i=0;i<a.length;i++) a[i]=a[i].split(':')
+for (var i=0;i<a.length;i++) this[a[i][0]]=unescape(a[i][1])
+return true
+}
+
+function CookieDelete() {
+var cookie = this.$name+'='
+if (this.$path) cookie+='; path='+this.$path
+if (this.$domain) cookie+='; domain='+this.$domain
+cookie+='; expires=Fri, 02-Jan-1970 00:00:00 GMT' // MAKE IT EXPIRE!
+this.$doc.cookie=cookie
+}
+
+new Cookie()
+Cookie.prototype.write = CookieWrite
+Cookie.prototype.del = CookieDelete
+Cookie.prototype.read = CookieRead
+/// END COOKIE CONSTRUCT
+
+//  The following script determines if this is a first time user
+//  [based upon a cookie counter value]
+//  If it is it makes sure that the user goes to page #1 first.
+//  It checks to find out what page # the user should be on,
+//  If the user is on that page it allows the rest of the page to load,
+//  otherwise the user is sent to the proper page.
+//  If the user is on the correct page the cookie counter is incremented
+//  so that the next page the user can look at is the next # page.
+
+var myCookie = new Cookie(document,"myMagicNumber",365); // expire in 1 year.
+if (!myCookie.read() || !myCookie.counter)
+  myCookie.counter = 1; // first visit!
+myCookie.write(); // store off the cookie!
+
+var _loc = document.location.toString();
+if(myCookie.counter <= 1){
+
+    document.location = "html/firsttime.htm";
+}
+
+
+// if the logic gets this far then the user is on the correct page.
+myCookie.counter++;
+myCookie.write();
+function clearCookie() { myCookie.del(); }
 </script>
 </head>
 
