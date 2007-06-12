@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------
- SVGRENDERER 1.0
+ DIVRenderer 1.0
  SVG Renderer For RichDraw
  -----------------------------------------------------------------------------
  Created by Mark Finkle (mark.finkle@gmail.com)
@@ -33,25 +33,23 @@
  --------------------------------------------------------------------------*/
 
 
-function SVGRenderer() {
+function DIVRenderer() {
 	this.base = AbstractRenderer;
 	this.svgRoot = null;
 }
 
 
-SVGRenderer.prototype = new AbstractRenderer;
+DIVRenderer.prototype = new AbstractRenderer;
 
 
-SVGRenderer.prototype.init = function(elem) {
+DIVRenderer.prototype.init = function(elem) {
   this.container = elem;
   this.container.style.MozUserSelect = 'none';
-  var svgNamespace = 'http://www.w3.org/2000/svg';
-  this.svgRoot = this.container.ownerDocument.createElementNS(svgNamespace, "svg");
-  this.container.appendChild(this.svgRoot);
+  this.Canvas = new jsGraphics(this.container.id);
 }
 
 
-SVGRenderer.prototype.bounds = function(shape) {
+DIVRenderer.prototype.bounds = function(shape) {
   var rect = new Object();
   var box = shape.getBBox();
   rect['x'] = box.x;
@@ -62,39 +60,26 @@ SVGRenderer.prototype.bounds = function(shape) {
 }
 
 
-SVGRenderer.prototype.create = function(shape, fillColor, lineColor, lineWidth, left, top, width, height) {
+DIVRenderer.prototype.create = function(shape, fillColor, lineColor, lineWidth, left, top, width, height) {
   var svgNamespace = 'http://www.w3.org/2000/svg';
   var svg;
 
   if (shape == 'rect') {
-    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'rect');
-    svg.setAttributeNS(null, 'x', left + 'px');
-    svg.setAttributeNS(null, 'y', top + 'px');
-    svg.setAttributeNS(null, 'width', width + 'px');
-    svg.setAttributeNS(null, 'height', height + 'px');
+  this.Canvas.drawRect(x, y, width, height);
+  this.Canvas.paint();
   }
   else if (shape == 'ellipse') {
-    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'ellipse');
-    svg.setAttributeNS(null, 'cx', (left + width / 2) + 'px');
-    svg.setAttributeNS(null, 'cy', (top + height / 2) + 'px');
-    svg.setAttributeNS(null, 'rx', (width / 2) + 'px');
-    svg.setAttributeNS(null, 'ry', (height / 2) + 'px');
+	this.Canvas.drawEllipse((left + width / 2), (top + height / 2), width, height);
+  this.Canvas.paint();
   }
   else if (shape == 'roundrect') {
     svg = this.container.ownerDocument.createElementNS(svgNamespace, 'rect');
-    svg.setAttributeNS(null, 'x', left + 'px');
-    svg.setAttributeNS(null, 'y', top + 'px');
-    svg.setAttributeNS(null, 'rx', '20px');
-    svg.setAttributeNS(null, 'ry', '20px');
-    svg.setAttributeNS(null, 'width', width + 'px');
-    svg.setAttributeNS(null, 'height', height + 'px');
+  this.Canvas.drawRect(x, y, width, height);
+  this.Canvas.paint();
   }
   else if (shape == 'line') {
-    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'line');
-    svg.setAttributeNS(null, 'x1', left + 'px');
-    svg.setAttributeNS(null, 'y1', top + 'px');
-    svg.setAttributeNS(null, 'x2', left + 'px');
-    svg.setAttributeNS(null, 'y2', top + 'px');
+	this.Canvas.drawLine(left, top, left, top);
+  this.Canvas.paint();
   }
 
   try{
@@ -115,12 +100,12 @@ SVGRenderer.prototype.create = function(shape, fillColor, lineColor, lineWidth, 
 };
 
 
-SVGRenderer.prototype.remove = function(shape) {
+DIVRenderer.prototype.remove = function(shape) {
   shape.parentNode.removeChild(shape);
 }
 
 
-SVGRenderer.prototype.move = function(shape, left, top) {
+DIVRenderer.prototype.move = function(shape, left, top) {
   if (shape.tagName == 'line') {
     var deltaX = shape.getBBox().width;
     var deltaY = shape.getBBox().height;
@@ -140,12 +125,12 @@ SVGRenderer.prototype.move = function(shape, left, top) {
 };
 
 
-SVGRenderer.prototype.track = function(shape) {
+DIVRenderer.prototype.track = function(shape) {
   // TODO
 };
 
 
-SVGRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
+DIVRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
   var deltaX = toX - fromX;
   var deltaY = toY - fromY;
 
@@ -192,7 +177,7 @@ SVGRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
 };
 
 
-SVGRenderer.prototype.editCommand = function(shape, cmd, value)
+DIVRenderer.prototype.editCommand = function(shape, cmd, value)
 {
   if (shape != null) {
     if (cmd == 'fillcolor') {
@@ -214,7 +199,7 @@ SVGRenderer.prototype.editCommand = function(shape, cmd, value)
 }
 
 
-SVGRenderer.prototype.queryCommand = function(shape, cmd)
+DIVRenderer.prototype.queryCommand = function(shape, cmd)
 {
   var result = '';
   
@@ -242,7 +227,7 @@ SVGRenderer.prototype.queryCommand = function(shape, cmd)
 }
 
 
-SVGRenderer.prototype.showTracker = function(shape) {
+DIVRenderer.prototype.showTracker = function(shape) {
   var box = shape.getBBox();
 
   var tracker = document.getElementById('tracker');
@@ -265,6 +250,6 @@ SVGRenderer.prototype.showTracker = function(shape) {
 }
 
 
-SVGRenderer.prototype.getMarkup = function() {
+DIVRenderer.prototype.getMarkup = function() {
   return this.container.innerHTML;
 }

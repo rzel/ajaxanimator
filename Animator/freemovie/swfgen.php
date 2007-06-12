@@ -1,6 +1,7 @@
 <?php
+require_once("decompressXML.php");
+$xmlstr = decompressXML(stripslashes($_REQUEST['svg']));
 
-$xmlstr = stripslashes($_REQUEST['svg']);
 $zhash = md5($xmlstr);
 
 if (file_exists("files/file-$zhash.swf")) { 

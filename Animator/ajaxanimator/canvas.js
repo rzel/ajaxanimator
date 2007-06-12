@@ -11,6 +11,7 @@ var revisionNumber = 1;
 var animationRevision = new Array();
 var animationRevisionURL = new Array();
 var lastAnimationURL = '';
+var replaceEngine = 'regexp'; //either regexp or string, it is the engine that changes stuff
 AnimationPlay = true;
 canvasIssueResolved = false;
 
@@ -70,23 +71,45 @@ AnimationFramerate = document.getElementById('cFramerate').value;
 function genxml(){
 $('jsQuery').value = generateAnimationXML();
 }
+
 function gencleanxml(){
-$('jsQuery').value = removeUnusedAttributes();
+$('jsQuery').value = decompressxml(compressxml(generateAnimationXML()));
 }
 
+function gencxml(){
+var zxvlue;
+zxvlue = compressxml(generateAnimationXML());
+$('jsQuery').value = zxvlue;
+}
+
+function decompressxml(pxml){
+var zxvlue;
+zxvlue = pxml;
+
+zxvlue = replaceDecompressXML(zxvlue);
+
+
+
+
+return zxvlue;
+}
+function compressxml(pxml){
+var zxvlue;
+zxvlue = pxml;
+zxvlue = replaceCompressXML(zxvlue);
+return zxvlue;
+}
 
 function generateAnimationXML(){
 var zAnimationXML = "<AnimationXML>";
 for(var pzxy = 1; pzxy <= totalFrames;pzxy++){
 if(DrawCanvas[pzxy] != null){
 var zCurrentAnimationXMLFrame;
-
 //zCurrentAnimationXMLFrame = DrawCanvas[pzxy].renderer.getMarkup() this fails in IE so do it the hard way...
 zCurrentAnimationXMLFrame = $('richdraw' + pzxy).innerHTML;
 if(document.all){
 zCurrentAnimationXMLFrame = zCurrentAnimationXMLFrame.replace('<?xml:namespace prefix = v ns = "urn:schemas-microsoft-com:vml" />',"<svg>");
 }
-
 zAnimationXML += zCurrentAnimationXMLFrame;
 if(document.all){
 zAnimationXML += "</svg>"
@@ -95,9 +118,7 @@ zAnimationXML += "</svg>"
 zAnimationXML += "<svg></svg>"
 }
 }
-
 zAnimationXML += "</AnimationXML>";
-
 //the above code is to make the vml less crappy
 return removeUnusedAttributes(zAnimationXML);
 }
@@ -130,6 +151,83 @@ if(AnimationPlay == true){
 gotoframe(currentFrameSelection+1,1);
 setTimeout('doAnimation()',1000/AnimationFramerate);
 }
+}
+
+function replaceCompressXML(xmlData){
+var b = xmlData;
+b = replaceAll(" ","",b,b);//remove spaces
+b = replaceAll("<svg>","_f",b);
+b = replaceAll("</svg>",",f",b);
+b = replaceAll("<rect","_r",b);
+b = replaceAll("</rect>",",r",b);
+b = replaceAll("<line","_l",b);
+b = replaceAll("</line>",",l",b);
+b = replaceAll("stroke-width",".i",b);
+b = replaceAll("stroke",".o",b);
+b = replaceAll("fill",".f",b);
+b = replaceAll("height",".h",b);
+b = replaceAll("width",".w",b);
+b = replaceAll("rgb","-y",b);
+b = replaceAll("0,0,0","g",b);
+b = replaceAll("255,0,0","*",b);
+b = replaceAll("<AnimationXML>","_A",b);
+b = replaceAll("</AnimationXML>",",A",b);
+b = replaceAll('="',"~",b);
+b = replaceAll('px"',"#",b);
+return b;
+}
+function revReplace(stringa,stringb,astring){
+return replaceAll(stringb,stringa,astring);
+}
+function replaceDecompressXML(xmlData){
+var b = xmlData;
+b = revReplace("0,0,0","g",b);
+b = revReplace("255,0,0","*",b);
+b = revReplace("<AnimationXML>","_A",b);
+b = revReplace("</AnimationXML>",",A",b);
+b = revReplace("<svg>","_f",b);
+b = revReplace("</svg>",",f",b);
+b = revReplace("<rect","_r",b);
+b = revReplace("</rect>",",r",b);
+b = revReplace("<line ","_l",b);
+b = revReplace("</line> ",",l",b);
+b = revReplace(" stroke-width",".i",b);
+b = revReplace(" stroke",".o",b);
+b = revReplace(" fill",".f",b);
+b = revReplace(" height",".h",b);
+b = revReplace(" width",".w",b);
+b = revReplace(" rgb","-y",b);
+
+zxvlue = revReplace('="',"~",zxvlue);
+zxvlue = revReplace('px"',"#",zxvlue);
+b = replaceAll('"x=','" x=',zxvlue);
+b = replaceAll('"y=','" y=',zxvlue);
+b = replaceAll('stroke=" ','stroke="',zxvlue);
+b = replaceAll('fill=" ','fill="',zxvlue);
+return b;
+}
+
+//the below code is not work of antimatter15
+//it is a slightly modified and compacted version of Philip Tan Boon Yew's work
+//http://home.pacific.net.sg/~firehzrd/jsarc/unWebify.html
+// I chose it because it's better/faster than the algorithim I made
+//and... just a reminder: google is your friend
+// it also has regexp f
+function replaceAll(findStr,repStr,oldStr) {
+var newStr = ""; 
+if(replaceEngine == 'string'){
+var srchNdx = 0;
+while (oldStr.indexOf(findStr,srchNdx) != -1)  {
+newStr += oldStr.substring(srchNdx,oldStr.indexOf(findStr,srchNdx));
+newStr += repStr;
+srchNdx = (oldStr.indexOf(findStr,srchNdx) + findStr.length);
+}
+newStr += oldStr.substring(srchNdx,oldStr.length);   
+}else{
+var re = new RegExp(findStr, "g"); // pre replace using regexp
+newStr = oldStr.replace(re, repStr);
+}
+return newStr;
 }
 
 function stopAnimation(){
@@ -167,18 +265,28 @@ if(generateAnimationXML() != '<AnimationXML><svg></svg></AnimationXML>'){
 }
 }
 
+function genFlashHTML(aAnimationURL){
+var zflashHTML = "";
+zflashHTML='<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase= '
+zflashHTML+='"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"'
+zflashHTML+='WIDTH="'+CanvasWidth+'" HEIGHT="'+CanvasHeight+'" id="">'
+zflashHTML+='<PARAM NAME=movie VALUE="'+lastAnimationURL+'">'
+zflashHTML+='<PARAM NAME=quality VALUE=high><PARAM NAME=bgcolor VALUE=#FFFFFF><EMBED src=' + aAnimationURL
+zflashHTML+='quality=high bgcolor=#FFFFFF WIDTH="'+CanvasWidth+'" HEIGHT="'+CanvasHeight+'"'
+zflashHTML+='NAME="" ALIGN="" TYPE="application/x-shockwave-flash"';
+zflashHTML+='PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer"></EMBED></OBJECT>'
+}
+
 function embedAnimationPreview(){
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + revisionNumber + ")"
-var zflashHTML = "";
-zflashHTML='<object width="480" height="272"><embed src="'+lastAnimationURL+'" width="480" height="272"></embed></object>'
-document.getElementById("zFlashPreviewDiv").innerHTML = zflashHTML;
+
+document.getElementById("zFlashPreviewDiv").innerHTML = genFlashHTML(lastAnimationURL);
 }
 
 function PreviewRevision(revision){
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + revisionNumber + ")"
-var zflashHTML = "";
-zflashHTML='<object width="480" height="272"><embed src="'+animationRevisionURL[revision]+'" width="480" height="272"></embed></object>'
-document.getElementById("zFlashPreviewDiv").innerHTML = zflashHTML;
+
+document.getElementById("zFlashPreviewDiv").innerHTML = genFlashHTML(animationRevisionURL[revision]);
 }
 function xmlError(e) {alert(e);}
 
@@ -193,10 +301,12 @@ for(var wzFrameObj = 0; wzFrameObj < wframeNode.getElements().length; wzFrameObj
 var wframeNodeObj = wframeNode.getElements()[wzFrameObj];
 var wframeObjId = wframeNodeObj.getAttribute("id");
 newXml = newXml.replace(wframeObjId,"")
+var wframeObjStyle = wframeNodeObj.getAttribute("style");
+newXml = newXml.replace(wframeObjStyle,"")
+newXml = newXml.replace(' id=""',"")
+newXml = newXml.replace(' style=""',"")
 }
 }
-newXml = newXml.replace('id=""',"")
-newXml = newXml.replace('style="position: absolute;"',"")
 return newXml
 }
 
@@ -214,11 +324,12 @@ $('zFlashPreviewDiv').style.width = canvasWidth + 'px';
 $('zFlashPreviewDiv').innerHTML = "";
 $('swfPreBtn').disabled = true;
 $('swfPreBtn').value = 'generating...';
-var swfgen = generateAnimationXML();
+var swfgen = compressxml(generateAnimationXML());
 if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></AnimationXML>'){
 ajaxpack.postAjaxRequest("../freemovie/swfgen.php", "height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , preFlashEvent, "txt")
 }else{$('zFlashPreviewDiv').innerHTML = "Sorry No Preview Availiable:<br> Empty Animation";}
 }
+$('previewStatus').innerHTML = "Mode: Preview (Revision " + revisionNumber + ")"
 }
 
 function generateSWFResponse(responsedata){
@@ -241,6 +352,7 @@ var FLASHfilename=myajax.responseText.replace('files','../freemovie/files');
 lastAnimationURL = FLASHfilename;
 animationRevisionURL[revisionNumber] = FLASHfilename;
 revisionNumber++;
+$('previewStatus').innerHTML = "Mode: Preview (Revision " + revisionNumber + ")"
 flashHTML='<object width="480" height="272"><embed src="'+FLASHfilename+'" width="480" height="272"></embed></object>'
 document.getElementById("zFlashPreviewDiv").innerHTML = flashHTML;
 $('swfPreBtn').disabled = false;
@@ -252,7 +364,6 @@ document.getElementById("zFlashPreviewDiv").innerHTML = myajax.responseText ;
 }
 }
 }
-
 }
 
 function genFlashEvent(){
