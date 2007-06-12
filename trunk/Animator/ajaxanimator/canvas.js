@@ -269,12 +269,13 @@ function genFlashHTML(aAnimationURL){
 var zflashHTML = "";
 zflashHTML='<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase= '
 zflashHTML+='"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"'
-zflashHTML+='WIDTH="'+CanvasWidth+'" HEIGHT="'+CanvasHeight+'" id="">'
-zflashHTML+='<PARAM NAME=movie VALUE="'+lastAnimationURL+'">'
-zflashHTML+='<PARAM NAME=quality VALUE=high><PARAM NAME=bgcolor VALUE=#FFFFFF><EMBED src=' + aAnimationURL
-zflashHTML+='quality=high bgcolor=#FFFFFF WIDTH="'+CanvasWidth+'" HEIGHT="'+CanvasHeight+'"'
+zflashHTML+='WIDTH="'+canvasWidth+'" HEIGHT="'+canvasHeight+'" id="">'
+zflashHTML+='<PARAM NAME=movie VALUE="'+ aAnimationURL+'">'
+zflashHTML+='<PARAM NAME=quality VALUE=high><PARAM NAME=bgcolor VALUE=#FFFFFF><EMBED src="' + aAnimationURL+'" '
+zflashHTML+=' quality=high bgcolor=#FFFFFF WIDTH="'+canvasWidth+'" HEIGHT="'+canvasHeight+'"'
 zflashHTML+='NAME="" ALIGN="" TYPE="application/x-shockwave-flash"';
 zflashHTML+='PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer"></EMBED></OBJECT>'
+return zflashHTML;
 }
 
 function embedAnimationPreview(){
@@ -286,15 +287,38 @@ document.getElementById("zFlashPreviewDiv").innerHTML = genFlashHTML(lastAnimati
 function PreviewRevision(revision){
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + revisionNumber + ")"
 
-document.getElementById("zFlashPreviewDiv").innerHTML = genFlashHTML(animationRevisionURL[revision]);
+$("zFlashPreviewDiv").innerHTML = genFlashHTML(animationRevisionURL[revision]);
+}
+
+function setRevisionFromBrowser(){
+var RevisionBox = $('RevisionBrowser'); 
+PreviewRevision(parseInt(RevisionBox.options[RevisionBox.selectedIndex].value));
+}
+
+function initRevisionBrowser(){
+
+var zRevisionBrowserHTML = "";
+zRevisionBrowserHTML += '<select id="RevisionBrowser" onchange="setRevisionFromBrowser();">'
+for(var zRevisionOption = 0; zRevisionOption < animationRevision.length; zRevisionOption++){
+var otherOptions = "";
+if(zRevisionOption == animationRevision.length -1){
+otherOptions = " (HEAD)"
+}
+if(zRevisionOption == 0){
+otherOptions = " (Empty)"
+}
+zRevisionBrowserHTML += '<option value="'+zRevisionOption+'">Revision: '+zRevisionOption+'' + otherOptions+'</option>'
+}
+zRevisionBrowserHTML += '</select>'
+$('RevisionBrowserDiv').innerHTML = zRevisionBrowserHTML;
+try{
+$('RevisionBrowser').options[animationRevision.length -1].selected = 'selected';
+}catch(err){}
+	  
 }
 
 function removeUnusedAttributes(zxml){
-if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></AnimationXML>'){
-if(zxml.indexOf('id="') == -1){
-zxml = replaceAll('id=','id="',zxml);
-}
-}
+
 
 var newXml = zxml;
 
@@ -321,6 +345,7 @@ return newXml;
 }
 
 function preFlash(){
+initRevisionBrowser()
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + revisionNumber + ")"
 
 if(animationRevision[revisionNumber -1] == generateAnimationXML()){
@@ -374,6 +399,7 @@ document.getElementById("zFlashPreviewDiv").innerHTML = myajax.responseText ;
 }
 }
 }
+initRevisionBrowser()
 }
 
 function genFlashEvent(){
