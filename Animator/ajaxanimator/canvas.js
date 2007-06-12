@@ -260,7 +260,7 @@ ajaxpack.postAjaxRequest("../freemovie/swfgen.php", "height="+canvasHeight+"&wid
 }
 
 function flashVerification(){
-if(generateAnimationXML() != '<AnimationXML><svg></svg></AnimationXML>'){
+if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></AnimationXML>'){
 
 }
 }
@@ -290,7 +290,14 @@ document.getElementById("zFlashPreviewDiv").innerHTML = genFlashHTML(animationRe
 }
 
 function removeUnusedAttributes(zxml){
+if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></AnimationXML>'){
+if(zxml.indexOf('id="') == -1){
+zxml = replaceAll('id=','id="',zxml);
+}
+}
+
 var newXml = zxml;
+
 if (window.ActiveXObject){
 var objDom=new ActiveXObject("Microsoft.XMLDOM");
 objDom.async="false";
