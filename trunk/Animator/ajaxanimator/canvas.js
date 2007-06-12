@@ -288,26 +288,29 @@ $('previewStatus').innerHTML = "Mode: Preview (Revision " + revisionNumber + ")"
 
 document.getElementById("zFlashPreviewDiv").innerHTML = genFlashHTML(animationRevisionURL[revision]);
 }
-function xmlError(e) {alert(e);}
 
 function removeUnusedAttributes(zxml){
-//var zxml = "" + generateAnimationXML();
 var newXml = zxml;
-var wobjDom = new XMLDoc(zxml, xmlError);
-var wdomTree = wobjDom.docNode;
-for(var wzFrames = 0; wzFrames < wdomTree.getElements("svg").length; wzFrames++){
-var wframeNode = wdomTree.getElements("svg")[wzFrames];
-for(var wzFrameObj = 0; wzFrameObj < wframeNode.getElements().length; wzFrameObj++){
-var wframeNodeObj = wframeNode.getElements()[wzFrameObj];
-var wframeObjId = wframeNodeObj.getAttribute("id");
-newXml = newXml.replace(wframeObjId,"")
-var wframeObjStyle = wframeNodeObj.getAttribute("style");
-newXml = newXml.replace(wframeObjStyle,"")
+if (window.ActiveXObject){
+var objDom=new ActiveXObject("Microsoft.XMLDOM");
+objDom.async="false";
+objDom.loadXML(zxml);
+}else{
+var parser=new DOMParser();
+var objDom=parser.parseFromString(zxml,"text/xml");
+}
+var domTree = objDom.getElementsByTagName('AnimationXML')[0];
+objDom.getElementsByTagName('AnimationXML')[0];
+for(var zFrames = 0; zFrames < objDom.getElementsByTagName('svg').length; zFrames++){
+var frameNode = objDom.getElementsByTagName('svg')[zFrames];
+for(var zFrameObj = 0; zFrameObj < frameNode.childNodes.length; zFrameObj++){
+newXml = newXml.replace(frameNode.childNodes[zFrameObj].getAttribute("id"),"")
+newXml = newXml.replace(frameNode.childNodes[zFrameObj].getAttribute("style"),"")
 newXml = newXml.replace(' id=""',"")
 newXml = newXml.replace(' style=""',"")
 }
 }
-return newXml
+return newXml;
 }
 
 function preFlash(){
