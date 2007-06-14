@@ -13,6 +13,7 @@ require_once("freemoviecompilertoolbox.php");
 
 header("Content-Type: text/plain");
 $height = $_REQUEST['height'];
+
 $width = $_REQUEST['width'];
 $framerate = $_REQUEST['framerate'];
 $swf = new FreeMovieCompilerToolbox;
@@ -76,14 +77,31 @@ $swf->EndFrame();
 }
 $swf->EndMovie();
 
+$type = $_REQUEST['type'];
+
+if($type == "export"){
+$fileDir = "files";
+
+if($_REQUEST['filename'] != null){
+$SWFFileName = $_REQUEST['filename'];
+}else{
+$SWFFileName = "file-$zhash";
+}
+
+}else{
+$fileDir = "preview";
+$SWFFileName = "file-$zhash";
+}
+$ourFileName = "$fileDir/$SWFFileName.swf";
+$filename = "$fileDir/$SWFFileName.swf";
 
 
-$ourFileName = "files/file-$zhash.swf";
 $ourFileHandle = fopen($ourFileName, 'w') or die("can't open file");
 fclose($ourFileHandle);
-$filename = "files/file-$zhash.swf";
+
 $somecontent = $swf->GetMovie();
 if (is_writable($filename)) {
+
     if (!$handle = fopen($filename, 'a')) {
          echo "Cannot open file ($filename)";
          exit;
@@ -94,6 +112,7 @@ if (is_writable($filename)) {
     }
     echo "$filename";
     fclose($handle);
+	
 } else {
     echo "The file $filename is not writable";
 }
