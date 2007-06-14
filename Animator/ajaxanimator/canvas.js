@@ -11,7 +11,7 @@ var revisionNumber = 1;
 var animationRevision = new Array();
 var animationRevisionURL = new Array();
 var lastAnimationURL = '';
-var replaceEngine = 'regexp'; //either regexp or string, it is the engine that changes stuff
+var replaceEngine = 'string'; //either regexp or string, it is the engine that changes stuff
 AnimationPlay = true;
 canvasIssueResolved = false;
 
@@ -183,31 +183,36 @@ function replaceDecompressXML(xmlData){
 var b = xmlData;
 b = revReplace("0,0,0","g",b);
 b = revReplace("255,0,0","*",b);
-b = revReplace("<AnimationXML>","_A",b);
-b = revReplace("</AnimationXML>",",A",b);
 b = revReplace("<svg>","_f",b);
 b = revReplace("</svg>",",f",b);
-b = revReplace("<rect","_r",b);
-b = revReplace("</rect>",",r",b);
-b = revReplace("<line ","_l",b);
-b = revReplace("</line> ",",l",b);
 b = revReplace(" stroke-width",".i",b);
 b = revReplace(" stroke",".o",b);
 b = revReplace(" fill",".f",b);
 b = revReplace(" height",".h",b);
 b = revReplace(" width",".w",b);
 b = revReplace(" rgb","-y",b);
+b = revReplace("<line ","_l",b);
+b = revReplace("</line> ",",l",b);
 
-zxvlue = revReplace('="',"~",zxvlue);
-zxvlue = revReplace('px"',"#",zxvlue);
-b = replaceAll('"x=','" x=',zxvlue);
-b = replaceAll('"y=','" y=',zxvlue);
-b = replaceAll('stroke=" ','stroke="',zxvlue);
-b = replaceAll('fill=" ','fill="',zxvlue);
+b = revReplace("<rect","_r",b);
+b = revReplace("</rect>",",r",b);
+b = revReplace("<AnimationXML>","_A",b);
+b = revReplace("</AnimationXML>",",A",b);
+b = revReplace('="',"~",b);
+b = revReplace('px"',"#",b);
+b = replaceAll('"x=','" x=',b);
+b = replaceAll('"y=','" y=',b);
+
+b = replaceAll('"x2=','" x2=',b);
+b = replaceAll('"y2=','" y2=',b);
+b = replaceAll('"x1=','" x1=',b);
+b = replaceAll('"y1=','" y1=',b);
+
+b = replaceAll('stroke=" ','stroke="',b);
+b = replaceAll('fill=" ','fill="',b);
 return b;
 }
 
-//the below code is not work of antimatter15
 //it is a slightly modified and compacted version of Philip Tan Boon Yew's work
 //http://home.pacific.net.sg/~firehzrd/jsarc/unWebify.html
 // I chose it because it's better/faster than the algorithim I made
@@ -224,8 +229,28 @@ srchNdx = (oldStr.indexOf(findStr,srchNdx) + findStr.length);
 }
 newStr += oldStr.substring(srchNdx,oldStr.length);   
 }else{
+try{
+if(findStr.indexOf("*") == -1){
 var re = new RegExp(findStr, "g"); // pre replace using regexp
 newStr = oldStr.replace(re, repStr);
+}else{
+var srchNdx = 0;
+while (oldStr.indexOf(findStr,srchNdx) != -1)  {
+newStr += oldStr.substring(srchNdx,oldStr.indexOf(findStr,srchNdx));
+newStr += repStr;
+srchNdx = (oldStr.indexOf(findStr,srchNdx) + findStr.length);
+}
+newStr += oldStr.substring(srchNdx,oldStr.length);   
+}
+}catch(err){
+var srchNdx = 0;
+while (oldStr.indexOf(findStr,srchNdx) != -1)  {
+newStr += oldStr.substring(srchNdx,oldStr.indexOf(findStr,srchNdx));
+newStr += repStr;
+srchNdx = (oldStr.indexOf(findStr,srchNdx) + findStr.length);
+}
+newStr += oldStr.substring(srchNdx,oldStr.length);   
+}
 }
 return newStr;
 }
@@ -247,17 +272,7 @@ document.getElementById("richdraw"+currentCanvas).style.display = "";
 }
 
 
-function genFlash(){
-flashVerification()
-$('swfGenBtn').disabled = true;
-$('swfGenBtn').value = 'generating...';
-$('export').innerHTML = '';
-var swfgen = generateAnimationXML();
-if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></AnimationXML>'){
-ajaxpack.postAjaxRequest("../freemovie/swfgen.php", "height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , genFlashEvent, "txt")
-}
 
-}
 
 function flashVerification(){
 if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></AnimationXML>'){
@@ -361,17 +376,13 @@ $('swfPreBtn').disabled = true;
 $('swfPreBtn').value = 'generating...';
 var swfgen = compressxml(generateAnimationXML());
 if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></AnimationXML>'){
-ajaxpack.postAjaxRequest("../freemovie/swfgen.php", "height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , preFlashEvent, "txt")
+ajaxpack.postAjaxRequest("../freemovie/swfgen.php", "type=preview&height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , preFlashEvent, "txt")
 }else{$('zFlashPreviewDiv').innerHTML = "Sorry No Preview Availiable:<br> Empty Animation";}
 }
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + revisionNumber + ")"
 }
 
-function generateSWFResponse(responsedata){
-$('export').innerHTML = '<a href="' + responsedata.replace('files','../freemovie/files') + '>Download</a>';
-$('swfGenBtn').disabled = false;
-$('swfGenBtn').value = 'Generate SWF';
-}
+
 
 
 function preFlashEvent(){
@@ -383,7 +394,7 @@ if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if reques
 animationRevision[revisionNumber] = generateAnimationXML();
 //$('previewIframe').src = myajax.responseText.replace('files','freemovie/files')
 var flashHTML = "";
-var FLASHfilename=myajax.responseText.replace('files','../freemovie/files');
+var FLASHfilename=myajax.responseText.replace('preview','../freemovie/preview');
 lastAnimationURL = FLASHfilename;
 animationRevisionURL[revisionNumber] = FLASHfilename;
 revisionNumber++;
@@ -400,6 +411,30 @@ document.getElementById("zFlashPreviewDiv").innerHTML = myajax.responseText ;
 }
 }
 initRevisionBrowser()
+}
+
+function genFlash(){
+var zSWFFilename=prompt("please enter a file name for the animation");
+zSWFFilename = zSWFFilename.replace(".swf","");
+zSWFFilename = zSWFFilename.replace("/","");
+//zSWFFilename = zSWFFilename.replace("\","");
+zSWFFilename = zSWFFilename.replace("+","");
+zSWFFilename = zSWFFilename.replace("&","");
+
+$('swfGenBtn').disabled = true;
+$('swfGenBtn').value = 'generating...';
+$('export').innerHTML = '';
+var swfgen = compressxml(generateAnimationXML());
+if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></AnimationXML>'){
+ajaxpack.postAjaxRequest("../freemovie/swfgen.php", "filename="+zSWFFilename+"&type=export&height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , genFlashEvent, "txt")
+}
+}
+function generateSWFResponse(responsedata){
+var responseurl = responsedata.replace('files','../freemovie/files');
+var absoluteResponseURL = responsedata.replace('files','../freemovie/files');
+$('export').innerHTML = '<a href="' + responseurl + '>' + responseurl + '</a>';
+$('swfGenBtn').disabled = false;
+$('swfGenBtn').value = 'Export Animation';
 }
 
 function genFlashEvent(){
