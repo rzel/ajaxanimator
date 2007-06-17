@@ -145,11 +145,12 @@ doAnimation();
 function doAnimation(){
 if(currentCanvas + 1> totalFrames){
 gotoframe(1,1);
-}
-
+setTimeout('doAnimation()',1000/AnimationFramerate);
+}else{
 if(AnimationPlay == true){
 gotoframe(currentFrameSelection+1,1);
 setTimeout('doAnimation()',1000/AnimationFramerate);
+}
 }
 }
 
