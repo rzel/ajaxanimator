@@ -52,17 +52,7 @@ $totalSWFObjects++;
 
 }
 foreach ($svg->rect as $rect) {
-/*
-DefineRectangle($rect['x']*20, $height*20 - $rect['y']*20, $rect['x']*20 + $rect['width']*20, $height*20 -($rect['y']*20 + $rect['height']*20), $rect['stroke-width']*20, false, $rectfillColor[0], $rectfillColor[1], $rectfillColor[2], 0);
 
-DefineRectangle     ($X1, $Y1, $X2, $Y2, $Width, $AlphaFlag, $R, $G, $B, $A)
-DefineRectangleSolid($X1, $Y1, $X2, $Y2, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $FillFlag, $FillR, $FillG, $FillB, $FillA)
-
-DefineRectangleSolid($rect['x']*20, $height*20 - $rect['y']*20, $rect['x']*20 + $rect['width']*20, $height*20 -($rect['y']*20 + $rect['height']*20), $rect['stroke-width']*2,false,false, $rectlineColor[0], $rectlineColor[1], $rectlineColor[2],0,255,$rectfillColor[0], $rectfillColor[1], $rectfillColor[2],0);
-
-($X1  , $Y1 , $X2  , $Y2  ,$Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $FillFlag, $FillR, $FillG, $FillB, $FillA)
-(10000, 6500, 15500, 10000, 300  , true      , true     , 0,   0,   0, 128, true, 0, 255, 0, 128
-*/
 $rectfillColor = rgbConvert($rect['fill']);
 $rectlineColor = rgbConvert($rect['stroke']);
 

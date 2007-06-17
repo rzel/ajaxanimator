@@ -13,7 +13,6 @@
     <script type="text/javascript" src="../ajaxanimator/includes.js"></script>
 	<script type="text/javascript" src="../js/ajaxroutine.js"></script>
 	<script type="text/javascript" src="../js/md5.js"></script>
-<script type="text/javascript" src="../js/xmldom.js"></script>
 	<script type="text/javascript" src="../richdraw/richdraw.js"></script>
     <script type="text/javascript" src="../richdraw/svgrenderer.js"></script>
 	<script type="text/javascript" src="../richdraw/vmlrenderer.js"></script>
@@ -48,7 +47,9 @@ playAnimation()
 	if (eventkeyCode==83){
 stopAnimation();
     }
-  
+		if (eventkeyCode==46){
+	deleteShape();
+  }
   }
   } 
   document.onkeydown=keyDown;

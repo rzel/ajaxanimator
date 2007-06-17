@@ -418,8 +418,10 @@ var zSWFFilename=prompt("please enter a file name for the animation");
 zSWFFilename = zSWFFilename.replace(".swf","");
 zSWFFilename = zSWFFilename.replace("/","");
 //zSWFFilename = zSWFFilename.replace("\","");
+zSWFFilename = zSWFFilename.replace(" ","_");
 zSWFFilename = zSWFFilename.replace("+","");
 zSWFFilename = zSWFFilename.replace("&","");
+zSWFFilename = zSWFFilename.replace("?","");
 
 $('swfGenBtn').disabled = true;
 $('swfGenBtn').value = 'generating...';
