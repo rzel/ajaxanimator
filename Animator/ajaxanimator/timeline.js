@@ -148,7 +148,7 @@ function setTotalFrameValue(){
 function gotoframe(framenumber, layer) //Function to change the current selected frame
 {
 	if(framenumber > 0 && framenumber < totalFramesPerLayer){
-	checkFrame(framenumber, layer);
+	checkFrame(currentFrameSelection, layer);
 	previousCanvas = currentCanvas;
 	if(framenumber > totalFrames){
 	gotoframeInterface(totalFrames, layer);
