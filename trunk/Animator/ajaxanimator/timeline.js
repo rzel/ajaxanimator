@@ -40,6 +40,17 @@ function toKeyframe() //Function to convert normal frames to keyframes
 	gotoframe(currentFrameSelection,currentLayerSelection);
 }
 
+function makeKeyframe(framenumber, layer){
+	var zframe;
+	zframe = document.getElementById("frame" + framenumber + "layer" + layer);
+	zframe.style.color = frameTextColor;
+	zframe.style.backgroundColor=KeyframeColor;
+	KeyFrames[kFrameCount] = framenumber + "," + layer
+	kFrameCount = kFrameCount + 1
+	gotoframeInterface(framenumber,layer);
+}
+
+
 
 
 function fullgotoframe() //Function to refresh all data in the timeline
@@ -91,6 +102,7 @@ function gotoframeInterface(framenumber,layer){
 	isKeyFrame = true
 	}
 	}
+
 	if(isKeyFrame == false){
 	frame.style.color = "#F2F2F2";
 	frame.style.backgroundColor="#00BFFF";
@@ -99,20 +111,55 @@ function gotoframeInterface(framenumber,layer){
 	frame.style.color = "#F2F2F2";
 	frame.style.backgroundColor="#3579DC";
 	}
+
 }
 
+function repeatChecks(){
+checkFrame(currentFrameSelection,currentLayerSelection);
+
+setTimeout("repeatChecks()",500);
+}
+
+repeatChecks()
+
+function checkFrame(oFrame, oLayer){
+try{
+var zisempty = false;
+if(DrawCanvas[oFrame] == null){
+zisempty = true;
+}else{
+if(DrawCanvas[oFrame].renderer.getMarkup().replace(" ","") == "<svg></svg>"){
+zisempty = true;
+}
+}
+if(zisempty == false){
+makeKeyframe(oFrame,oLayer);
+}
+}catch(err){}
+}
+
+function setTotalFrameValue(){
+	var qframe;
+	qframe = document.getElementById("frame" + totalFrames + "layer" + 1);
+	qframe.style.color = "#ffffff";
+	qframe.style.backgroundColor="#FF9900";
+}
 
 function gotoframe(framenumber, layer) //Function to change the current selected frame
 {
 	if(framenumber > 0 && framenumber < totalFramesPerLayer){
+	checkFrame(framenumber, layer);
 	previousCanvas = currentCanvas;
 	if(framenumber > totalFrames){
+	gotoframeInterface(totalFrames, layer);
 	totalFrames = framenumber;
 	}
 	gotoframeInterface(framenumber,layer);
+	if(framenumber < totalFrames){
+	setTotalFrameValue()
+	}
 	hideCurrentCanvas();
 	currentCanvas = framenumber;
-
 	if(DrawCanvas[currentCanvas]==null){
 	if(document.all){
 	makeCanvasFromIE(framenumber);	
@@ -121,7 +168,7 @@ function gotoframe(framenumber, layer) //Function to change the current selected
 	}
 	}
 	showCurrentCanvas();
-
+ checkFrame(framenumber, layer);
 
 }
 }
@@ -236,6 +283,10 @@ zisselected = 'true';
 var zisempty = false;
 if(DrawCanvas[uFrame] == null){
 zisempty = true;
+}else{
+if(DrawCanvas[uFrame].renderer.getMarkup().replace(" ","") == "<svg></svg>"){
+zisempty = true;
+}
 }
 var canvasframepreview = "empty";
 if(DrawCanvas[uFrame] != null){
@@ -246,8 +297,9 @@ canvasframepreview = DrawCanvas[uFrame].renderer.getMarkup()
 zDataText = '<b>layer:</b> '+uLayer
 zDataText+='<br><b>keyframe:</b>'+ziskeyframe+'<br><b>selected:</b> '+zisselected;
 zDataText+='<br><b>empty:</b>' + zisempty;
-
-
+if(uFrame == totalFrames){
+zDataText+='<br><br><b>Last Frame</b>';
+}
 //zDataText+='<br><b>Preview:</b><br>' +  canvasframepreview.replace('_moz-userdefined=""','');
 //document.getElementById("ToolTipData").innerHTML=zDataText
 return zDataText;
