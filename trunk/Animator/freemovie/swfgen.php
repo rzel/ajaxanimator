@@ -35,12 +35,13 @@ $totalSWFObjects = 0;
 
 foreach ($xml->svg as $svg) {
 
+if($svg['t'] != 'f'){
 if($charid != null||$chardepth != null){
 for ($p = 0; $p <= $totalSWFObjects - 1; $p++) {
 $swf->RemoveObjectFromLayer($charid[$p], $chardepth[$p]);
 }
 }
-
+}
 foreach ($svg->line as $line) {
 
 $linefillColor = rgbConvert($line['stroke']);

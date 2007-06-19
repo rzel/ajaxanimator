@@ -103,19 +103,24 @@ return zxvlue;
 function generateAnimationXML(){
 var zAnimationXML = "<AnimationXML>";
 for(var pzxy = 1; pzxy <= totalFrames;pzxy++){
-if(DrawCanvas[pzxy] != null){
+if(DrawCanvas[pzxy] != null && DrawCanvas[pzxy].renderer.getMarkup() != "<svg></svg>"){
 var zCurrentAnimationXMLFrame;
 //zCurrentAnimationXMLFrame = DrawCanvas[pzxy].renderer.getMarkup() this fails in IE so do it the hard way...
 zCurrentAnimationXMLFrame = $('richdraw' + pzxy).innerHTML;
-if(document.all){
+if(isIE() == true){
 zCurrentAnimationXMLFrame = zCurrentAnimationXMLFrame.replace('<?xml:namespace prefix = v ns = "urn:schemas-microsoft-com:vml" />',"<svg>");
 }
 zAnimationXML += zCurrentAnimationXMLFrame;
-if(document.all){
+if(isIE() == true){
 zAnimationXML += "</svg>"
 }
 }else{
+if(isKeyframe(pzxy,1) != false){
 zAnimationXML += "<svg></svg>"
+}else{
+zAnimationXML += '<svg t="f"></svg>'
+}
+
 }
 }
 zAnimationXML += "</AnimationXML>";
@@ -123,13 +128,16 @@ zAnimationXML += "</AnimationXML>";
 return removeUnusedAttributes(zAnimationXML);
 }
 
-/*
-<AnimationXML>
+function isIE(){
+    ie = navigator.appVersion.match(/MSIE (\d\.\d)/);
+    opera = (navigator.userAgent.toLowerCase().indexOf("opera") != -1);
+    if ((!ie) || (opera)) {
+	
+	}else{
+	return true
+	}
+}
 
-<?xml:namespace prefix = v ns = "urn:schemas-microsoft-com:vml" />
-
-<v:rect id=shape:5145ebd5-2c43-a41f-58ab-b4718c2fa542 style="LEFT: 10px; WIDTH: 460px; POSITION: absolute; TOP: 10px; HEIGHT: 250px" coordsize = "21600,21600" filled = "t" fillcolor = "red" stroked = "t" strokecolor = "black" strokeweight = ".75pt"></v:rect></AnimationXML>
-*/
 function initCanvas(){
 	//for(var zxCanvas = 0; zxCanvas > 10; zxCanvas++){
 	makeCanvas();
@@ -159,6 +167,7 @@ setTimeout('doAnimation()',1000/AnimationFramerate);
 
 function replaceCompressXML(xmlData){
 var b = xmlData;
+b = replaceAll('<svg t="f">',"_e",b);
 b = replaceAll(" ","",b,b);//remove spaces
 b = replaceAll("<svg>","_f",b);
 b = replaceAll("</svg>",",f",b);
@@ -185,7 +194,9 @@ return replaceAll(stringb,stringa,astring);
 }
 function replaceDecompressXML(xmlData){
 var b = xmlData;
+
 b = revReplace("0,0,0","g",b);
+b = revReplace('<svg t="f">',"_e",b);
 b = revReplace("255,0,0","*",b);
 b = revReplace("<svg>","_f",b);
 b = revReplace("</svg>",",f",b);
@@ -388,7 +399,6 @@ $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1)
 
 
 
-
 function preFlashEvent(){
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
 var myajax=ajaxpack.ajaxobj
@@ -455,9 +465,10 @@ alert(myajax.responseText)
 function generateSWFResponse(responsedata){
 var responseurl = responsedata.replace('files','../freemovie/files');
 var absoluteResponseURL = responsedata.replace('files','../freemovie/files');
-$('export').innerHTML = '<a href="' + responseurl + '>' + responseurl + '</a>';
+$('export').innerHTML = '<a id="zExportURL" href="' + responseurl + '>' + responseurl + '</a>';
 $('swfGenBtn').disabled = false;
 $('swfGenBtn').value = 'Export Animation';
+$('export').innerHTML = '<a id="zExportURL" href="' + $('zExportURL').href + '>' + $('zExportURL').href + '</a>';
 }
 
 function genFlashEvent(){
