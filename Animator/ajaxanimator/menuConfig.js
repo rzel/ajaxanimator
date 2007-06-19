@@ -31,7 +31,7 @@
     menuModel.addItem(22, 'Previous Frame','../images/control_rewind_blue.png' ,'',40,'','gotoframe(currentFrameSelection-1,1)');
     menuModel.addItem(55, 'Last Frame','../images/control_end_blue.png' ,'',40,'','gotoframe(totalFrames,1)');
     menuModel.addItem(54, 'First Frame','../images/control_start_blue.png' ,'',40,'','gotoframe(1,1)');
-
+    menuModel.addItem(56, 'Set Last Frame','' ,'',40,'','changeTotalFrameValue(currentFrameSelection)');
 	
     menuModel.addItem(30 , 'About','' ,'',6,'','showWin("AboutMain")');
     menuModel.addItem(31 , 'Manual' ,'../images/help.png' ,'',6,'','showWin("ManualMain")');

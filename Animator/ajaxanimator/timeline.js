@@ -145,6 +145,12 @@ function setTotalFrameValue(){
 	qframe.style.backgroundColor="#FF9900";
 }
 
+function changeTotalFrameValue(tfValue){
+totalFrames = tfValue;
+setTotalFrameValue();
+gotoframe(currentFrameSelection,currentLayerSelection);
+}
+
 function gotoframe(framenumber, layer) //Function to change the current selected frame
 {
 	if(framenumber > 0 && framenumber < totalFramesPerLayer){
@@ -202,7 +208,17 @@ function removeKeyframe(){ //Function to delete selected keyframe
 	}
 }
 
-
+function isKeyframe(frame, layer){
+	var pKeyFrame = new Boolean();
+	pKeyFrame = false
+	for(var m = 0; m <= kFrameCount; m++)
+	{
+	if(KeyFrames[m] == frame + "," + layer){
+	pKeyFrame = true
+	}
+	}
+	return pKeyFrame;
+}
 
 function ClearAllKeyframes(){ //Empties timeline
 
@@ -293,12 +309,32 @@ if(DrawCanvas[uFrame] != null){
 canvasframepreview = DrawCanvas[uFrame].renderer.getMarkup()
 }
 
+if(zisempty == false){
+var pstr = DrawCanvas[uFrame].renderer.getMarkup();
+count = 0; 
+var key = "rect";
+pos = pstr.indexOf(key);
+while ( pos != -1 ) {
+count++;
+pos = pstr.indexOf(key,pos+1);
+}
+key = "line";
+pos = pstr.indexOf(key);
+while ( pos != -1 ) {
+count++;
+pos = pstr.indexOf(key,pos+1);
+}
+}
+
 //zDataText = '<b>frame:</b> '+uFrame+'<br><b>layer:</b> '+uLayer
 zDataText = '<b>layer:</b> '+uLayer
 zDataText+='<br><b>keyframe:</b>'+ziskeyframe+'<br><b>selected:</b> '+zisselected;
 zDataText+='<br><b>empty:</b>' + zisempty;
+if(zisempty == false){
+zDataText+='<br><b>Total Objects:</b> ' + count/2;
+}
 if(uFrame == totalFrames){
-zDataText+='<br><br><b>Last Frame</b>';
+zDataText+='<br><b>Last Frame</b>';
 }
 //zDataText+='<br><b>Preview:</b><br>' +  canvasframepreview.replace('_moz-userdefined=""','');
 //document.getElementById("ToolTipData").innerHTML=zDataText

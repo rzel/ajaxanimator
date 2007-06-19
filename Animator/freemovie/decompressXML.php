@@ -2,6 +2,7 @@
 function decompressXML($XMLData){
 $decompressedXML = $XMLData;
 $decompressedXML = str_replace("g","0,0,0",$decompressedXML);
+$decompressedXML = str_replace("_e",'<svg t="f">',$decompressedXML);   
 $decompressedXML = str_replace("*","255,0,0",$decompressedXML);
 $decompressedXML = str_replace("_A","<AnimationXML>",$decompressedXML);
 $decompressedXML = str_replace(",A","</AnimationXML>",$decompressedXML);
