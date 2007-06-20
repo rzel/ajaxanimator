@@ -131,12 +131,7 @@ $('jsQuery').value = zxvlue;
 function decompressxml(pxml){
 var zxvlue;
 zxvlue = pxml;
-
 zxvlue = replaceDecompressXML(zxvlue);
-
-
-
-
 return zxvlue;
 }
 function compressxml(pxml){
@@ -147,6 +142,7 @@ return zxvlue;
 }
 
 function generateAnimationXML(){
+
 var zAnimationXML = "<AnimationXML>";
 for(var pzxy = 1; pzxy <= totalFrames;pzxy++){
 if(DrawCanvas[pzxy] != null && DrawCanvas[pzxy].renderer.getMarkup() != "<svg></svg>"){
@@ -166,12 +162,105 @@ zAnimationXML += "<svg></svg>"
 }else{
 zAnimationXML += '<svg t="f"></svg>'
 }
-
 }
 }
 zAnimationXML += "</AnimationXML>";
 //the above code is to make the vml less crappy
-return removeUnusedAttributes(zAnimationXML);
+
+var cleanAXML = "";
+if(isIE() == true){
+zAnimationXML = replaceAll('id=shape:','id="shape:',zAnimationXML)
+zAnimationXML = replaceAll(" style",'" style',zAnimationXML)
+cleanAXML = zAnimationXML;
+}else{
+cleanAXML = removeUnusedAttributes(zAnimationXML);
+}
+var finalAXML = "";
+if(isIE() == true){
+finalAXML = convertVML(cleanAXML);
+}else{
+finalAXML = cleanAXML
+}
+return finalAXML;
+}
+
+function replaceT(findStr, repStr, origStr){
+var re = new RegExp(findStr, "g"); // pre replace using regexp
+return origStr.replace(re, repStr);
+}
+		
+function convertVML(VMLData){
+var qVML = VMLData;
+var qSVG = "";
+qVML = replaceT("v:","",qVML)
+qVML = replaceT('id=shape:','id="shape:',qVML)
+qVML = replaceT(" style",'" style',qVML)
+qVML = replaceT("black","rgb(0,0,0)",qVML)
+qVML = replaceT("red","rgb(255,0,0)",qVML)
+qVML = replaceT('""','"',qVML)
+if (window.ActiveXObject){
+var vmlXML=new ActiveXObject("Microsoft.XMLDOM");
+vmlXML.async="false";
+vmlXML.loadXML(qVML);
+}else{
+var vmlXML=(new DOMParser()).parseFromString(qVML, "text/xml");
+}
+var vmlDomTree = vmlXML.getElementsByTagName('AnimationXML')[0];
+qSVG += "<AnimationXML>";
+for(var zFrames = 0; zFrames < vmlXML.getElementsByTagName('svg').length; zFrames++){
+var frameNode = vmlXML.getElementsByTagName('svg')[zFrames];
+qSVG += "<svg>";
+for(var zLines = 0; zLines < frameNode.getElementsByTagName('line').length; zLines++){
+var lineNodes = frameNode.getElementsByTagName('line')[zLines];
+var qSVGLine = "<line ";
+qSVGLine += 'x1="' + (parseFloat(lineNodes.getAttribute("from").split(',')[0])/0.75) + '" ';
+qSVGLine += 'y1="' + (parseFloat(lineNodes.getAttribute("from").split(',')[1])/0.75) + '" ';
+qSVGLine += 'x2="' + (parseFloat(lineNodes.getAttribute("to").split(',')[0])/0.75) + '" ';
+qSVGLine += 'y2="' + (parseFloat(lineNodes.getAttribute("to").split(',')[1])/0.75) + '" ';
+qSVGLine += 'stroke="' + lineNodes.getAttribute("strokecolor") + '" ';
+qSVGLine += 'stroke-width="' + (parseFloat(lineNodes.getAttribute("strokeweight"))/0.75) + '" ';
+qSVGLine += "></line>";
+qSVG += qSVGLine;
+}
+for(var zRect = 0; zRect < frameNode.getElementsByTagName('rect').length; zRect++){
+var rectNodes = frameNode.getElementsByTagName('rect')[zRect];
+var qSVGRect = "<rect ";
+var rectTop = 0;
+var rectLeft = 0;
+var rectWidth = 0;
+var rectHeight = 0;
+var zRectStyle = rectNodes.getAttribute("style").split(';')
+for(var currentRectStyle = 0; currentRectStyle <= zRectStyle.length -1 ; currentRectStyle++){
+var currentStyle = zRectStyle[currentRectStyle].split(':');
+currentStyle[0] = replaceT(" ","",currentStyle[0])
+currentStyle[1] = replaceT(" ","",currentStyle[1])
+if(currentStyle[0].indexOf('LEFT') != -1){
+rectLeft = currentStyle[1];
+}
+if(currentStyle[0].indexOf('TOP') != -1){
+rectTop = currentStyle[1];
+}
+if(currentStyle[0].indexOf('WIDTH') != -1){
+rectWidth = currentStyle[1];
+}
+if(currentStyle[0].indexOf('HEIGHT') != -1){
+rectHeight = currentStyle[1];
+}
+}
+qSVGRect += 'stroke-width="' + (parseFloat(rectNodes.getAttribute("strokeweight"))/0.75) + '" ';
+qSVGRect += 'stroke="' + rectNodes.getAttribute("strokecolor") + '" ';
+qSVGRect += 'fill="' + rectNodes.getAttribute("fillcolor") + '" ';
+qSVGRect += 'height="' + rectHeight + '" ';
+qSVGRect += 'width="' + rectWidth + '" ';
+qSVGRect += 'x="' + rectLeft + '" ';
+qSVGRect += 'y="' + rectTop + '" ';
+qSVGRect += '></rect>'
+qSVG += qSVGRect
+}
+qSVG += "</svg>";
+}
+qSVG += "</AnimationXML>";
+return qSVG;
 }
 
 function isIE(){
