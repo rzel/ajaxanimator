@@ -37,6 +37,9 @@ var paneModel = new DHTMLSuite.paneSplitterModel();
 	$('export').innerHTML = "";
 	if(contentObj.id == 'swfpreview'){
 	preFlash();
-	
+	if(isIE() == true){
+	setTimeout("preFlash()",1000)
+		setTimeout("preFlash()",5000)
+	}
 	}
 	}
