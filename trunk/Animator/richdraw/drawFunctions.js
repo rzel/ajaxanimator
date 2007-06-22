@@ -1,5 +1,6 @@
  var DrawCanvas = new Array();
  var currentCanvas = 1;
+ var zCurrentCanvasMode = 'rect';
 
 
  function initDraw() {
@@ -23,6 +24,13 @@
 	isinit = true;
   }
   
+  function refreshModeData(){
+
+    DrawCanvas[currentCanvas].editCommand('mode', zCurrentCanvasMode);
+
+  setTimeout('refreshModeData()',1000);
+  }
+  
   
   
   function setCanvasDefaults(){
@@ -37,13 +45,15 @@
     function setCanvasProperties(){
     DrawCanvas[currentCanvas].editCommand('fillcolor', $('fillcolor').style.backgroundColor);
     DrawCanvas[currentCanvas].editCommand('linecolor', $('linecolor').style.backgroundColor);
-	var width = $('linewidth').options[$('linewidth').selectedIndex].value;
-    DrawCanvas[currentCanvas].editCommand('linewidth', width);
-	DrawCanvas[currentCanvas].editCommand('mode', DrawCanvas[previousCanvas].mode);
+	
+	var LWidth = $('linewidth').options[$('linewidth').selectedIndex].value;
+    DrawCanvas[currentCanvas].editCommand('linewidth', LWidth);
+	DrawCanvas[currentCanvas].editCommand('mode', zCurrentCanvasMode);
   }
   
   function setMode(mode, status) {
     DrawCanvas[currentCanvas].editCommand('mode', mode);
+	zCurrentCanvasMode = mode;
     if (mode == 'select')
       $('status').innerHTML = 'Mode: Select/Move' ;
     else
@@ -84,17 +94,13 @@
   }
   
   function onSelect() {
-    $('fillcolor').selectedIndex = getOptionByValue($('fillcolor'), DrawCanvas[currentCanvas].queryCommand('fillcolor'));
     $('fillcolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('fillcolor');
-    $('linecolor').selectedIndex = getOptionByValue($('linecolor'), DrawCanvas[currentCanvas].queryCommand('linecolor'));
     $('linecolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('linecolor');
-    $('linewidth').selectedIndex = getOptionByValue($('linewidth'), DrawCanvas[currentCanvas].queryCommand('linewidth'));
+	$('linewidth').selectedIndex = getOptionByValue($('linewidth'), DrawCanvas[currentCanvas].queryCommand('linewidth'));
   }
 
   function onUnselect() {
-    $('fillcolor').selectedIndex = getOptionByValue($('fillcolor'), DrawCanvas[currentCanvas].queryCommand('fillcolor'));
-    $('fillcolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('fillcolor');
-    $('linecolor').selectedIndex = getOptionByValue($('linecolor'), DrawCanvas[currentCanvas].queryCommand('linecolor'));
+   $('fillcolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('fillcolor');
     $('linecolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('linecolor');
-    $('linewidth').selectedIndex = getOptionByValue($('linewidth'), DrawCanvas[currentCanvas].queryCommand('linewidth'));
+   $('linewidth').selectedIndex = getOptionByValue($('linewidth'), DrawCanvas[currentCanvas].queryCommand('linewidth'));
   }

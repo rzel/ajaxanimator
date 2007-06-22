@@ -247,7 +247,7 @@ asdf = asdf + (" cellspacing='0' border='1' onmouseover=\"document.body.style.cu
 
 asdf = asdf + ("<tr>")
 
-asdf = asdf + ("<td onmouseover=\"document.body.style.cursor='default';Tip('Layer "+layers+"');\" height='5' bgcolor='"+LayerBGColor+"'");
+asdf = asdf + ("<td onmouseover=\"try{document.body.style.cursor='default';Tip('Layer "+layers+"');}catch(err){}\" height='5' bgcolor='"+LayerBGColor+"'");
 
 
 asdf = asdf + (">Layer" + layers + "</td>")
@@ -260,7 +260,7 @@ asdf = asdf + ("style='-moz-user-select: none; background-color:"+FrameColor+";'
 
 asdf = asdf + ("onmousedown='gotoframe(" + x +", " + layers +");'"); //Start Javascript event handling
 
-asdf = asdf + ("onmouseover=\"Tip(setTooltipData('"+x+"','"+layers+"'),TITLE, 'Frame "+x+"');\" "); 
+asdf = asdf + ("onmouseover=\"try{Tip(setTooltipData('"+x+"','"+layers+"'),TITLE, 'Frame "+x+"');}catch(err){}\" "); 
 
 
 asdf = asdf + (">" + x);//Text in each frame

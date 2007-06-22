@@ -23,8 +23,6 @@
     DHTMLSuite.include("paneSplitter");
     DHTMLSuite.include("menuBar");
     DHTMLSuite.include("windowWidget");
-    DHTMLSuite.include("infoPanel");
-    DHTMLSuite.include("modalMessage");
     DHTMLSuite.include("colorWidget");
     DHTMLSuite.include("colorSlider");
     DHTMLSuite.include("slider");

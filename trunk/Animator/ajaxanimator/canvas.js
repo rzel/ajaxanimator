@@ -99,12 +99,12 @@ canvasDisplayStyle = 'none'
 initDraw();
 }
 
-function setCanvasProperties(){
-canvasHeight = $('cHeight').value;
-canvasWidth = $('cWidth').value;
+function setCP(){
+canvasHeight = parseInt($('cHeight').value);
+canvasWidth = parseInt($('cWidth').value);
 
-document.getElementById('CanvasContainer').style.height =   $('cHeight').value + 'px';
-document.getElementById('CanvasContainer').style.width =  $('cHeight').value + 'px';
+$('CanvasContainer').style.height = canvasHeight+ 'px';
+$('CanvasContainer').style.width =  canvasWidth + 'px';
 
 $('zFlashPreviewDiv').style.height = canvasHeight + 'px';
 $('zFlashPreviewDiv').style.width = canvasWidth + 'px';
@@ -566,12 +566,10 @@ function genFlash(){
 var zSWFFilename=prompt("please enter a file name for the animation");
 zSWFFilename = zSWFFilename.replace(".swf","");
 zSWFFilename = zSWFFilename.replace("/","");
-//zSWFFilename = zSWFFilename.replace("\","");
 zSWFFilename = zSWFFilename.replace(" ","_");
 zSWFFilename = zSWFFilename.replace("+","");
 zSWFFilename = zSWFFilename.replace("&","");
 zSWFFilename = zSWFFilename.replace("?","");
-
 $('swfGenBtn').disabled = true;
 $('swfGenBtn').value = 'generating...';
 $('export').innerHTML = '';
