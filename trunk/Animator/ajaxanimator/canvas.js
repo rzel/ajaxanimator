@@ -15,18 +15,6 @@ var replaceEngine = 'string'; //either regexp or string, it is the engine that c
 AnimationPlay = true;
 canvasIssueResolved = false;
 
-function makeCanvas(){
-var canvasString;
-canvasString='<div id="richdraw'+canvasNumber+'" style="';
-canvasString+='border:1px solid black;position:relative;top:0px'
-canvasString+='width:99%;height:99%;background-color:white;'
-canvasString+='-moz-user-select:none;display:'+canvasDisplayStyle+'"></div>';
-document.getElementById("CanvasContainer").innerHTML+=canvasString;
-canvasNumber++;
-canvasDisplayStyle = "none";
-initDraw();
-currentCanvas++;
-}
 
 function convertVML(s){
 
@@ -275,7 +263,7 @@ function isIE(){
 
 function initCanvas(){
 	//for(var zxCanvas = 0; zxCanvas > 10; zxCanvas++){
-	makeCanvas();
+	makeCanvasFromIE(1);
 	//}
 	gotoframe(1,1);
 }
