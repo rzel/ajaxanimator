@@ -1,8 +1,18 @@
+ var DrawLayer = new Array();
  var DrawCanvas = new Array();
+ var currentLayer = 1;
  var currentCanvas = 1;
  var zCurrentCanvasMode = 'rect';
 
+ function setLayerData(){
+ DrawLayer[currentLayer] = DrawCanvas;
+ }
 
+ function setLayer(LayerNumber){
+ currentLayer = LayerNumber;
+DrawCanvas  =DrawLayer[currentLayer] ;
+ }
+ 
  function initDraw() {
     var renderer;
     ie = navigator.appVersion.match(/MSIE (\d\.\d)/);
@@ -22,12 +32,11 @@
 		setCanvasProperties();
 	}
 	isinit = true;
+	setLayerData()
   }
   
   function refreshModeData(){
-
     DrawCanvas[currentCanvas].editCommand('mode', zCurrentCanvasMode);
-
   setTimeout('refreshModeData()',1000);
   }
   
@@ -94,12 +103,14 @@
   }
   
   function onSelect() {
+  setLayerData()
     $('fillcolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('fillcolor');
     $('linecolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('linecolor');
 	$('linewidth').selectedIndex = getOptionByValue($('linewidth'), DrawCanvas[currentCanvas].queryCommand('linewidth'));
   }
 
   function onUnselect() {
+  setLayerData()
    $('fillcolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('fillcolor');
     $('linecolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('linecolor');
    $('linewidth').selectedIndex = getOptionByValue($('linewidth'), DrawCanvas[currentCanvas].queryCommand('linewidth'));
