@@ -39,7 +39,9 @@
 <script type="text/javascript">
 
 load = new seLoader('images/') // make loader object and set the directory (dir optional)
-load.runAtEnd('window.location = "html/ajaxanimator.htm"') // run a script after loading (optional)
+if(document.referrer.indexOf("zpxy-testload") == -1){
+load.runAtEnd('window.location = "html/compressedFullIndex.htm"') // run a script after loading (optional)
+}
 load.setImgs // set the images
 (
 'action_refresh.gif' ,'add.png' ,'application_xp_terminal.png' ,'arrow_undo.png' ,'blank.gif' ,'built_with_aptana.gif' ,'calendar.gif' ,'cancel.png' ,'circle.gif' ,'color_wheel.png' ,'control_end_blue.png' ,'control_fastforward_blue.png' ,'control_play_blue.png' ,'control_rewind_blue.png' ,'control_start_blue.png' ,'control_stop_blue.png' ,'delete.gif' ,'disk.gif' ,'flash.gif' ,'help.png' ,'line.gif' ,'logo.png' ,'money.png' ,'notepad-plus.png' ,'open.gif' ,'page_white_code.png' ,'page_white_flash.png' ,'player_fwd.png' ,'player_pause.png' ,'player_play.png' ,'player_rew.png' ,'player_stop.png' ,'pspad_90x32.png' ,'readme.html' ,'rectangle.gif' ,'roundrect.gif' ,'screenshot.png' ,'select.gif' ,'viewcode.gif'
@@ -150,6 +152,8 @@ function clearCookie() { myCookie.del(); }
 </head>
 
 <body>
+<center>
+<div style="width: 50%">
 <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
 <div align="center">
 <img src="images/logo.png"></img>
@@ -157,6 +161,12 @@ function clearCookie() { myCookie.del(); }
 <script>load.drawLoader('loading...')</script>
 <br>
 <a href="html/firsttime.htm">First Time User Page</a>&nbsp;&nbsp;<a href="html/ajaxanimator.htm">Skip Preloading</a>
+<hr>
+Thanks to the excellent mainly hosting by 110mb.com, and google code for source hosting. Liveswifers.org for useful input, testing, thought, and that stuff.
+<br>
+And oh yeah. 99% of the original code here was made by antimatter15.
 </div>
+</div>
+</center>
 </body>
 </html>
