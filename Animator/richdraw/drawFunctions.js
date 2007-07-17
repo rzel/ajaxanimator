@@ -132,7 +132,40 @@ DrawCanvas  =DrawLayer[currentLayer] ;
 	  Event.observe(newRect, "mousedown", DrawCanvas[1].onHitListener);  
   }
 
-function openAnimation(Axml){
+  function openAnimation(){
+  loadAnimation(unescape(uploadFrame.document.body.innerHTML))
+  }
+  
+function newCanvas(){
+gotoframe(1,1)
+DrawCanvas = new Array();
+currentLayer = 1;
+currentCanvas = 1;
+$("CanvasContainer").innerHTML = "";
+KeyFrames = new Array();
+$("frameContainer").innerHTML = "";
+layers = 0;
+kFrameCount = 0
+totalFrames = 1;
+currentFrameSelection = 1;
+currentLayerSelection = 1;
+addLayer()
+makeCanvasFromIE(1)
+gotoframe(1,1)
+revisionNumber = 1;
+animationRevision = new Array();
+animationRevisionURL = new Array();
+lastAnimationURL = '';
+}
+  
+function confirmNewCanvas(){
+	if (confirm("Do you want to save first?")) { 
+	
+	}
+}  
+  
+function loadAnimation(Axml){
+newCanvas();
 var svgNamespace = 'http://www.w3.org/2000/svg';
 if (window.ActiveXObject){
 var domContainer = new ActiveXObject("Microsoft.XMLDOM");
@@ -171,7 +204,7 @@ return "<AnimationXML>" + $('CanvasContainer').innerHTML + "</AnimationXML>";
 }
 
 function saveAnimation(){
-window.location = dataUrl(animationSaveData(), "application/ajaxanimator")
+window.location = dataUrl(escape(animationSaveData()), "application/ajaxanimator")
 }
 
 function dataUrl(data, mimeType){ // turns a string into a url that appears as a file. (to ff/op/saf)

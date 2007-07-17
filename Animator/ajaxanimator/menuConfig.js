@@ -7,9 +7,9 @@
 	menuModel.addItem(40, 'Animation' ,'' ,'',0,'',''  ,'',160);
     menuModel.addItem(6 , 'Help' ,'' ,'',0,'',''  ,'',100);
 
-    menuModel.addItem(7 , 'Save' ,'../images/disk.gif' ,'',1,'','progress()');
-    menuModel.addItem(8 , 'Save as','../images/disk.gif' ,'',1,'','progress()');
-    menuModel.addItem(9 , 'Open' ,'../images/open.gif' ,'',1,'','progress()');
+    menuModel.addItem(7 , 'New' ,'../images/new.png' ,'',1,'','confirmNewCanvas()');
+    menuModel.addItem(8 , 'Save' ,'../images/disk.gif' ,'',1,'','saveDialog()');
+    menuModel.addItem(9 , 'Open' ,'../images/open.gif' ,'',1,'','openDialog()');
     menuModel.addItem(10, 'Export' ,'../images/flash.gif' ,'',1,'','genFlash()');
 
     menuModel.addItem(24, 'Undo' ,'../images/arrow_undo.png' ,'',2,'','progress()');
