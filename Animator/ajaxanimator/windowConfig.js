@@ -35,18 +35,7 @@
 	}
 	}
 	
-	function saveDialog(){
-	SaveOpenWin.show();
-		SaveOpenWin.activateTab("Save");
-		    SaveOpenWin.minimizeWindow();
-		   		   setTimeout("SaveOpenWin.maximizeWindow();",10)
-	}
-	function openDialog(){
-	SaveOpenWin.show();
-		SaveOpenWin.activateTab("Open");
-		   SaveOpenWin.minimizeWindow();
-		   		   setTimeout("SaveOpenWin.maximizeWindow();",10)
-	}
+
 
     var HelpModel = new DHTMLSuite.windowModel();
     HelpModel.createWindowModelFromMarkUp('HELP');
@@ -64,6 +53,18 @@
     ColorWin.setStatusBarText('Color');
     ColorWin.close();
 	
+		function saveDialog(){
+	SaveOpenWin.show();
+		SaveOpenWin.activateTab("Save");
+		    SaveOpenWin.minimizeWindow();
+		   		   setTimeout("SaveOpenWin.maximizeWindow();",10)
+	}
+	function openDialog(){
+	SaveOpenWin.show();
+		SaveOpenWin.activateTab("Open");
+		   SaveOpenWin.minimizeWindow();
+		   		   setTimeout("SaveOpenWin.maximizeWindow();",10)
+	}
 	var SaveOpenModel = new DHTMLSuite.windowModel();
     SaveOpenModel.createWindowModelFromMarkUp('SaveOpen');
     var SaveOpenWin = new DHTMLSuite.windowWidget();
