@@ -181,16 +181,41 @@ $('cWidth').value = "480";
         </center>
       </div>
       <div id="centerContent">
-
-   		  <div id="CanvasContainer" style="margin-left: auto; margin-right: auto;width: 480px; height: 272px;overflow:scrolling">
+<div id="appIntro">
+<script type="text/javascript">
+function startDraw(){
+$('status').style.display = '';
+$('CanvasContainer').style.display = '';
+$('playControls').style.display = '';
+$('appIntro').style.display = 'none';
+}
+</script>
+<center>
+<img src="../images/logo.png" alt="Ajax Animator">
+<br>
+<div style="width: 50%">
+This application will work best on standards compliant webbrowsers supporting SVG such as Safari and Firefox.
+Although it contains some support for Internet Explorer 6+, it is not fully supported.
+If you do not currently run one of these web browsers, please consider testing one out.
+<br>
+<hr>
+<input type="button" onclick="startDraw()" value="Create A New Animation">
+<hr>
+If you need help creating an animation, please read the manual or faq, located under the help section of the top menu bar.
+</div>
+</center>
+</div>
+   		  <div id="CanvasContainer" style="display: none; margin-left: auto; margin-right: auto;width: 480px; height: 272px;overflow:scrolling">
 		 </div><center>
 		  <br>
+		  <div id="playControls" style="display: none">
 		  <img alt="<--" src="../images/player_rew.png" onclick="gotoframe(currentFrameSelection-1,1);">
 		  <img alt="play" src="../images/player_play.png" onclick="playAnimation();">
 		  <img alt="stop" src="../images/player_stop.png" onclick="stopAnimation();">
 		  <img alt="-->" src="../images/player_fwd.png" onclick="gotoframe(currentFrameSelection+1,1);">
+		  </div>
 		  <br>
-		  <div style="font-size:x-small" id="status"></div>
+		  <div style="display: none; font-size:x-small" id="status"></div>
         </center>
       </div>
 	  <div id="FlashPreview">
@@ -233,5 +258,16 @@ $('cWidth').value = "480";
    <script type="text/javascript" src="../ajaxanimator/paneSplitterConfig.js"></script>
     <script type="text/javascript" src="../ajaxanimator/menuConfig.js"></script>
     <script type="text/javascript" src="../ajaxanimator/seizure.js"></script>
+	  <!-- Histats.com  START  --> 
+  
+ <script  type="text/javascript" language="javascript"> 
+ var s_sid = 101448;var st_dominio = 4; 
+ var cimg = 0;var cwi =112;var che =48; 
+ </script><script  type="text/javascript" language="javascript" src="http://s10.histats.com/js9.js"></script> 
+ <noscript><a href="http://www.histats.com" target="_blank"> 
+ <img  src="http://s4.histats.com/stats/0.gif?101448&1" alt="web page hit counter" border="0"></a> 
+ </noscript> 
+ <!-- Histats.com  END  --> 
+
   </body>
 </html>
