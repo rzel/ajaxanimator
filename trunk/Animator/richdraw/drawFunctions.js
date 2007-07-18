@@ -137,6 +137,10 @@ DrawCanvas  =DrawLayer[currentLayer] ;
   }
   
 function newCanvas(){
+revisionNumber = 1;
+animationRevision = new Array();
+animationRevisionURL = new Array();
+lastAnimationURL = '';
 gotoframe(1,1)
 DrawCanvas = new Array();
 currentLayer = 1;
@@ -152,15 +156,36 @@ currentLayerSelection = 1;
 addLayer()
 makeCanvasFromIE(1)
 gotoframe(1,1)
-revisionNumber = 1;
-animationRevision = new Array();
-animationRevisionURL = new Array();
-lastAnimationURL = '';
 }
+  function toggleLoadInput(){
+  if($("STRINPT").style.display == "none"){
+  $("STRINPT").style.display = ""
+  }else{
+  $("STRINPT").style.display = "none"
+  }
+  }
   
+  function toggleSaveInput(){
+  if($("STROUT").style.display == "none"){
+  $("STROUT").style.display = ""
+  }else{
+  $("STROUT").style.display = "none"
+  }
+  }
+  
+ 
+  function saveAXTxt(){
+  $("AXTxt").value = escape(animationSaveData());
+  }
+  
+  function loadAXIT(){
+  loadAnimation(unescape($("AXIT").value));
+  }
 function confirmNewCanvas(){
-	if (confirm("Do you want to save first?")) { 
-	
+	if (confirm("Do you want to save before continuing?\n press Cancel to proceed anyways")) { 
+		saveDialog();
+	}else{
+	newCanvas();
 	}
 }  
   

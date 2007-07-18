@@ -29,6 +29,8 @@ $decompressedXML = str_replace('"x1=','" x1=',$decompressedXML);
 $decompressedXML = str_replace('"y1=','" y1=',$decompressedXML);
 $decompressedXML = str_replace('stroke=" ','stroke="',$decompressedXML);
 $decompressedXML = str_replace('fill=" ','fill="',$decompressedXML);
+$decompressedXML = str_replace('rectx" ','rect x"',$decompressedXML);
+$decompressedXML = str_replace('> <" ','><',$decompressedXML);
 return $decompressedXML;
 }
 ?>
