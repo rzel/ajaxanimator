@@ -8,32 +8,19 @@
     <title>
       Animator
     </title>
-    <script type="text/javascript" src="../js/dynamicdriveajax.js">
-</script>
-    <script type="text/javascript" src="../ajaxanimator/canvas.js">
-</script>
-    <script type="text/javascript" src="../dhtmlsuite/dhtmlSuite-common.js">
-</script>
-    <script type="text/javascript" src="../lib/prototype.js">
-</script>
-    <script type="text/javascript" src="../lib/scriptaculous.js">
-</script>
-    <script type="text/javascript" src="../ajaxanimator/timeline.js">
-</script>
-    <script type="text/javascript" src="../ajaxanimator/includes.js">
-</script>
-    <script type="text/javascript" src="../js/ajaxroutine.js">
-</script>
-    <script type="text/javascript" src="../js/md5.js">
-</script>
-    <script type="text/javascript" src="../richdraw/richdraw.js">
-</script>
-    <script type="text/javascript" src="../richdraw/svgrenderer.js">
-</script>
-    <script type="text/javascript" src="../richdraw/vmlrenderer.js">
-</script>
-    <script type="text/javascript" src="../richdraw/drawFunctions.js">
-</script>
+    <script type="text/javascript" src="../js/dynamicdriveajax.js"></script>
+    <script type="text/javascript" src="../ajaxanimator/canvas.js"></script>
+    <script type="text/javascript" src="../dhtmlsuite/dhtmlSuite-common.js"></script>
+    <script type="text/javascript" src="../lib/prototype.js"></script>
+    <script type="text/javascript" src="../lib/scriptaculous.js"></script>
+    <script type="text/javascript" src="../ajaxanimator/timeline.js"></script>
+    <script type="text/javascript" src="../ajaxanimator/includes.js"></script>
+    <script type="text/javascript" src="../js/ajaxroutine.js"></script>
+    <script type="text/javascript" src="../js/md5.js"></script>
+    <script type="text/javascript" src="../richdraw/richdraw.js"></script>
+    <script type="text/javascript" src="../richdraw/svgrenderer.js"></script>
+    <script type="text/javascript" src="../richdraw/vmlrenderer.js"></script>
+    <script type="text/javascript" src="../richdraw/drawFunctions.js"></script>
     <script type="text/javascript">
 window.onload = startUp;
     nn=(document.layers)?true:false;
@@ -287,19 +274,36 @@ function startDraw(){
     </div>
     <div id="SaveOpen" windowproperties="title:Save/Open,resizable:true,closable:true,dragable:true,cookieName:SaveOpenWindowCookie,xPos:30,yPos:40,minWidth:400,minHeight:250,activeTabId:Save">
       <div id="Save" style="overflow:hidden" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Save">
-<center>     
+<br><center>     
+
 	 <input type="button" onclick="saveAnimation()" value="Save To Computer"> <input type="button" onclick="alert('Not implemented yet')" value="Save To Webserver">
-      </center>
+      	  		<hr>
+			<a href="javascript:toggleSaveInput()">Save as text</a>
+			<div id="STROUT" style="display:none">
+		<textarea id="AXTxt" style="width: 200px"></textarea><br>
+		<input type="button" value="Save" onclick="saveAXTxt()">
+	  </center>
+	  
 	  </div>
+	  
       <div id="Open" style="overflow:hidden" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Open">
-       <center>
+       <br>
+	   <center>
 	   <form enctype="multipart/form-data" target="uploadFrame" action="../php/upload.php" method="post">
      
 	   Open: <input name="uploaded" type="file"> <input type="submit" onclick="setTimeout('openAnimation()',1000);" value="Upload">
         </form><iframe name="uploadFrame" id="uploadFrame" style="display:none;visibility: hidden; height: 1px; width: 1px"></iframe>
+		<hr>
+		<a href="javascript:toggleLoadInput()">Open from text</a>
+		<div id="STRINPT" style="display:none">
+		<textarea id="AXIT" style="width: 200px"></textarea><br>
+		<input type="button" value="Load" onclick="loadAXIT()">
+		</div>
 		</center>
       </div>
-    </div><script type="text/javascript" src="../ajaxanimator/windowConfig.js">
+	  
+    </div>
+	<script type="text/javascript" src="../ajaxanimator/windowConfig.js">
 </script><script type="text/javascript" src="../ajaxanimator/colorConfig.js">
 </script><script type="text/javascript" src="../ajaxanimator/paneSplitterConfig.js">
 </script><script type="text/javascript" src="../ajaxanimator/menuConfig.js">

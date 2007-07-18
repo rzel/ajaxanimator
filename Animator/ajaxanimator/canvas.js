@@ -501,10 +501,8 @@ function preFlash(){
 initRevisionBrowser()
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
 
-if(animationRevision[revisionNumber -1] == generateAnimationXML()){
-
+if(animationRevision[revisionNumber -1 ] == generateAnimationXML()){
 setTimeout("embedAnimationPreview()",100);//hack to make it work right...
-
 }else{
 flashVerification()
 $('zFlashPreviewDiv').style.height = canvasHeight + 'px';
@@ -519,7 +517,6 @@ ajaxpack.postAjaxRequest("../freemovie/swfgen.php", "type=preview&height="+canva
 }
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
 }
-
 
 
 function preFlashEvent(){
