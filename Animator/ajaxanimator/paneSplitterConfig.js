@@ -5,9 +5,11 @@ var paneModel = new DHTMLSuite.paneSplitterModel();
     paneModel.addPane(paneWest);
 
     // Creating east pane
-    var paneEast = new DHTMLSuite.paneSplitterPaneModel( { position : "east", id:"eastPane",size:160,minSize:10,maxSize:500 ,closable: false,scrollbars:false} );
-    paneEast.addContent( new DHTMLSuite.paneSplitterContentModel( { closable: false, id:"eastContent",htmlElementId:'eastContent',title:'Ads', tabTitle: 'Ads'} ) );
-      paneModel.addPane(paneEast);
+    var paneEast = new DHTMLSuite.paneSplitterPaneModel( { position : "east", id:"eastPane",size:160,minSize:10,maxSize:500 ,closable: false,scrollbars:true} );
+    paneEast.addContent( new DHTMLSuite.paneSplitterContentModel( { closable: false, id:"eastContent",htmlElementId:'eastContent',title:'Edit History', tabTitle: 'History'} ) );
+    paneEast.addContent( new DHTMLSuite.paneSplitterContentModel( { closable: false, id:"userContent",htmlElementId:'userContent',title:'Login/Register', tabTitle: 'Login'} ) );
+
+    paneModel.addPane(paneEast);
 
     // Creating south pane
     var paneSouth = new DHTMLSuite.paneSplitterPaneModel( { position : "south", id:"southPane",size:160,minSize:10,maxSize:500,resizable:true,scrollbars:false} );
