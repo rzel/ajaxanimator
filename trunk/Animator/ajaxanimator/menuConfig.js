@@ -12,7 +12,7 @@
     menuModel.addItem(9 , 'Open' ,'../images/open.gif' ,'',1,'','openDialog()');
     menuModel.addItem(10, 'Export' ,'../images/flash.gif' ,'',1,'','genFlash()');
 
-    menuModel.addItem(24, 'Undo' ,'../images/arrow_undo.png' ,'',2,'','progress()');
+    menuModel.addItem(24, 'Undo' ,'../images/arrow_undo.png' ,'',2,'','undo()');
 
     menuModel.addItem(12 , 'Animation' ,'../images/flash.gif' ,'',3,'','playAnimation()');
 

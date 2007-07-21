@@ -3,6 +3,10 @@
  var currentLayer = 1;
  var currentCanvas = 1;
  var zCurrentCanvasMode = 'rect';
+ var editHistoryNumber = 0;
+ var editHistory = new Array();
+ var mouseIsDown = new Boolean();
+ 
 
  function setLayerData(){
  DrawLayer[currentLayer] = DrawCanvas;
@@ -14,6 +18,7 @@ DrawCanvas  =DrawLayer[currentLayer] ;
  }
  
  function initDraw() {
+
     var renderer;
     ie = navigator.appVersion.match(/MSIE (\d\.\d)/);
     opera = (navigator.userAgent.toLowerCase().indexOf("opera") != -1);
@@ -26,9 +31,13 @@ DrawCanvas  =DrawLayer[currentLayer] ;
     DrawCanvas[currentCanvas] = new RichDrawEditor(document.getElementById('richdraw'+currentCanvas), renderer);
     DrawCanvas[currentCanvas].onselect = onSelect;
     DrawCanvas[currentCanvas].onunselect = onUnselect;
+	//$("CanvasContainer").onmousedown = startDown;
+	$("CanvasContainer").onmouseup = checkEdit;
+	//$("CanvasContainer").onclick = checkEdit;
 	if(totalFrames == 1){
 	setCanvasDefaults();
 	}else{
+	 addHistory("Add&nbsp;Frame")
 		setCanvasProperties();
 	}
 	isinit = true;
@@ -71,6 +80,7 @@ DrawCanvas  =DrawLayer[currentLayer] ;
   
   function deleteShape() {
     DrawCanvas[currentCanvas].deleteSelection();
+	addHistory("Delete Shape")
   }
   
   function setFillColor() {
@@ -189,6 +199,8 @@ function confirmNewCanvas(){
 	}
 }  
   
+  
+  
 function loadAnimation(Axml){
 newCanvas();
 var svgNamespace = 'http://www.w3.org/2000/svg';
@@ -210,10 +222,13 @@ for(var cId = 0; cId < domShape.childNodes.length; cId++){
 try{
 var cNode = domShape.childNodes[cId];
 var cAtt = cNode.attributes;
+
 var newShape = document.createElementNS(svgNamespace , cNode.tagName);
 for(var aId = 0; aId < cAtt.length; aId++){
 newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
 }
+
+
 DrawCanvas[dId +1].renderer.svgRoot.appendChild(newShape);
 Event.observe(newShape, "mousedown", DrawCanvas[dId +1].onHitListener);  
 }
@@ -254,3 +269,66 @@ function dataUrl(data, mimeType){ // turns a string into a url that appears as a
 	  }//end if object 
  return;
 }  //end function dataUrl
+function revertRevision(numId){
+//alert(editHistory[numId -1].id)
+//alert(numId)
+//$("TCContainer") = editHistory[numId -1]
+
+loadAnimation( editHistory[numId])
+editHistoryNumber++;
+editHistory[editHistoryNumber] = $("CanvasContainer").innerHTML
+addHistory("Revert to " + numId)
+
+}
+
+function addHistory(data){
+
+ var tbl = document.getElementById('HistoryContainer');
+  var lastRow = tbl.rows.length;
+  //var row = tbl.insertRow(0);
+  var row = tbl.insertRow(lastRow);
+  var zxdy = editHistoryNumber;
+  row.onmousedown = function(){
+  revertRevision(zxdy)
+  }
+  var cellLeft = row.insertCell(0);
+
+  var textNode = document.createTextNode(editHistoryNumber);
+  cellLeft.appendChild(textNode);
+  var cellRight = row.insertCell(1);
+  var el = document.createElement('span');
+  el.innerHTML = data
+  cellRight.appendChild(el);
+
+  
+}
+function undo(){
+revertRevision(editHistoryNumber -1);
+}
+
+function checkEdit(event){
+if (editHistory[editHistoryNumber] != $("CanvasContainer").innerHTML){
+editHistoryNumber++;
+editHistory[editHistoryNumber] = $("CanvasContainer").innerHTML
+
+if(DrawCanvas[currentCanvas].mode != "select"){
+var curM = DrawCanvas[currentCanvas].mode;
+var result = "";
+switch (curM) {
+case 'rect': result = 'Rectangle'; break;
+case 'roundrect': result = 'Rectangle'; break;
+case 'ellipse': result = 'Ellipse'; break;
+case 'line': result = 'Line'; break;
+}
+
+addHistory("Add&nbsp;" + result)
+
+}else{
+addHistory("Select/Move&nbsp;Object")
+}
+
+
+}
+}
+
+
