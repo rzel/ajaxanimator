@@ -200,9 +200,11 @@ window.onload = startUp;
 </div>
 <div id="userProfile" style="display:none">
 <div id="usrNme"></div>
-<br>
 <hr>
-<a href="javascript:logout()">Log Out</a>
+<a href="javascript:logout()">Log&nbsp;Out</a>
+<hr>
+My&nbsp;Animations:
+<div id="userFiles"></div>
 </div>
 </div>
 
@@ -289,7 +291,7 @@ function startDraw(){
       <div id="Save" style="overflow:hidden" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Save">
 <br><center>     
 
-	 <input type="button" onclick="saveAnimation()" value="Save To Computer"> <input type="button" onclick="alert('Not implemented yet')" value="Save To Webserver">
+	 <input type="button" onclick="saveAnimation()" value="Save To Computer"> <input type="button" onclick="savetoserver()" value="Save To Webserver">
       	  		<hr>
 			<a href="javascript:toggleSaveInput()">Save as text</a>
 			<div id="STROUT" style="display:none">

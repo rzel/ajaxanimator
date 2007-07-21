@@ -296,6 +296,7 @@ function addHistory(data){
   var textNode = document.createTextNode(editHistoryNumber);
   cellLeft.appendChild(textNode);
   var cellRight = row.insertCell(1);
+  
   var el = document.createElement('span');
   el.innerHTML = data
   cellRight.appendChild(el);
