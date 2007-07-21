@@ -7,8 +7,7 @@ $pass2 = md5($pass);
 mkdir('../users/'.$user);
 mkdir('../users/'.$user.'/animations');
 $fw = fopen('../users/'.$user.'/pass.php', 'w');
-$stringData = '
-<?php
+$stringData = '<?php
 $X_pass = "'.$pass2.'"
 ?>';
 fwrite($fw, $stringData);

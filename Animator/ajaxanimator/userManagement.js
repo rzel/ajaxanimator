@@ -83,3 +83,27 @@ $("changeModeLink").innerHTML = "Login"
 }
 
 }
+
+
+
+
+function savetoserver(){
+if($("userProfile").style.display == ""){
+var savedata = escape(animationSaveData());
+var nameRequest = prompt('Set a Name For Animation', 'animation');
+ajaxpack.postAjaxRequest("../php/savetoserver.php", "pass="+encPW+"&data="+savedata+"&name="+nameRequest, savetoserverEvent, "txt")
+
+}else{
+alert("Please Login or Register First")
+}
+}
+
+function savetoserverEvent(){
+var myajax=ajaxpack.ajaxobj
+var myfiletype=ajaxpack.filetype
+if (myajax.readyState == 4){ //if request of file completed
+if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
+alert("Save Sucessful");
+}
+}
+}
