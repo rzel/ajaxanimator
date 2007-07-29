@@ -130,7 +130,7 @@ return zxvlue;
 }
 
 function generateAnimationXML(){
-
+DrawCanvas[currentCanvas].unselect();
 var zAnimationXML = "<AnimationXML>";
 for(var pzxy = 1; pzxy <= totalFrames;pzxy++){
 if(DrawCanvas[pzxy] != null && DrawCanvas[pzxy].renderer.getMarkup() != "<svg></svg>"){

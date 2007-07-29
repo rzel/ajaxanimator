@@ -1987,7 +1987,7 @@ var myajax=ajaxpack.ajaxobj
 var myfiletype=ajaxpack.filetype
 if(myajax.readyState==4){
 if(myajax.status==200||window.location.href.indexOf("http")==-1){
-if(myajax.responseText.indexOf("S")!=-1){
+if(myajax.responseText.substr(1,2).indexOf("S")!=-1){
 alert("Login Sucessful")
 encPW=hex_md5($("pwId").value);
 userName=$("usrId").value
@@ -2010,7 +2010,7 @@ var myajax=ajaxpack.ajaxobj
 var myfiletype=ajaxpack.filetype
 if(myajax.readyState==4){
 if(myajax.status==200||window.location.href.indexOf("http")==-1){
-if(myajax.responseText.substr(1,3).indexOf("S")!=-1){
+if(myajax.responseText.substr(1,2).indexOf("S")!=-1){
 alert("Registration Sucessful")
 }else{
 alert(myajax.responseText.substr(4).replace(":",""))
@@ -2035,7 +2035,7 @@ function savetoserver(){
 if($("userProfile").style.display==""){
 var savedata=escape(escape(animationSaveData()));
 var nameRequest=prompt('Set a Name For Animation','animation');
-ajaxpack.postAjaxRequest("../php/savetoserver.php", "user="+userName+"&pass="+encPW+"&data="+savedata+"&name="+nameRequest, savetoserverEvent, "txt")
+ajaxpack.postAjaxRequest("../php/savetoserver.php","pass="+encPW+"&data="+savedata+"&name="+nameRequest,savetoserverEvent,"txt")
 }else{
 alert("Please Login or Register First")
 }

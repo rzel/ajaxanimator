@@ -153,6 +153,7 @@ gotoframe(currentFrameSelection,currentLayerSelection);
 
 function gotoframe(framenumber, layer) //Function to change the current selected frame
 {
+DrawCanvas[currentCanvas].unselect();
 	if(framenumber > 0 && framenumber < totalFramesPerLayer){
 	checkFrame(currentFrameSelection, layer);
 	previousCanvas = currentCanvas;
@@ -167,10 +168,12 @@ function gotoframe(framenumber, layer) //Function to change the current selected
 	hideCurrentCanvas();
 	currentCanvas = framenumber;
 	if(DrawCanvas[currentCanvas]==null){
-	if(document.all){
-	makeCanvasFromIE(framenumber);	
+	if(isIE() == true){
+	makeCanvasFromIE(framenumber);
+	//clonePreviousFrame()
 	}else{
 	makeCanvasFromId(framenumber);
+	//clonePreviousFrame()
 	}
 	}
 	showCurrentCanvas();

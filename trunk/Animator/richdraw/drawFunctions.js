@@ -37,8 +37,11 @@ DrawCanvas  =DrawLayer[currentLayer] ;
 	if(totalFrames == 1){
 	setCanvasDefaults();
 	}else{
-	 addHistory("Add&nbsp;Frame")
-		setCanvasProperties();
+
+	editHistoryNumber++;
+	addHistoryTO("Add&nbsp;Frame")
+	editHistory[editHistoryNumber] =  $("CanvasContainer").innerHTML
+	setCanvasProperties();
 	}
 	isinit = true;
 	setLayerData()
@@ -144,6 +147,7 @@ DrawCanvas  =DrawLayer[currentLayer] ;
 
   function openAnimation(){
   loadAnimation(unescape(uploadFrame.document.body.innerHTML))
+  resetHistory()
   }
   
 function newCanvas(){
@@ -167,6 +171,19 @@ addLayer()
 makeCanvasFromIE(1)
 gotoframe(1,1)
 }
+
+function newAnimation(){
+newCanvas();
+resetHistory();
+}
+
+function resetHistory(){
+
+editHistory = new Array();
+editHistoryNumber = 0;
+$("HistoryContainer").innerHTML = "<tr><td>0</td><td>New Animation</td></tr>"
+}
+
   function toggleLoadInput(){
   if($("STRINPT").style.display == "none"){
   $("STRINPT").style.display = ""
@@ -190,12 +207,13 @@ gotoframe(1,1)
   
   function loadAXIT(){
   loadAnimation(unescape($("AXIT").value));
+  resetHistory()
   }
 function confirmNewCanvas(){
 	if (confirm("Do you want to save before continuing?\n press Cancel to proceed anyways")) { 
 		saveDialog();
 	}else{
-	newCanvas();
+	newAnimation();
 	}
 }  
   
@@ -222,13 +240,10 @@ for(var cId = 0; cId < domShape.childNodes.length; cId++){
 try{
 var cNode = domShape.childNodes[cId];
 var cAtt = cNode.attributes;
-
 var newShape = document.createElementNS(svgNamespace , cNode.tagName);
 for(var aId = 0; aId < cAtt.length; aId++){
 newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
 }
-
-
 DrawCanvas[dId +1].renderer.svgRoot.appendChild(newShape);
 Event.observe(newShape, "mousedown", DrawCanvas[dId +1].onHitListener);  
 }
@@ -237,6 +252,44 @@ catch(err)
 }
 }
 }
+
+}
+
+
+function copyObj(){
+}
+function pasteObj(){
+}
+
+function clonePreviousFrame(){
+var svgNamespace = 'http://www.w3.org/2000/svg';
+var rdX = $("richdraw" + (currentCanvas-1)).innerHTML
+if (window.ActiveXObject){
+var domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer.async="false";
+domContainer.loadXML(rdX);
+}else{
+var parser=new DOMParser();
+var domContainer=parser.parseFromString(rdX,"text/xml");
+}
+
+var domShape = domContainer.getElementsByTagName("svg")[0];
+for(var cId = 0; cId < domShape.childNodes.length; cId++){
+try{
+var cNode = domShape.childNodes[cId];
+var cAtt = cNode.attributes;
+var newShape = document.createElementNS(svgNamespace , cNode.tagName);
+for(var aId = 0; aId < cAtt.length; aId++){
+newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
+}
+DrawCanvas[currentCanvas].renderer.svgRoot.appendChild(newShape);
+Event.observe(newShape, "mousedown", DrawCanvas[currentCanvas].onHitListener);  
+}
+catch(err)
+{
+}
+}
+
 }
 
 function animationSaveData(){
@@ -274,9 +327,9 @@ function revertRevision(numId){
 //alert(numId)
 //$("TCContainer") = editHistory[numId -1]
 
-loadAnimation( editHistory[numId])
+loadAnimation("<AnimationXML>"  + editHistory[numId] + "</AnimationXML>" )
 editHistoryNumber++;
-editHistory[editHistoryNumber] = $("CanvasContainer").innerHTML
+editHistory[editHistoryNumber] =  $("CanvasContainer").innerHTML
 addHistory("Revert to " + numId)
 
 }
@@ -300,9 +353,29 @@ function addHistory(data){
   var el = document.createElement('span');
   el.innerHTML = data
   cellRight.appendChild(el);
-
-  
 }
+
+
+function addHistoryTO(data){
+
+ var tbl = document.getElementById('HistoryContainer');
+  var lastRow = tbl.rows.length;
+  //var row = tbl.insertRow(0);
+  var row = tbl.insertRow(lastRow);
+  var zxdy = editHistoryNumber;
+  var cellLeft = row.insertCell(0);
+
+  var textNode = document.createTextNode(editHistoryNumber);
+  cellLeft.appendChild(textNode);
+  var cellRight = row.insertCell(1);
+  
+  var el = document.createElement('span');
+  el.innerHTML = data
+  cellRight.appendChild(el);
+}
+
+
+
 function undo(){
 revertRevision(editHistoryNumber -1);
 }
@@ -325,7 +398,7 @@ case 'line': result = 'Line'; break;
 addHistory("Add&nbsp;" + result)
 
 }else{
-addHistory("Select/Move&nbsp;Object")
+addHistory("Select/Move")
 }
 
 

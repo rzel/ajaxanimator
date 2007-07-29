@@ -97,6 +97,14 @@ window.onload = startUp;
         }
         setTimeout("adblockCheck()",30000)
         }
+
+function startDraw(){
+        $('status').style.display = '';
+        $('CanvasContainer').style.display = '';
+        $('playControls').style.display = '';
+        $('appIntro').style.display = 'none';
+        }
+
     </script>
   </head>
   <body>
@@ -181,7 +189,7 @@ window.onload = startUp;
     </div>
     <div id="eastContent">
 
-<table id="HistoryContainer" border="1px" cellpadding="0px"  width="99%" cellspacing="0px" >
+<table id="HistoryContainer" border="1px" cellpadding="0px"  width="99%" cellspacing="0px">
 <tr><td>0</td><td>New Animation</td></tr>
 </table>
 </div>
@@ -210,14 +218,7 @@ My&nbsp;Animations:
 
     <div id="centerContent">
       <div id="appIntro">
-        <script type="text/javascript">
-function startDraw(){
-        $('status').style.display = '';
-        $('CanvasContainer').style.display = '';
-        $('playControls').style.display = '';
-        $('appIntro').style.display = 'none';
-        }
-        </script>
+
         <center>
           <img src="../images/logo.png" alt="Ajax Animator"><br>
           <div style="width: 50%">

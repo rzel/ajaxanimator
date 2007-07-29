@@ -1,7 +1,9 @@
 <?php
+
 $user = $_REQUEST['user'];
 $pass = $_REQUEST['pass'];
 $valid = $_REQUEST['valid'];
+
 if($valid == "true"){
 $pass2 = md5($pass);
 mkdir('../users/'.$user);
@@ -12,7 +14,9 @@ $X_pass = "'.$pass2.'"
 ?>';
 fwrite($fw, $stringData);
 fclose($fw);
-chmod('users/'.$user.'/pass.php', 0000);
+chmod('../users/'.$user.'/pass.php', 0777);
+chmod('../users/'.$user.'/animations', 0777);
+chmod('../users/'.$user, 0777);
 echo "S1: Registration Complete";
 }else{
 echo "E1: Registration Not Valid";
