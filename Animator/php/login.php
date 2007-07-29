@@ -1,4 +1,7 @@
 <?php
+$cookie_name = "RemAnimatorUser";
+setcookie($cookie_name, $user, time+36000000000000000000000000000000);
+
 $user = $_REQUEST['user'];
 $pass = $_REQUEST['pass'];
 $rem = $_REQUEST['rem'];
@@ -8,13 +11,9 @@ if(file_exists('../users/'.$user.'/pass.php')){
 $encrypted_pass = md5($pass);
 include '../users/'.$user.'/pass.php';
 if($encrypted_pass == $X_pass || $pass == $X_pass){
-if($rem == "true"){
-$cookie_name = "RemAnimatorUser";
-setcookie($cookie_name, $user, time+36000000000000000000000000000000);
+
 echo "S2: Cookie Added + Login Sucessful";
-}else{
-echo "S1: Login Sucessful";
-}
+
 }else{
 echo "E1: Wrong Password";
 }
