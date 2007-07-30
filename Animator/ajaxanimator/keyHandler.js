@@ -25,7 +25,11 @@ if (eventkeyCode==83){
 stopAnimation();
 }
 if (eventkeyCode==46){
+if(DrawCanvas[currentCanvas].selected != null){
 deleteShape();
+}else{
+removeKeyframe();
+}
 }
 if (eventkeyCode==13){
 playAnimation()
