@@ -153,6 +153,7 @@ gotoframe(currentFrameSelection,currentLayerSelection);
 
 function gotoframe(framenumber, layer) //Function to change the current selected frame
 {
+var preCnvs = currentCanvas;
 DrawCanvas[currentCanvas].unselect();
 	if(framenumber > 0 && framenumber < totalFramesPerLayer){
 	checkFrame(currentFrameSelection, layer);
@@ -170,10 +171,14 @@ DrawCanvas[currentCanvas].unselect();
 	if(DrawCanvas[currentCanvas]==null){
 	if(isIE() == true){
 	makeCanvasFromIE(framenumber);
-	//clonePreviousFrame()
+	if(preCnvs == framenumber -1){
+	clonePreviousFrame()
+	}
 	}else{
 	makeCanvasFromId(framenumber);
-	//clonePreviousFrame()
+	if(preCnvs == framenumber -1){
+	clonePreviousFrame()
+	}
 	}
 	}
 	showCurrentCanvas();
@@ -184,7 +189,19 @@ DrawCanvas[currentCanvas].unselect();
 
 
 
+function removeFrame(frameId,layer){
+var qzmy = currentCanvas;
+DrawCanvas[frameId] = null;
+$("richdraw" + frameId).innerHTML = "";
+currentCanvas = frameId;
+initDraw()
+currentCanvas = qzmy
+addHist("Remove Frame")
+}
+
+
 function removeKeyframe(){ //Function to delete selected keyframe
+/*
 	var wasKeyFrame = new Boolean(false);
 	for(var m = 0; m <= kFrameCount; m++)
 	{
@@ -197,18 +214,19 @@ function removeKeyframe(){ //Function to delete selected keyframe
 	}
 	if(wasKeyFrame == true){
 	if (confirm("Are You Sure you want to delete this frame?")) { 
-	
+	*/
 	for(var m = 0; m <= kFrameCount; m++)
 	{
 	if(KeyFrames[m] == currentFrameSelection + "," + currentLayerSelection){
 	KeyFrames[m] = "0,0";
 	}
 	}
+	removeFrame(currentFrameSelection , currentLayerSelection)
 	
 	gotoframe(currentFrameSelection,currentLayerSelection);
 	
-	}
-	}
+	//}
+	//}
 }
 
 function isKeyframe(frame, layer){
@@ -341,7 +359,47 @@ zDataText+='<br><b>Last Frame</b>';
 }
 //zDataText+='<br><b>Preview:</b><br>' +  canvasframepreview.replace('_moz-userdefined=""','');
 //document.getElementById("ToolTipData").innerHTML=zDataText
+if(zisempty == false){
+zDataText += "<div id='timPreDiv' style='width: 120px; height: 68px;border: 1px black solid'></div>";
+setTimeout("generateFramePreview("+uFrame+")",500);
+}else{
+zDataText += "<div id='timPreDiv' style='width: 120px; height: 68px;border: 1px black solid'><center>No Preview Availiable</center></div>";
+}
 return zDataText;
+
+
+
+}
+
+function generateFramePreview(frameNumber){
+
+var svgNamespace = 'http://www.w3.org/2000/svg';
+var newSVGE = document.createElementNS(svgNamespace,"svg")
+newSVGE.setAttributeNS(null, "viewBox", "0 0 480 480");
+document.getElementById("timPreDiv").appendChild(newSVGE);
+var rdX = $("richdraw" + frameNumber).innerHTML
+if (window.ActiveXObject){
+var domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer.async="false";
+domContainer.loadXML(rdX);
+}else{
+var parser=new DOMParser();
+var domContainer=parser.parseFromString(rdX,"text/xml");
+}
+
+var domShape = domContainer.getElementsByTagName("svg")[0];
+for(var cId = 0; cId < domShape.childNodes.length; cId++){
+try{
+var cNode = domShape.childNodes[cId];
+var cAtt = cNode.attributes;
+var newShape = document.createElementNS(svgNamespace , cNode.tagName);
+for(var aId = 0; aId < cAtt.length; aId++){
+newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
+}
+document.getElementById("timPreDiv").firstChild.appendChild(newShape);
+}catch(err){}
+}
+
 }
 
 
