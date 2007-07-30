@@ -375,7 +375,7 @@ function generateFramePreview(frameNumber){
 
 var svgNamespace = 'http://www.w3.org/2000/svg';
 var newSVGE = document.createElementNS(svgNamespace,"svg")
-newSVGE.setAttributeNS(null, "viewBox", "0 0 480 480");
+newSVGE.setAttributeNS(null, "viewBox", "0 0 480 272");
 document.getElementById("timPreDiv").appendChild(newSVGE);
 var rdX = $("richdraw" + frameNumber).innerHTML
 if (window.ActiveXObject){

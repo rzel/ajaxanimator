@@ -316,6 +316,42 @@ catch(err)
 }
 }
 
+function moveFrameObj(distance){
+if(cloneFrameEnabled == true){
+var svgNamespace = 'http://www.w3.org/2000/svg';
+var rdX = $("richdraw" + (currentCanvas)).innerHTML
+if (window.ActiveXObject){
+var domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer.async="false";
+domContainer.loadXML(rdX);
+}else{
+var parser=new DOMParser();
+var domContainer=parser.parseFromString(rdX,"text/xml");
+}
+
+var domShape = domContainer.getElementsByTagName("svg")[0];
+for(var cId = 0; cId < domShape.childNodes.length; cId++){
+try{
+var cNode = domShape.childNodes[cId];
+var cAtt = cNode.attributes;
+var newShape = document.createElementNS(svgNamespace , cNode.tagName);
+for(var aId = 0; aId < cAtt.length; aId++){
+if(cAtt[aId].nodeName != "x" && cAtt[aId].nodeName != "y"){
+
+}
+
+newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
+}
+DrawCanvas[currentCanvas].renderer.svgRoot.appendChild(newShape);
+Event.observe(newShape, "mousedown", DrawCanvas[currentCanvas].onHitListener);  
+}
+catch(err)
+{
+}
+}
+}
+}
+
 
 function animationSaveData(){
 return "<AnimationXML>" + $('CanvasContainer').innerHTML + "</AnimationXML>";
