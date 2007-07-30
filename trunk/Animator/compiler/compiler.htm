@@ -15,7 +15,8 @@ var jsA = new Array();
     jsA[8]="../richdraw/svgrenderer.js"
     jsA[9]="../richdraw/vmlrenderer.js"
     jsA[10]="../richdraw/drawFunctions.js"
-
+    jsA[11]="../ajaxanimator/keyHandler.js"
+	jsA[12]="../ajaxanimator/historyManagement.js"
 for(var z = 0; z < jsA.length; z++){
 var loader= (window.ActiveXObject) ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
 loader.open('GET', jsA[z], false);

@@ -91,7 +91,7 @@ $("changeModeLink").innerHTML = "Login"
 function savetoserver(){
 if($("userProfile").style.display == ""){
 var savedata = escape(escape(animationSaveData()));
-var nameRequest = prompt('Set a Name For Animation', 'animation');
+var nameRequest = prompt('Set a Name For Animation', 'animation' + Math.floor(Math.random()*999));
 ajaxpack.postAjaxRequest("../php/savetoserver.php", "user="+userName+"&pass="+encPW+"&data="+savedata+"&name="+nameRequest, savetoserverEvent, "txt")
 
 }else{
@@ -112,7 +112,11 @@ animationList()
 
 
 function animationList(){
+if(userName != ""){
 ajaxpack.postAjaxRequest("../php/listAnimations.php", "user=" + userName, listAnimationEvent, "txt")
+}else{
+alert("Please Login Before Using This Feature")
+}
 }
 
 function listAnimationEvent(){

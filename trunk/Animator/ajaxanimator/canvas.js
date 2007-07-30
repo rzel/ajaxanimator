@@ -20,13 +20,6 @@ function convertVML(s){
 
 parseFloat(s.split(',')[0])//x
 parseFloat(s.split(',')[1])//y
-
-
-/*
-<AnimationXML><svg><v:rect style="LEFT: 70px; WIDTH: 160px; POSITION: absolute; TOP: 30px; HEIGHT: 160px" coordsize = "21600,21600" filled = "t" fillcolor = "red" stroked = "t" strokecolor = "black" strokeweight = ".75pt">
-</v:rect><v:line style="POSITION: absolute" from = "30pt,45pt" to = "75pt,157.5pt" stroked = "t" strokecolor = "black" strokeweight = ".75pt"></v:line></svg></AnimationXML>
-*/
-
 if (window.ActiveXObject){
 var objDom=new ActiveXObject("Microsoft.XMLDOM");
 objDom.async="false";
@@ -474,7 +467,7 @@ function removeUnusedAttributes(zxml){
 
 
 var newXml = zxml;
-
+/*  this will speed up compiliation
 if (window.ActiveXObject){
 var objDom=new ActiveXObject("Microsoft.XMLDOM");
 objDom.async="false";
@@ -494,6 +487,8 @@ newXml = newXml.replace(' id=""',"")
 newXml = newXml.replace(' style=""',"")
 }
 }
+*/
+
 return newXml;
 }
 

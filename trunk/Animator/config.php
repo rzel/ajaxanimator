@@ -1,4 +1,4 @@
-Welcome to the configuration tool.
+Welcome to the Ajax Animator configuration tool.<br>
 <?php
 chmod('users/', 0777);
 echo "chmoding user folder<br>";

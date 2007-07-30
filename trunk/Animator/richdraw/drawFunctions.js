@@ -6,8 +6,11 @@
  var editHistoryNumber = 0;
  var editHistory = new Array();
  var mouseIsDown = new Boolean();
+ var clipboardTagStr = "";
+ var clipboardAtt;
+ var cloneFrameEnabled = new Boolean();
+ cloneFrameEnabled = true;
  
-
  function setLayerData(){
  DrawLayer[currentLayer] = DrawCanvas;
  }
@@ -32,7 +35,10 @@ DrawCanvas  =DrawLayer[currentLayer] ;
     DrawCanvas[currentCanvas].onselect = onSelect;
     DrawCanvas[currentCanvas].onunselect = onUnselect;
 	//$("CanvasContainer").onmousedown = startDown;
-	$("CanvasContainer").onmouseup = checkEdit;
+	$("CanvasContainer").onmouseup = function(){
+	checkEdit;
+	setSD();
+	}
 	//$("CanvasContainer").onclick = checkEdit;
 	if(totalFrames == 1){
 	setCanvasDefaults();
@@ -49,7 +55,9 @@ DrawCanvas  =DrawLayer[currentLayer] ;
   
   function refreshModeData(){
     DrawCanvas[currentCanvas].editCommand('mode', zCurrentCanvasMode);
+ // setSD();
   setTimeout('refreshModeData()',1000);
+  
   }
   
   
@@ -75,10 +83,12 @@ DrawCanvas  =DrawLayer[currentLayer] ;
   function setMode(mode, status) {
     DrawCanvas[currentCanvas].editCommand('mode', mode);
 	zCurrentCanvasMode = mode;
-    if (mode == 'select')
+    if (mode == 'select'){
       $('status').innerHTML = 'Mode: Select/Move' ;
-    else
+
+    }else{
       $('status').innerHTML = 'Mode: Draw ' + status;
+	  }
   }
   
   function deleteShape() {
@@ -177,12 +187,7 @@ newCanvas();
 resetHistory();
 }
 
-function resetHistory(){
 
-editHistory = new Array();
-editHistoryNumber = 0;
-$("HistoryContainer").innerHTML = "<tr><td>0</td><td>New Animation</td></tr>"
-}
 
   function toggleLoadInput(){
   if($("STRINPT").style.display == "none"){
@@ -221,6 +226,7 @@ function confirmNewCanvas(){
   
 function loadAnimation(Axml){
 newCanvas();
+cloneFrameEnabled = false;
 var svgNamespace = 'http://www.w3.org/2000/svg';
 if (window.ActiveXObject){
 var domContainer = new ActiveXObject("Microsoft.XMLDOM");
@@ -233,6 +239,7 @@ var domContainer=parser.parseFromString(Axml,"text/xml");
 var domAnimation = domContainer.firstChild;
 for(var dId = 0; dId < domAnimation.getElementsByTagName("svg").length; dId++){
 if(DrawCanvas[dId +1] == null){
+
 gotoframe(dId + 1,1);
 }
 var domShape = domAnimation.getElementsByTagName("svg")[dId];
@@ -252,16 +259,33 @@ catch(err)
 }
 }
 }
-
+cloneFrameEnabled == true;
 }
 
 
 function copyObj(){
+if(DrawCanvas[currentCanvas].selected == null){
+alert("Please Select an Object First");
+}else{
+clipboardTagStr = DrawCanvas[currentCanvas].selected.tagName;
+clipboardAtt = DrawCanvas[currentCanvas].selected.attributes;
 }
+}
+
 function pasteObj(){
+try{
+var svgNamespace = 'http://www.w3.org/2000/svg';
+var newShape = document.createElementNS(svgNamespace , clipboardTagStr);
+for(var aId = 0; aId < clipboardAtt.length; aId++){
+newShape.setAttributeNS(null, clipboardAtt[aId].nodeName, clipboardAtt[aId].value);
+}
+DrawCanvas[currentCanvas].renderer.svgRoot.appendChild(newShape);
+Event.observe(newShape, "mousedown", DrawCanvas[currentCanvas].onHitListener);  
+}catch(err){alert(err)}
 }
 
 function clonePreviousFrame(){
+if(cloneFrameEnabled == true){
 var svgNamespace = 'http://www.w3.org/2000/svg';
 var rdX = $("richdraw" + (currentCanvas-1)).innerHTML
 if (window.ActiveXObject){
@@ -289,8 +313,9 @@ catch(err)
 {
 }
 }
-
 }
+}
+
 
 function animationSaveData(){
 return "<AnimationXML>" + $('CanvasContainer').innerHTML + "</AnimationXML>";
@@ -322,87 +347,22 @@ function dataUrl(data, mimeType){ // turns a string into a url that appears as a
 	  }//end if object 
  return;
 }  //end function dataUrl
-function revertRevision(numId){
-//alert(editHistory[numId -1].id)
-//alert(numId)
-//$("TCContainer") = editHistory[numId -1]
 
-loadAnimation("<AnimationXML>"  + editHistory[numId] + "</AnimationXML>" )
-editHistoryNumber++;
-editHistory[editHistoryNumber] =  $("CanvasContainer").innerHTML
-addHistory("Revert to " + numId)
-
-}
-
-function addHistory(data){
-
- var tbl = document.getElementById('HistoryContainer');
-  var lastRow = tbl.rows.length;
-  //var row = tbl.insertRow(0);
-  var row = tbl.insertRow(lastRow);
-  var zxdy = editHistoryNumber;
-  row.onmousedown = function(){
-  revertRevision(zxdy)
-  }
-  var cellLeft = row.insertCell(0);
-
-  var textNode = document.createTextNode(editHistoryNumber);
-  cellLeft.appendChild(textNode);
-  var cellRight = row.insertCell(1);
-  
-  var el = document.createElement('span');
-  el.innerHTML = data
-  cellRight.appendChild(el);
-}
-
-
-function addHistoryTO(data){
-
- var tbl = document.getElementById('HistoryContainer');
-  var lastRow = tbl.rows.length;
-  //var row = tbl.insertRow(0);
-  var row = tbl.insertRow(lastRow);
-  var zxdy = editHistoryNumber;
-  var cellLeft = row.insertCell(0);
-
-  var textNode = document.createTextNode(editHistoryNumber);
-  cellLeft.appendChild(textNode);
-  var cellRight = row.insertCell(1);
-  
-  var el = document.createElement('span');
-  el.innerHTML = data
-  cellRight.appendChild(el);
-}
-
-
-
-function undo(){
-revertRevision(editHistoryNumber -1);
-}
-
-function checkEdit(event){
-if (editHistory[editHistoryNumber] != $("CanvasContainer").innerHTML){
-editHistoryNumber++;
-editHistory[editHistoryNumber] = $("CanvasContainer").innerHTML
-
-if(DrawCanvas[currentCanvas].mode != "select"){
-var curM = DrawCanvas[currentCanvas].mode;
-var result = "";
-switch (curM) {
-case 'rect': result = 'Rectangle'; break;
-case 'roundrect': result = 'Rectangle'; break;
-case 'ellipse': result = 'Ellipse'; break;
-case 'line': result = 'Line'; break;
-}
-
-addHistory("Add&nbsp;" + result)
-
+function setSD(){
+	  if(DrawCanvas[currentCanvas].mode == "select" && DrawCanvas[currentCanvas].selected != null){
+	  
+	  $("ResizeObjOpt").style.display = ""
+$("noSelectRem").style.display = "none"
+	  $('sHeight').value = DrawCanvas[currentCanvas].selected.attributes['height'].nodeValue;
+	  $('sWidth').value = DrawCanvas[currentCanvas].selected.attributes['width'].nodeValue;
 }else{
-addHistory("Select/Move")
+$("ResizeObjOpt").style.display = "none"
+$("noSelectRem").style.display = ""
 }
+	  }
+function setSP(){
 
-
+DrawCanvas[currentCanvas].selected.attributes['width'].nodeValue  = $("sWidth").value
+DrawCanvas[currentCanvas].selected.attributes['height'].nodeValue  = $("sHeight").value
+DrawCanvas[currentCanvas].renderer.showTracker(DrawCanvas[currentCanvas].selected)
 }
-}
-
-
