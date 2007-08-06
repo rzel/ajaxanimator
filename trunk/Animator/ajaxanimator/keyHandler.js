@@ -6,35 +6,35 @@ if(evt){
 var eventkeyCode=(evt.charCode)?evt.charCode: ((evt.keyCode)?evt.keyCode:((evt.which)?evt.which:0));
 
 //keypress handling code begins
-if (eventkeyCode==39||eventkeyCode == 33){
+if (eventkeyCode==39||eventkeyCode == 33){ //pg up/right
 gotoframe(currentFrameSelection+1,1)
 return false
 }
-if (eventkeyCode==37||eventkeyCode == 34){
+if (eventkeyCode==37||eventkeyCode == 34){ //pg down/left
 gotoframe(currentFrameSelection-1,1)
 return false
 }
-if (eventkeyCode==117){
+if (eventkeyCode==117){//F6
 toKeyframe();
 return false
 }
-if (eventkeyCode==80){
+if (eventkeyCode==80){//p key
 playAnimation()
 }
-if (eventkeyCode==83){
+if (eventkeyCode==83){//s key
 stopAnimation();
 }
-if (eventkeyCode==46){
+if (eventkeyCode==46){ //delete key
 if(DrawCanvas[currentCanvas].selected != null){
 deleteShape();
 }else{
 removeKeyframe();
 }
 }
-if (eventkeyCode==13){
+if (eventkeyCode==13){// enter key
 playAnimation()
 }
-if (eventkeyCode==82){
+if (eventkeyCode==82){//r key
 removeKeyframe()
 }
 
