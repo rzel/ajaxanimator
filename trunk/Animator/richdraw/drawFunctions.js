@@ -36,7 +36,7 @@ DrawCanvas  =DrawLayer[currentLayer] ;
     DrawCanvas[currentCanvas].onunselect = onUnselect;
 	//$("CanvasContainer").onmousedown = startDown;
 	$("CanvasContainer").onmouseup = function(){
-	checkEdit;
+	checkEdit();
 	setSD();
 	}
 	//$("CanvasContainer").onclick = checkEdit;

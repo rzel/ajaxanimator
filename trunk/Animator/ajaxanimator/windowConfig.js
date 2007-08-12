@@ -72,3 +72,13 @@
     SaveOpenWin.init();
     SaveOpenWin.setStatusBarText('Save/Open');
     SaveOpenWin.close();
+	
+	
+	var UserModel = new DHTMLSuite.windowModel();
+    UserModel.createWindowModelFromMarkUp('User');
+    var UserWin = new DHTMLSuite.windowWidget();
+    UserWin.addWindowModel(UserModel);
+    UserWin.init();
+    UserWin.setStatusBarText('Users');
+	UserWin.minimizeWindow();
+    UserWin.close();

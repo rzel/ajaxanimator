@@ -47,6 +47,7 @@ icj("menuConfig")
     $('cHeight').value = "272";
     $('cWidth').value = "480";
 
+setTimeout("browseOtherAnimations()",1000);
 
         try{
         ajaxpage("../../documentation/manual.htm","ManualDiv");
@@ -268,14 +269,38 @@ My&nbsp;Animations:
           </div>
         </div>
       </div>
+	  
       <div id="SupportMain" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Support Development">
         <div id="supportdiv" style="width: 99%; height:99%"></div>
       </div>
     </div>
+	
+	    <div id="User" windowproperties="title:User Animations,resizable:false,closable:true,dragable:true,cookieName:UserBrowserCookie,xPos:300,yPos:400,minWidth:425,minHeight:350,activeTabId:AdvancedColorPicker">
+      <div id="UserAnimations" style="overflow:hidden" class="DHTMLSuite_windowContent" tabproperties="tabTitle:User Animations">
+	  <center>
+	  <img src="../images/arrow_refresh.png" onclick="javascript:refreshOtherAnimations()"></img>
+	  <img src="../images/arrow_left.png" onclick="javascript:browseOtherAnimations()"></img>
+	  </center>
+	  <div id="UAB"></div>
+	  
+	  </div>
+	  
+
+	        <div id="PreviewAXML" style="overflow:hidden" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Preview">
+	  <center>
+<a href="javascript:LAFC()">Import To Canvas</a>
+	
+	  <div id="AXMLPlayer" style="border: 1px solid black; position: relative;width:480px; overflow:hidden; height: 272px; background-color: white; -moz-user-select: none;"></div>
+	    </center>
+	  </div>
+      </div>
+
+	
     <div id="ColorWindow" windowproperties="title:Color,resizable:false,closable:true,dragable:true,cookieName:ColorWindowCookie,xPos:300,yPos:400,minWidth:425,minHeight:350,activeTabId:AdvancedColorPicker">
       <div id="AdvancedColorPicker" style="overflow:hidden" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Advanced Color Picker"></div>
       <div id="ColorPalette" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Color Palette"></div>
     </div>
+	
     <div id="SaveOpen" windowproperties="title:Save/Open,resizable:true,closable:true,dragable:true,cookieName:SaveOpenWindowCookie,xPos:30,yPos:40,minWidth:400,minHeight:250,activeTabId:Save">
       <div id="Save" style="overflow:hidden" class="DHTMLSuite_windowContent" tabproperties="tabTitle:Save">
 <br><center>     
