@@ -97,13 +97,14 @@ DrawCanvas  =DrawLayer[currentLayer] ;
   }
   
   function setFillColor() {
-
-    DrawCanvas[currentCanvas].editCommand('fillcolor', $('fillcolor').style.backgroundColor);
+DrawCanvas[currentCanvas].editCommand('fillcolor', hex2rgb(currentPreviewColor));
+    //DrawCanvas[currentCanvas].editCommand('fillcolor', $('fillcolor').style.backgroundColor);
   }
   
   function setLineColor() {
-
-    DrawCanvas[currentCanvas].editCommand('linecolor', $('linecolor').style.backgroundColor);
+DrawCanvas[currentCanvas].editCommand('linecolor', hex2rgb(currentPreviewColor));
+    //DrawCanvas[currentCanvas].editCommand('linecolor', $('linecolor').style.backgroundColor);
+	//currentPreviewColor
   }
   
   function setLineWidth(widths) {
@@ -401,4 +402,68 @@ function setSP(){
 DrawCanvas[currentCanvas].selected.attributes['width'].nodeValue  = $("sWidth").value
 DrawCanvas[currentCanvas].selected.attributes['height'].nodeValue  = $("sHeight").value
 DrawCanvas[currentCanvas].renderer.showTracker(DrawCanvas[currentCanvas].selected)
+}
+
+
+function createTween(firstFrame,secondFrame){
+var startframesrc = document.getElementById("richdraw" + firstFrame).innerHTML
+var endframesrc = document.getElementById("richdraw" + secondFrame).innerHTML
+var tweenstr = "<AnimationXML>" + startframesrc + endframesrc + "</AnimationXML>";
+var e=(new DOMParser()).parseFromString(tweenstr,"text/xml").firstChild.getElementsByTagName("svg");
+if(e[1].childNodes.length == e[0].childNodes.length){//if same number of objects per frame
+var tweens = secondFrame - firstFrame
+var newE = new Array();
+newE[0] = e[0].cloneNode(true)
+for(var ctf=0;ctf<tweens;ctf++){
+newE[ctf] = e[0].cloneNode(true)
+}
+for(var objIndex=0;objIndex<e[0].childNodes.length;objIndex++){
+if(e[0].childNodes[objIndex].getAttribute("id") + e[1].childNodes[objIndex].getAttribute("id")){//if same ids
+var x1 = parseInt(e[0].childNodes[objIndex].getAttribute("x"))
+var x2 = parseInt(e[1].childNodes[objIndex].getAttribute("x"))
+var xtDistance = x2-x1;
+var y1 = parseInt(e[0].childNodes[objIndex].getAttribute("y"))
+var y2 = parseInt(e[1].childNodes[objIndex].getAttribute("y"))
+var ytDistance = y2-y1;
+var xtDfP = xtDistance/tweens;
+var ytDfP = ytDistance/tweens;
+for(var tf=0;tf<tweens;tf++){
+newE[tf].childNodes[objIndex].setAttribute("x", (xtDfP * tf) + x1)
+newE[tf].childNodes[objIndex].setAttribute("y", (ytDfP * tf) + y1)
+}
+}
+}
+for(var cf=0;cf<newE.length;cf++){
+loadFrame((new XMLSerializer()).serializeToString(newE[cf]),cf + firstFrame);
+}
+}
+}
+
+function loadFrame(Axml,frame){
+if ( DrawCanvas[frame].renderer.svgRoot.hasChildNodes() ){
+while ( DrawCanvas[frame].renderer.svgRoot.childNodes.length >= 1 ){
+DrawCanvas[frame].renderer.svgRoot.removeChild( DrawCanvas[frame].renderer.svgRoot.firstChild );       
+} 
+} 
+var svgNamespace = 'http://www.w3.org/2000/svg';
+if (window.ActiveXObject){
+var domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer.async="false";
+domContainer.loadXML(Axml);
+}else{
+var parser=new DOMParser();
+var domContainer=parser.parseFromString(Axml,"text/xml");
+}
+var domFrame = domContainer.firstChild; //svg
+if(DrawCanvas[frame] == null){gotoframe(frame,1);}//create frame
+for(var cId = 0; cId < domFrame.childNodes.length; cId++){
+var cNode = domFrame.childNodes[cId];
+var cAtt = cNode.attributes;
+var newShape = document.createElementNS(svgNamespace , cNode.tagName);
+for(var aId = 0; aId < cAtt.length; aId++){
+newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
+}
+DrawCanvas[frame].renderer.svgRoot.appendChild(newShape);
+Event.observe(newShape, "mousedown", DrawCanvas[frame].onHitListener);  
+}
 }

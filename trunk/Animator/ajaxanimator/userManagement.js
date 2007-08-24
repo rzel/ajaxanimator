@@ -239,13 +239,22 @@ document.getElementById(z).appendChild(c);
 _rq = "f"
 _QzX = z
 _pA(z)}
-
+/*old version
 function _pA(z){
 if(_rq == "f"){
 var a=document.getElementById(z).firstChild.childNodes;
 a[_y-1].style.display="none";a[_y].style.display="";_y++;
 if(_y==a.length){a[_y-1].style.display="none";_y=1;}setTimeout("_pA('"+z+"')",83)
 }}
+*/
+function _pA(z){
+if(_rq == "f"){
+var a=document.getElementById(z).firstChild.childNodes;
+_y++;if(_y==a.length ){_y=0;}
+if(_y != 0){a[_y - 1].style.display="none";}
+a[_y].style.display="";
+setTimeout("_pA('"+z+"')",1000)}}
+
 
 function checkWindows(){
 if($("UserAnimations").style.display == "none"){

@@ -3,7 +3,6 @@
  isinit = false;
 function setColorFromPallette(color)
 {
-
 	colorWidget.setRgbColor(color.rgb);
 	setColor(color);
 
@@ -23,12 +22,25 @@ ColorWin.close();
 ColorWin.show();
 ColorWin.maximizeWindow();
 Colorobj = document.getElementById('fillcolor');	
-}	
+}
+
+function hex2rgb(hex){
+if(hex.indexOf("rgb") == -1){
+var xhex = hex.replace("#","")
+var red =(new DHTMLSuite.colorUtil()).getRgbColorsByRgbCode(xhex)["red"]
+var blue =(new DHTMLSuite.colorUtil()).getRgbColorsByRgbCode(xhex)["blue"]
+var green = (new DHTMLSuite.colorUtil()).getRgbColorsByRgbCode(xhex)["green"]
+var rgbout = "rgb(" + red + "," + blue + "," + green + ")";
+}else{
+var rgbout = hex
+}
+return  rgbout;
+}
 
 function setColor(color)
 {
 
-	Colorobj.style.backgroundColor = color.rgb;
+	Colorobj.style.backgroundColor = hex2rgb(color.rgb);
 	currentPreviewColor = color.rgb;	
 	if(color.name){
 	Colorobj.innerHTML = color.name;
@@ -36,20 +48,20 @@ function setColor(color)
 	Colorobj.innerHTML = color.rgb;
 	}
 
-	if(isinit == true){
+if(Colorobj.id == "fillcolor"){
 	setFillColor();
+	}else{
 	setLineColor();
 	}
-
-	if(isinit == false){
-	FillColorChange();
 	}
-	
-}
+
+
 
 var colorWidget = new DHTMLSuite.colorWidget({ callbackOnChangeRgb : 'setColor',hueSliderPosition:'vertical' });
 colorWidget.init();
 colorWidget.setRgbColor('#000000');
+Colorobj = document.getElementById('fillcolor');	
+colorWidget.setRgbColor('#FF0000');
 
 var grayscalePalette = new DHTMLSuite.colorPalette( { callbackOnColorClick:'setColorFromPallette' } );
 grayscalePalette.addGrayScaleColors(32);

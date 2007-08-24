@@ -1,0 +1,31 @@
+{{Infobox Software
+| name = Ajax Animator
+| logo = 
+| screenshot = [[Image:AjaxAnimator.png|300px]]
+| caption = Current Appearance of Ajax Animator's Main Window
+| developer = Antimatter15
+| operating_system = Web Browser
+| genre = free flash alternative
+| license = [[GNU General Public License|GPL]]
+| website = [http://antimatter15.110mb.com http://antimatter15.110mb.com] or [http://osflash.org/ajaxanimator http://osflash.org/ajaxanimator]
+}}
+
+The Ajax Animator project is a a free open source web based flash ide alternative designed for simplicity and community effort. The project is currently aimed at creating a platform for people to create animations, share animations, and improve animations - all in a simple, easy-to-use web interface. 
+
+The project (as of July 30, 2007) is capable of creating basic flash animations through a wysiwyg interface, sharing/importing (to some extent) the content, and is one of the very few flash alternatives actively in development.
+
+The Ajax Animator currently works on Firefox 2.0 and Safari Public Beta 3+. With IE support being very limited (no saving/loading/copying/pasting and many bugs).
+
+The project uses SVG for displaying the individual frames' content when drawing, and converts it to a swf at the server using freemovie. It is possible for the application to export animations as animated SVGs in the future.
+
+== External links ==
+{{Portal|Free software}}
+*[http://antimatter15.110mb.com/ Official Ajax Animator site]
+*[http://osflash.org/ajaxanimator Osflash Project Page]
+*[http://code.google.com/p/ajaxanimator Google Code Project Page]
+
+
+[[Category:Free media software]]
+[[Category:Animation software]]
+
+

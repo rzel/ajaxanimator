@@ -82,3 +82,16 @@
     UserWin.setStatusBarText('Users');
 	UserWin.minimizeWindow();
     UserWin.close();
+
+	function stuw(){
+	UserWin.show();
+	UserWin.maximizeWindow()
+	setTimeout("wuts();",100);
+	}
+	function wuts(){
+	UserWin.minimizeWindow()
+	setTimeout("uwst();",100);
+	}
+	function uwst(){
+	UserWin.maximizeWindow();
+	}
