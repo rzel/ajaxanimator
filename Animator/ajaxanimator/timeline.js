@@ -131,6 +131,11 @@ zisempty = true;
 if(DrawCanvas[oFrame].renderer.getMarkup().replace(" ","") == "<svg></svg>"){
 zisempty = true;
 }
+if(oFrame != 1 && oFrame != 0){
+if(DrawCanvas[oFrame].renderer.getMarkup() != DrawCanvas[oFrame -1].renderer.getMarkup()){
+zisempty = true;
+}
+}
 }
 if(zisempty == false){
 makeKeyframe(oFrame,oLayer);
@@ -360,10 +365,10 @@ zDataText+='<br><b>Last Frame</b>';
 //zDataText+='<br><b>Preview:</b><br>' +  canvasframepreview.replace('_moz-userdefined=""','');
 //document.getElementById("ToolTipData").innerHTML=zDataText
 if(zisempty == false){
-zDataText += "<div id='timPreDiv' style='width: 120px; height: 68px;border: 1px black solid'></div>";
+zDataText += "<div id='timPreDiv' style='width: 120px; height: 68px;border: 1px black solid;z-index: 100000'></div>";
 setTimeout("generateFramePreview("+uFrame+")",500);
 }else{
-zDataText += "<div id='timPreDiv' style='width: 120px; height: 68px;border: 1px black solid'><center>No Preview Availiable</center></div>";
+zDataText += "<div id='timPreDiv' style='width: 120px; height: 68px;border: 1px black solid;z-index: 100000'><center>No Preview Availiable</center></div>";
 }
 return zDataText;
 
@@ -372,7 +377,8 @@ return zDataText;
 }
 
 function generateFramePreview(frameNumber){
-
+if(document.getElementById("timPreDiv")){
+document.getElementById("timPreDiv").innerHTML = "";
 var svgNamespace = 'http://www.w3.org/2000/svg';
 var newSVGE = document.createElementNS(svgNamespace,"svg")
 newSVGE.setAttributeNS(null, "viewBox", "0 0 480 272");
@@ -399,7 +405,7 @@ newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
 document.getElementById("timPreDiv").firstChild.appendChild(newShape);
 }catch(err){}
 }
-
+}
 }
 
 

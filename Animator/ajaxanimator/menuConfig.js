@@ -38,7 +38,7 @@
 	
 	menuModel.addItem(70, 'Logout','../images/logout.png' ,'',7,'','logout()');
 	menuModel.addItem(71, 'Refresh Animation List','../images/action_refresh.gif' ,'',7,'','animationList()');
-	menuModel.addItem(72, 'Browse Animations','../images/user_go.png' ,'',7,'','UserWin.show();UserWin.maximizeWindow();');
+	menuModel.addItem(72, 'Browse Animations','../images/user_go.png' ,'',7,'','stuw();');
 	
     menuModel.addItem(80 , 'About','' ,'',8,'','showWin("AboutMain")');
     menuModel.addItem(81 , 'Manual' ,'../images/help.png' ,'',8,'','showWin("ManualMain")');

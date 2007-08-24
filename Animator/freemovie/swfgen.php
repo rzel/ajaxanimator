@@ -16,12 +16,15 @@ $height = $_REQUEST['height'];
 
 $width = $_REQUEST['width'];
 $framerate = $_REQUEST['framerate'];
+
 $swf = new FreeMovieCompilerToolbox;
 $swf->SetSWFVersion(5);
 $swf->SetFrameSize($width*20, $height*20);
 $swf->SetFrameRate($framerate);
 $swf->SetBackgroundColor(255, 255, 255);
 $swf->BeginMovie();
+
+
 
 function rgbConvert($rgb_str){
 $rgb = $rgb_str;
@@ -30,6 +33,7 @@ $rgb = str_replace(")","",$rgb);
 $rgbArray = explode(",", $rgb);
 return $rgbArray;
 }
+
 
 $totalSWFObjects = 0;
 
