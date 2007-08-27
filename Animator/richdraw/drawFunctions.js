@@ -467,3 +467,5 @@ DrawCanvas[frame].renderer.svgRoot.appendChild(newShape);
 Event.observe(newShape, "mousedown", DrawCanvas[frame].onHitListener);  
 }
 }
+
+

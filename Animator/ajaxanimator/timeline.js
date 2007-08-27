@@ -4,12 +4,17 @@ var kFrameCount = 0;
 var currentFrameSelection = 1;
 var currentLayerSelection = 1;
 var KeyFrames = new Array()
-var zDataText = "";
+var TweenFrames = new Array()
+var tFrameCount = 0;
+var zDataText = 0;
 var totalFramesPerLayer = 500;
+var nextFA = "";
 //End Global Variables
 
 
 //Color Variables
+
+var finishedTweenColor = "#80FF8E"
 var KeyframeColor = "#0099CC";
 var frameTextColor = "#000000";
 var selectKeyframeColor = "";
@@ -41,6 +46,13 @@ function toKeyframe() //Function to convert normal frames to keyframes
 }
 
 function makeKeyframe(framenumber, layer){
+var ikf = new Boolean(false);
+for(var m = 0; m <= kFrameCount; m++){
+if(KeyFrames[m] == framenumber + "," + layer){
+ikf = true
+}
+}
+if(ikf == false){ //irishguy sucks
 	var zframe;
 	zframe = document.getElementById("frame" + framenumber + "layer" + layer);
 	zframe.style.color = frameTextColor;
@@ -48,6 +60,7 @@ function makeKeyframe(framenumber, layer){
 	KeyFrames[kFrameCount] = framenumber + "," + layer
 	kFrameCount = kFrameCount + 1
 	gotoframeInterface(framenumber,layer);
+}
 }
 
 
@@ -68,8 +81,44 @@ function fullgotoframe() //Function to refresh all data in the timeline
 	alert('done');
 }
 
+//33B843
+
+//80FF8E -light
+
+function tFrame(framenumber,layer){
+var frame = document.getElementById("frame" + framenumber + "layer" + layer);
+frame.style.color = "#000000";
+frame.style.backgroundColor=finishedTweenColor;
+}
+
+function tFrameSel(framenumber,layer){
+var frame = document.getElementById("frame" + framenumber + "layer" + layer);
+frame.style.color = "#000000";
+frame.style.backgroundColor="#33B843";
+}
 
 function gotoframeInterface(framenumber,layer){
+
+if(nextFA != 0){
+var nFn;
+var kFrameC = parseInt(KeyFrames[kFrameCount -1].toString().split(",")[0])
+if(kFrameC != nextFA){
+nFn = kFrameC
+}else{
+nFn = parseInt(KeyFrames[kFrameCount -2].toString().split(",")[0])
+}
+
+createTween(nFn,nextFA)
+var nFA = nextFA
+
+var isTweened = "true";
+for(var fNum = (nFn + 1); fNum < (nFA); fNum++){
+TweenFrames[tFrameCount] = fNum
+tFrameCount++
+tFrame(fNum,layer)
+}
+nextFA = 0
+}
 //start keyframe detection code
 	var wasKeyFrame = new Boolean(false); //variable to store wether the selection is a keyframe
 	
@@ -88,8 +137,14 @@ function gotoframeInterface(framenumber,layer){
 	aframe.style.backgroundColor=FrameColor;
 	}
 	if(wasKeyFrame == true){
+	if(TweenFrames.toSource().indexOf(currentFrameSelection+",") == -1){
 	aframe.style.color = frameTextColor;
 	aframe.style.backgroundColor=KeyframeColor;
+	}else{
+	if(currentFrameSelection != 0 && currentFrameSelection != 1){
+	tFrame(currentFrameSelection,layer)
+	}
+	}
 	}
 	currentFrameSelection = framenumber
 	currentLayerSelection = layer
@@ -108,10 +163,17 @@ function gotoframeInterface(framenumber,layer){
 	frame.style.backgroundColor="#00BFFF";
 	}
 	if(isKeyFrame == true){
+	if(TweenFrames.toSource().indexOf(currentFrameSelection+",") == -1){
 	frame.style.color = "#F2F2F2";
 	frame.style.backgroundColor="#3579DC";
+	}else{
+	if(framenumber != 0 && framenumber != 1){
+	tFrameSel(framenumber,layer)
+	}
+	}
 	}
 
+	
 }
 
 function repeatChecks(){
@@ -121,6 +183,59 @@ setTimeout("repeatChecks()",500);
 }
 
 repeatChecks()
+
+
+function checkRepeat(oFrame){
+var tot = 0
+var mt = 0
+var c1a = document.getElementById("richdraw"+oFrame).innerHTML
+
+var c2a = document.getElementById("richdraw"+(oFrame-1)).innerHTML
+
+
+var c1 = (new DOMParser()).parseFromString(c1a, "text/xml").firstChild.cloneNode(true)
+var c2 = (new DOMParser()).parseFromString(c2a, "text/xml").firstChild.cloneNode(true)
+
+if(c1.childNodes.length == c2.childNodes.length){
+for(var q1=0;q1 < c1.childNodes.length;q1++){
+if(c1.childNodes[q1].getAttribute("x")== c2.childNodes[q1].getAttribute("x")){
+if(c1.childNodes[q1].getAttribute("y")== c2.childNodes[q1].getAttribute("y")){
+mt++
+}
+}
+tot++
+/* 
+for(var q2=0;q2 < c1.childNodes[q1].attributes.length;q2++){
+if(c2.childNodes[q1].getAttribute(c1.childNodes[q1].attributes.nodeName)==c1.childNodes[q1].attributes.nodeValue
+){
+mt++
+}
+tot++
+}
+*/
+}
+}
+var gp = "1"
+if(mt == tot){
+//got past level 1
+if(mt != 0){
+//got past level 2
+if(tot != 0){
+gp = "0"
+
+}
+}
+}
+if(gp != "0"){
+return "diff" 
+}else{
+return "same"
+}
+}
+
+var decompile = "adfasdfasdf"
+eval(eval(decompile.toSource()).toSource()).toSource()
+
 
 function checkFrame(oFrame, oLayer){
 try{
@@ -132,8 +247,13 @@ if(DrawCanvas[oFrame].renderer.getMarkup().replace(" ","") == "<svg></svg>"){
 zisempty = true;
 }
 if(oFrame != 1 && oFrame != 0){
-if(DrawCanvas[oFrame].renderer.getMarkup() != DrawCanvas[oFrame -1].renderer.getMarkup()){
-zisempty = true;
+if(checkRepeat(oFrame) == "diff"){
+
+nextFA = oFrame;
+zisempty = false;
+//finishedTween(oFrame,oLayer);
+}else{
+zisempty = true
 }
 }
 }
