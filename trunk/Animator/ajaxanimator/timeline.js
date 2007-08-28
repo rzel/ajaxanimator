@@ -97,6 +97,21 @@ frame.style.color = "#000000";
 frame.style.backgroundColor="#33B843";
 }
 
+function timelineInterfaceTween(nFA){
+var kFrameC = parseInt(KeyFrames[kFrameCount -1].toString().split(",")[0])
+if(kFrameC != nextFA){
+nFn = kFrameC
+}else{
+nFn = parseInt(KeyFrames[kFrameCount -2].toString().split(",")[0])
+}
+
+for(var fNum = (nFn + 1); fNum < (nFA); fNum++){
+TweenFrames[tFrameCount] = fNum
+tFrameCount++
+tFrame(fNum,layer)
+}
+}
+
 function gotoframeInterface(framenumber,layer){
 
 if(nextFA != 0){
@@ -133,15 +148,22 @@ nextFA = 0
 	var aframe;
 	aframe = document.getElementById("frame" + currentFrameSelection + "layer" + currentLayerSelection);
 	if(wasKeyFrame == false){
+	if(TweenFrames.toSource().indexOf(currentFrameSelection+",") == -1){
 	aframe.style.color = "black";
 	aframe.style.backgroundColor=FrameColor;
+	}else{
+	tFrame(currentFrameSelection,layer)
+	}
 	}
 	if(wasKeyFrame == true){
 	if(TweenFrames.toSource().indexOf(currentFrameSelection+",") == -1){
 	aframe.style.color = frameTextColor;
 	aframe.style.backgroundColor=KeyframeColor;
 	}else{
-	if(currentFrameSelection != 0 && currentFrameSelection != 1){
+	var kfc1 = parseInt(KeyFrames[kFrameCount -2].toString().split(",")[0])
+	var kfc2 = parseInt(KeyFrames[kFrameCount -1].toString().split(",")[0])
+	var cfs = currentFrameSelection
+	if(cfs != 0 && cfs != 1&& cfs != kfc1){
 	tFrame(currentFrameSelection,layer)
 	}
 	}
@@ -167,7 +189,9 @@ nextFA = 0
 	frame.style.color = "#F2F2F2";
 	frame.style.backgroundColor="#3579DC";
 	}else{
-	if(framenumber != 0 && framenumber != 1){
+	var kfc1 = parseInt(KeyFrames[kFrameCount -2].toString().split(",")[0])
+	var kfc2 = parseInt(KeyFrames[kFrameCount -1].toString().split(",")[0])
+	if(framenumber != 0 && framenumber != 1 && framenumber != kfc1){
 	tFrameSel(framenumber,layer)
 	}
 	}
@@ -233,10 +257,29 @@ return "same"
 }
 }
 
-var decompile = "adfasdfasdf"
-eval(eval(decompile.toSource()).toSource()).toSource()
+function ikf(frame,layer){
+	var wasKeyFrame = new Boolean(false);
+	for(var m = 0; m <= kFrameCount; m++)
+	{
+	if(KeyFrames[m] == frame + "," + layer){
+	wasKeyFrame = true
+	}
+	}
+	return wasKeyFrame;
+	}
 
-
+	function itf(frame){
+	var wasKeyFrame = new Boolean(false);
+	for(var m = 0; m <= tFrameCount; m++)
+	{
+	if(TweenFrames[m] == frame ){
+	wasKeyFrame = true
+	}
+	}
+	return wasKeyFrame;
+	}
+	
+	
 function checkFrame(oFrame, oLayer){
 try{
 var zisempty = false;
@@ -248,16 +291,23 @@ zisempty = true;
 }
 if(oFrame != 1 && oFrame != 0){
 if(checkRepeat(oFrame) == "diff"){
-
+if(itf(oFrame,oLayer) == false || ikf(oFrame,oLayer) == false){
 nextFA = oFrame;
+//timelineInterfaceTween(oFrame)
+}
+
 zisempty = false;
 //finishedTween(oFrame,oLayer);
+//tFrame(oFrame,oLayer)
+
 }else{
+
 zisempty = true
 }
 }
 }
-if(zisempty == false){
+if(zisempty == false && itf(oFrame,oLayer) == false ){
+
 makeKeyframe(oFrame,oLayer);
 }
 }catch(err){}
