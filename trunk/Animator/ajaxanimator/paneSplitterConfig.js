@@ -41,7 +41,7 @@ var paneModel = new DHTMLSuite.paneSplitterModel();
 	preFlash();
 	if(isIE() == true){
 	setTimeout("preFlash()",1000)
-		setTimeout("preFlash()",5000)
+	setTimeout("preFlash()",5000)
 	}
 	}
 	}
