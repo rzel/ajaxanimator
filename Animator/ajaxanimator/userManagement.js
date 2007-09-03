@@ -253,7 +253,7 @@ var a=document.getElementById(z).firstChild.childNodes;
 _y++;if(_y==a.length ){_y=0;}
 if(_y != 0){a[_y - 1].style.display="none";}
 a[_y].style.display="";
-setTimeout("_pA('"+z+"')",1000)}}
+setTimeout("_pA('"+z+"')",83)}}
 
 
 function checkWindows(){
