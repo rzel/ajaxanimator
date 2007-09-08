@@ -1,4 +1,7 @@
 <?php
+//Settings//
+$enable_logging = false; //enable logging to swfexport.txt
+//Settings//
 require_once("decompressXML.php");
 $xmlstr = decompressXML(stripslashes($_REQUEST['svg']));
 
@@ -112,12 +115,13 @@ if (is_writable($filename)) {
     echo "The file $filename is not writable";
 }
 
+if($enable_logging == true){
 $myFile = "swfexport.txt";
 $fh = fopen($myFile, 'a') or die("can't open file");
 $stringData = "\n $xmlstr";
 fwrite($fh, $stringData);
 fclose($fh);
-
+}
 //temp
 //$poopy = $charid[3];
 //echo "\n $totalSWFObjects \n $poopy";

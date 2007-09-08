@@ -1245,7 +1245,7 @@ GoogAd = new Ext.BasicDialog("GoogAd",{
 
 }
 GoogAd.show()
-setTimeout("showTehAdz()",30000);
+setTimeout("showTehAdz()",15000);
 }
 }
  

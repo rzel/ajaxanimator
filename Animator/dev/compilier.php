@@ -12,16 +12,6 @@ $fh = fopen($myFile, 'r');
 $theData = fread($fh, filesize($myFile));
 fclose($fh);
 
-echo "Reading Google Ads 1<br>";
-$fhi = fopen("GoogAd1.txt", 'r');
-$theGoog1 = fread($fhi, filesize("GoogAd1.txt"));
-fclose($fhi);
-
-echo "Reading Google Ads 2<br>";
-$fhip = fopen("GoogAd2.txt", 'r');
-$theGoog2 = fread($fhip, filesize("GoogAd2.txt"));
-fclose($fhip);
-
 
 $theData =  preg_replace('/\s+/', ' ', $theData );
 
@@ -109,8 +99,12 @@ echo "Copying $gzsrc to full.js (in html folder)<br>";
 copy($gzsrc,"../ajaxanimator/full.js.php");
 echo "Finish copying $gzsrc to full.js.php (in html folder)<br>";
 $newzfile2 = $newzfile;
-$newzfile2 = str_replace("<!-- GoogAd1-->", $theGoog1,$newzfile2);
-$newzfile2 = str_replace("<!-- GoogAd2-->", $theGoog2,$newzfile2);
+$newzfile2 = str_replace("<!-- GoogAd1-->", file_get_contents("GoogAd1.txt"),$newzfile2);
+$newzfile2 = str_replace("<!-- GoogAd2-->", file_get_contents("GoogAd2.txt"),$newzfile2);
+$newzfile2 = str_replace("<!-- GoogAd3-->", file_get_contents("GoogAd3.txt"),$newzfile2);
+$newzfile2 = str_replace("<!-- GoogAd4-->", file_get_contents("GoogAd4.txt"),$newzfile2);
+$newzfile2 = str_replace("<!-- GoogAd5-->", file_get_contents("GoogAd5.txt"),$newzfile2);
+
 echo "Writing ajaxanimator-compressed.php (html folder)<br>";
 $fhaz = fopen("../html/ajaxanimator-compressed.php", 'w') or die("can't open file");
 fwrite($fhaz, '<?php ob_start ("ob_gzhandler"); ?>'.$newzfile2. '<?php ob_end_flush(); ?>');
