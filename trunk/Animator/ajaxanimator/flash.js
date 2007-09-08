@@ -10,8 +10,8 @@ flashVerification()
 $('zFlashPreviewDiv').style.height = canvasHeight + 'px';
 $('zFlashPreviewDiv').style.width = canvasWidth + 'px';
 $('zFlashPreviewDiv').innerHTML = "";
-$('swfPreBtn').disabled = true;
-$('swfPreBtn').value = 'generating...';
+pButton.disable()
+pButton.setText( 'generating...')
 var swfgen = generateAnimationXML();
 if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></AnimationXML>'){
 ajaxpack.postAjaxRequest("../freemovie/swfgen.php", "type=preview&height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , preFlashEvent, "txt")
@@ -37,8 +37,8 @@ revisionNumber++;
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
 flashHTML=genFlashHTML(FLASHfilename)
 document.getElementById("zFlashPreviewDiv").innerHTML = flashHTML;
-$('swfPreBtn').disabled = false;
-$('swfPreBtn').value = 'Preview';
+pButton.enable()
+pButton.setText( 'Preview')
 if(myajax.responseText.indexOf('Warning') != -1 || myajax.responseText.indexOf('Error') != -1 ){
 if(myajax.responseText.indexOf('<br>') != -1 || myajax.responseText.indexOf('<b>') != -1 ){
 document.getElementById("zFlashPreviewDiv").innerHTML = myajax.responseText ;
