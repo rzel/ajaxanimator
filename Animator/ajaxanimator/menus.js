@@ -131,7 +131,7 @@ logoutbutton.setVisible(false)
 var histToolbar = new Ext.Toolbar('history-tb');
 histToolbar.addText("History")
 histToolbar.addSeparator() 
-histToolbar.addButton({text: 'Clear'})
+histToolbar.addButton({text: 'Clear', handler: function(){clearHist()}})
 
 var centerToolbar = new Ext.Toolbar('center-tb');
 //centerToolbar.addElement($('status'))

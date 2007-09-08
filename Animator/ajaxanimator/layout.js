@@ -1,5 +1,7 @@
 var initPreview;
 var mainLayout;
+var pButton = new Ext.Toolbar.Button({text: 'Reload Preview', handler: function(){preFlash}})
+var eButton = new Ext.Toolbar.Button({text: 'Export Animation', handler: function(){genFlash()}})
 MainLayout = function() {
 	return {
 		init : function() {
@@ -13,12 +15,19 @@ MainLayout = function() {
 			var propToolbar = new Ext.Toolbar('prop-tb');
 			propToolbar.addText("Properties")
 			var histToolbar = new Ext.Toolbar('history-tb');
+			var previewToolbar = new Ext.Toolbar('preview-tb');
+			previewToolbar.addText("Preview");
+			previewToolbar.add("-")
+			
+			previewToolbar.addButton(pButton);
+			previewToolbar.addButton(eButton);
+			//previewToolbar.add("<div id=''")
 			var mainLayout = new Ext.BorderLayout(document.body, {
 				north:{ titlebar: false, split: true, initialSize: 120 , collapsible: true, toolbar: topToolbar}, 
 				south:{ tilebar: false, split: true, initialSize: 100 , collapsible: true}, 
 				east: { titlebar: false, split: true, initialSize: 120 , collapsible: true}, 
 				west: { titlebar: true, split: true, initialSize: 60 , collapsible: true}, 
-				center: { toolbar:centerToolbar }
+				center: { }
 			});
 			mainLayout.on("regionresized",timelineResize);
 			mainLayout.beginUpdate();
@@ -28,8 +37,8 @@ MainLayout = function() {
 			mainLayout.add('east', new Ext.ContentPanel('history-div', {title: 'History', toolbar: histToolbar,fitToFrame: true, closable: false }));
 			mainLayout.add('east', new Ext.ContentPanel('login-div', {title: 'Login', toolbar: loginToolbar,fitToFrame: true, closable: false }));
 			mainLayout.add('west', new Ext.ContentPanel('toolbar-div', { title: 'Tools', fitToFrame: true, closable: false }));
-			mainLayout.add('center', new Ext.ContentPanel('canvas-div', {title: 'Canvas', fitToFrame: true })); 
-			mainLayout.add('center', new Ext.ContentPanel('preview-div', {title: 'Preview', fitToFrame: true })); 
+			mainLayout.add('center', new Ext.ContentPanel('canvas-div', {toolbar:centerToolbar,title: 'Canvas', fitToFrame: true })); 
+			mainLayout.add('center', new Ext.ContentPanel('preview-div', {toolbar: previewToolbar,title: 'Preview', fitToFrame: true })); 
 			mainLayout.getRegion('center').showPanel('canvas-div');
 			mainLayout.getRegion('east').showPanel('history-div');
 			mainLayout.getRegion('south').showPanel('properties-div');

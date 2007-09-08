@@ -12,6 +12,17 @@ $fh = fopen($myFile, 'r');
 $theData = fread($fh, filesize($myFile));
 fclose($fh);
 
+echo "Reading Google Ads 1<br>";
+$fhi = fopen("GoogAd1.txt", 'r');
+$theGoog1 = fread($fhi, filesize("GoogAd1.txt"));
+fclose($fhi);
+
+echo "Reading Google Ads 2<br>";
+$fhip = fopen("GoogAd2.txt", 'r');
+$theGoog2 = fread($fhip, filesize("GoogAd2.txt"));
+fclose($fhip);
+
+
 $theData =  preg_replace('/\s+/', ' ', $theData );
 
 echo "Finish Reading ajaxanimator.htm<br>";
@@ -88,14 +99,22 @@ echo "<a href='ajaxanimator-compressed.htm'>Compiled Output</a>";
 echo "<hr>Publishing To HTML folder and ajaxanimator folder";
 
 
+
 $newzfile = str_replace($regs[0],'<script type="text/javascript" src="../ajaxanimator/full.js.php"></script>',$newzfile);
-echo "Writing ajaxanimator-compressed.php (html folder)<br>";
+echo "Writing ajaxanimator-compressed-adfree.php (html folder)<br>";
 $fhaz = fopen("../html/ajaxanimator-compressed.php", 'w') or die("can't open file");
 fwrite($fhaz, '<?php ob_start ("ob_gzhandler"); ?>'.$newzfile. '<?php ob_end_flush(); ?>');
 fclose($fhaz);
 echo "Copying $gzsrc to full.js (in html folder)<br>";
 copy($gzsrc,"../ajaxanimator/full.js.php");
 echo "Finish copying $gzsrc to full.js.php (in html folder)<br>";
+$newzfile2 = $newzfile;
+$newzfile2 = str_replace("<!-- GoogAd1-->", $theGoog1,$newzfile2);
+$newzfile2 = str_replace("<!-- GoogAd2-->", $theGoog2,$newzfile2);
+echo "Writing ajaxanimator-compressed.php (html folder)<br>";
+$fhaz = fopen("../html/ajaxanimator-compressed.php", 'w') or die("can't open file");
+fwrite($fhaz, '<?php ob_start ("ob_gzhandler"); ?>'.$newzfile2. '<?php ob_end_flush(); ?>');
+fclose($fhaz);
 $etimer = explode( ' ', microtime() );
 $etimer = $etimer[1] + $etimer[0];
 echo '<hr><p style="margin:auto; text-align:center">';

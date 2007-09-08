@@ -94,3 +94,6 @@ addHistory(text)
 }
 }
 
+function clearHist(){
+$("HistoryContainer").innerHTML = "";
+}
