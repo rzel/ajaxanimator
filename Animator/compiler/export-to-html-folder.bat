@@ -1,1 +1,0 @@
-copy ajaxanimator.htm "../html/compressedFullIndex.htm"
