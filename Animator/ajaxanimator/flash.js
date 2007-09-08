@@ -59,7 +59,8 @@ zSWFFilename = zSWFFilename.replace("+","");
 zSWFFilename = zSWFFilename.replace("&","");
 zSWFFilename = zSWFFilename.replace("?","");
 $('swfGenBtn').disabled = true;
-$('swfGenBtn').value = 'generating...';
+eButton.disable()
+eButton.setText('generating...');
 $('export').innerHTML = '';
 var swfgen = generateAnimationXML();
 if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></AnimationXML>'){
@@ -93,8 +94,8 @@ function generateSWFResponse(responsedata){
 var responseurl = responsedata.replace('files','../freemovie/files');
 var absoluteResponseURL = responsedata.replace('files','../freemovie/files');
 $('export').innerHTML = '<a id="zExportURL" href="' + responseurl + '>' + responseurl + '</a>';
-$('swfGenBtn').disabled = false;
-$('swfGenBtn').value = 'Export Animation';
+eButton.enable()
+eButton.setText( 'Export Animation');
 $('export').innerHTML = '<a id="zExportURL" href="' + $('zExportURL').href + '>' + $('zExportURL').href + '</a>';
 }
 
