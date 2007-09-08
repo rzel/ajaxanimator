@@ -1,0 +1,21 @@
+var uL = new Array();
+
+function generate(a){var b = a.split(",");for(c in b){var e = b[c].split("|")
+eval("function "+e[0]+"(){l('"+e[1]+"',arguments,'"+e[0]+"')}")}}
+generate("wcd|tree,tea|google,blah|whole")
+
+
+function l(u,ag,f){
+console.log(arguments)
+for(t in uL){if(t==u)return}uL[uL.length+1]=u
+var argstr = Array.prototype.slice.call(ag).join(",")
+var x=(window.ActiveXObject)?new ActiveXObject("Microsoft.XMLHTTP"):new XMLHttpRequest();
+x.onreadystatechange=function(){if(x.readyState==4&&x.status==200){
+function(){
+eval(f+"("+argstr+")")
+}
+}}
+x.open("GET",u,true);x.send(null)}
+
+generate("wcd|tree,tea|google,blah|whole")
+blah("asdf","asdfasdf","asdfasdfasdf")
