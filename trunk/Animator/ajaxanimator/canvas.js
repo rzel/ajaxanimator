@@ -98,7 +98,3 @@ function initCanvas(){
 	//}
 	gotoframe(1,1);
 }
-
-
-
-

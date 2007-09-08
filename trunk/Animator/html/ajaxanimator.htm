@@ -26,7 +26,6 @@
 	<script type="text/javascript" src="../ajaxanimator/animationLoader.js"></script>
 	<script type="text/javascript" src="../ajaxanimator/globalvars.js"></script>
 	<script type="text/javascript" src="../ajaxanimator/animationxml.js"></script>
-
 	<!--EndJS-->
 	</head>
 	<body>
@@ -68,53 +67,48 @@
 	<div class="x-dlg-hd">Browse User-Made Animations</div>
 	<div class="x-dlg-bd">
 	<div id="animationBrowser">
-		  <center>
-	  <img alt="Refresh" src="../images/arrow_refresh.png" onclick="javascript:refreshOtherAnimations()">
-	  <img alt="Back" src="../images/arrow_left.png" onclick="javascript:browseOtherAnimations()">
-	  </center>
-	  <div id="UAB"></div>
+	<center>
+	<img alt="Refresh" src="../images/arrow_refresh.png" onclick="javascript:refreshOtherAnimations()">
+	<img alt="Back" src="../images/arrow_left.png" onclick="javascript:browseOtherAnimations()">
+	</center>
+	<div id="UAB"></div>
 	</div>
 	<div id="animationViewer">
-		  <center>
-<a href="javascript:LAFC()">Import To Canvas</a>
-	  <div id="AXMLPlayer" style="border: 1px solid black; position: relative;width:480px; overflow:hidden; height: 272px; background-color: white; -moz-user-select: none;"></div>
-	    </center>
+	<center>
+	<a href="javascript:LAFC()">Import To Canvas</a>
+	<div id="AXMLPlayer" style="border: 1px solid black; position: relative;width:480px; overflow:hidden; height: 272px; background-color: white; -moz-user-select: none;"></div>
+	</center>
 	</div>
 	</div>
 	</div>
-	
 	<div id="fs-dialog">
 	<div class="x-dlg-hd">Save/Open</div>
 	<div class="x-dlg-bd">
 	<div id="saveTab">
-	<center>     
-
-	 <input type="button" onclick="saveAnimation()" value="Save To Computer"> <input type="button" onclick="savetoserver()" value="Save To Webserver">
-      	  		<hr>
-			<a href="javascript:toggleSaveInput()">Save as text</a>
-			<div id="STROUT" style="display:none"></div>
-		<textarea id="AXTxt" cols="20" rows="10" style="width: 200px"></textarea><br>
-		<input type="button" value="Save" onclick="saveAXTxt()">
-	  </center>
+	<center>
+	<input type="button" onclick="saveAnimation()" value="Save To Computer"> <input type="button" onclick="savetoserver()" value="Save To Webserver">
+    <hr>
+	<a href="javascript:toggleSaveInput()">Save as text</a>
+	<div id="STROUT" style="display:none"></div>
+	<textarea id="AXTxt" cols="20" rows="10" style="width: 200px"></textarea><br>
+	<input type="button" value="Save" onclick="saveAXTxt()">
+	</center>
 	</div>
 	<div id="openTab">
-		   <center>
-	   <form enctype="multipart/form-data" target="uploadFrame" action="../php/upload.php" method="post">
-     
-	   Open: <input name="uploaded" type="file"> <input type="submit" onclick="setTimeout('openAnimation()',1000);" value="Upload">
-        </form><iframe name="uploadFrame" id="uploadFrame" style="display:none;visibility: hidden; height: 1px; width: 1px"></iframe>
-		<hr>
-		<a href="javascript:toggleLoadInput()">Open from text</a>
-		<div id="STRINPT" style="display:none">
-		<textarea id="AXIT" cols="20" rows="10" style="width: 200px"></textarea><br>
-		<input type="button" value="Load" onclick="loadAXIT()">
-		</div>
-		</center>
+	<center>
+	<form enctype="multipart/form-data" target="uploadFrame" action="../php/upload.php" method="post">
+    Open: <input name="uploaded" type="file"> <input type="submit" onclick="setTimeout('openAnimation()',1000);" value="Upload">
+    </form><iframe name="uploadFrame" id="uploadFrame" style="display:none;visibility: hidden; height: 1px; width: 1px"></iframe>
+	<hr>
+	<a href="javascript:toggleLoadInput()">Open from text</a>
+	<div id="STRINPT" style="display:none">
+	<textarea id="AXIT" cols="20" rows="10" style="width: 200px"></textarea><br>
+	<input type="button" value="Load" onclick="loadAXIT()">
+	</div>
+	</center>
 	</div>
 	</div>
 	</div>
-	
-	
 	<div id="north-div">
 		<div id="north-tb"><!--Toolbar--></div>
 		<div id="frameContainer" style="overflow: auto"></div>
@@ -126,14 +120,14 @@
 	<div id="properties-div">
 	<div id="prop-tb"></div>
 	<table><tr><td>
-		  <div id="ResizeObjOpt" style="display: none">
-		  Height:<input type="text" style="width: 50px" id="sHeight" onchange="setSP()" onblur="setSP()" value=""> 
-		  Width:<input type="text" style="width: 50px" id="sWidth" onchange="setSP()" onblur="setSP()" value="">
-		  </div>
-		  <div id="noSelectRem">No Object Currently Selected</div>  
-		  </td><td>
-<!-- GoogAd2-->
-</td></tr></table>
+	<div id="ResizeObjOpt" style="display: none">
+	Height:<input type="text" style="width: 50px" id="sHeight" onchange="setSP()" onblur="setSP()" value=""> 
+	Width:<input type="text" style="width: 50px" id="sWidth" onchange="setSP()" onblur="setSP()" value="">
+	</div>
+	<div id="noSelectRem">No Object Currently Selected</div>  
+	</td><td>
+	<!-- GoogAd2-->
+	</td></tr></table>
 	</div>
 	<div id="history-div">
 	<div id="history-tb"></div>
@@ -146,19 +140,18 @@
 	</div>
     <div id="userContent">
 	<div id="userQuery">
-		<div id="userManMode">Login</div>
-		<input type="text" id="usrId" title="Username" value="Username">
-		<input type="password" id="pwId"  title="Password" value="Password">
-		<input type="password" id="pwId2" title="Repeat Password" style="display:none" value="Password">
-		<input type="button" id="submitAction" value="Login" title="ooh! press this button!" onclick="submitUser()">
-		</div>
-		<div id="userProfile" style="display:none">
-		<div id="usrNme"style="font-size:small;"></div>
-		<hr>
-		My&nbsp;Animations:
-		<div id="userFiles"></div>
-		</div>
-		</div>
+	<div id="userManMode">Login</div>
+	<input type="text" id="usrId" title="Username" value="Username">
+	<input type="password" id="pwId"  title="Password" value="Password">
+	<input type="password" id="pwId2" title="Repeat Password" style="display:none" value="Password">
+	<input type="button" id="submitAction" value="Login" title="ooh! press this button!" onclick="submitUser()">
+	</div>
+	<div id="userProfile" style="display:none">
+	<div id="usrNme"style="font-size:small;"></div>
+	<hr>My&nbsp;Animations:
+	<div id="userFiles"></div>
+	</div>
+	</div>
 	</div>
 	<div id="toolbar-div">
 	<img id="select" alt="" title="Select shapes" onclick="setMode('select', 'Selection');" src="../images/select.gif" name="select"> 
@@ -193,15 +186,18 @@
 	<table style="margin-left: auto; margin-right: auto;" >
 	<tr>
 	<td>
-<!-- GoogAd3-->
+	<!-- GoogAd3-->
 	<table style="margin-left: auto; margin-right: auto;">
 	<tr>
-<!-- GoogAd4-->
+	<!-- GoogAd4-->
 	<td>
 	<div id="CanvasContainer"  style="margin-left: auto; margin-right: auto;width: 480px; height: 272px;overflow:auto"></div>
 		<div id="playControls">
 		<center>
-			<img alt="&lt;--" src="../images/player_rew.png" onclick="gotoframe(currentFrameSelection-1,1);"> <img alt="play" src="../images/player_play.png" onclick="playAnimation();"> <img alt="stop" src="../images/player_stop.png" onclick="stopAnimation();"> <img alt="--&gt;" src="../images/player_fwd.png" onclick="gotoframe(currentFrameSelection+1,1);">
+		<img alt="&lt;--" src="../images/player_rew.png" onclick="preFrame();">
+		<img alt="play" src="../images/player_play.png" onclick="playAnimation();">
+		<img alt="stop" src="../images/player_stop.png" onclick="stopAnimation();">
+		<img alt="--&gt;" src="../images/player_fwd.png" onclick="nextFrame();">
 		</center>
 		</div>
 	<center>
@@ -213,38 +209,24 @@
 	</tr>
 	</table>
 	</div>
-	
 	<div id="preview-div">
 	<div id="preview-tb"></div>
     <div id="FlashPreview">
-      <center>
-        <div style="border: 1px black solid;" id="zFlashPreviewDiv"></div><br>
-        <table border="0">
-          <tr>
-            <td>
-
-            </td>
-            <td>
-              <div id="export"></div>
-            </td>
-          </tr>
-        </table>
-        <div id="previewStatus" style="font-size:x-small">
-          Mode: Preview
-        </div>
-        <div id="RevisionBrowserDiv"></div>
-      </center>
+    <center>
+    <div style="border: 1px black solid;" id="zFlashPreviewDiv"></div><br>
+    <div id="previewStatus" style="font-size:x-small">Mode: Preview</div>
+    <div id="RevisionBrowserDiv"></div>
+    </center>
     </div>
 	</div>
-	  <!-- Histats.com  START  --> 
- <script  type="text/javascript" language="javascript"> 
- var s_sid = 101448;var st_dominio = 4; 
- var cimg = 0;var cwi =112;var che =48;</script> 
- <script  type="text/javascript" language="javascript" src="http://s10.histats.com/js9.js"></script> 
- <noscript><a href="http://www.histats.com" target="_blank"> 
- <img  src="http://s4.histats.com/stats/0.gif?101448&1" alt="site hit counter" border="0"></a> 
- </noscript> 
- <!-- Histats.com  END  --> 
-
+	<!-- Histats.com  START  -->
+	<script  type="text/javascript" language="javascript"> 
+	var s_sid = 101448;var st_dominio = 4; 
+	var cimg = 0;var cwi =112;var che =48;</script> 
+	<script  type="text/javascript" language="javascript" src="http://s10.histats.com/js9.js"></script> 
+	<noscript><a href="http://www.histats.com" target="_blank"> 
+	<img  src="http://s4.histats.com/stats/0.gif?101448&1" alt="site hit counter" border="0"></a> 
+	</noscript>
+	<!-- Histats.com  END  -->
 </body>
 </html>
