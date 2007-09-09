@@ -55,10 +55,12 @@ if(btn != "cancel"){
 zSWFFilename = zSWFFilename.replace(".swf","");
 zSWFFilename = zSWFFilename.replace("/","");
 zSWFFilename = zSWFFilename.replace(" ","_");
+zSWFFilename = zSWFFilename.replace(unescape("%5C"),"");
+zSWFFilename = zSWFFilename.replace(":","");
 zSWFFilename = zSWFFilename.replace("+","");
 zSWFFilename = zSWFFilename.replace("&","");
 zSWFFilename = zSWFFilename.replace("?","");
-$('swfGenBtn').disabled = true;
+zSWFFilename = zSWFFilename.replace("..","");
 eButton.disable()
 eButton.setText('generating...');
 $('export').innerHTML = '';
