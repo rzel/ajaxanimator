@@ -1005,6 +1005,7 @@ MainLayout = function() {
 			
 			previewToolbar.addButton(pButton);
 			previewToolbar.addButton(eButton);
+			previewToolbar.addText('<div id="export"></div>');
 			//previewToolbar.add("<div id=''")
 			var mainLayout = new Ext.BorderLayout(document.body, {
 				north:{ titlebar: false, split: true, initialSize: 120 , collapsible: true, toolbar: topToolbar}, 
@@ -2245,12 +2246,7 @@ function initCanvas(){
 	makeCanvasFromIE(1);
 	//}
 	gotoframe(1,1);
-}
-
-
-
-
- 
+} 
  function playAnimation(){
 AnimationPlay = true;
 doAnimation();
