@@ -17,7 +17,18 @@ $theData =  preg_replace('/\s+/', ' ', $theData );
 
 echo "Finish Reading ajaxanimator.htm<br>";
 echo "Parsing ajaxanimator.htm source<br>";
+echo "adding wz_tooltip<br>";
+ereg("<!--BeginBodyJS.*EndBodyJS-->",$theData,$wzreg);
+$theData = str_replace($wzreg[0],'<script type="text/javascript">'.file_get_contents("../lib/wz_tooltip-min.js")."</script>",$theData);
 ereg("<!--BeginJS.*EndJS-->",$theData,$regs);
+ereg("<!--BeginCSS.*EndCSS-->",$theData,$cssCode);
+$c = $cssCode[0];
+$c = str_replace("<!--BeginCSS-->", "", $c);
+$c = str_replace("<!--EndCSS-->", "", $c);
+$c = str_replace('<link rel="stylesheet" type="text/css" href="', "", $c);
+$c = str_replace('">', "", $c);
+$c = preg_replace('/\s+/', ',', $c);
+$cssCodeu = explode(",",$c);
 $s = $regs[0];
 $s = str_replace("../ext/ext-all-debug.js","../ext/ext-all.js",$s);
 $s = str_replace("<!--BeginJS-->", "", $s);
@@ -79,6 +90,12 @@ echo "Finish Gzipping file (to check filesize) $srcName <br>";
 echo "Gzipped Filesize Est: ".filesize($dstName)."B, versus originally,".filesize($srcName)."B <br>";
 $newzfile = $theData;
 $newfile = $theData;
+$cssCoded = "";
+foreach($cssCodeu as $cssCodem){
+$cssCoded.=file_get_contents($cssCodem)."\n";
+}
+echo $cssCode[0];
+$newfile = str_replace($cssCode[0],"<style>".$cssCoded."</style>",$newfile);
 $newfile = str_replace($regs[0],'<script type="text/javascript" src="'.$gzsrc.'"></script>',$newfile);
 echo "Writing ajaxanimator-compressed.htm<br>";
 $fhaz = fopen("ajaxanimator-compressed.htm", 'w') or die("can't open file");
@@ -87,12 +104,11 @@ fclose($fhaz);
 echo "Finish Compiliation<br><hr>";
 echo "<a href='ajaxanimator-compressed.htm'>Compiled Output</a>";
 echo "<hr>Publishing To HTML folder and ajaxanimator folder";
-
-
-
+copy("ajaxanimator-compressed.htm","../html/ajaxanimator-compressed.htm<br>");
+$newzfile = str_replace($cssCode[0],'<style type="text/css">'.$cssCoded."</style>",$newzfile);
 $newzfile = str_replace($regs[0],'<script type="text/javascript" src="../ajaxanimator/full.js.php"></script>',$newzfile);
 echo "Writing ajaxanimator-compressed-adfree.php (html folder)<br>";
-$fhaz = fopen("../html/ajaxanimator-compressed.php", 'w') or die("can't open file");
+$fhaz = fopen("../html/ajaxanimator-compressed-adfree.php", 'w') or die("can't open file");
 fwrite($fhaz, '<?php ob_start ("ob_gzhandler"); ?>'.$newzfile. '<?php ob_end_flush(); ?>');
 fclose($fhaz);
 echo "Copying $gzsrc to full.js (in html folder)<br>";

@@ -1,72 +1,74 @@
-  function openAnimation(){
-  loadAnimation(unescape(uploadFrame.document.body.innerHTML))
-  resetHistory()
-  }
-  
-function newCanvas(){
-revisionNumber = 1;
-animationRevision = new Array();
-animationRevisionURL = new Array();
-lastAnimationURL = '';
-gotoframe(1,1)
-DrawCanvas = new Array();
-currentLayer = 1;
-currentCanvas = 1;
-$("CanvasContainer").innerHTML = "";
-KeyFrames = new Array();
-$("frameContainer").innerHTML = "";
-layers = 0;
-kFrameCount = 0
-totalFrames = 1;
-currentFrameSelection = 1;
-currentLayerSelection = 1;
-addLayer()
-makeCanvasFromIE(1)
-gotoframe(1,1)
-}
+	function openAnimation(){
+	loadAnimation(unescape(uploadFrame.document.body.innerHTML))
+	resetHistory()
+	}
+	
+	function newCanvas(){
+	revisionNumber = 1;
+	animationRevision = new Array();
+	animationRevisionURL = new Array();
+	lastAnimationURL = '';
+	gotoframe(1,1)
+	DrawCanvas = new Array();
+	currentLayer = 1;
+	currentCanvas = 1;
+	$("CanvasContainer").innerHTML = "";
+	KeyFrames = new Array();
+	$("frameContainer").innerHTML = "";
+	layers = 0;
+	kFrameCount = 0
+	TweenFrames = new Array()
+	tFrameCount = 0;
+	totalFrames = 1;
+	currentFrameSelection = 1;
+	currentLayerSelection = 1;
+	addLayer()
+	makeCanvasFromIE(1)
+	gotoframe(1,1)
+	}
 
-function newAnimation(){
-newCanvas();
-resetHistory();
-}
+	function newAnimation(){
+	newCanvas();
+	resetHistory();
+	}
 
 
 
-  function toggleLoadInput(){
-  if($("STRINPT").style.display == "none"){
-  $("STRINPT").style.display = ""
-  }else{
-  $("STRINPT").style.display = "none"
-  }
-  }
-  
-  function toggleSaveInput(){
-  if($("STROUT").style.display == "none"){
-  $("STROUT").style.display = ""
-  }else{
-  $("STROUT").style.display = "none"
-  }
-  }
-  
+	function toggleLoadInput(){
+	if($("STRINPT").style.display == "none"){
+	$("STRINPT").style.display = ""
+	}else{
+	$("STRINPT").style.display = "none"
+	}
+	}
+	
+	function toggleSaveInput(){
+	if($("STROUT").style.display == "none"){
+	$("STROUT").style.display = ""
+	}else{
+	$("STROUT").style.display = "none"
+	}
+	}
+	
  
-  function saveAXTxt(){
-  $("AXTxt").value = escape(animationSaveData());
-  }
-  
-  function loadAXIT(){
-  loadAnimation(unescape($("AXIT").value));
-  resetHistory()
-  }
+	function saveAXTxt(){
+	$("AXTxt").value = escape(animationSaveData());
+	}
+	
+	function loadAXIT(){
+	loadAnimation(unescape($("AXIT").value));
+	resetHistory()
+	}
 function confirmNewCanvas(){
 	if (confirm("Do you want to save before continuing?\n press Cancel to proceed anyways")) { 
 		saveDialog();
 	}else{
 	newAnimation();
 	}
-}  
-  
-  
-  
+}	
+	
+	
+	
 function loadAnimation(Axml){
 newCanvas();
 cloneFrameEnabled = false;
@@ -95,7 +97,7 @@ for(var aId = 0; aId < cAtt.length; aId++){
 newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
 }
 DrawCanvas[dId +1].renderer.svgRoot.appendChild(newShape);
-Event.observe(newShape, "mousedown", DrawCanvas[dId +1].onHitListener);  
+Event.observe(newShape, "mousedown", DrawCanvas[dId +1].onHitListener);	
 }
 catch(err)
 {
@@ -123,7 +125,7 @@ for(var aId = 0; aId < clipboardAtt.length; aId++){
 newShape.setAttributeNS(null, clipboardAtt[aId].nodeName, clipboardAtt[aId].value);
 }
 DrawCanvas[currentCanvas].renderer.svgRoot.appendChild(newShape);
-Event.observe(newShape, "mousedown", DrawCanvas[currentCanvas].onHitListener);  
+Event.observe(newShape, "mousedown", DrawCanvas[currentCanvas].onHitListener);	
 }catch(err){alert(err)}
 }
 
@@ -150,7 +152,7 @@ for(var aId = 0; aId < cAtt.length; aId++){
 newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
 }
 DrawCanvas[currentCanvas].renderer.svgRoot.appendChild(newShape);
-Event.observe(newShape, "mousedown", DrawCanvas[currentCanvas].onHitListener);  
+Event.observe(newShape, "mousedown", DrawCanvas[currentCanvas].onHitListener);	
 }
 catch(err)
 {
@@ -183,7 +185,7 @@ for(var aId = 0; aId < cAtt.length; aId++){
 newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
 }
 DrawCanvas[currentCanvas].renderer.svgRoot.appendChild(newShape);
-Event.observe(newShape, "mousedown", DrawCanvas[currentCanvas].onHitListener);  
+Event.observe(newShape, "mousedown", DrawCanvas[currentCanvas].onHitListener);	
 }
 catch(err)
 {
@@ -220,7 +222,7 @@ if(cAtt[aId].nodeName != "x" && cAtt[aId].nodeName != "y"){
 newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
 }
 DrawCanvas[currentCanvas].renderer.svgRoot.appendChild(newShape);
-Event.observe(newShape, "mousedown", DrawCanvas[currentCanvas].onHitListener);  
+Event.observe(newShape, "mousedown", DrawCanvas[currentCanvas].onHitListener);	
 }
 catch(err)
 {
@@ -239,44 +241,44 @@ window.location = dataUrl(escape(animationSaveData()), "application/ajaxanimator
 }
 
 function dataUrl(data, mimeType){ // turns a string into a url that appears as a file. (to ff/op/saf)
-   encType= (!!btoa) ? ";base64" : "";
-   var esc = (!!encType) ? function(d){return btoa(d);} : function(d){return escape(d);};
-   if(!mimeType){mimeType= (data.nodeName) ? "text\/html" :"text\/plain";};	
-   b="data:"+mimeType+";charset="+document.characterSet+encType+",";
-   
-  	if ("string number date boolean function".indexOf(typeof data) > -1){ b+=esc(data.toString()); return b; };  
-  	if ( data.constructor==Array){b+= esc( data.join("") );	return b;  };
+	 encType= (!!btoa) ? ";base64" : "";
+	 var esc = (!!encType) ? function(d){return btoa(d);} : function(d){return escape(d);};
+	 if(!mimeType){mimeType= (data.nodeName) ? "text\/html" :"text\/plain";};	
+	 b="data:"+mimeType+";charset="+document.characterSet+encType+",";
+	 
+		if ("string number date boolean function".indexOf(typeof data) > -1){ b+=esc(data.toString()); return b; };	
+		if ( data.constructor==Array){b+= esc( data.join("") );	return b;	};
 	if(typeof data=="xml"){b+=esc(data.toSource()); return b;} //FF2 xml frag/doc
 		//for more complicated data, attempt to determine the format.
 	if(typeof data=="object"){ 
-		  if(!!data.value && !!data.value.length){b+=esc(data.value); return b;}; //input tags w/content
-		  if(!!data.innerHTML){b+=esc(data.innerHTML); return b;} //HTML tag
-		  if(!!data.length){ 		//weird stuff like nodelists
+			if(!!data.value && !!data.value.length){b+=esc(data.value); return b;}; //input tags w/content
+			if(!!data.innerHTML){b+=esc(data.innerHTML); return b;} //HTML tag
+			if(!!data.length){ 		//weird stuff like nodelists
 			var G=function(ob){r=[]; i=0; 
 				for(i;i<ob.length;i++){
 				if(dataUrl(ob[i])) r[i]=dataUrl(ob[i]);} return r.join("\n");};//end g
-		    return	(b+G(data));}//end if object w/length	
-		  if(!! eval(data.toSource()) ){b+=esc(data.toSource()); return b;}; //JSON
-	  }//end if object 
+				return	(b+G(data));}//end if object w/length	
+			if(!! eval(data.toSource()) ){b+=esc(data.toSource()); return b;}; //JSON
+		}//end if object 
  return;
-}  //end function dataUrl
+}	//end function dataUrl
 
 function setSD(){
-	  if(DrawCanvas[currentCanvas].mode == "select" && DrawCanvas[currentCanvas].selected != null){
-	  
-	  $("ResizeObjOpt").style.display = ""
+		if(DrawCanvas[currentCanvas].mode == "select" && DrawCanvas[currentCanvas].selected != null){
+		
+		$("ResizeObjOpt").style.display = ""
 $("noSelectRem").style.display = "none"
-	  $('sHeight').value = DrawCanvas[currentCanvas].selected.attributes['height'].nodeValue;
-	  $('sWidth').value = DrawCanvas[currentCanvas].selected.attributes['width'].nodeValue;
+		$('sHeight').value = DrawCanvas[currentCanvas].selected.attributes['height'].nodeValue;
+		$('sWidth').value = DrawCanvas[currentCanvas].selected.attributes['width'].nodeValue;
 }else{
 $("ResizeObjOpt").style.display = "none"
 $("noSelectRem").style.display = ""
 }
-	  }
+		}
 function setSP(){
 
-DrawCanvas[currentCanvas].selected.attributes['width'].nodeValue  = $("sWidth").value
-DrawCanvas[currentCanvas].selected.attributes['height'].nodeValue  = $("sHeight").value
+DrawCanvas[currentCanvas].selected.attributes['width'].nodeValue	= $("sWidth").value
+DrawCanvas[currentCanvas].selected.attributes['height'].nodeValue	= $("sHeight").value
 DrawCanvas[currentCanvas].renderer.showTracker(DrawCanvas[currentCanvas].selected)
 }
 
@@ -318,7 +320,7 @@ loadFrame((new XMLSerializer()).serializeToString(newE[cf]),cf + firstFrame);
 function loadFrame(Axml,frame){
 if ( DrawCanvas[frame].renderer.svgRoot.hasChildNodes() ){
 while ( DrawCanvas[frame].renderer.svgRoot.childNodes.length >= 1 ){
-DrawCanvas[frame].renderer.svgRoot.removeChild( DrawCanvas[frame].renderer.svgRoot.firstChild );       
+DrawCanvas[frame].renderer.svgRoot.removeChild( DrawCanvas[frame].renderer.svgRoot.firstChild );			 
 } 
 } 
 var svgNamespace = 'http://www.w3.org/2000/svg';
@@ -340,6 +342,6 @@ for(var aId = 0; aId < cAtt.length; aId++){
 newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
 }
 DrawCanvas[frame].renderer.svgRoot.appendChild(newShape);
-Event.observe(newShape, "mousedown", DrawCanvas[frame].onHitListener);  
+Event.observe(newShape, "mousedown", DrawCanvas[frame].onHitListener);	
 }
 }

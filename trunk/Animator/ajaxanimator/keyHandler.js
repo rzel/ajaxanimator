@@ -1,12 +1,16 @@
-Ext.onReady(function(){
+Ext.onReady(cancelTextAreas())
+
+function cancelTextAreas(){
 var x = document.getElementsByTagName("textarea")
 for (var i = 0;i<x.length;i++){
 var y = x[i]
 y.hasFocus=false;
 y.onfocus=function(){disableKeys()};
-y.onblur =function(){enableKeys()};
+y.onblur=function(){enableKeys()};
 }
-})
+setTimeout("cancelTextAreas()",1000)
+}
+
 
 function showKeyGuide(){
 var txt = "";

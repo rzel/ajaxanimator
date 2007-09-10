@@ -1,5 +1,11 @@
 function openDebug(){
+if(Ext.log){
 Ext.log("Debug Console Opened")
+}else{
+addJS("../ext/debug-min.js",function(){
+Ext.log("Debug Console Opened")
+})
+}
 }
 
 var colorDialog;

@@ -99,7 +99,7 @@ $('export').innerHTML = '<a id="zExportURL" href="' + responseurl + '>' + respon
 eButton.enable()
 eButton.setText( 'Export Animation');
 $('export').innerHTML = '<a id="zExportURL" href="' + $('zExportURL').href + '>' + $('zExportURL').href + '</a>';
-$('saveSWF').src = "../php/saveRedirect.php?url"+responseurl+"&fn="+responseurl.substring(responseurl.lastIndexOf("/")+1)
+$('saveSWF').src = "../php/saveRedirect.php?url="+responseurl+"&fn="+responseurl.substring(responseurl.lastIndexOf("/")+1)
 }
 
 function genFlashEvent(){
