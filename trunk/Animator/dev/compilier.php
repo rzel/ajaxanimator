@@ -92,7 +92,10 @@ $newzfile = $theData;
 $newfile = $theData;
 $cssCoded = "";
 foreach($cssCodeu as $cssCodem){
-$cssCoded.=file_get_contents($cssCodem)."\n";
+$sText = file_get_contents($cssCodem);
+$sText = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $sText);
+$buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '   ', '    ', '     '), '', $sText);
+$cssCoded.=$buffer."\n";
 }
 echo $cssCode[0];
 $newfile = str_replace($cssCode[0],"<style>".$cssCoded."</style>",$newfile);
@@ -104,7 +107,13 @@ fclose($fhaz);
 echo "Finish Compiliation<br><hr>";
 echo "<a href='ajaxanimator-compressed.htm'>Compiled Output</a>";
 echo "<hr>Publishing To HTML folder and ajaxanimator folder";
-copy("ajaxanimator-compressed.htm","../html/ajaxanimator-compressed.htm<br>");
+//copy("ajaxanimator-compressed.htm","../html/ajaxanimator-compressed.htm");
+
+$edtd =  str_replace($gzsrc,"../ajaxanimator/full.js",$newfile);;
+$fhazyw = fopen("../html/ajaxanimator-compressed.htm", 'w') or die("can't open file");
+fwrite($fhazyw,$edtd);
+fclose($fhazyw);
+
 $newzfile = str_replace($cssCode[0],'<style type="text/css">'.$cssCoded."</style>",$newzfile);
 $newzfile = str_replace($regs[0],'<script type="text/javascript" src="../ajaxanimator/full.js.php"></script>',$newzfile);
 echo "Writing ajaxanimator-compressed-adfree.php (html folder)<br>";
@@ -125,6 +134,8 @@ echo "Writing ajaxanimator-compressed.php (html folder)<br>";
 $fhaz = fopen("../html/ajaxanimator-compressed.php", 'w') or die("can't open file");
 fwrite($fhaz, '<?php ob_start ("ob_gzhandler"); ?>'.$newzfile2. '<?php ob_end_flush(); ?>');
 fclose($fhaz);
+
+copy($output,"../ajaxanimator/full.js");
 $etimer = explode( ' ', microtime() );
 $etimer = $etimer[1] + $etimer[0];
 echo '<hr><p style="margin:auto; text-align:center">';
