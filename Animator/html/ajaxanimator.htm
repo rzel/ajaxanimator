@@ -4,7 +4,9 @@
 <head>
 	<title>Ajax Animator</title>
 	<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.css">
+	<!--BeginCSS-->
 	<link rel="stylesheet" type="text/css" href="../ajaxanimator/loading.css">
+	<!--EndCSS-->
 	<!--BeginJS-->
 	<script type="text/javascript" src="../lib/utilities.js"></script>
 	<script type="text/javascript" src="../ext/ext-yui-adapter.js"></script>
@@ -28,7 +30,11 @@
 	<script type="text/javascript" src="../ajaxanimator/animationxml.js"></script>
 	<!--EndJS-->
 	</head>
-	<body>
+	<body style="overflow: hidden">
+	<!--BeginBodyJS-->
+	<script type="text/javascript" src="../lib/wz_tooltip-min.js"></script>
+	<!--EndBodyJS-->
+	
 	<!-- Start Loading Window Markup -->
 	<div id="loading">
 	<div class="loading-indicator">
@@ -209,6 +215,9 @@
 	<!-- GoogAd5-->
 	</tr>
 	</table>
+	</td>
+	</tr>
+	</table>
 	</div>
 	<div id="preview-div">
 	<div id="preview-tb"></div>
@@ -226,7 +235,7 @@
 	var cimg = 0;var cwi =112;var che =48;</script> 
 	<script  type="text/javascript" language="javascript" src="http://s10.histats.com/js9.js"></script> 
 	<noscript><a href="http://www.histats.com" target="_blank"> 
-	<img  src="http://s4.histats.com/stats/0.gif?101448&1" alt="site hit counter" border="0"></a> 
+	<img  src="http://s4.histats.com/stats/0.gif?101448&amp;1" alt="site hit counter" border="0"></a> 
 	</noscript>
 	<!-- Histats.com  END  -->
 </body>

@@ -326,13 +326,13 @@ setTotalFrameValue();
 gotoframe(currentFrameSelection,currentLayerSelection);
 }
 
-function gotoframe(framenumber, layer) //Function to change the current selected frame
-{
-if(KeyFrames.join(",").indexOf(framenumber+","+layer) == -1){
-}
+function gotoframe(framenumber, layer){
 
-var preCnvs = currentCanvas;
-DrawCanvas[currentCanvas].unselect();
+	if(KeyFrames.join(",").indexOf(framenumber+","+layer) == -1){
+	}
+
+	var preCnvs = currentCanvas;
+	DrawCanvas[currentCanvas].unselect();
 	if(framenumber > 0 && framenumber < totalFramesPerLayer){
 	checkFrame(currentFrameSelection, layer);
 	previousCanvas = currentCanvas;
@@ -347,7 +347,7 @@ DrawCanvas[currentCanvas].unselect();
 	hideCurrentCanvas();
 	currentCanvas = framenumber;
 	if(DrawCanvas[currentCanvas]==null){
-	if(isIE() == true){
+	if(Ext.isIe == true){
 	makeCanvasFromIE(framenumber);
 	}else{
 	makeCanvasFromId(framenumber);
@@ -357,9 +357,8 @@ DrawCanvas[currentCanvas].unselect();
 	}
 	}
 	showCurrentCanvas();
- checkFrame(framenumber, layer);
-
-}
+	checkFrame(framenumber, layer);
+	}
 }
 
 
