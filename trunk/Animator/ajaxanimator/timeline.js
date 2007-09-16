@@ -113,7 +113,7 @@ tFrame(fNum,layer)
 }
 
 function gotoframeInterface(framenumber,layer){
-
+if(Ext.isIE != true){
 if(nextFA != 0 && kFrameCount > 1){
 var nFn;
 var kFrameC = parseInt(KeyFrames[kFrameCount -1].toString().split(",")[0])
@@ -134,7 +134,9 @@ tFrame(fNum,layer)
 }
 nextFA = 0
 }
+}
 //start keyframe detection code
+
 	var wasKeyFrame = new Boolean(false); //variable to store wether the selection is a keyframe
 	
 	for(var m = 0; m <= kFrameCount; m++)
@@ -327,7 +329,7 @@ gotoframe(currentFrameSelection,currentLayerSelection);
 }
 
 function gotoframe(framenumber, layer){
-
+	if(Ext.isIE != true){
 	if(KeyFrames.join(",").indexOf(framenumber+","+layer) == -1){
 	}
 
@@ -347,7 +349,7 @@ function gotoframe(framenumber, layer){
 	hideCurrentCanvas();
 	currentCanvas = framenumber;
 	if(DrawCanvas[currentCanvas]==null){
-	if(Ext.isIe == true){
+	if(Ext.isIE == true){
 	makeCanvasFromIE(framenumber);
 	}else{
 	makeCanvasFromId(framenumber);
@@ -358,6 +360,10 @@ function gotoframe(framenumber, layer){
 	}
 	showCurrentCanvas();
 	checkFrame(framenumber, layer);
+	}
+
+	}else{
+		gotoframeInterface(framenumber,layer);
 	}
 }
 
@@ -579,17 +585,19 @@ document.getElementById("timPreDiv").firstChild.appendChild(newShape);
 
 
 function changeInnerHTML (elm, txt) {
-	if(document.getElementById) {
+
+	if(document.getElementById && elm != null && txt != null){
 	var el = document.getElementById(elm);
 	el.innerHTML = el.innerHTML + txt;
 	return true;
 	}
 	return false;
+	
 }
 
 
 function overwriteInnerHTML (elm, txt) {
-	if(document.getElementById) {
+	if(document.getElementById && elm != null && txt != null) {
 	var el = document.getElementById(elm);
 	el.innerHTML =  txt;
 	return true;

@@ -6,7 +6,7 @@ while ($file = readdir($dir_handle))
 $file = rawurlencode($file);
 $url = str_replace('+' , '%20' , $file);
 if($url != ".." && $url != "." && $url != "index.php" && $url != ".svn" ){
-$urI = '"' . $url . '"';z
+$urI = '"' . $url . '"';
 echo "<a href='javascript:animationList2($urI)'>$url</a><br />";
 }
 }

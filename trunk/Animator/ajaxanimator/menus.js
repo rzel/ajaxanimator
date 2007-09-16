@@ -81,7 +81,7 @@ Ext.onReady(function(){
 			{text: 'Manual',icon: '../images/help.png',handler: function(){Ext.MessageBox.alert("LA LA LA","Okay, so um.... play around until it breaks?")}},
 			{text: 'FAQ',icon: '../images/help.png',handler: poop},
 			{text: 'Seizure',icon: '../images/help.png',handler: function(){Ext.MessageBox.alert("Yo!","Hey, this is a Flash ANIMATOR application, ISN'T it? Make one yourself")}},
-			{text: 'Support',icon: '../images/money.png',handler: function(){showTehAdz();}}
+			{text: 'Support',icon: '../images/money.png',handler: function(){Ext.MessageBox.alert("Blah","Um... Hi")}}
         ]
     });
 

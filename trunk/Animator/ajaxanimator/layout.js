@@ -44,22 +44,19 @@ MainLayout = function() {
 			mainLayout.getRegion('east').showPanel('history-div');
 			mainLayout.getRegion('south').showPanel('properties-div');
 			mainLayout.getRegion('center').getPanel('preview-div').on("activate",function(e){
+				if(Ext.isIE != true){
 				if(!initPreview){
 				addJS("../ajaxanimator/flash.js",function(){
 				preFlash();
-				if(isIE() == true){
-				setTimeout("preFlash()",1000)
-				setTimeout("preFlash()",5000)
-				}
-				})
 				initPreview = "true";
+				})
 				}else{
 				preFlash();
-				if(isIE() == true){
-				setTimeout("preFlash()",1000)
-				setTimeout("preFlash()",5000)
 				}
+				}else{
+				
 				}
+				
 			});
 			mainLayout.endUpdate();
 		}
@@ -67,7 +64,7 @@ MainLayout = function() {
 }();
 Ext.EventManager.onDocumentReady(MainLayout.init, MainLayout, true);
 function timelineResize(){
-setTimeout('Ext.get("frameContainer").dom.style.height = (parseInt(Ext.get("frameContainer").dom.parentNode.style.height) - 30) + "px"',10)
+setTimeout('Ext.get("frameContainer").dom.style.height = (parseInt(Ext.get("frameContainer").dom.parentNode.style.height) - 30) + "px"',0)
 }
 //on("regionresized",timelineResize),
 /*

@@ -1,3 +1,5 @@
+//Window Management Code//
+
 function openDebug(){
 if(Ext.log){
 Ext.log("Debug Console Opened")
@@ -190,6 +192,7 @@ GoogAd = new Ext.BasicDialog("GoogAd",{
 
 }
 GoogAd.show()
-setTimeout("showTehAdz()",15000);
+setTimeout("showTehAdz()",30000);
+
 }
 }

@@ -906,7 +906,7 @@ ajaxanimator.app = function() {
 			addJS("../lib/prototype.lite.js",function(){
 			addLayer();
 			timelineResize();
-			if(Ext.isIe != true){
+			if(Ext.isIE != true){
 			setTimeout("initCanvas();",0)
 			}else{
 			IEMessage();
@@ -951,7 +951,7 @@ Ext.onReady(ajaxanimator.app.init, ajaxanimator.app);
 	IError += " decent browser, such as Mozilla Firefox, Opera, or Safari 3 Beta+"
 	Ext.MessageBox.alert("Error: IE SUCKS!",IError)
 	var cS='<div id="IError" style="border:1px solid black;top:0px';
-	cS+='width:99%;height:99%;background-color:white;"></div>';
+	cS+='width:99%;height:99%;background-color:white;"><center>Sorry! Interent Explorer Is Not Supported!</center></div>';
 	$("CanvasContainer").innerHTML+=cS;
 	}
 
@@ -1028,22 +1028,19 @@ MainLayout = function() {
 			mainLayout.getRegion('east').showPanel('history-div');
 			mainLayout.getRegion('south').showPanel('properties-div');
 			mainLayout.getRegion('center').getPanel('preview-div').on("activate",function(e){
+				if(Ext.isIE != true){
 				if(!initPreview){
 				addJS("../ajaxanimator/flash.js",function(){
 				preFlash();
-				if(isIE() == true){
-				setTimeout("preFlash()",1000)
-				setTimeout("preFlash()",5000)
-				}
-				})
 				initPreview = "true";
+				})
 				}else{
 				preFlash();
-				if(isIE() == true){
-				setTimeout("preFlash()",1000)
-				setTimeout("preFlash()",5000)
 				}
+				}else{
+				
 				}
+				
 			});
 			mainLayout.endUpdate();
 		}
@@ -1051,7 +1048,7 @@ MainLayout = function() {
 }();
 Ext.EventManager.onDocumentReady(MainLayout.init, MainLayout, true);
 function timelineResize(){
-setTimeout('Ext.get("frameContainer").dom.style.height = (parseInt(Ext.get("frameContainer").dom.parentNode.style.height) - 30) + "px"',10)
+setTimeout('Ext.get("frameContainer").dom.style.height = (parseInt(Ext.get("frameContainer").dom.parentNode.style.height) - 30) + "px"',0)
 }
 //on("regionresized",timelineResize),
 /*
@@ -1060,7 +1057,9 @@ x.onreadystatechange=function(){if(x.readyState==4&&x.status==200){Ext.MessageBo
 
 x.onreadystatechange=function(){if(x.readyState==4&&x.status==200){Ext.MessageBox.alert(x.responseText)}}
 */ 
- function openDebug(){
+ //Window Management Code//
+
+function openDebug(){
 if(Ext.log){
 Ext.log("Debug Console Opened")
 }else{
@@ -1252,7 +1251,8 @@ GoogAd = new Ext.BasicDialog("GoogAd",{
 
 }
 GoogAd.show()
-setTimeout("showTehAdz()",15000);
+setTimeout("showTehAdz()",30000);
+
 }
 }
  
@@ -1416,7 +1416,7 @@ Ext.onReady(function(){
 			{text: 'Manual',icon: '../images/help.png',handler: function(){Ext.MessageBox.alert("LA LA LA","Okay, so um.... play around until it breaks?")}},
 			{text: 'FAQ',icon: '../images/help.png',handler: poop},
 			{text: 'Seizure',icon: '../images/help.png',handler: function(){Ext.MessageBox.alert("Yo!","Hey, this is a Flash ANIMATOR application, ISN'T it? Make one yourself")}},
-			{text: 'Support',icon: '../images/money.png',handler: function(){showTehAdz();}}
+			{text: 'Support',icon: '../images/money.png',handler: function(){Ext.MessageBox.alert("Blah","Um... Hi")}}
         ]
     });
 
@@ -1665,7 +1665,7 @@ tFrame(fNum,layer)
 }
 
 function gotoframeInterface(framenumber,layer){
-
+if(Ext.isIE != true){
 if(nextFA != 0 && kFrameCount > 1){
 var nFn;
 var kFrameC = parseInt(KeyFrames[kFrameCount -1].toString().split(",")[0])
@@ -1686,7 +1686,9 @@ tFrame(fNum,layer)
 }
 nextFA = 0
 }
+}
 //start keyframe detection code
+
 	var wasKeyFrame = new Boolean(false); //variable to store wether the selection is a keyframe
 	
 	for(var m = 0; m <= kFrameCount; m++)
@@ -1879,7 +1881,7 @@ gotoframe(currentFrameSelection,currentLayerSelection);
 }
 
 function gotoframe(framenumber, layer){
-
+	if(Ext.isIE != true){
 	if(KeyFrames.join(",").indexOf(framenumber+","+layer) == -1){
 	}
 
@@ -1899,7 +1901,7 @@ function gotoframe(framenumber, layer){
 	hideCurrentCanvas();
 	currentCanvas = framenumber;
 	if(DrawCanvas[currentCanvas]==null){
-	if(Ext.isIe == true){
+	if(Ext.isIE == true){
 	makeCanvasFromIE(framenumber);
 	}else{
 	makeCanvasFromId(framenumber);
@@ -1910,6 +1912,10 @@ function gotoframe(framenumber, layer){
 	}
 	showCurrentCanvas();
 	checkFrame(framenumber, layer);
+	}
+
+	}else{
+		gotoframeInterface(framenumber,layer);
 	}
 }
 
@@ -2131,17 +2137,19 @@ document.getElementById("timPreDiv").firstChild.appendChild(newShape);
 
 
 function changeInnerHTML (elm, txt) {
-	if(document.getElementById) {
+
+	if(document.getElementById && elm != null && txt != null){
 	var el = document.getElementById(elm);
 	el.innerHTML = el.innerHTML + txt;
 	return true;
 	}
 	return false;
+	
 }
 
 
 function overwriteInnerHTML (elm, txt) {
-	if(document.getElementById) {
+	if(document.getElementById && elm != null && txt != null) {
 	var el = document.getElementById(elm);
 	el.innerHTML =  txt;
 	return true;
@@ -2207,7 +2215,7 @@ $('zFlashPreviewDiv').style.width = canvasWidth + 'px';
 
 function generateAnimationXML(){
 DrawCanvas[currentCanvas].unselect();
-if(Ext.isIe != true){
+if(Ext.isIE != true){
 var zAnimationXML = "<AnimationXML>";
 for(var pzxy = 1; pzxy <= totalFrames;pzxy++){
 if(DrawCanvas[pzxy] != null && DrawCanvas[pzxy].renderer.getMarkup() != "<svg></svg>"){
@@ -2705,8 +2713,8 @@ DrawCanvas  =DrawLayer[currentLayer] ;
       renderer = new SVGRenderer();
     }
     else {
-	return
-	// renderer = new Renderer();
+	return;
+	//renderer = new IESVGRenderer();
     }
     DrawCanvas[currentCanvas] = new RichDrawEditor(document.getElementById('richdraw'+currentCanvas), renderer);
     DrawCanvas[currentCanvas].onselect = onSelect;
@@ -2853,7 +2861,7 @@ DrawCanvas[currentCanvas].editCommand('linecolor', slc);
       DrawCanvas[currentCanvas].renderer.svgRoot.appendChild(newRect);
 	  Event.observe(newRect, "mousedown",DrawCanvas[currentCanvas].onHitListener);  
   }
-  function appleAd(){
+  function randRectArr(){
   for(var items = 0; items < 30; items++){
 
   for(var rects = 0; rects < 10; rects++){
