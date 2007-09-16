@@ -132,7 +132,7 @@ $newzfile2 = str_replace("<!-- GoogAd5-->", file_get_contents("GoogAd5.txt"),$ne
 
 echo "Writing ajaxanimator-compressed.php (html folder)<br>";
 $fhaz = fopen("../html/ajaxanimator-compressed.php", 'w') or die("can't open file");
-fwrite($fhaz, preg_replace('/\s+/', ' ',utf8_encode('<?php ob_start ("ob_gzhandler"); ?>'.$newzfile2. '<?php ob_end_flush(); ?>')));
+fwrite($fhaz, utf8_encode('<?php ob_start ("ob_gzhandler"); ?>'.$newzfile2. '<?php ob_end_flush(); ?>'));
 fclose($fhaz);
 
 copy($output,"../ajaxanimator/full.js");
