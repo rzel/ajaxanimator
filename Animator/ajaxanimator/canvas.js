@@ -53,7 +53,7 @@ $('zFlashPreviewDiv').style.width = canvasWidth + 'px';
 
 function generateAnimationXML(){
 DrawCanvas[currentCanvas].unselect();
-if(Ext.isIe != true){
+if(Ext.isIE != true){
 var zAnimationXML = "<AnimationXML>";
 for(var pzxy = 1; pzxy <= totalFrames;pzxy++){
 if(DrawCanvas[pzxy] != null && DrawCanvas[pzxy].renderer.getMarkup() != "<svg></svg>"){

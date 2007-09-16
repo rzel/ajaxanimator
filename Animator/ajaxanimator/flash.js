@@ -13,9 +13,10 @@ $('zFlashPreviewDiv').innerHTML = "";
 pButton.disable()
 pButton.setText( 'generating...')
 var swfgen = generateAnimationXML();
-if(generateAnimationXML().replace("<svg></svg>","") != '<AnimationXML></AnimationXML>'){
+
+if(generateAnimationXML().length > 50){
 ajaxpack.postAjaxRequest("../freemovie/swfgen.php", "type=preview&height="+canvasHeight+"&width="+canvasWidth+"&framerate="+AnimationFramerate+"&svg=" + swfgen , preFlashEvent, "txt")
-}else{$('zFlashPreviewDiv').innerHTML = "Sorry No Preview Availiable:<br> Empty Animation";}
+}else{$('zFlashPreviewDiv').innerHTML = "Empty Animation";}
 }
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
 }

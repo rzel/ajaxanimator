@@ -16,8 +16,8 @@ DrawCanvas  =DrawLayer[currentLayer] ;
       renderer = new SVGRenderer();
     }
     else {
-	return
-	// renderer = new Renderer();
+	return;
+	//renderer = new IESVGRenderer();
     }
     DrawCanvas[currentCanvas] = new RichDrawEditor(document.getElementById('richdraw'+currentCanvas), renderer);
     DrawCanvas[currentCanvas].onselect = onSelect;
@@ -164,7 +164,7 @@ DrawCanvas[currentCanvas].editCommand('linecolor', slc);
       DrawCanvas[currentCanvas].renderer.svgRoot.appendChild(newRect);
 	  Event.observe(newRect, "mousedown",DrawCanvas[currentCanvas].onHitListener);  
   }
-  function appleAd(){
+  function randRectArr(){
   for(var items = 0; items < 30; items++){
 
   for(var rects = 0; rects < 10; rects++){

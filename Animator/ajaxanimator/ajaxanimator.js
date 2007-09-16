@@ -13,7 +13,7 @@ ajaxanimator.app = function() {
 			addJS("../lib/prototype.lite.js",function(){
 			addLayer();
 			timelineResize();
-			if(Ext.isIe != true){
+			if(Ext.isIE != true){
 			setTimeout("initCanvas();",0)
 			}else{
 			IEMessage();
@@ -58,7 +58,7 @@ Ext.onReady(ajaxanimator.app.init, ajaxanimator.app);
 	IError += " decent browser, such as Mozilla Firefox, Opera, or Safari 3 Beta+"
 	Ext.MessageBox.alert("Error: IE SUCKS!",IError)
 	var cS='<div id="IError" style="border:1px solid black;top:0px';
-	cS+='width:99%;height:99%;background-color:white;"></div>';
+	cS+='width:99%;height:99%;background-color:white;"><center>Sorry! Interent Explorer Is Not Supported!</center></div>';
 	$("CanvasContainer").innerHTML+=cS;
 	}
 

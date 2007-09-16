@@ -19,7 +19,7 @@ echo "Finish Reading ajaxanimator.htm<br>";
 echo "Parsing ajaxanimator.htm source<br>";
 echo "adding wz_tooltip<br>";
 ereg("<!--BeginBodyJS.*EndBodyJS-->",$theData,$wzreg);
-$theData = str_replace($wzreg[0],'<script type="text/javascript">'.file_get_contents("../lib/wz_tooltip-min.js")."</script>",$theData);
+$theData = str_replace($wzreg[0],'<script type="text/javascript">'.file_get_contents("../lib/wz_tooltip-packer.js")."</script>",$theData);
 ereg("<!--BeginJS.*EndJS-->",$theData,$regs);
 ereg("<!--BeginCSS.*EndCSS-->",$theData,$cssCode);
 $c = $cssCode[0];
@@ -98,7 +98,7 @@ $buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '   ', '    ', '    
 $cssCoded.=$buffer."\n";
 }
 echo $cssCode[0];
-$newfile = str_replace($cssCode[0],"<style>".$cssCoded."</style>",$newfile);
+$newfile = str_replace($cssCode[0],'<style type="text/css">'.$cssCoded."</style>",$newfile);
 $newfile = str_replace($regs[0],'<script type="text/javascript" src="'.$gzsrc.'"></script>',$newfile);
 echo "Writing ajaxanimator-compressed.htm<br>";
 $fhaz = fopen("ajaxanimator-compressed.htm", 'w') or die("can't open file");
@@ -132,7 +132,7 @@ $newzfile2 = str_replace("<!-- GoogAd5-->", file_get_contents("GoogAd5.txt"),$ne
 
 echo "Writing ajaxanimator-compressed.php (html folder)<br>";
 $fhaz = fopen("../html/ajaxanimator-compressed.php", 'w') or die("can't open file");
-fwrite($fhaz, '<?php ob_start ("ob_gzhandler"); ?>'.$newzfile2. '<?php ob_end_flush(); ?>');
+fwrite($fhaz, preg_replace('/\s+/', ' ',utf8_encode('<?php ob_start ("ob_gzhandler"); ?>'.$newzfile2. '<?php ob_end_flush(); ?>')));
 fclose($fhaz);
 
 copy($output,"../ajaxanimator/full.js");
