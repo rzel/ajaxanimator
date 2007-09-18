@@ -31,8 +31,9 @@ Ext.onReady(function(){
 	var viewMenu = new Ext.menu.Menu({
         id: 'viewMenu',
         items: [
-			{text: 'Animation', icon: '../images/page_white_flash.png',handler: function(){mainLayout.getRegion('center').showPanel('preview-div')}}
-        ]
+			{text: 'Animation', icon: '../images/page_white_flash.png',handler: function(){mainLayout.getRegion('center').showPanel('preview-div')}},
+			{text: 'Theme', icon: '../images/application_double.png',menu: themeMenu}
+		]
     });
 	var toolsMenu = new Ext.menu.Menu({
         id: 'toolsMenu',
@@ -85,6 +86,18 @@ Ext.onReady(function(){
         ]
     });
 
+	
+	//////////////////////SubSub Menu Items////////////////////
+	var themeMenu = new Ext.menu.Menu({
+        id: 'themeMenu',
+        items: [
+			{text: 'Default',icon: '../images/application_go.png',handler: function(){setTheme(0)}},
+			{text: 'Gray', icon: '../images/application_go.png',handler: function(){setTheme(1)}},
+			{text: 'Vista',icon: '../images/application_go.png',handler: function(){setTheme(2)}},
+			{text: 'Aero',icon: '../images/application_go.png',handler: function(){setTheme(4)}},
+			{text: 'Galdaka',icon: '../images/application_go.png',handler: function(){setTheme(5)}}
+		     ]
+    });
 	
 	//////////////////////Menu Items///////////////////////////
 
@@ -194,6 +207,32 @@ var drawToolSubmenu = new Ext.menu.Menu({
     ]
 });
 
+var lineColorMenu = new Ext.menu.Menu({
+    id: 'lineColorMenu', // the menu's id we use later to assign as submenu
+    items: [
+        new Ext.menu.ColorItem({
+            selectHandler: function(zcp, selColor){
+Colorobj =document.getElementById('linecolor')
+            picker.setColor(selColor)
+			
+			}
+        })
+    ]
+});
+
+
+var fillColorMenu = new Ext.menu.Menu({
+    id: 'fillColorMenu', // the menu's id we use later to assign as submenu
+    items: [
+        new Ext.menu.ColorItem({
+            selectHandler: function(zcp, selColor){
+Colorobj =document.getElementById('fillcolor')
+            picker.setColor(selColor)
+            }
+        })
+    ]
+});
+
 var canvasContextMenu = new Ext.menu.Menu({
     id: 'canvasContextMenu',
     items: [
@@ -203,7 +242,9 @@ var canvasContextMenu = new Ext.menu.Menu({
 		{text: 'Delete Shape',icon: '../images/delete.png',handler: poop},
 		{text: 'Clear Frame',icon: '../images/cancel.png',handler: poop},
 		{text: 'Undo',icon: '../images/arrow_undo.png',handler: poop},
-	    {text: 'Drawing Tool',icon: '../images/paintbrush.png', menu: drawToolSubmenu}
+	    {text: 'Drawing Tool',icon: '../images/paintbrush.png', menu: drawToolSubmenu},
+	    {text: 'Fill Color',icon: '../images/color_wheel.png', menu: fillColorMenu},
+		{text: 'Line Color',icon: '../images/color_wheel.png', menu: lineColorMenu}
 	]
 });
 

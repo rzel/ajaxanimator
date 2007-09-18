@@ -1,11 +1,13 @@
 Ext.onReady(function(){
 var x = document.getElementsByTagName("textarea")
+
 for (var i = 0;i<x.length;i++){
 var y = x[i]
 y.hasFocus=false;
-y.onfocus=function(){disableKeys()};
-y.onblur=function(){enableKeys()};
+y.onfocus=function(){keyShortcuts.disable();};
+y.onblur=function(){keyShortcuts.enable();};
 }
+
 })
 
 
@@ -39,83 +41,62 @@ txt+="F6: To Keyframe"
 Ext.MessageBox.alert("Keyboard Shortcuts:",txt)
 }
 
-function enableKeys(){
-kcopy.enable()
-kpaste.enable()
-kundo.enable()
-knextframe.enable()
-kpreframe.enable()
-ktokeyframe.enable()
-kplayanim.enable()
-kstopanim.enable()
-kdelete.enable()
-kfdelete.enable()
-}
-function disableKeys(){
-kcopy.disable()
-kpaste.disable()
-kundo.disable()
-knextframe.disable()
-kpreframe.disable()
-ktokeyframe.disable()
-kplayanim.disable()
-kstopanim.disable()
-kdelete.disable()
-kfdelete.disable()
-}
 
 
-var kcopy = new YAHOO.util.KeyListener(document, { keys:67,  ctrl:true}, { fn:function(){
-copyObj();
-}, correctScope:true } );
-kcopy.enable();
 
-var kpaste = new YAHOO.util.KeyListener(document, { keys:86,  ctrl:true}, { fn:function(){
-pasteObj();
-}, correctScope:true } );
-kpaste.enable();
+Ext.onReady(function(){
+var keyShortcuts = new Ext.KeyMap(document, [
+    {
+        key: [10,13],
+        fn: function(){ alert("Return was pressed"); }
+	}, {
+	
+	
+        key: "c",ctrl:true,
+        fn: function(){ copyObj(); }
+	}, {
+        key: "p",ctrl:true,
+        fn: function(){ pasteObj(); }
+    }, {
+        key: "z",ctrl:true,
+        fn: function(){undo();}
+    }, {
+        key: [39,33],
+        fn: function(){ nextFrame(); }
+    }, {
+        key: [37,34],
+        fn: function(){ preFrame(); }
+    }, {
+        key: 117,
+        fn: function(){ toKeyframe(); }
+	}, {
+	
+        key: "p",
+        fn: function(){ playAnimation() }
+	}, {
+	
+        key: "s",
+        fn: function(){ stopAnimation(); }
+	}, {
+	
+        key: 46,
+        fn: function(){if(DrawCanvas[currentCanvas].selected!=null){deleteShape();}else{removeKeyframe();}}
+	}, {
+	
+        key: 82,
+        fn: function(){ removeKeyframe(); }
+	}
+	
+/*
+        key: "\t",
+        ctrl:true,
+        shift:true,
+        fn: function(){ alert('Control + shift + tab was pressed.'); }
+ */   
+	
+]);
 
-var kundo = new YAHOO.util.KeyListener(document, { keys:86,  ctrl:true}, { fn:function(){
-undo();
-}, correctScope:true } );
-kundo.enable();
+})
 
-var knextframe = new YAHOO.util.KeyListener(document, { keys:[39,33] }, { fn:function(){
-gotoframe(currentFrameSelection+1,1)
-}, correctScope:true } );
-knextframe.enable();
 
-var kpreframe = new YAHOO.util.KeyListener(document, { keys:[37,34] }, { fn:function(){
-gotoframe(currentFrameSelection-1,1)
-}, correctScope:true } );
-kpreframe.enable();
-
-var ktokeyframe = new YAHOO.util.KeyListener(document, { keys:117 }, { fn:function(){
-toKeyframe();
-}, correctScope:true } );
-ktokeyframe.enable();
-
-var kplayanim = new YAHOO.util.KeyListener(document, { keys:[80,13] }, { fn:function(){
-playAnimation()
-}, correctScope:true } );
-ktokeyframe.enable();
-
-var kstopanim = new YAHOO.util.KeyListener(document, { keys:83 }, { fn:function(){
-stopAnimation();
-}, correctScope:true } );
-kstopanim.enable();
-
-var kdelete = new YAHOO.util.KeyListener(document, { keys:46 }, { fn:function(){
-if(DrawCanvas[currentCanvas].selected != null){
-deleteShape();
-}else{
-removeKeyframe();
-}
-}, correctScope:true } );
-kdelete.enable();
-
-var kfdelete = new YAHOO.util.KeyListener(document, { keys:82 }, { fn:function(){
-removeKeyframe()
-}, correctScope:true } );
-kfdelete.enable();
 

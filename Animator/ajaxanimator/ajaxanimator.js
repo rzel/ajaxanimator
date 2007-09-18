@@ -28,6 +28,24 @@ ajaxanimator.app = function() {
     };
 }();
 
+function setTheme(thId){
+
+var themeArray = ["default","gray","vista","aero","galdaka"]
+var theme = "default";
+if(typeof(thId) == typeof(5)){
+theme = themeArray[thId];
+}else{
+if(typeof(thId) == typeof("ajaxanimator")){
+theme = thId;
+}
+}
+if(theme == "default"){
+addCSS("../resources/css/ext-all.css")
+}else{
+addCSS("../resources/css/xtheme-"+theme+".css")
+}
+
+}
 function jsTimeout(){
 	if(!initHistory){
 	addJS("../ajaxanimator/historyManagement.js",function(){
