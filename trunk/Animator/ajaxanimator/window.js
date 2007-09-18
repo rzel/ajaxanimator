@@ -21,11 +21,11 @@ function showColorDialog(){
 	
         colorDialog = new Ext.LayoutDialog("color-dialog", { 
                 modal:false,
-                width:400,
-                height:290,
+                width:280,
+                height:285,
                 shadow:true,
-                minWidth:400,
-                minHeight:290,
+                minWidth:010,
+                minHeight:010,
                 proxyDrag: true,
                 center: {
                     autoScroll:true,
