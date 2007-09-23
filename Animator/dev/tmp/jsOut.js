@@ -1027,7 +1027,7 @@ MainLayout = function() {
 				north:{ titlebar: false, split: true, initialSize: 120 , collapsible: true, toolbar: topToolbar}, 
 				south:{ tilebar: false, split: true, initialSize: 100 , collapsible: true}, 
 				east: { titlebar: false, split: true, initialSize: 120 , collapsible: true}, 
-				west: { titlebar: true, split: true, initialSize: 60 , collapsible: true}, 
+				west: { titlebar: true, split: true, initialSize: 55 , collapsible: true}, 
 				center: { }
 			});
 			mainLayout.on("regionresized",timelineResize);
@@ -1634,10 +1634,6 @@ var LayerBGColor = "#BED6E0";
 
 
 
-function setOpacity(obj, value) { //this function is never actually called... but it would make a good effect
-	getElementById(obj).style.opacity = value/10;
-	getElementById(obj).style.filter = 'alpha(opacity=' + value*10 + ')';
-}
 
 function toKeyframe() //Function to convert normal frames to keyframes
 {
@@ -2629,7 +2625,8 @@ setTimeout("_pA('"+z+"')",83)}}
 
 
  
- Ext.onReady(function(){
+ var keyShortcuts;
+Ext.onReady(function(){
 var x = document.getElementsByTagName("textarea")
 
 for (var i = 0;i<x.length;i++){
@@ -2676,7 +2673,7 @@ Ext.MessageBox.alert("Keyboard Shortcuts:",txt)
 
 
 Ext.onReady(function(){
-var keyShortcuts = new Ext.KeyMap(document, [
+keyShortcuts = new Ext.KeyMap(document, [
 	{
         key: "c",ctrl:true,
         fn: function(){ copyObj(); }
@@ -2727,7 +2724,16 @@ var keyShortcuts = new Ext.KeyMap(document, [
 
 
  
-  function setLayerData(){
+ var drawTools = new Object();
+drawTools.select = function(){setMode('select', 'Selection');}
+drawTools.rect = function(){setMode('rect', 'Rectangle');}
+drawTools.roundrect = function(){setMode('roundrect', 'Rounded Rectangle');}
+drawTools.ellipse = function(){setMode('ellipse', 'Ellipse / Circle');}
+drawTools.line = function(){setMode('line', 'Line');}
+
+var iconId = new Array("select","rect","roundrect","ellipse","line","delete") 
+ 
+ function setLayerData(){
  DrawLayer[currentLayer] = DrawCanvas;
  }
 
@@ -2751,7 +2757,6 @@ DrawCanvas  =DrawLayer[currentLayer] ;
     DrawCanvas[currentCanvas] = new RichDrawEditor(document.getElementById('richdraw'+currentCanvas), renderer);
     DrawCanvas[currentCanvas].onselect = onSelect;
     DrawCanvas[currentCanvas].onunselect = onUnselect;
-	//$("CanvasContainer").onmousedown = startDown;
 	$("CanvasContainer").onmouseup = function(){
 	if(!initHistory){
 	addJS("../ajaxanimator/historyManagement.js",function(){
@@ -2764,17 +2769,19 @@ DrawCanvas  =DrawLayer[currentLayer] ;
 	setSD();
 	}
 	}
-	//$("CanvasContainer").onclick = checkEdit;
 	if(totalFrames == 1){
 	setCanvasDefaults();
 	}else{
-
-	editHistoryNumber++;
 	if(!initHistory){
 	addJS("../ajaxanimator/historyManagement.js",function(){
+	editHistoryNumber++;
 	addHistoryTO("Add&nbsp;Frame")
 	initHistory = "true";
 	})
+	}else{
+	editHistoryNumber++;
+	addHistoryTO("Add&nbsp;Frame")
+	initHistory = "true";	
 	}
 
 	editHistory[editHistoryNumber] =  $("CanvasContainer").innerHTML
@@ -2788,7 +2795,6 @@ DrawCanvas  =DrawLayer[currentLayer] ;
   if(DrawCanvas[currentCanvas]){
     DrawCanvas[currentCanvas].editCommand('mode', zCurrentCanvasMode);
  }
- // setSD();
   setTimeout('refreshModeData()',1000);
   
   }
@@ -2812,8 +2818,15 @@ DrawCanvas  =DrawLayer[currentLayer] ;
     DrawCanvas[currentCanvas].editCommand('linewidth', LWidth);
 	DrawCanvas[currentCanvas].editCommand('mode', zCurrentCanvasMode);
   }
-  
+  function changeSelectedUI(id) {
+    for(var iid = 0; iid < iconId.length; iid++){
+	$(iconId[iid]).style.backgroundImage = "";
+	}
+	$(id).style.backgroundImage = "url(../images/selectedMask.png)"
+  }
   function setMode(mode, status) {
+	changeSelectedUI(mode)
+	
     DrawCanvas[currentCanvas].editCommand('mode', mode);
 	zCurrentCanvasMode = mode;
     if (mode == 'select'){
@@ -2825,34 +2838,24 @@ DrawCanvas  =DrawLayer[currentLayer] ;
   }
   
   function deleteShape() {
+	if(DrawCanvas[currentCanvas].selected){
     DrawCanvas[currentCanvas].deleteSelection();
 	addHistory("Delete Shape")
+	}
   }
   
   function setFillColor(sfc) {
 DrawCanvas[currentCanvas].editCommand('fillcolor', sfc);
-    //DrawCanvas[currentCanvas].editCommand('fillcolor', $('fillcolor').style.backgroundColor);
+
   }
   
   function setLineColor(slc) {
 DrawCanvas[currentCanvas].editCommand('linecolor', slc);
-    //DrawCanvas[currentCanvas].editCommand('linecolor', $('linecolor').style.backgroundColor);
-	//currentPreviewColor
   }
   
   function setLineWidth(widths) {
     var width = widths.options[widths.selectedIndex].value;
     DrawCanvas[currentCanvas].editCommand('linewidth', width);
-  }
-
-  function getOptionByValue(select, value)
-  {
-    for (var i=0; i<select.length; i++) {
-      if (select.options[i].value == value) {
-        return i;
-      }
-    }
-    return -1;
   }
 
   function showMarkup() {
@@ -2863,7 +2866,7 @@ DrawCanvas[currentCanvas].editCommand('linecolor', slc);
   setLayerData()
     $('fillcolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('fillcolor');
     $('linecolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('linecolor');
-	$('linewidth').selectedIndex = getOptionByValue($('linewidth'), DrawCanvas[currentCanvas].queryCommand('linewidth'));
+	//$('linewidth').selectedIndex = getOptionByValue($('linewidth'), DrawCanvas[currentCanvas].queryCommand('linewidth'));
   }
 
   function onUnselect() {
@@ -2873,36 +2876,8 @@ DrawCanvas[currentCanvas].editCommand('linecolor', slc);
    $('linewidth').selectedIndex = getOptionByValue($('linewidth'), DrawCanvas[currentCanvas].queryCommand('linewidth'));
   }
   
-  function randomRect(){
-  var svgNamespace = 'http://www.w3.org/2000/svg';
-      var red1 = Math.round(Math.random() * 255);
-      var green1 = Math.round(Math.random() * 255);
-      var blue1 = Math.round(Math.random() * 255);
-	  var red2 = Math.round(Math.random() * 255);
-      var green2 = Math.round(Math.random() * 255);
-      var blue2 = Math.round(Math.random() * 255);
- var newRect = document.createElementNS(svgNamespace,"rect");
-	  newRect.setAttributeNS(null,"stroke-width",Math.random() * 10);	
-	  	  newRect.setAttributeNS(null,"stroke","rgb("+ red1 +","+ green1+","+blue1+")");
-      newRect.setAttributeNS(null,"fill","rgb("+ red2 +","+ green2+","+blue2+")");
-	        newRect.setAttributeNS(null,"height",Math.random() * 100);	
-      newRect.setAttributeNS(null,"width",Math.random() * 100);	
-      newRect.setAttributeNS(null,"y",Math.random() * 272);
-      newRect.setAttributeNS(null,"x",Math.random() * 480);
 
-      DrawCanvas[currentCanvas].renderer.svgRoot.appendChild(newRect);
-	  Event.observe(newRect, "mousedown",DrawCanvas[currentCanvas].onHitListener);  
-  }
-  function randRectArr(){
-  for(var items = 0; items < 30; items++){
-
-  for(var rects = 0; rects < 10; rects++){
-  randomRect()
-  }
-  gotoframe(items,1)
-  removeKeyframe()
-  }
-  }
+  
 
 
 
@@ -3282,6 +3257,7 @@ statArray["date"] = (new Date()).toString();
 statArray["useragent"] = window.userAgent;
 statArray["appversion"] = navigator.appVersion;
 statArray["useragent"] = navigator.userAgent;
+statArray["firebug"] = (__firebug__)?"true":"false"
 statArray["vendor"] = navigator.vendor;
 statArray["platform"] = navigator.platform;
 statArray["screenwidth"] = screen.width;
