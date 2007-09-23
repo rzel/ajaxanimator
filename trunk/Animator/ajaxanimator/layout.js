@@ -28,7 +28,7 @@ MainLayout = function() {
 				north:{ titlebar: false, split: true, initialSize: 120 , collapsible: true, toolbar: topToolbar}, 
 				south:{ tilebar: false, split: true, initialSize: 100 , collapsible: true}, 
 				east: { titlebar: false, split: true, initialSize: 120 , collapsible: true}, 
-				west: { titlebar: true, split: true, initialSize: 60 , collapsible: true}, 
+				west: { titlebar: true, split: true, initialSize: 55 , collapsible: true}, 
 				center: { }
 			});
 			mainLayout.on("regionresized",timelineResize);

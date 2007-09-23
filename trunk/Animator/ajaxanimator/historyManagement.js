@@ -1,8 +1,9 @@
+initHistory = "true"
 function resetHistory(){
 
 editHistory = new Array();
 editHistoryNumber = 0;
-$("HistoryContainer").innerHTML = "<tr><td>0</td><td>New Animation</td></tr>"
+$("HistoryContainer").innerHTML = "<tr><td>0</td><td>New&nbsp;Animation</td></tr>"
 }
 
 function revertRevision(numId){

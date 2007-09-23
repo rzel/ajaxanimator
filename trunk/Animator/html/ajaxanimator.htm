@@ -3,7 +3,7 @@
 <html>
 <head>
 	<title>Ajax Animator</title>
-	<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.css">
+	<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.php">
 	<!--BeginCSS-->
 	<link rel="stylesheet" type="text/css" href="../ajaxanimator/loading.css">
 	<!--EndCSS-->
@@ -26,9 +26,26 @@
 	<script type="text/javascript" src="../ajaxanimator/drawFunctions.js"></script>
 	<script type="text/javascript" src="../ajaxanimator/animationLoader.js"></script>
 	<script type="text/javascript" src="../ajaxanimator/globalvars.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/stats.js"></script>
 	<script type="text/javascript" src="../ajaxanimator/animationxml.js"></script>
-	<script type="text/javascript" src="../ext/color-picker.ux.js"></script>  
 	<!--EndJS-->
+	<style>
+	IMG.toolbarItem {
+	display: block;
+	margin-left: auto;
+    margin-right: auto;
+	vertical-align: middle
+	}
+	DIV.toolbarItem {
+	width: 22px;
+	height: 22px;
+	}
+	DIV.centerVertical {
+	min-height: 10em;
+    display: table-cell;
+    vertical-align: middle
+	}
+	</style>
 	</head>
 	<body style="overflow: hidden">
 	<!--BeginBodyJS-->
@@ -52,7 +69,7 @@
 	</div>
 	</div>
 	<!-- Start Color Dialog Markup -->
-	<iframe id="saveSWF"></iframe>
+	<iframe id="saveSWF" style="display: none"></iframe>
 	
 	<div id="color-dialog">
 	<div class="x-dlg-hd">Color</div>
@@ -164,21 +181,78 @@
 	</div>
 	</div>
 	<div id="toolbar-div">
-	<img id="select" alt="" title="Select shapes" onclick="setMode('select', 'Selection');" src="../images/select.gif" name="select"> 
-	<img src="../images/blank.gif" alt=""> 
-	<img id="rect" alt="" title="Draw a rectangle" onclick="setMode('rect', 'Rectangle');" src="../images/rectangle.gif" name="rect"> 
-	<img src="../images/blank.gif" alt="">
-	<img id="roundrect" alt="" title="Draw a rounded rectangle" onclick="setMode('roundrect', 'Rounded Rectangle');" src="../images/roundrect.gif" name="roundrect">
-	<img src="../images/blank.gif" alt="">
-	<img id="ellipse" alt="" title="Draw an ellipse" onclick="setMode('ellipse', 'Ellipse / Circle');" src="../images/circle.gif" name="ellipse"> 
-	<img src="../images/blank.gif" alt="">
-	<img id="line" title="Draw a line" onclick="setMode('line', 'Line');" alt="" src="../images/line.gif" name="line">
-	<img src="../images/blank.gif" alt="">
-	<img id="delete" alt="" title="Delete selected shape" onclick="deleteShape();" src="../images/delete.gif" name="delete">
-	<br><span>Fill:</span>
-	<div id="fillcolor" style="color: #ffffff;background-color: #ff0000;" onclick="FillColorChange()">FF0000</div>
-	<span>Line:</span>
-	<div id="linecolor" style="color: #ffffff;background-color: #000000;" onclick="LineColorChange()">000000</div>
+	
+	
+	<table>
+	<tr>
+	<td>
+	<div id="select" class="toolbarItem"><div class="centerVertical">
+	<img src="../images/select.gif"class="toolbarItem" alt=""></div> </div>
+	</td>
+	<td>
+	<div id="rect" class="toolbarItem">
+	<div class="centerVertical">
+	<img src="../images/rectangle.gif"class="toolbarItem" alt=""></div> </div>
+	</td>
+	</tr>
+	<tr>
+	<td>
+	<div id="roundrect" class="toolbarItem"><div class="centerVertical">
+	<img src="../images/roundrect.gif" class="toolbarItem"alt=""></div></div>
+	</td>
+	<td>
+	<div id="ellipse" class="toolbarItem"><div class="centerVertical">
+	<img src="../images/circle.gif"class="toolbarItem" alt=""></div> </div>
+	</td>
+	</tr>
+	<tr>
+	<td>
+	<div id="line" class="toolbarItem"><div class="centerVertical">
+	<img src="../images/line.gif" class="toolbarItem"alt=""></div></div>
+	</td>
+	<td>
+	<div id="delete" class="toolbarItem"><div class="centerVertical">
+	<img src="../images/delete.gif" class="toolbarItem" alt=""></div></div>
+	</td>
+	</tr>
+	</table>	
+	
+	
+<script>
+
+
+for(var iid = 0; iid < iconId.length; iid++){
+(function(id){
+Ext.get(id).on("mouseover",function(){
+if($(id).style.backgroundImage.indexOf("selectedMask") == -1){
+$(id).style.backgroundImage = "url(../images/buttonMask.png)"
+}
+})
+Ext.get(id).on("mouseout",function(){
+if($(id).style.backgroundImage.indexOf("buttonMask") != -1){
+$(id).style.backgroundImage = ""
+}
+})
+Ext.get(id).on("click",function(){
+if(id == "delete"){
+changeSelectedUI("delete")
+deleteShape()
+setTimeout("drawTools.select();",100);//some eyecandy
+}else{
+drawTools[id]()
+}
+})
+})(iconId[iid])
+}
+
+</script>
+	<br>
+	<span style="font-size:small;">
+	<div id="fillcolor" style="font-size:small;text-align: right;background-repeat: no-repeat;background-image:url('../images/bucket.png');color: #ffffff;background-color: #ff0000;" onclick="FillColorChange()">FF0000</div>
+	</span>
+	<span style="font-size:small;">
+	<div id="linecolor" style="font-size:small;text-align: right;background-repeat: no-repeat;background-image:url('../images/pencil.png');color: #ffffff;background-color: #000000;" onclick="LineColorChange()">000000</div>
+	</span>
 	<select id="linewidth" onchange="setLineWidth(this);">
 	<option value="1px">1px</option>
 	<option value="2px">2px</option>
@@ -190,6 +264,8 @@
 	<option value="8px">8px</option>
 	<option value="9px">9px</option>
 	</select>
+	
+	
 	</div>
 	<div id="canvas-div">
 	<div id="center-tb"></div>
@@ -232,23 +308,5 @@
     </center>
     </div>
 	</div>
-	<!-- Histats.com  START  -->
-	<script  type="text/javascript" language="javascript"> 
-	var s_sid = 101448;var st_dominio = 4; 
-	var cimg = 0;var cwi =112;var che =48;</script> 
-	<script  type="text/javascript" language="javascript" src="http://s10.histats.com/js9.js"></script> 
-	<noscript><a href="http://www.histats.com" target="_blank"> 
-	<img  src="http://s4.histats.com/stats/0.gif?101448&amp;1" alt="site hit counter" border="0"></a> 
-	</noscript>
-	<!-- Histats.com  END  -->
-	<!-- Start of StatCounter Code -->
-	<script type="text/javascript">
-	var sc_project=2936995; 
-	var sc_invisible=0; 
-	var sc_partition=30; 
-	var sc_security="9e1245d3"; 
-	</script>
-	<script type="text/javascript" src="http://www.statcounter.com/counter/counter_xhtml.js"></script><noscript><div class="statcounter"><a class="statcounter" href="http://www.statcounter.com/"><img class="statcounter" src="http://c31.statcounter.com/2936995/0/9e1245d3/0/" alt="web statistics" /></a></div></noscript>
-	<!-- End of StatCounter Code -->
 </body>
 </html>

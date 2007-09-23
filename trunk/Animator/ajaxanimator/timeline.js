@@ -2,6 +2,7 @@
 var layers = 0;
 var kFrameCount = 0;
 var currentFrameSelection = 1;
+
 var currentLayerSelection = 1;
 var KeyFrames = new Array()
 var TweenFrames = new Array()
@@ -26,14 +27,10 @@ var LayerBGColor = "#BED6E0";
 
 
 
-function setOpacity(obj, value) { //this function is never actually called... but it would make a good effect
-	getElementById(obj).style.opacity = value/10;
-	getElementById(obj).style.filter = 'alpha(opacity=' + value*10 + ')';
-}
-
 
 function toKeyframe() //Function to convert normal frames to keyframes
 {
+	
 	var zframe;
 	zframe = document.getElementById("frame" + currentFrameSelection + "layer" + currentLayerSelection);
 	zframe.style.color = frameTextColor;
