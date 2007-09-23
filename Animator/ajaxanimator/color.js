@@ -1,3 +1,6 @@
+function hex2rgb(h){
+var mh=h.toLowerCase().match(RegExp('^#?([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})$'));
+return Array(parseInt(mh[1],16),parseInt(mh[2],16),parseInt(mh[3],16));}
 
 Ext.onReady(function(){
 Colorobj = document.getElementById('linecolor');	
@@ -15,20 +18,25 @@ Colorobj = document.getElementById('fillcolor');
 }
 
 function initColor(){
+displayColor();
+}
 
-addCSS("../ext/color-picker.ux.css");
-
-
+function colorChangeHandler(t,o){
+	var onv=hex2rgb(o)
+	Colorobj.style.backgroundColor = "rgb("+onv[0]+","+onv[1]+","+onv[2]+")";
+	Colorobj.innerHTML = o;
+	if(Colorobj.id == "fillcolor"){
+	setFillColor("rgb("+onv[0]+","+onv[1]+","+onv[2]+")");
+	}else{
+	setLineColor("rgb("+onv[0]+","+onv[1]+","+onv[2]+")");
+	}
 }
 
 function displayColor(){
-
-
-
-
-};
-Ext.onReady(function(){
-			picker = new Ext.ux.ColorPicker( 'colorPicker', {
+	if(!picker){
+	addCSS("../ext/color-picker.ux.css");
+	addJS("../ext/color-picker.ux.js",function(){
+	picker = new Ext.ux.ColorPicker( 'colorPicker', {
 				hidePanel: false,
 				captions: {
 					red: 'red',
@@ -38,29 +46,19 @@ Ext.onReady(function(){
 					saturation: 'sat',
 					brightness: 'val',
 					hexa: 'col.',
-					colorHotPoint: { x:3, y:3 } 
+					colorHotPoint: { x:3, y:3 }
 				},
 				animate: true
 			});
 		 
-			picker.on('pickcolor',function(t,o){
-			var onv=picker.hexToRgb(o)
-			//var onv = new Array();
-			Colorobj.style.backgroundColor = "rgb("+onv[0]+","+onv[1]+","+onv[2]+")";
-			Colorobj.innerHTML = o;
-			if(Colorobj.id == "fillcolor"){
-			setFillColor("rgb("+onv[0]+","+onv[1]+","+onv[2]+")");
-			}else{
-			setLineColor("rgb("+onv[0]+","+onv[1]+","+onv[2]+")");
-			}
-			});
-			
-			picker.huePointer.dom.style.left="-2px"
-			var cp = new Ext.ColorPalette({value:'FFFFFF'});  // initial selected color
+			picker.on('pickcolor',colorChangeHandler);
+			picker.huePointer.dom.style.left="-2px";//a little hack...
+			var cp = new Ext.ColorPalette({value:'000000'});  // initial selected color
 			cp.render('colorPalette');
 
 	cp.on('select', function(palette, selColor){
 	picker.setColor(selColor);
 	});
-
-});
+	});
+	}
+};

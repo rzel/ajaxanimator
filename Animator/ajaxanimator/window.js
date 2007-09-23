@@ -15,13 +15,14 @@ var GoogAd;
 
 
 function showColorDialog(){
+
     if(!colorDialog){ // lazy initialize the colorDialog and only create it once
 
 	initColor();
 	
         colorDialog = new Ext.LayoutDialog("color-dialog", { 
                 modal:false,
-                width:280,
+                width:285,
                 height:285,
                 shadow:true,
                 minWidth:010,
@@ -42,7 +43,9 @@ function showColorDialog(){
         layout.add('center', new Ext.ContentPanel('colorPicker', {title: 'Color Picker'}));
         layout.add('center', new Ext.ContentPanel('colorPalette', { title: 'Color Palette'}));
         layout.endUpdate();
-    }
+    }else{
+	picker.huePointer.dom.style.left="-2px";
+	}
 	colorDialog.show()
 	//colorDialog.show(Ext.get('show-colorDialog-btn').dom);
 }

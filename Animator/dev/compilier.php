@@ -4,23 +4,7 @@ Version 0.63 Alpha<br>
 <hr>
 <?php
 
-function chomp($string)
-{
-        if (is_array($string))
-        {
-                foreach($string as $i => $val)
-                {
-                        $endchar = chomp($string[$i]);
-                }
-        } else {
-                $endchar = substr("$string", strlen("$string") - 1, 1);
-                if ($endchar == "\n")
-                {
-                        $string = substr("$string", 0, -1);
-                }
-        }
-        return $endchar;
-} 
+
 
 $stimer = explode( ' ', microtime() );
 $stimer = $stimer[1] + $stimer[0];
@@ -151,7 +135,7 @@ $newzfile2 = str_replace("<!-- GoogAd5-->", file_get_contents("GoogAd5.txt"),$ne
 
 echo "Writing ajaxanimator-compressed.php (html folder)<br>";
 $fhaz = fopen("../html/ajaxanimator-compressed.php", 'w') or die("can't open file");
-fwrite($fhaz, chomp(utf8_encode('<?php ob_start ("ob_gzhandler"); ?>'.$newzfile2. '<?php ob_end_flush(); ?>')));
+fwrite($fhaz, '<?php ob_start ("ob_gzhandler"); ?>'.$newzfile2. '<?php ob_end_flush(); ?>');
 fclose($fhaz);
 
 copy($output,"../ajaxanimator/full.js");

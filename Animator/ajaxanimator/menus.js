@@ -6,7 +6,17 @@ var logoutbutton;
 
 Ext.onReady(function(){
 	var topToolbar = new Ext.Toolbar('north-tb');
-
+	//////////////////////SubSub Menu Items////////////////////
+	var themeMenu = new Ext.menu.Menu({
+        id: 'themeMenu',
+        items: [
+			{text: 'Default',icon: '../images/application_go.png',handler: function(){setTheme(0)}},
+			{text: 'Gray', icon: '../images/application_go.png',handler: function(){setTheme(1)}},
+			{text: 'Vista',icon: '../images/application_go.png',handler: function(){setTheme(2)}},
+			{text: 'Aero',icon: '../images/application_go.png',handler: function(){setTheme(3)}},
+			{text: 'Galdaka',icon: '../images/application_go.png',handler: function(){setTheme(4)}}
+		     ]
+    });
 	//////////////////////SubMenu Items///////////////////////////
     var fileMenu = new Ext.menu.Menu({
 		
@@ -87,17 +97,7 @@ Ext.onReady(function(){
     });
 
 	
-	//////////////////////SubSub Menu Items////////////////////
-	var themeMenu = new Ext.menu.Menu({
-        id: 'themeMenu',
-        items: [
-			{text: 'Default',icon: '../images/application_go.png',handler: function(){setTheme(0)}},
-			{text: 'Gray', icon: '../images/application_go.png',handler: function(){setTheme(1)}},
-			{text: 'Vista',icon: '../images/application_go.png',handler: function(){setTheme(2)}},
-			{text: 'Aero',icon: '../images/application_go.png',handler: function(){setTheme(4)}},
-			{text: 'Galdaka',icon: '../images/application_go.png',handler: function(){setTheme(5)}}
-		     ]
-    });
+
 	
 	//////////////////////Menu Items///////////////////////////
 
@@ -212,9 +212,12 @@ var lineColorMenu = new Ext.menu.Menu({
     items: [
         new Ext.menu.ColorItem({
             selectHandler: function(zcp, selColor){
-Colorobj =document.getElementById('linecolor')
+			Colorobj=document.getElementById('linecolor')
+			if(picker){
             picker.setColor(selColor)
-			
+			}else{
+			colorChangeHandler(null,selColor)
+			}
 			}
         })
     ]
@@ -226,8 +229,12 @@ var fillColorMenu = new Ext.menu.Menu({
     items: [
         new Ext.menu.ColorItem({
             selectHandler: function(zcp, selColor){
-Colorobj =document.getElementById('fillcolor')
+			Colorobj=document.getElementById('fillcolor')
+            if(picker){
             picker.setColor(selColor)
+			}else{
+			colorChangeHandler(null,selColor)
+			}
             }
         })
     ]

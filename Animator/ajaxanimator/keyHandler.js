@@ -1,3 +1,4 @@
+var keyShortcuts;
 Ext.onReady(function(){
 var x = document.getElementsByTagName("textarea")
 
@@ -45,13 +46,8 @@ Ext.MessageBox.alert("Keyboard Shortcuts:",txt)
 
 
 Ext.onReady(function(){
-var keyShortcuts = new Ext.KeyMap(document, [
-    {
-        key: [10,13],
-        fn: function(){ alert("Return was pressed"); }
-	}, {
-	
-	
+keyShortcuts = new Ext.KeyMap(document, [
+	{
         key: "c",ctrl:true,
         fn: function(){ copyObj(); }
 	}, {
