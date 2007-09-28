@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.php">
+<script type="text/javascript" src="../ext/ext-base.js">
+</script>
+<script type="text/javascript" src="../ext/ext-all-debug.js">
+</script>
+<title></title>
+</head>
+<body>
+<div id="tree"></div>
+
+<script type="text/javascript">
+/*
+ * Ext JS Library 1.1.1
+ * Copyright(c) 2006-2007, Ext JS, LLC.
+ * licensing@extjs.com
+ * 
+ * http://www.extjs.com/license
+ */
+var dws
+var grid 
+var Example = {
+    init : function(){
+
+historyDS = new Ext.data.SimpleStore({
+fields: ['number','action'],
+data : [["1","New Animation"]]
+});
+var historyCM = new Ext.grid.ColumnModel([
+	{header: "#", width: 20, sortable: true,  dataIndex: 'number'},
+	{header: "Action", width: 100, sortable: true,  dataIndex: 'action'},
+]);
+
+
+historyGrid = new Ext.grid.Grid("tree", {
+ds: historyDS,
+cm: historyCM,
+autoSizeColumns: false,
+monitorWindowResize: false,
+trackMouseOver: true
+});
+
+historyGrid.render();
+}
+
+};
+Ext.onReady(Example.init, Example);
+/*
+var supertree = {
+action: "supr",
+number: "2"
+}
+dws.add(new grid.dataSource.reader.recordType(supertree))
+*/
+</script>
+</body>
+</html>

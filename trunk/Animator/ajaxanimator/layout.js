@@ -27,7 +27,7 @@ MainLayout = function() {
 			mainLayout = new Ext.BorderLayout(document.body, {
 				north:{ titlebar: false, split: true, initialSize: 120 , collapsible: true, toolbar: topToolbar}, 
 				south:{ tilebar: false, split: true, initialSize: 100 , collapsible: true}, 
-				east: { titlebar: false, split: true, initialSize: 120 , collapsible: true}, 
+				east: { titlebar: false, split: true, initialSize: 130 , collapsible: true}, 
 				west: { titlebar: true, split: true, initialSize: 55 , collapsible: true}, 
 				center: { }
 			});
@@ -57,7 +57,7 @@ MainLayout = function() {
 				}else{
 				
 				}
-				
+
 			});
 			mainLayout.endUpdate();
 		}

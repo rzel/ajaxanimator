@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.php">
 	<!--BeginCSS-->
 	<link rel="stylesheet" type="text/css" href="../ajaxanimator/loading.css">
+	<link rel="stylesheet" type="text/css" href="../ajaxanimator/ajaxanimator.css">
 	<!--EndCSS-->
 	<!--BeginJS-->
 	<script type="text/javascript" src="../ext/ext-base.js"></script>
@@ -29,29 +30,11 @@
 	<script type="text/javascript" src="../ajaxanimator/stats.js"></script>
 	<script type="text/javascript" src="../ajaxanimator/animationxml.js"></script>
 	<!--EndJS-->
-	<style>
-	IMG.toolbarItem {
-	display: block;
-	margin-left: auto;
-    margin-right: auto;
-	vertical-align: middle
-	}
-	DIV.toolbarItem {
-	width: 22px;
-	height: 22px;
-	}
-	DIV.centerVertical {
-	min-height: 10em;
-    display: table-cell;
-    vertical-align: middle
-	}
-	</style>
 	</head>
 	<body style="overflow: hidden">
 	<!--BeginBodyJS-->
 	<script type="text/javascript" src="../lib/wz_tooltip-min.js"></script>
 	<!--EndBodyJS-->
-	
 	<!-- Start Loading Window Markup -->
 	<div id="loading">
 	<div class="loading-indicator">
@@ -68,9 +51,7 @@
 	</div>
 	</div>
 	</div>
-	<!-- Start Color Dialog Markup -->
 	<iframe id="saveSWF" style="display: none"></iframe>
-	
 	<div id="color-dialog">
 	<div class="x-dlg-hd">Color</div>
 	<div class="x-dlg-bd">
@@ -80,7 +61,6 @@
 	</div>
 	</div>
 	</div>
-	<!-- End Color Dialog Markup -->
 	<div id="register-dialog">
 	<div class="x-dlg-hd">Register</div>
 	<div class="x-dlg-bd">
@@ -142,7 +122,7 @@
 	</div>
 	<div id="scriptEval-div">
 	<div id="eval-tb"></div>
-	<textarea id="evalScript" cols="20" rows="10" style="width: 99%;height: 99%"></textarea>
+	<textarea id="evalScript" cols="20" rows="10" style="width: 100%;height: 99%"></textarea>
 	</div>
 	<div id="properties-div">
 	<div id="prop-tb"></div>
@@ -158,9 +138,10 @@
 	</div>
 	<div id="history-div">
 	<div id="history-tb"></div>
-	<table id="HistoryContainer" style="font-size:small" border="1px" cellpadding="0"  width="99%" cellspacing="0">
-	<tr><td>0</td><td>New Animation</td></tr>
-	</table>
+	<div id="HistoryLayout">
+	<div id="HistoryContainer" style="width: 100%">
+	</div>
+	</div>
 	</div>
 	<div id="login-div">
 	<div id="login-tb">
@@ -181,91 +162,10 @@
 	</div>
 	</div>
 	<div id="toolbar-div">
-	
-	
-	<table>
-	<tr>
-	<td>
-	<div id="select" class="toolbarItem"><div class="centerVertical">
-	<img src="../images/select.gif"class="toolbarItem" alt=""></div> </div>
-	</td>
-	<td>
-	<div id="rect" class="toolbarItem">
-	<div class="centerVertical">
-	<img src="../images/rectangle.gif"class="toolbarItem" alt=""></div> </div>
-	</td>
-	</tr>
-	<tr>
-	<td>
-	<div id="roundrect" class="toolbarItem"><div class="centerVertical">
-	<img src="../images/roundrect.gif" class="toolbarItem"alt=""></div></div>
-	</td>
-	<td>
-	<div id="ellipse" class="toolbarItem"><div class="centerVertical">
-	<img src="../images/circle.gif"class="toolbarItem" alt=""></div> </div>
-	</td>
-	</tr>
-	<tr>
-	<td>
-	<div id="line" class="toolbarItem"><div class="centerVertical">
-	<img src="../images/line.gif" class="toolbarItem"alt=""></div></div>
-	</td>
-	<td>
-	<div id="delete" class="toolbarItem"><div class="centerVertical">
-	<img src="../images/delete.gif" class="toolbarItem" alt=""></div></div>
-	</td>
-	</tr>
-	</table>	
-	
-	
-<script>
-
-
-for(var iid = 0; iid < iconId.length; iid++){
-(function(id){
-Ext.get(id).on("mouseover",function(){
-if($(id).style.backgroundImage.indexOf("selectedMask") == -1){
-$(id).style.backgroundImage = "url(../images/buttonMask.png)"
-}
-})
-Ext.get(id).on("mouseout",function(){
-if($(id).style.backgroundImage.indexOf("buttonMask") != -1){
-$(id).style.backgroundImage = ""
-}
-})
-Ext.get(id).on("click",function(){
-if(id == "delete"){
-changeSelectedUI("delete")
-deleteShape()
-setTimeout("drawTools.select();",100);//some eyecandy
-}else{
-drawTools[id]()
-}
-})
-})(iconId[iid])
-}
-
-</script>
-	<br>
-	<span style="font-size:small;">
+	<div id="tbIcon"></div>
 	<div id="fillcolor" style="font-size:small;text-align: right;background-repeat: no-repeat;background-image:url('../images/bucket.png');color: #ffffff;background-color: #ff0000;" onclick="FillColorChange()">FF0000</div>
-	</span>
-	<span style="font-size:small;">
 	<div id="linecolor" style="font-size:small;text-align: right;background-repeat: no-repeat;background-image:url('../images/pencil.png');color: #ffffff;background-color: #000000;" onclick="LineColorChange()">000000</div>
-	</span>
-	<select id="linewidth" onchange="setLineWidth(this);">
-	<option value="1px">1px</option>
-	<option value="2px">2px</option>
-	<option value="3px">3px</option>
-	<option value="4px">4px</option>
-	<option value="5px">5px</option>
-	<option value="6px">6px</option>
-	<option value="7px">7px</option>
-	<option value="8px">8px</option>
-	<option value="9px">9px</option>
-	</select>
-	
-	
+	<input type="text" id="linewidth" size="1">
 	</div>
 	<div id="canvas-div">
 	<div id="center-tb"></div>
@@ -308,5 +208,6 @@ drawTools[id]()
     </center>
     </div>
 	</div>
+	<!--JS Page Bottom-->
 </body>
 </html>

@@ -14,30 +14,20 @@ y.onblur=function(){keyShortcuts.enable();};
 
 function showKeyGuide(){
 var txt = "";
-
-txt+="Ctrl+C : Copy Selected Object"
-txt+="\n<br>"
-txt+="Ctrl+V : Paste Object"
-txt+="\n<br>"
-txt+="Ctrl+Z : Undo Action"
-txt+="\n<br>"
-txt+="-> (right arrow key) : Next Frame"
-txt+="\n<br>"
-txt+="Page Down : Next Frame"
-txt+="\n<br>"
-txt+="<- (left arrow key) : Previous Frame"
-txt+="\n<br>"
-txt+="Page Up : Previous Frame"
-txt+="\n<br>"
-txt+="P : Play Animation (within canvas)"
-txt+="\n<br>"
-txt+="S : Stop Animation Playback (within canvas)"
-txt+="\n<br>"
-txt+="Delete : Delete Selected Object (or delete frame if nothing is selected)"
-txt+="\n<br>"
-txt+="R : Clear Current Frame"
-txt+="\n<br>"
-txt+="F6: To Keyframe"
+var txp=function(t){txt+=t;txt+="\n<br>"}
+txp("Ctrl+C : Copy Selected Object")
+txp("Ctrl+V : Paste Object")
+txp("Ctrl+Z : Undo Action")
+txp("Ctrl+S : Open Save/Open window")
+txp("-> (right arrow key) : Next Frame")
+txp("Page Down : Next Frame")
+txp("<- (left arrow key) : Previous Frame")
+txp("Page Up : Previous Frame")
+txp("P : Play Animation (within canvas)")
+txp("S : Stop Animation Playback (within canvas)")
+txp("Delete : Delete Selected Object (or delete frame if nothing is selected)")
+txp("R : Clear Current Frame")
+txp("F6: To Keyframe")
 
 Ext.MessageBox.alert("Keyboard Shortcuts:",txt)
 }
@@ -51,8 +41,8 @@ keyShortcuts = new Ext.KeyMap(document, [
         key: "c",ctrl:true,
         fn: function(){ copyObj(); }
 	}, {
-        key: "p",ctrl:true,
-        fn: function(){ pasteObj(); }
+        key: "v",ctrl:true,
+        fn: function(){ pasteObj() }
     }, {
         key: "z",ctrl:true,
         fn: function(){undo();}
@@ -71,7 +61,7 @@ keyShortcuts = new Ext.KeyMap(document, [
         fn: function(){ playAnimation() }
 	}, {
 	
-        key: "s",
+        key: "s", ctrl:false,
         fn: function(){ stopAnimation(); }
 	}, {
 	
@@ -81,6 +71,13 @@ keyShortcuts = new Ext.KeyMap(document, [
 	
         key: 82,
         fn: function(){ removeKeyframe(); }
+	}, {
+	
+        key: "s", ctrl:true,stopEvent: true,
+        fn: function(){
+		
+		showFileSystemDialog()
+		}
 	}
 	
 /*

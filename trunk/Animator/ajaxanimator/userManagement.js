@@ -5,7 +5,9 @@ var cPrEiD = "";
 var cPrEuN = "";
 var initMD5var;
 
-
+function failCon(){
+Ext.MessageBox.alert("Error:","Connection to server failed. Try Again Later. This might because of server misconfiguration, faulty connection, browser misconfiguration, or server traffic")
+}
 
 function submitUser(){
 if(userMode == "login"){
@@ -16,17 +18,29 @@ registerUser();
 }
 
 function loginUser(){
-
 if(!initMD5var){
 addJS("../lib/md5.js",function(){
 initMD5var = "true";
 loginUser();
 })
 }else{
-
 var cUsername = $("usrId").value;
 var cPassword = hex_md5($("pwId").value);
-ajaxpack.postAjaxRequest("../php/login.php", "user="+cUsername+"&pass="+cPassword+"&valid=true&rem=true", loginUserEvent, "txt")
+Ext.Ajax.request({
+url: "../php/login.php",
+params: "user="+cUsername+"&pass="+cPassword+"&valid=true&rem=true",
+success: function(e){
+if(e.responseText.substr(1,3).indexOf("S") != -1){
+Ext.MessageBox.alert("Login Status: Successful","Login Successful")
+encPW = hex_md5($("pwId").value);
+userName = $("usrId").value
+loginSucessful()
+}else{
+Ext.MessageBox.alert("Login Status: Error",e.responseText.substr(4).replace(":",""))
+}
+},
+failure: failCon
+})
 }
 }
 
@@ -49,82 +63,55 @@ regbutton.setVisible(false)
 logoutbutton.setVisible(true)
 }
 
-function loginUserEvent(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-if(myajax.responseText.substr(1,3).indexOf("S") != -1){
-Ext.MessageBox.alert("Login Status","Login Sucessful")
-encPW = hex_md5($("pwId").value);
-userName = $("usrId").value
-loginSucessful()
-}else{
-Ext.MessageBox.alert("Login Status",myajax.responseText.substr(4).replace(":",""))
-}
-}
-}
-}
 
 
 
 function registerUserCred(user,pass){
-ajaxpack.postAjaxRequest("../php/register.php", "user="+user+"&pass="+pass+"&valid=true", registerUserEvent, "txt")
-}
-
-function registerUserEvent(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-if(myajax.responseText.substr(1,2).indexOf("S") != -1){
+Ext.Ajax.request({
+url: "../php/register.php",
+params:  "user="+user+"&pass="+pass+"&valid=true", 
+failure: failCon,
+success: function(e){
+if(e.responseText.substr(1,2).indexOf("S") != -1){
 Ext.MessageBox.alert("Registration Status","Registration Sucessful")
 }else{
-Ext.MessageBox.alert("Registration Status",myajax.responseText.substr(4).replace(":",""))
+Ext.MessageBox.alert("Registration Status",e.responseText.substr(4).replace(":",""))
 }
 }
+})
 }
-}
-
 
 
 function savetoserver(){
 if($("userProfile").style.display == ""){
 var savedata = escape(escape(animationSaveData()));
-var nameRequest = prompt('Set a Name For Animation', 'animation' + Math.floor(Math.random()*999));
-ajaxpack.postAjaxRequest("../php/savetoserver.php", "user="+userName+"&pass="+encPW+"&data="+savedata+"&name="+nameRequest, savetoserverEvent, "txt")
-
-}else{
-Ext.MessageBox.alert("Error:","Please Login or Register First")
-}
-}
-
-function savetoserverEvent(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
+var nameRequest = Ext.MessageBox.prompt('Animation Name','Set a Name For Animation', function(a,nameRequest){
+Ext.Ajax.request({
+url: "../php/savetoserver.php",
+params:  "user="+userName+"&pass="+encPW+"&data="+savedata+"&name="+nameRequest,
+failure: failCon,
+success: function(){
 Ext.MessageBox.alert("Save Status","Save Sucessful");
 animationList()
 }
+})
+});
+}else{
+Ext.MessageBox.alert("Error:","Please Login or Register First")
 }
+
+
 }
+
 
 
 function animationList(){
 if(userName != ""){
-ajaxpack.postAjaxRequest("../php/listAnimations.php", "user=" + userName, listAnimationEvent, "txt")
-}else{
-Ext.MessageBox.alert("Error:","Please Login Before Using This Feature")
-}
-}
-
-function listAnimationEvent(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-var animationList = myajax.responseText.split(",");
+Ext.Ajax.request({
+url: "../php/listAnimations.php",
+params: "user=" + userName,
+success: function(e){
+var animationList = e.responseText.split(",");
 var animations = "";
 var qt = '"';
 for(var q = 0; q < animationList.length; q++){
@@ -132,25 +119,24 @@ var au = animationList[q].replace(".xml","")
 animations += "<a href="+qt+"javascript:loadAnimationFromURL('"+animationList[q]+"')"+qt+">"+au+"</a><br>";
 }
 $("userFiles").innerHTML = animations;
-}
+},
+failure: failCon
+})
+}else{
+Ext.MessageBox.alert("Error:","Please Login First")
 }
 }
 
 
 function loadAnimationFromURL(url){
-ajaxpack.postAjaxRequest("../users/" + userName + "/animations/" + url, "", loadAnimationEvent, "txt")
+Ext.Ajax.request({
+url: "../users/" + userName + "/animations/" + url,
+success: function(e){
+loadAnimation(unescape(e.responseText))
+}
+})
 }
 
-function loadAnimationEvent(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-loadAnimation(unescape(myajax.responseText))
-
-}
-}
-}
 
 function refreshOtherAnimations(){
 if($("UAB").innerHTML.indexOf("javascript:previewAnimationFromURL") == -1){
@@ -162,34 +148,24 @@ animationList2(urnQ);
 }
 
 function browseOtherAnimations(){
-ajaxpack.getAjaxRequest("../php/usersList.php", "", otherAnimationsEvent, "txt")
+Ext.Ajax.request({
+url: "../php/usersList.php",
+failure: failCon,
+success: function(e){
+$("UAB").innerHTML = e.responseText
+}
+})
 }
 
-function otherAnimationsEvent(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-$("UAB").innerHTML = myajax.responseText
-}
-}
-}
 
 function animationList2(unA){
 uAn = unA;
-ajaxpack.postAjaxRequest("../php/listAnimations.php", "user=" + unA, listAnimationEvent2, "txt")
-}
-
-function LAFC(){
-ajaxpack.postAjaxRequest("../users/" + cPrEuN + "/animations/" + cPrEiD, "", loadAnimationEvent, "txt")
-}
-
-function listAnimationEvent2(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-var animationList = myajax.responseText.split(",");
+ajaxpack.postAjaxRequest( listAnimationEvent2, "txt")
+Ext.Ajax.request({
+url: "../php/listAnimations.php", 
+params: "user=" + unA,
+success: function(e){
+var animationList = e.responseText.split(",");
 var animations = "";
 var qt = '"';
 for(var q = 0; q < animationList.length; q++){
@@ -197,9 +173,23 @@ var au = animationList[q].replace(".xml","")
 animations += "<a href="+qt+"javascript:previewAnimationFromURL('"+animationList[q]+"','"+uAn+"')"+qt+">"+au+"</a><br>";
 }
 $("UAB").innerHTML = animations;
+},
+failure: failCon
+})
 }
+
+function LAFC(){
+Ext.Ajax.request({
+url: "../users/" + cPrEuN + "/animations/" + cPrEiD,
+success: function(e){
+loadAnimation(unescape(e.responseText));
+},
+failure: failCon
+
+})
 }
-}
+
+
 
 function previewAnimationFromURL(fLn,uAn){
 cPrEiD = fLn
@@ -220,13 +210,10 @@ _lA(unescape(myajax.responseText),"AXMLPlayer");
 }
 }
 }
-var _QzX = "";
-var _y=1;
-var _rq = "f";
-function _lA(a,z){
-_rq = "t"
-_QzX = "";
-_y=1;
+
+
+var _QzX = "";var _y=1;var _rq = "f";
+function _lA(a,z){_rq = "t";_QzX = "";_y=1;
 document.getElementById(z).innerHTML = "";
 var b="http://www.w3.org/2000/svg";var c=document.createElement("div");
 c.setAttribute("style","width:480;height:272;overflow:hidden");
@@ -235,17 +222,7 @@ for(var f=0;f<e.length;f++){var g=document.createElement("div");g.style.display=
 g.appendChild(document.createElementNS(b,"svg"));var h=e[f].childNodes;for(var i=0;i<h.length;i++){
 var j=h[i];var k=j.attributes;var l=document.createElementNS(b,j.tagName);for(var m=0;m<k.length;m++){
 l.setAttributeNS(null,k[m].nodeName,k[m].value)}g.firstChild.appendChild(l)}c.appendChild(g)}
-document.getElementById(z).appendChild(c);
-_rq = "f"
-_QzX = z
-_pA(z)}
-
-function _pA(z){
-if(_rq == "f"){
-var a=document.getElementById(z).firstChild.childNodes;
-_y++;if(_y==a.length){_y=0}else{a[_y-1].style.display="none"}
-a[_y].style.display="";
-setTimeout("_pA('"+z+"')",83)}}
-
-
+document.getElementById(z).appendChild(c);_rq = "f";_QzX = z;_pA(z)}
+function _pA(z){if(_rq == "f"){var a=document.getElementById(z).firstChild.childNodes;
+_y++;if(_y==a.length){_y=0}else{a[_y-1].style.display="none"}a[_y].style.display="";setTimeout("_pA('"+z+"')",83)}}
 

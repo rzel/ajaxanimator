@@ -995,8 +995,38 @@ mask.shift({
 
 
 function interLoad(){
+historyDS = new Ext.data.SimpleStore({
+fields: ['number','action'],
+data : [["0","New Animation"]]
+});
+var historyCM = new Ext.grid.ColumnModel([
+	{header: "#", sortable: true,  dataIndex: 'number'},
+	{header: "Action", sortable: true,  dataIndex: 'action'},
+]);
+historyGrid = new Ext.grid.Grid("HistoryContainer", {
+ds: historyDS,
+cm: historyCM,
+autoSizeColumns: true,
+monitorWindowResize: true,
+trackMouseOver: true
+});
+historyGrid.render();
+historyGrid.on("cellclick",function(e,w,s,g){
+revertRevision(w)
+})
+historyLayout = Ext.BorderLayout.create({
+ 	monitorWindowResize: true,
+center: {
+margins:{left:.1,top:.1,right:.1,bottom:.1},
+panels: [new Ext.GridPanel(historyGrid)]
+}
+}, 'HistoryLayout');
+mainLayout.getRegion('east').getPanel('history-div').on("resize",function(){
+historyLayout.layout()
+})
+}
 
-} 
+ 
  
 var initPreview;
 var mainLayout;
@@ -1026,7 +1056,7 @@ MainLayout = function() {
 			mainLayout = new Ext.BorderLayout(document.body, {
 				north:{ titlebar: false, split: true, initialSize: 120 , collapsible: true, toolbar: topToolbar}, 
 				south:{ tilebar: false, split: true, initialSize: 100 , collapsible: true}, 
-				east: { titlebar: false, split: true, initialSize: 120 , collapsible: true}, 
+				east: { titlebar: false, split: true, initialSize: 130 , collapsible: true}, 
 				west: { titlebar: true, split: true, initialSize: 55 , collapsible: true}, 
 				center: { }
 			});
@@ -1056,7 +1086,7 @@ MainLayout = function() {
 				}else{
 				
 				}
-				
+
 			});
 			mainLayout.endUpdate();
 		}
@@ -2380,7 +2410,10 @@ var cPrEiD = "";
 var cPrEuN = "";
 var initMD5var;
 
+function failCon(){
+Ext.MessageBox.alert("Error:","Connection to server failed. Try Again Later. This might because of server misconfiguration, faulty connection, browser misconfiguration, or server traffic")
 
+}
 
 function submitUser(){
 if(userMode == "login"){
@@ -2391,17 +2424,29 @@ registerUser();
 }
 
 function loginUser(){
-
 if(!initMD5var){
 addJS("../lib/md5.js",function(){
 initMD5var = "true";
 loginUser();
 })
 }else{
-
 var cUsername = $("usrId").value;
 var cPassword = hex_md5($("pwId").value);
-ajaxpack.postAjaxRequest("../php/login.php", "user="+cUsername+"&pass="+cPassword+"&valid=true&rem=true", loginUserEvent, "txt")
+Ext.Ajax.request({
+url: "../php/login.php",
+params: "user="+cUsername+"&pass="+cPassword+"&valid=true&rem=true",
+success: function(e){
+if(e.responseText.substr(1,3).indexOf("S") != -1){
+Ext.MessageBox.alert("Login Status: Successful","Login Successful")
+encPW = hex_md5($("pwId").value);
+userName = $("usrId").value
+loginSucessful()
+}else{
+Ext.MessageBox.alert("Login Status: Error",e.responseText.substr(4).replace(":",""))
+}
+},
+failure: failCon
+})
 }
 }
 
@@ -2424,82 +2469,53 @@ regbutton.setVisible(false)
 logoutbutton.setVisible(true)
 }
 
-function loginUserEvent(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-if(myajax.responseText.substr(1,3).indexOf("S") != -1){
-Ext.MessageBox.alert("Login Status","Login Sucessful")
-encPW = hex_md5($("pwId").value);
-userName = $("usrId").value
-loginSucessful()
-}else{
-Ext.MessageBox.alert("Login Status",myajax.responseText.substr(4).replace(":",""))
-}
-}
-}
-}
 
 
 
 function registerUserCred(user,pass){
-ajaxpack.postAjaxRequest("../php/register.php", "user="+user+"&pass="+pass+"&valid=true", registerUserEvent, "txt")
-}
-
-function registerUserEvent(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-if(myajax.responseText.substr(1,2).indexOf("S") != -1){
+Ext.Ajax.request({
+url: "../php/register.php",
+params:  "user="+user+"&pass="+pass+"&valid=true", 
+failure: failCon,
+success: function(e){
+if(e.responseText.substr(1,2).indexOf("S") != -1){
 Ext.MessageBox.alert("Registration Status","Registration Sucessful")
 }else{
-Ext.MessageBox.alert("Registration Status",myajax.responseText.substr(4).replace(":",""))
+Ext.MessageBox.alert("Registration Status",e.responseText.substr(4).replace(":",""))
 }
 }
+})
 }
-}
-
 
 
 function savetoserver(){
 if($("userProfile").style.display == ""){
 var savedata = escape(escape(animationSaveData()));
-var nameRequest = prompt('Set a Name For Animation', 'animation' + Math.floor(Math.random()*999));
-ajaxpack.postAjaxRequest("../php/savetoserver.php", "user="+userName+"&pass="+encPW+"&data="+savedata+"&name="+nameRequest, savetoserverEvent, "txt")
-
-}else{
-Ext.MessageBox.alert("Error:","Please Login or Register First")
-}
-}
-
-function savetoserverEvent(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
+var nameRequest = Ext.MessageBox.prompt('Animation Name','Set a Name For Animation', function(a,nameRequest){
+Ext.Ajax.request({
+url: "../php/savetoserver.php",
+params:  "user="+userName+"&pass="+encPW+"&data="+savedata+"&name="+nameRequest,
+failure: failCon
+success: function(){
 Ext.MessageBox.alert("Save Status","Save Sucessful");
 animationList()
 }
+})
+}else{
+Ext.MessageBox.alert("Error:","Please Login or Register First")
 }
+});
+
 }
 
 
 function animationList(){
 if(userName != ""){
-ajaxpack.postAjaxRequest("../php/listAnimations.php", "user=" + userName, listAnimationEvent, "txt")
-}else{
-Ext.MessageBox.alert("Error:","Please Login Before Using This Feature")
-}
-}
-
-function listAnimationEvent(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-var animationList = myajax.responseText.split(",");
+Ext.Ajax.request({
+url: "../php/listAnimations.php",
+params: "user=" + userName,
+success: function(e){
+var animationList = e.responseText.split(",");
 var animations = "";
 var qt = '"';
 for(var q = 0; q < animationList.length; q++){
@@ -2507,25 +2523,24 @@ var au = animationList[q].replace(".xml","")
 animations += "<a href="+qt+"javascript:loadAnimationFromURL('"+animationList[q]+"')"+qt+">"+au+"</a><br>";
 }
 $("userFiles").innerHTML = animations;
-}
+},
+failure: failCon
+})
+}else{
+Ext.MessageBox.alert("Error:","Please Login First")
 }
 }
 
 
 function loadAnimationFromURL(url){
-ajaxpack.postAjaxRequest("../users/" + userName + "/animations/" + url, "", loadAnimationEvent, "txt")
+Ext.Ajax.request({
+url: "../users/" + userName + "/animations/" + url,
+success: function(e){
+loadAnimation(unescape(e.responseText))
+}
+})
 }
 
-function loadAnimationEvent(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-loadAnimation(unescape(myajax.responseText))
-
-}
-}
-}
 
 function refreshOtherAnimations(){
 if($("UAB").innerHTML.indexOf("javascript:previewAnimationFromURL") == -1){
@@ -2537,34 +2552,24 @@ animationList2(urnQ);
 }
 
 function browseOtherAnimations(){
-ajaxpack.getAjaxRequest("../php/usersList.php", "", otherAnimationsEvent, "txt")
+Ext.Ajax.request({
+url: "../php/usersList.php",
+failure: failCon,
+success: function(e){
+$("UAB").innerHTML = e.responseText
+}
+})
 }
 
-function otherAnimationsEvent(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-$("UAB").innerHTML = myajax.responseText
-}
-}
-}
 
 function animationList2(unA){
 uAn = unA;
-ajaxpack.postAjaxRequest("../php/listAnimations.php", "user=" + unA, listAnimationEvent2, "txt")
-}
-
-function LAFC(){
-ajaxpack.postAjaxRequest("../users/" + cPrEuN + "/animations/" + cPrEiD, "", loadAnimationEvent, "txt")
-}
-
-function listAnimationEvent2(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-var animationList = myajax.responseText.split(",");
+ajaxpack.postAjaxRequest( listAnimationEvent2, "txt")
+Ext.Ajax.request({
+url: "../php/listAnimations.php", 
+params: "user=" + unA,
+success: function(e){
+var animationList = e.responseText.split(",");
 var animations = "";
 var qt = '"';
 for(var q = 0; q < animationList.length; q++){
@@ -2572,9 +2577,20 @@ var au = animationList[q].replace(".xml","")
 animations += "<a href="+qt+"javascript:previewAnimationFromURL('"+animationList[q]+"','"+uAn+"')"+qt+">"+au+"</a><br>";
 }
 $("UAB").innerHTML = animations;
+},
+failure: failCon
+})
 }
+
+function LAFC(){
+Ext.Ajax.request({
+url: "../users/" + cPrEuN + "/animations/" + cPrEiD
+failure: failCon,
+success: function(e){loadAnimation(unescape(e.responseText))}
+})
 }
-}
+
+
 
 function previewAnimationFromURL(fLn,uAn){
 cPrEiD = fLn
@@ -2595,13 +2611,10 @@ _lA(unescape(myajax.responseText),"AXMLPlayer");
 }
 }
 }
-var _QzX = "";
-var _y=1;
-var _rq = "f";
-function _lA(a,z){
-_rq = "t"
-_QzX = "";
-_y=1;
+
+
+var _QzX = "";var _y=1;var _rq = "f";
+function _lA(a,z){_rq = "t"_QzX = "";_y=1;
 document.getElementById(z).innerHTML = "";
 var b="http://www.w3.org/2000/svg";var c=document.createElement("div");
 c.setAttribute("style","width:480;height:272;overflow:hidden");
@@ -2610,17 +2623,9 @@ for(var f=0;f<e.length;f++){var g=document.createElement("div");g.style.display=
 g.appendChild(document.createElementNS(b,"svg"));var h=e[f].childNodes;for(var i=0;i<h.length;i++){
 var j=h[i];var k=j.attributes;var l=document.createElementNS(b,j.tagName);for(var m=0;m<k.length;m++){
 l.setAttributeNS(null,k[m].nodeName,k[m].value)}g.firstChild.appendChild(l)}c.appendChild(g)}
-document.getElementById(z).appendChild(c);
-_rq = "f"
-_QzX = z
-_pA(z)}
-
-function _pA(z){
-if(_rq == "f"){
-var a=document.getElementById(z).firstChild.childNodes;
-_y++;if(_y==a.length){_y=0}else{a[_y-1].style.display="none"}
-a[_y].style.display="";
-setTimeout("_pA('"+z+"')",83)}}
+document.getElementById(z).appendChild(c);_rq = "f";_QzX = z;_pA(z)}
+function _pA(z){if(_rq == "f"){var a=document.getElementById(z).firstChild.childNodes;
+_y++;if(_y==a.length){_y=0}else{a[_y-1].style.display="none"}a[_y].style.display="";setTimeout("_pA('"+z+"')",83)}}
 
 
 
@@ -2641,30 +2646,20 @@ y.onblur=function(){keyShortcuts.enable();};
 
 function showKeyGuide(){
 var txt = "";
-
-txt+="Ctrl+C : Copy Selected Object"
-txt+="\n<br>"
-txt+="Ctrl+V : Paste Object"
-txt+="\n<br>"
-txt+="Ctrl+Z : Undo Action"
-txt+="\n<br>"
-txt+="-> (right arrow key) : Next Frame"
-txt+="\n<br>"
-txt+="Page Down : Next Frame"
-txt+="\n<br>"
-txt+="<- (left arrow key) : Previous Frame"
-txt+="\n<br>"
-txt+="Page Up : Previous Frame"
-txt+="\n<br>"
-txt+="P : Play Animation (within canvas)"
-txt+="\n<br>"
-txt+="S : Stop Animation Playback (within canvas)"
-txt+="\n<br>"
-txt+="Delete : Delete Selected Object (or delete frame if nothing is selected)"
-txt+="\n<br>"
-txt+="R : Clear Current Frame"
-txt+="\n<br>"
-txt+="F6: To Keyframe"
+var txp=function(t){txt+=t;txt+="\n<br>"}
+txp("Ctrl+C : Copy Selected Object")
+txp("Ctrl+V : Paste Object")
+txp("Ctrl+Z : Undo Action")
+txp("Ctrl+S : Open Save/Open window")
+txp("-> (right arrow key) : Next Frame")
+txp("Page Down : Next Frame")
+txp("<- (left arrow key) : Previous Frame")
+txp("Page Up : Previous Frame")
+txp("P : Play Animation (within canvas)")
+txp("S : Stop Animation Playback (within canvas)")
+txp("Delete : Delete Selected Object (or delete frame if nothing is selected)")
+txp("R : Clear Current Frame")
+txp("F6: To Keyframe")
 
 Ext.MessageBox.alert("Keyboard Shortcuts:",txt)
 }
@@ -2678,8 +2673,8 @@ keyShortcuts = new Ext.KeyMap(document, [
         key: "c",ctrl:true,
         fn: function(){ copyObj(); }
 	}, {
-        key: "p",ctrl:true,
-        fn: function(){ pasteObj(); }
+        key: "v",ctrl:true,
+        fn: function(){ pasteObj() }
     }, {
         key: "z",ctrl:true,
         fn: function(){undo();}
@@ -2698,7 +2693,7 @@ keyShortcuts = new Ext.KeyMap(document, [
         fn: function(){ playAnimation() }
 	}, {
 	
-        key: "s",
+        key: "s", ctrl:false,
         fn: function(){ stopAnimation(); }
 	}, {
 	
@@ -2708,6 +2703,13 @@ keyShortcuts = new Ext.KeyMap(document, [
 	
         key: 82,
         fn: function(){ removeKeyframe(); }
+	}, {
+	
+        key: "s", ctrl:true,stopEvent: true,
+        fn: function(){
+		
+		showFileSystemDialog()
+		}
 	}
 	
 /*
@@ -2724,7 +2726,45 @@ keyShortcuts = new Ext.KeyMap(document, [
 
 
  
- var drawTools = new Object();
+ Ext.onReady(function(){
+var genDB = [
+	"select|select.gif",
+	"rect|rectangle.gif",
+	"roundrect|roundrect.gif",
+	"ellipse|circle.gif",
+	"line|line.gif",
+	"delete|delete.gif"
+	]
+	var tbdiv = document.getElementById("tbIcon")
+	var toolTable = document.createElement("table")
+	var toolTBody = document.createElement("tbody")
+	var tObjCnt = 0;
+	for(var tRowN = 0; tRowN < 3; tRowN++){
+	var tRow = document.createElement("tr")
+	for(var tColN = 0; tColN < 2; tColN++){
+	var tCol = document.createElement("td")
+	var tsAD = genDB[tObjCnt].split("|")
+	tObjCnt++;
+	var tCDiv = document.createElement("div")
+	tCDiv.id = tsAD[0]
+	tCDiv.className = "toolbarItem"
+	var tcvDiv = document.createElement("div")
+	tcvDiv.className = "centerVertical"
+	var tvImg = document.createElement("img")
+	tvImg.src = "../images/"+tsAD[1]
+	tvImg.className = "toolbarItem";
+	tcvDiv.appendChild(tvImg)
+	tCDiv.appendChild(tcvDiv)
+	tCol.appendChild(tCDiv)
+	tRow.appendChild(tCol)
+	}
+	toolTBody.appendChild(tRow)
+	}
+	toolTable.appendChild(toolTBody)
+	tbdiv.appendChild(toolTable)
+})
+
+var drawTools = new Object();
 drawTools.select = function(){setMode('select', 'Selection');}
 drawTools.rect = function(){setMode('rect', 'Rectangle');}
 drawTools.roundrect = function(){setMode('roundrect', 'Rounded Rectangle');}
@@ -2732,7 +2772,54 @@ drawTools.ellipse = function(){setMode('ellipse', 'Ellipse / Circle');}
 drawTools.line = function(){setMode('line', 'Line');}
 
 var iconId = new Array("select","rect","roundrect","ellipse","line","delete") 
- 
+var lineWidth;
+Ext.onReady(function(){
+for(var iid = 0; iid < iconId.length; iid++){
+(function(id){
+Ext.get(id).on("mouseover",function(){
+if($(id).style.backgroundImage.indexOf("selectedMask") == -1){
+$(id).style.backgroundImage = "url(../images/buttonMask.png)"
+}
+})
+Ext.get(id).on("mouseout",function(){
+if($(id).style.backgroundImage.indexOf("buttonMask") != -1){
+$(id).style.backgroundImage = ""
+}
+})
+Ext.get(id).on("click",function(){
+if(id == "delete"){
+changeSelectedUI("delete")
+deleteShape()
+setTimeout("drawTools.select();",100);//some eyecandy
+}else{
+drawTools[id]()
+}
+})
+})(iconId[iid])
+}
+
+
+    var lineWidthStore = new Ext.data.SimpleStore({
+        fields: ['size'],
+        data : [["1px"],["2px"],["3px"],["4px"],["5px"],["6px"],["7px"],["8px"],["9px"],["10px"],
+		["11px"],["12px"],["13px"],["14px"]]
+    });
+    lineWidth = new Ext.form.ComboBox({
+        store: lineWidthStore,
+        displayField:'size',
+        typeAhead: true,
+        mode: 'local',
+		value: "1px",
+        triggerAction: 'all',
+		minLength: '1px',
+        selectOnFocus:true,
+        resizable:true
+    });
+	lineWidth.on("select",function(c){
+	setLineWidth()
+	})
+    lineWidth.applyTo('linewidth');
+ })
  function setLayerData(){
  DrawLayer[currentLayer] = DrawCanvas;
  }
@@ -2792,6 +2879,7 @@ DrawCanvas  =DrawLayer[currentLayer] ;
   }
   
   function refreshModeData(){
+
   if(DrawCanvas[currentCanvas]){
     DrawCanvas[currentCanvas].editCommand('mode', zCurrentCanvasMode);
  }
@@ -2814,7 +2902,7 @@ DrawCanvas  =DrawLayer[currentLayer] ;
     DrawCanvas[currentCanvas].editCommand('fillcolor', $('fillcolor').style.backgroundColor);
     DrawCanvas[currentCanvas].editCommand('linecolor', $('linecolor').style.backgroundColor);
 	
-	var LWidth = $('linewidth').options[$('linewidth').selectedIndex].value;
+	var LWidth = lineWidth.value;
     DrawCanvas[currentCanvas].editCommand('linewidth', LWidth);
 	DrawCanvas[currentCanvas].editCommand('mode', zCurrentCanvasMode);
   }
@@ -2853,8 +2941,8 @@ DrawCanvas[currentCanvas].editCommand('fillcolor', sfc);
 DrawCanvas[currentCanvas].editCommand('linecolor', slc);
   }
   
-  function setLineWidth(widths) {
-    var width = widths.options[widths.selectedIndex].value;
+  function setLineWidth() {
+    var width = lineWidth.value;
     DrawCanvas[currentCanvas].editCommand('linewidth', width);
   }
 
@@ -2866,14 +2954,14 @@ DrawCanvas[currentCanvas].editCommand('linecolor', slc);
   setLayerData()
     $('fillcolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('fillcolor');
     $('linecolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('linecolor');
-	//$('linewidth').selectedIndex = getOptionByValue($('linewidth'), DrawCanvas[currentCanvas].queryCommand('linewidth'));
+	lineWidth.setValue(DrawCanvas[currentCanvas].queryCommand('linewidth'));
   }
 
   function onUnselect() {
   setLayerData()
    $('fillcolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('fillcolor');
     $('linecolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('linecolor');
-   $('linewidth').selectedIndex = getOptionByValue($('linewidth'), DrawCanvas[currentCanvas].queryCommand('linewidth'));
+   lineWidth.setValue( DrawCanvas[currentCanvas].queryCommand('linewidth'));
   }
   
 
@@ -3243,7 +3331,8 @@ Event.observe(newShape, "mousedown", DrawCanvas[frame].onHitListener);
  var initHistory;
  var cloneFrameEnabled = new Boolean(true);
  var Colorobj;
- var picker; 
+ var picker;
+ var historyLayout 
  /*
 ..okay, so the site trackers are really slowing my app down... alot... so i'm gonna try making my own
 */
@@ -3257,7 +3346,6 @@ statArray["date"] = (new Date()).toString();
 statArray["useragent"] = window.userAgent;
 statArray["appversion"] = navigator.appVersion;
 statArray["useragent"] = navigator.userAgent;
-statArray["firebug"] = (__firebug__)?"true":"false"
 statArray["vendor"] = navigator.vendor;
 statArray["platform"] = navigator.platform;
 statArray["screenwidth"] = screen.width;
@@ -3273,11 +3361,13 @@ paramString += "&" + x + "=" + escape(statArray[x])
 paramString = paramString.substring(1)
 //okay, so now let's ajax it
 
+function sendStats(){
 var ajaxstat=(window.ActiveXObject)?new ActiveXObject('Microsoft.XMLHTTP'):new XMLHttpRequest();
 ajaxstat.open("POST","../stats/load.php",true)
 ajaxstat.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 ajaxstat.send(paramString)
-
+}
+setTimeout("sendStats()",1000)
 //Measure Visit Length// Featuring Ajax!!!
 var startime=(new Date()).getTime();
 window.onunload=function(){
