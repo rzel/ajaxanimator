@@ -29,7 +29,19 @@ ajaxanimator.app = function() {
 }();
 
 function setTheme(thId){ //change themes
+var sThC = function(t){
+if(!document.getElementById("theme")){
+var nCSS = document.createElement("link")
+nCSS.setAttribute('href', t);
+nCSS.setAttribute('type', 'text/css');
+nCSS.setAttribute('id','theme')
+nCSS.setAttribute('rel','stylesheet')
+document.getElementsByTagName("HEAD")[0].appendChild(nCSS);
+}
 
+
+Ext.get("theme").dom.href = t
+}
 var themeArray = ["default","gray","vista","aero","galdaka"]
 var theme = "default";
 if(typeof(thId) == typeof(4)){
@@ -40,9 +52,9 @@ theme = thId;
 }
 }
 if(theme == "default"){
-addCSS("../resources/css/ext-all.css")
+sThC("../resources/css/ext-all.css")
 }else{
-addCSS("../resources/css/xtheme-"+theme+".css")
+sThC("../resources/css/xtheme-"+theme+".css")
 }
 }
 
@@ -105,5 +117,34 @@ mask.shift({
 
 
 function interLoad(){
-
+historyDS = new Ext.data.SimpleStore({
+fields: ['number','action'],
+data : [["0","New Animation"]]
+});
+var historyCM = new Ext.grid.ColumnModel([
+	{header: "#", sortable: true,  dataIndex: 'number'},
+	{header: "Action", sortable: true,  dataIndex: 'action'},
+]);
+historyGrid = new Ext.grid.Grid("HistoryContainer", {
+ds: historyDS,
+cm: historyCM,
+autoSizeColumns: true,
+monitorWindowResize: true,
+trackMouseOver: true
+});
+historyGrid.render();
+historyGrid.on("cellclick",function(e,w,s,g){
+revertRevision(w)
+})
+historyLayout = Ext.BorderLayout.create({
+ 	monitorWindowResize: true,
+center: {
+margins:{left:.1,top:.1,right:.1,bottom:.1},
+panels: [new Ext.GridPanel(historyGrid)]
 }
+}, 'HistoryLayout');
+mainLayout.getRegion('east').getPanel('history-div').on("resize",function(){
+historyLayout.layout()
+})
+}
+

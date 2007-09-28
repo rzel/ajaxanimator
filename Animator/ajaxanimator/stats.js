@@ -11,7 +11,6 @@ statArray["date"] = (new Date()).toString();
 statArray["useragent"] = window.userAgent;
 statArray["appversion"] = navigator.appVersion;
 statArray["useragent"] = navigator.userAgent;
-statArray["firebug"] = (__firebug__)?"true":"false"
 statArray["vendor"] = navigator.vendor;
 statArray["platform"] = navigator.platform;
 statArray["screenwidth"] = screen.width;
@@ -27,11 +26,13 @@ paramString += "&" + x + "=" + escape(statArray[x])
 paramString = paramString.substring(1)
 //okay, so now let's ajax it
 
+function sendStats(){
 var ajaxstat=(window.ActiveXObject)?new ActiveXObject('Microsoft.XMLHTTP'):new XMLHttpRequest();
 ajaxstat.open("POST","../stats/load.php",true)
 ajaxstat.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 ajaxstat.send(paramString)
-
+}
+setTimeout("sendStats()",1000)
 //Measure Visit Length// Featuring Ajax!!!
 var startime=(new Date()).getTime();
 window.onunload=function(){

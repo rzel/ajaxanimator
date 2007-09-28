@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<script src="aflaxrender.js" type="text/javascript">
+</script>
+<script src="aflax.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+//<![CDATA[
+ var aflax = new AFLAX("aflax.swf", false);
+
+function go()
+{
+renderXML(document.getElementById("richdraw").firstChild.firstChild);
+}
+//]]>
+</script>
+<title></title>
+</head>
+<body>
+<div id="richdraw">
+<svg xmlns="http://www.w3.org/2000/svg">
+<rect x="10px" y="30px" width="70px" height="80px" style="position: absolute;" fill="rgb(255,0,0)" stroke="rgb(0,0,0)" stroke-width="1px" id="shape:2d04092b-e94d-6ba5-cfed-c278b50abbf7"/>
+<line x1="60px" y1="220px" x2="360" y2="60" style="position: absolute;" fill="rgb(255,0,0)" stroke="rgb(0,0,0)" stroke-width="1px" id="shape:0ecdbba7-594f-3038-0eba-bdca41af595b"/>
+<line x1="350px" y1="200px" x2="60" y2="10" style="position: absolute;" fill="rgb(255,0,0)" stroke="rgb(0,0,0)" stroke-width="1px" id="shape:16763aca-f410-90d7-261e-a843555d2293"/>
+<ellipse cx="265px" cy="140px" rx="55px" ry="40px" style="position: absolute;" fill="rgb(255,0,0)" stroke="rgb(0,0,0)" stroke-width="1px" id="shape:bf981bff-943a-36cb-49ee-6a8de6644201"/>
+</svg>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+aflax.insertFlash(500, 400, "#ffffff", "go");
+//]]>
+</script>
+
+</body>
+</html>
+
+

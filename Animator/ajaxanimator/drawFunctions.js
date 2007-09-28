@@ -1,3 +1,41 @@
+Ext.onReady(function(){
+var genDB = [
+	"select|select.gif",
+	"rect|rectangle.gif",
+	"roundrect|roundrect.gif",
+	"ellipse|circle.gif",
+	"line|line.gif",
+	"delete|delete.gif"
+	]
+	var tbdiv = document.getElementById("tbIcon")
+	var toolTable = document.createElement("table")
+	var toolTBody = document.createElement("tbody")
+	var tObjCnt = 0;
+	for(var tRowN = 0; tRowN < 3; tRowN++){
+	var tRow = document.createElement("tr")
+	for(var tColN = 0; tColN < 2; tColN++){
+	var tCol = document.createElement("td")
+	var tsAD = genDB[tObjCnt].split("|")
+	tObjCnt++;
+	var tCDiv = document.createElement("div")
+	tCDiv.id = tsAD[0]
+	tCDiv.className = "toolbarItem"
+	var tcvDiv = document.createElement("div")
+	tcvDiv.className = "centerVertical"
+	var tvImg = document.createElement("img")
+	tvImg.src = "../images/"+tsAD[1]
+	tvImg.className = "toolbarItem";
+	tcvDiv.appendChild(tvImg)
+	tCDiv.appendChild(tcvDiv)
+	tCol.appendChild(tCDiv)
+	tRow.appendChild(tCol)
+	}
+	toolTBody.appendChild(tRow)
+	}
+	toolTable.appendChild(toolTBody)
+	tbdiv.appendChild(toolTable)
+})
+
 var drawTools = new Object();
 drawTools.select = function(){setMode('select', 'Selection');}
 drawTools.rect = function(){setMode('rect', 'Rectangle');}
@@ -6,7 +44,54 @@ drawTools.ellipse = function(){setMode('ellipse', 'Ellipse / Circle');}
 drawTools.line = function(){setMode('line', 'Line');}
 
 var iconId = new Array("select","rect","roundrect","ellipse","line","delete") 
- 
+var lineWidth;
+Ext.onReady(function(){
+for(var iid = 0; iid < iconId.length; iid++){
+(function(id){
+Ext.get(id).on("mouseover",function(){
+if($(id).style.backgroundImage.indexOf("selectedMask") == -1){
+$(id).style.backgroundImage = "url(../images/buttonMask.png)"
+}
+})
+Ext.get(id).on("mouseout",function(){
+if($(id).style.backgroundImage.indexOf("buttonMask") != -1){
+$(id).style.backgroundImage = ""
+}
+})
+Ext.get(id).on("click",function(){
+if(id == "delete"){
+changeSelectedUI("delete")
+deleteShape()
+setTimeout("drawTools.select();",100);//some eyecandy
+}else{
+drawTools[id]()
+}
+})
+})(iconId[iid])
+}
+
+
+    var lineWidthStore = new Ext.data.SimpleStore({
+        fields: ['size'],
+        data : [["1px"],["2px"],["3px"],["4px"],["5px"],["6px"],["7px"],["8px"],["9px"],["10px"],
+		["11px"],["12px"],["13px"],["14px"]]
+    });
+    lineWidth = new Ext.form.ComboBox({
+        store: lineWidthStore,
+        displayField:'size',
+        typeAhead: true,
+        mode: 'local',
+		value: "1px",
+        triggerAction: 'all',
+		minLength: '1px',
+        selectOnFocus:true,
+        resizable:true
+    });
+	lineWidth.on("select",function(c){
+	setLineWidth()
+	})
+    lineWidth.applyTo('linewidth');
+ })
  function setLayerData(){
  DrawLayer[currentLayer] = DrawCanvas;
  }
@@ -66,6 +151,7 @@ DrawCanvas  =DrawLayer[currentLayer] ;
   }
   
   function refreshModeData(){
+
   if(DrawCanvas[currentCanvas]){
     DrawCanvas[currentCanvas].editCommand('mode', zCurrentCanvasMode);
  }
@@ -88,7 +174,7 @@ DrawCanvas  =DrawLayer[currentLayer] ;
     DrawCanvas[currentCanvas].editCommand('fillcolor', $('fillcolor').style.backgroundColor);
     DrawCanvas[currentCanvas].editCommand('linecolor', $('linecolor').style.backgroundColor);
 	
-	var LWidth = $('linewidth').options[$('linewidth').selectedIndex].value;
+	var LWidth = lineWidth.value;
     DrawCanvas[currentCanvas].editCommand('linewidth', LWidth);
 	DrawCanvas[currentCanvas].editCommand('mode', zCurrentCanvasMode);
   }
@@ -127,8 +213,8 @@ DrawCanvas[currentCanvas].editCommand('fillcolor', sfc);
 DrawCanvas[currentCanvas].editCommand('linecolor', slc);
   }
   
-  function setLineWidth(widths) {
-    var width = widths.options[widths.selectedIndex].value;
+  function setLineWidth() {
+    var width = lineWidth.value;
     DrawCanvas[currentCanvas].editCommand('linewidth', width);
   }
 
@@ -140,14 +226,14 @@ DrawCanvas[currentCanvas].editCommand('linecolor', slc);
   setLayerData()
     $('fillcolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('fillcolor');
     $('linecolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('linecolor');
-	//$('linewidth').selectedIndex = getOptionByValue($('linewidth'), DrawCanvas[currentCanvas].queryCommand('linewidth'));
+	lineWidth.setValue(DrawCanvas[currentCanvas].queryCommand('linewidth'));
   }
 
   function onUnselect() {
   setLayerData()
    $('fillcolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('fillcolor');
     $('linecolor').style.backgroundColor = DrawCanvas[currentCanvas].queryCommand('linecolor');
-   $('linewidth').selectedIndex = getOptionByValue($('linewidth'), DrawCanvas[currentCanvas].queryCommand('linewidth'));
+   lineWidth.setValue( DrawCanvas[currentCanvas].queryCommand('linewidth'));
   }
   
 

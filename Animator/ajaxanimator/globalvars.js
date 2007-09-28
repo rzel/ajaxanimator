@@ -12,3 +12,4 @@
  var cloneFrameEnabled = new Boolean(true);
  var Colorobj;
  var picker;
+ var historyLayout
