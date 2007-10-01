@@ -4,8 +4,11 @@ function openDebug(){
 if(Ext.log){
 Ext.log("Debug Console Opened")
 }else{
-addJS("../ext/debug-min.js",function(){
+Ext.Ajax.request({
+url: "../ext/debug-min.js",
+success: function(){
 Ext.log("Debug Console Opened")
+}
 })
 }
 }
@@ -64,11 +67,8 @@ passwordField.on("change",function(textObj,newVal,oldVal){
 currentRegPassword = newVal
 });
 passwordField.render(Ext.get("registerDialog"))
-addCSS("../lib/secure-pass.css");
-addJS("../lib/secure-pass.js",function(){
 sPwd = new Ext.ux.SecurePass();
 sPwd.applyTo('regPw');
-});
 };
 
 var registerDialog;
@@ -106,10 +106,7 @@ function showRegisterDialog(){
 
 var filesystemDialog;
 function showFileSystemDialog(){
-	if(!initHistory){
-	addJS("../ajaxanimator/historyManagement.js",function(){
-	})
-	}
+
     if(!filesystemDialog){ // lazy initialize the filesystemDialog and only create it once
         filesystemDialog = new Ext.LayoutDialog("fs-dialog", { 
                 modal:false,

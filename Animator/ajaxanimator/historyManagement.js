@@ -1,6 +1,3 @@
-initHistory = "true"
-
-
 
 
 function resetHistory(){
@@ -25,13 +22,6 @@ historyDS.add(new historyGrid.dataSource.reader.recordType(nData))
 }
 
 
-function addHistoryTO(data){
-
-addHistory(data)
-}
-
-
-
 function undo(){
 revertRevision(editHistoryNumber -1);
 }
@@ -40,7 +30,6 @@ function checkEdit(event){
 if (editHistory[editHistoryNumber] != $("CanvasContainer").innerHTML){
 editHistoryNumber++;
 editHistory[editHistoryNumber] = $("CanvasContainer").innerHTML
-
 if(DrawCanvas[currentCanvas].mode != "select"){
 var curM = DrawCanvas[currentCanvas].mode;
 var result = "";
@@ -50,9 +39,7 @@ case 'roundrect': result = 'Rectangle'; break;
 case 'ellipse': result = 'Ellipse'; break;
 case 'line': result = 'Line'; break;
 }
-
 addHistory("Add&nbsp;" + result)
-
 }else{
 addHistory("Select/Move")
 }

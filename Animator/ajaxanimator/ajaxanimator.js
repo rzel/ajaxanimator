@@ -5,12 +5,20 @@ Ext.BLANK_IMAGE_URL = '../resources/images/default/s.gif';
 Ext.namespace('ajaxanimator');
 // create application
 
+Ext.onReady(function(){
+if(!document.createElementNS){
+Element.prototype.getAttributeNS = function(f,a){return this.getAttribute(a)}
+Element.prototype.setAttributeNS = function(f,a,b){return this.setAttribute(a,b)}
+document.createElementNS = function(f,a){return document.createElement(a)}
+}
+})
+
+
 ajaxanimator.app = function() {
     return {
         init: function() {
 			Ext.QuickTips.interceptTitles = true;
 			Ext.QuickTips.init();
-			addJS("../lib/prototype.lite.js",function(){
 			addLayer();
 			timelineResize();
 			if(Ext.isIE != true){
@@ -20,9 +28,7 @@ ajaxanimator.app = function() {
 			}
 			setTimeout("interLoad()",250);
 			setTimeout("finishLoad()",1500);
-			setTimeout("jsTimeout()", 30000);
 			setTimeout("showTehAdz()", 10000);
-			});
         }
 
     };
@@ -58,12 +64,7 @@ sThC("../resources/css/xtheme-"+theme+".css")
 }
 }
 
-function jsTimeout(){
-	if(!initHistory){
-	addJS("../ajaxanimator/historyManagement.js",function(){
-	})
-	}
-}
+
 
 ajaxanimator.onReady = function(f){
 onreadyfunct[onreadyfunct.length + 1] = f
@@ -93,7 +94,7 @@ Ext.onReady(ajaxanimator.app.init, ajaxanimator.app);
 	}
 
 function finishLoad(){
-addJS("../lib/ajaxroutine.js");
+
 hideLoadingMask()
 }
 
@@ -106,11 +107,11 @@ mask.shift({
 	width:loading.getWidth(),
 	height:loading.getHeight(), 
 	remove:true,
-	duration:3,
+	duration:2,
 	opacity:.2,
 	easing:'bounceOut',
 	callback : function(){
-		loading.fadeOut({duration:.5,remove:true});
+		loading.fadeOut({duration:1,remove:true});
 	}
 });
 }
@@ -133,7 +134,7 @@ monitorWindowResize: true,
 trackMouseOver: true
 });
 historyGrid.render();
-historyGrid.on("cellclick",function(e,w,s,g){
+historyGrid.on("cellclick",function(e,w){
 revertRevision(w)
 })
 historyLayout = Ext.BorderLayout.create({

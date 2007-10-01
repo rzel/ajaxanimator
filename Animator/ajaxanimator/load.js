@@ -1,3 +1,4 @@
+/*
 var isInitRD;
 var includedJS = new Array();
 
@@ -46,3 +47,4 @@ nCSS.setAttribute('rel','stylesheet')
 document.getElementsByTagName("HEAD")[0].appendChild(nCSS);
 }
 
+*/

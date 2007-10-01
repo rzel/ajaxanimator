@@ -3,7 +3,7 @@ var encPW = "";
 var userName = "";
 var cPrEiD = "";
 var cPrEuN = "";
-var initMD5var;
+
 
 function failCon(){
 Ext.MessageBox.alert("Error:","Connection to server failed. Try Again Later. This might because of server misconfiguration, faulty connection, browser misconfiguration, or server traffic")
@@ -18,12 +18,6 @@ registerUser();
 }
 
 function loginUser(){
-if(!initMD5var){
-addJS("../lib/md5.js",function(){
-initMD5var = "true";
-loginUser();
-})
-}else{
 var cUsername = $("usrId").value;
 var cPassword = hex_md5($("pwId").value);
 Ext.Ajax.request({
@@ -41,7 +35,6 @@ Ext.MessageBox.alert("Login Status: Error",e.responseText.substr(4).replace(":",
 },
 failure: failCon
 })
-}
 }
 
 function logout(){

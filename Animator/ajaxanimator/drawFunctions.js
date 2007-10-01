@@ -117,31 +117,19 @@ DrawCanvas  =DrawLayer[currentLayer] ;
     DrawCanvas[currentCanvas].onselect = onSelect;
     DrawCanvas[currentCanvas].onunselect = onUnselect;
 	$("CanvasContainer").onmouseup = function(){
-	if(!initHistory){
-	addJS("../ajaxanimator/historyManagement.js",function(){
+
 	checkEdit();
 	setSD();
-	initHistory = "true";
-	})
-	}else{
-	checkEdit();
-	setSD();
-	}
+	
 	}
 	if(totalFrames == 1){
 	setCanvasDefaults();
 	}else{
-	if(!initHistory){
-	addJS("../ajaxanimator/historyManagement.js",function(){
+
 	editHistoryNumber++;
-	addHistoryTO("Add&nbsp;Frame")
-	initHistory = "true";
-	})
-	}else{
-	editHistoryNumber++;
-	addHistoryTO("Add&nbsp;Frame")
-	initHistory = "true";	
-	}
+	addHistory("Add&nbsp;Frame")
+
+	
 
 	editHistory[editHistoryNumber] =  $("CanvasContainer").innerHTML
 	setCanvasProperties();

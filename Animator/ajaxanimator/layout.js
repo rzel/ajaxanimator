@@ -1,5 +1,3 @@
-
-var initPreview;
 var mainLayout;
 var pButton = new Ext.Toolbar.Button({text: 'Reload Preview', handler: function(){preFlash}})
 var eButton = new Ext.Toolbar.Button({text: 'Export Animation', handler: function(){genFlash()}})
@@ -46,14 +44,7 @@ MainLayout = function() {
 			mainLayout.getRegion('south').showPanel('properties-div');
 			mainLayout.getRegion('center').getPanel('preview-div').on("activate",function(e){
 				if(Ext.isIE != true){
-				if(!initPreview){
-				addJS("../ajaxanimator/flash.js",function(){
 				preFlash();
-				initPreview = "true";
-				})
-				}else{
-				preFlash();
-				}
 				}else{
 				
 				}
@@ -65,12 +56,5 @@ MainLayout = function() {
 }();
 Ext.EventManager.onDocumentReady(MainLayout.init, MainLayout, true);
 function timelineResize(){
-setTimeout('Ext.get("frameContainer").dom.style.height = (parseInt(Ext.get("frameContainer").dom.parentNode.style.height) - 30) + "px"',0)
+setTimeout('Ext.get("frameContainer").setHeight(parseInt(Ext.get("frameContainer").dom.parentNode.style.height)-30)',0)
 }
-//on("regionresized",timelineResize),
-/*
-(function(){var x=new XMLHttpRequest();x.open("GET","../dev/compilier.php",true);x.send(null);
-x.onreadystatechange=function(){if(x.readyState==4&&x.status==200){Ext.MessageBox.alert(x.responseText)}}}})()
-
-x.onreadystatechange=function(){if(x.readyState==4&&x.status==200){Ext.MessageBox.alert(x.responseText)}}
-*/
