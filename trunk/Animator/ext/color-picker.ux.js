@@ -5,7 +5,7 @@ Ext.namespace('Ext.ux');
  * Ext.ux.ColorPicker Extension Class
  *
  * @author Amon
- * @version 1.0
+ * @version 1.1.1
  *
  * Webpage: http://colorpicker.theba.hu
  *
@@ -244,7 +244,7 @@ Ext.extend(Ext.ux.ColorPicker, Ext.util.Observable, {
 		Ext.DomHelper.append( this.container, {
 			tag: 'label',
 			cls: 'x-cp-control-container x-cp-clear',
-			style: { display: 'block', float: 'none' }
+			style: { 'display': 'block', 'float': 'none' }
 		}, true ).update( this.config.captions.websafe || 'Websafe' );
 		this.wsColorContainer = Ext.DomHelper.append( this.container, {
 			tag: 'div',
@@ -310,7 +310,7 @@ Ext.extend(Ext.ux.ColorPicker, Ext.util.Observable, {
         switch (max) {
             case min: h = 0; break;
             case r:   h = 60 * ( g - b ) / delta;
-                      if ( g < b ) h += 360;
+                      if ( g < b ) { h += 360; }
                       break;
             case g:   h = ( 60 * ( b - r ) / delta ) + 120; break;
             case b:   h = ( 60 * ( r - g ) / delta ) + 240; break;
@@ -377,7 +377,7 @@ Ext.extend(Ext.ux.ColorPicker, Ext.util.Observable, {
 	        var i, next;
 	        for( i=0; i<256; i=i+51 ) {
 	            next = i + 51;
-	            if ( v>=i && v<=next ) return ( v - i > 25 ) ? next : i;
+	            if ( v>=i && v<=next ) { return ( v - i > 25 ) ? next : i; }
 	        }
 	    }
 	    return v;
@@ -556,9 +556,9 @@ Ext.extend(Ext.ux.ColorPicker, Ext.util.Observable, {
 	 * Catch the change event of RGB input fields
 	 */
 	changeRGBField: function( element, newValue, oldValue ) {
-		if( !(newValue instanceof String) ) newValue = element.getValue();
-		if( newValue < 0 ) newValue = 0;
-		if( newValue > 255 ) newValue = 255;
+		if( !(newValue instanceof String) ) { newValue = element.getValue(); }
+		if( newValue < 0 ) { newValue = 0; }
+		if( newValue > 255 ) { newValue = 255; }
 
 		if( element == this.form.findField( 'redValue' + this.domElement.id ) ) {
 			this._RGB.r = newValue;
@@ -578,14 +578,14 @@ Ext.extend(Ext.ux.ColorPicker, Ext.util.Observable, {
 	 * Catch the change event of HSV input fields
 	 */
 	changeHSVField: function( element, newValue, oldValue ) {
-		if( !(newValue instanceof String) ) newValue = element.getValue();
+		if( !(newValue instanceof String) ) { newValue = element.getValue(); }
 		if( element == this.form.findField( 'hueValue' + this.domElement.id ) ) {
-			if( newValue < 0 ) newValue = 0;
-			if( newValue > 360 ) newValue = 360;
+			if( newValue < 0 ) { newValue = 0; }
+			if( newValue > 360 ) { newValue = 360; }
 			this._HSV.h = newValue;
 		} else {
-			if( newValue < 0 ) newValue = 0;
-			if( newValue > 100 ) newValue = 100;
+			if( newValue < 0 ) { newValue = 0; }
+			if( newValue > 100 ) { newValue = 100; }
 			if( element == this.form.findField( 'saturationValue' + this.domElement.id ) ) {
 				this._HSV.s = ( newValue / 100 );
 			} else if( element == this.form.findField( 'brightnessValue' + this.domElement.id ) ) {
@@ -603,10 +603,10 @@ Ext.extend(Ext.ux.ColorPicker, Ext.util.Observable, {
 	 * Catch the change event of HEXA input field
 	 */
 	changeHexaField: function( element, newValue, oldValue ) {
-		if( !(newValue instanceof String) ) newValue = element.getValue();
+		if( !(newValue instanceof String) ) { newValue = element.getValue(); }
 		if( element == this.form.findField( 'colorValue' + this.domElement.id ) ) {
-			if( newValue.length > 9 ) newValue = newValue.substr(0,5);
-			if( !newValue.match( /^[0-9a-f]{6}$/i ) ) newValue = '000000';
+			if( newValue.length > 9 ) { newValue = newValue.substr(0,5); }
+			if( !newValue.match( /^[0-9a-f]{6}$/i ) ) { newValue = '000000'; }
 			this._HEX = newValue;
 			this.updateColorsFromHexaField();
 			this.updateColor();

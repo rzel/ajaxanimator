@@ -34,8 +34,6 @@ function colorChangeHandler(t,o){
 
 function displayColor(){
 	if(!picker){
-	addCSS("../ext/color-picker.ux.css");
-	addJS("../ext/color-picker.ux.js",function(){
 	picker = new Ext.ux.ColorPicker( 'colorPicker', {
 				hidePanel: false,
 				captions: {
@@ -58,7 +56,6 @@ function displayColor(){
 
 	cp.on('select', function(palette, selColor){
 	picker.setColor(selColor);
-	});
 	});
 	}
 };

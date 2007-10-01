@@ -8,7 +8,6 @@
  var mouseIsDown = new Boolean();
  var clipboardTagStr = "";
  var clipboardAtt;
- var initHistory;
  var cloneFrameEnabled = new Boolean(true);
  var Colorobj;
  var picker;

@@ -276,6 +276,759 @@ Ext.grid.PropertyRecord=Ext.data.Record.create([{name:"name",type:"string"},"val
 
 Ext.LoadMask=function(el,_2){this.el=Ext.get(el);Ext.apply(this,_2);if(this.store){this.store.on("beforeload",this.onBeforeLoad,this);this.store.on("load",this.onLoad,this);this.store.on("loadexception",this.onLoad,this);this.removeMask=false;}else{var um=this.el.getUpdateManager();um.showLoadIndicator=false;um.on("beforeupdate",this.onBeforeLoad,this);um.on("update",this.onLoad,this);um.on("failure",this.onLoad,this);this.removeMask=true;}};Ext.LoadMask.prototype={msg:"Loading...",msgCls:"x-mask-loading",disabled:false,disable:function(){this.disabled=true;},enable:function(){this.disabled=false;},onLoad:function(){this.el.unmask(this.removeMask);},onBeforeLoad:function(){if(!this.disabled){this.el.mask(this.msg,this.msgCls);}},destroy:function(){if(this.store){this.store.un("beforeload",this.onBeforeLoad,this);this.store.un("load",this.onLoad,this);this.store.un("loadexception",this.onLoad,this);}else{var um=this.el.getUpdateManager();um.un("beforeupdate",this.onBeforeLoad,this);um.un("update",this.onLoad,this);um.un("failure",this.onLoad,this);}}};
  
+ // Create user extensions namespace (Ext.ux)
+Ext.namespace('Ext.ux');
+
+/**
+ * Ext.ux.ColorPicker Extension Class
+ *
+ * @author Amon
+ * @version 1.1.1
+ *
+ * Webpage: http://colorpicker.theba.hu
+ *
+ * @class Ext.ux.ColorPicker
+ * @extends Ext.util.Observable
+ * @constructor
+ * Creates new ColorPicker
+ * @param {String/HTMLElement/Element} el The container element for this picker
+ * @param {Object} config Config Object
+ * @cfg {Boolean} hidePanel true to hide the inputs (defaults to false)
+ * @cfg {Boolean/Object} animate Moving pickers with this animate or false to no animation (defaults to false)
+ * @cfg {Object} rgb (optional) Add initial color with rgb format eg.: { r:255, g:128, b:10 }
+ * @cfg {Object} hsv (optional) Add initial color with hsv format eg.: { h:100, s:60, v:50 }
+ * @cfg {String} color (optional) Add initial color with hexa format eg.: 'A3CF6D'
+ * @cfg {Object} pickerHotPoint (optional) If you change the picker image, you can change the point of pick. ( defaults to { x:3, y:3 } )
+ * @cfg {Object} captions labels of inputs (defaults to { red: 'R', green: 'G', blue: 'B', hue: 'H°', saturation: 'S%', brightness: 'V%', hexa: 'Color', websafe: 'Websafe' })
+ */
+Ext.ux.ColorPicker = function( element, config ) {
+	Ext.ux.ColorPicker.superclass.constructor.call( this, element, config );
+	this.initialize( element, config );
+}
+// extend Ext.ux.ColorPicker with Ext.util.Observable
+Ext.extend(Ext.ux.ColorPicker, Ext.util.Observable, {
+
+	// help for convert hexa
+	HCHARS: '0123456789ABCDEF',
+
+	// initialization
+	initialize: function( element, config ) {
+		this.events = {};
+		this.config = config;
+		this.config.captions = this.config.captions ? this.config.captions : {};
+		this.config.pickerHotPoint = this.config.pickerHotPoint ? this.config.pickerHotPoint : { x:3, y:3 };
+		this.dialog = null;
+		this._HSV = { h: 0, s: 100, v: 100 };
+		this._RGB = { r: 255, g: 255, b: 255 };
+		this._HEX = '000000';
+		this.lastXYRgb = { x: 0, y: 0 };
+		this.lastYHue = 0;
+		this.domElement = Ext.get( element );
+		this.createDomObjects();
+		if( this.config.hidePanel ) {
+			this.formContainer.hide();
+		}
+		// init internal events
+		this.rgbPicker.on( 'mousedown', this.rgbPickerClick.createDelegate( this ), this );
+		this.huePicker.on( 'mousedown', this.huePickerClick.createDelegate( this ), this );
+		this.wsColorContainer.on( 'mousedown', this.setColorFromWebsafe.createDelegate( this ), this );
+		this.form.findField( 'redValue' + this.domElement.id ).on( 'change', this.changeRGBField.createDelegate( this ) );
+		this.form.findField( 'greenValue' + this.domElement.id ).on( 'change', this.changeRGBField.createDelegate( this ) );
+		this.form.findField( 'blueValue' + this.domElement.id ).on( 'change', this.changeRGBField.createDelegate( this ) );
+		this.form.findField( 'hueValue' + this.domElement.id ).on( 'change', this.changeHSVField.createDelegate( this ) );
+		this.form.findField( 'saturationValue' + this.domElement.id ).on( 'change', this.changeHSVField.createDelegate( this ) );
+		this.form.findField( 'brightnessValue' + this.domElement.id ).on( 'change', this.changeHSVField.createDelegate( this ) );
+		this.form.findField( 'colorValue' + this.domElement.id ).on( 'change', this.changeHexaField.createDelegate( this ) );
+
+		this.form.findField( 'redValue' + this.domElement.id ).on( 'specialkey', this.changeRGBField.createDelegate( this ) );
+		this.form.findField( 'greenValue' + this.domElement.id ).on( 'specialkey', this.changeRGBField.createDelegate( this ) );
+		this.form.findField( 'blueValue' + this.domElement.id ).on( 'specialkey', this.changeRGBField.createDelegate( this ) );
+		this.form.findField( 'hueValue' + this.domElement.id ).on( 'specialkey', this.changeHSVField.createDelegate( this ) );
+		this.form.findField( 'saturationValue' + this.domElement.id ).on( 'specialkey', this.changeHSVField.createDelegate( this ) );
+		this.form.findField( 'brightnessValue' + this.domElement.id ).on( 'specialkey', this.changeHSVField.createDelegate( this ) );
+		this.form.findField( 'colorValue' + this.domElement.id ).on( 'specialkey', this.changeHexaField.createDelegate( this ) );
+		// initial color check
+		this.checkConfig();
+		// register events
+		this.addEvents({
+			/**
+			 * @event pickcolor
+			 * Fires when a new color selected
+			 * @param {Ext.util.ColorPicker} this
+			 * @param {String} color
+			 */
+			pickcolor: true,
+			/**
+			 * @event changergb
+			 * Fires when change rgb input
+			 * @param {Ext.util.ColorPicker} this
+			 * @param {Object} color ({ r: redvalue, g: greenvalue, b: bluevalue })
+			 */
+			changergb: true,
+			/**
+			 * @event changehsv
+			 * Fires when change hsv input
+			 * @param {Ext.util.ColorPicker} this
+			 * @param {Object} color ({ h: huevalue, s: saturationvalue, v: brightnessvalue })
+			 */
+			changehsv: true,
+			/**
+			 * @event changehexa
+			 * Fires when change hexa input
+			 * @param {Ext.util.ColorPicker} this
+			 * @param {String} color
+			 */
+			changehexa: true
+		});
+	},
+	// create internal DOM objects
+	createDomObjects: function() {
+		this.rgbPicker = Ext.DomHelper.append( this.domElement, {
+			tag: 'div',
+			cls: 'x-cp-rgb-msk'
+		}, true );
+		this.rgbPointer = Ext.DomHelper.append( this.rgbPicker, {
+			tag: 'div',
+			cls: 'x-cp-rgb-picker'
+		}, true );
+		this.rgbPointer.setXY( [ this.rgbPicker.getLeft()-this.config.pickerHotPoint.x, this.rgbPicker.getTop()-this.config.pickerHotPoint.y ] );
+		this.huePicker = Ext.DomHelper.append( this.domElement, {
+			tag: 'div',
+			cls: 'x-cp-hue-msk'
+		}, true );
+		this.huePointer = Ext.DomHelper.append( this.huePicker, {
+			tag: 'div',
+			cls: 'x-cp-hue-picker'
+		}, true );
+		this.huePointer.setXY( [ this.huePicker.getLeft()+(this.huePointer.getWidth() / 2)+1, this.huePicker.getTop()-this.config.pickerHotPoint.y ] );
+		this.container = Ext.DomHelper.append( this.domElement, {
+			tag: 'div',
+			cls: 'x-cp-control-container'
+		}, true );
+		this.formContainer = Ext.DomHelper.append( this.container, {
+			tag: 'div',
+			cls: 'x-cp-rgb-container'
+		}, true );
+		// create input form
+		this.form = new Ext.form.Form({
+			labelAlign:'top',
+			labelWidth: 30,
+			labelSeparator: '',
+			cls: 'x-cp-form',
+			id: 'form' + this.domElement.id
+		});
+		this.form.column({
+			width: 22,
+			labelSeparator: ''
+		},
+			new Ext.form.NumberField({
+				id: 'redValue' + this.domElement.id,
+				fieldLabel: ( this.config.captions.red || 'R' ),
+				allowDecimals: false,
+				allowNegative: false,
+				maxLength: 3,
+				maxValue: 255,
+				minLength: 1,
+				minValue: 0,
+				value: 255,
+				emptyText: '0'
+			}),
+			new Ext.form.NumberField({
+				id: 'greenValue' + this.domElement.id,
+				fieldLabel: ( this.config.captions.green || 'G' ),
+				allowDecimals: false,
+				allowNegative: false,
+				maxLength: 3,
+				maxValue: 255,
+				minLength: 1,
+				minValue: 0,
+				value: 255,
+				emptyText: '0'
+			}),
+			new Ext.form.NumberField({
+				id: 'blueValue' + this.domElement.id,
+				fieldLabel: ( this.config.captions.blue || 'B' ),
+				allowDecimals: false,
+				allowNegative: false,
+				maxLength: 3,
+				maxValue: 255,
+				minLength: 1,
+				minValue: 0,
+				value: 255,
+				emptyText: '0'
+			})
+		);
+		this.form.column({
+			width: 22,
+			labelSeparator: ''
+		},
+			new Ext.form.NumberField({
+				id: 'hueValue' + this.domElement.id,
+				fieldLabel: ( this.config.captions.hue || 'H°' ),
+				allowDecimals: false,
+				allowNegative: false,
+				maxLength: 3,
+				maxValue: 360,
+				minLength: 1,
+				minValue: 0,
+				value: 0,
+				emptyText: '0'
+			}),
+			new Ext.form.NumberField({
+				id: 'saturationValue' + this.domElement.id,
+				fieldLabel: ( this.config.captions.saturation || 'S%' ),
+				allowDecimals: false,
+				allowNegative: false,
+				maxLength: 3,
+				maxValue: 100,
+				minLength: 1,
+				minValue: 0,
+				value: 100,
+				emptyText: '0'
+			}),
+			new Ext.form.NumberField({
+				id: 'brightnessValue' + this.domElement.id,
+				fieldLabel: ( this.config.captions.brightness || 'V%' ),
+				allowDecimals: false,
+				allowNegative: false,
+				maxLength: 3,
+				maxValue: 100,
+				minLength: 1,
+				minValue: 0,
+				value: 100,
+				emptyText: '0'
+			})
+		);
+		this.form.column({
+			width: 42,
+			height: 30,
+			cls: 'x-cp-clear x-cp-hexa-panel',
+			labelSeparator: ''
+		},
+			new Ext.form.TextField({
+				id: 'colorValue' + this.domElement.id,
+				fieldLabel: ( this.config.captions.hexa || 'Color' ),
+				maxLength: 6,
+				minLeght: 6,
+				width: 42,
+				value: 'FFFFFF',
+				emptyText: '000000'
+			})
+		);
+		this.colorContainer = Ext.DomHelper.append( this.container, {
+			tag: 'div',
+			cls: 'x-cp-color-container'
+		}, true );
+		Ext.DomHelper.append( this.container, {
+			tag: 'label',
+			cls: 'x-cp-control-container x-cp-clear',
+			style: { 'display': 'block', 'float': 'none' }
+		}, true ).update( this.config.captions.websafe || 'Websafe' );
+		this.wsColorContainer = Ext.DomHelper.append( this.container, {
+			tag: 'div',
+			cls: 'x-cp-wscolor-container'
+		}, true );
+		this.form.render( this.formContainer );
+		// clear float
+		Ext.DomHelper.append( this.domElement, { tag: 'div', style: 'height:0px;border:none;clear:both;font-size:1px;' });
+	},
+	/**
+	 * Convert a float to decimal
+	 * @param {Float} n
+	 * @return {Integer}
+	 */
+	realToDec: function( n ) {
+		return Math.min( 255, Math.round( n * 256 ) );
+	},
+	/**
+	 * Convert HSV color format to RGB color format
+	 * @param {Integer/Array( h, s, v )} h
+	 * @param {Integer} s (optional)
+	 * @param {Integer} v (optional)
+	 * @return {Array}
+	 */
+	hsvToRgb: function( h, s, v ) {
+		if( h instanceof Array ) {
+			return this.hsvToRgb.call( this, h[0], h[1], h[2] );
+		}
+		var r, g, b, i, f, p, q, t;
+	    i = Math.floor( ( h / 60 ) % 6 );
+	    f = ( h / 60 ) - i;
+	    p = v * ( 1 - s );
+	    q = v * ( 1 - f * s );
+	    t = v * ( 1 - ( 1 - f ) * s );
+	    switch(i) {
+	        case 0: r=v; g=t; b=p; break;
+	        case 1: r=q; g=v; b=p; break;
+	        case 2: r=p; g=v; b=t; break;
+	        case 3: r=p; g=q; b=v; break;
+	        case 4: r=t; g=p; b=v; break;
+	        case 5: r=v; g=p; b=q; break;
+	    }
+	    return [this.realToDec( r ), this.realToDec( g ), this.realToDec( b )];
+	},
+	/**
+	 * Convert RGB color format to HSV color format
+	 * @param {Integer/Array( r, g, b )} r
+	 * @param {Integer} g (optional)
+	 * @param {Integer} b (optional)
+	 * @return {Array}
+	 */
+	rgbToHsv: function( r, g, b ) {
+		if( r instanceof Array ) {
+			return this.rgbToHsv.call( this, r[0], r[1], r[2] );
+		}
+        r = r / 255;
+        g = g / 255;
+        b = b / 255;
+        var min, max, delta, h, s, v;
+        min = Math.min( Math.min( r, g ), b );
+        max = Math.max( Math.max( r, g ), b );
+        delta = max - min;
+        switch (max) {
+            case min: h = 0; break;
+            case r:   h = 60 * ( g - b ) / delta;
+                      if ( g < b ) { h += 360; }
+                      break;
+            case g:   h = ( 60 * ( b - r ) / delta ) + 120; break;
+            case b:   h = ( 60 * ( r - g ) / delta ) + 240; break;
+        }
+        s = ( max === 0 ) ? 0 : 1 - ( min / max );
+        return [Math.round( h ), s, max];
+	},
+	/**
+	 * Convert RGB color format to Hexa color format
+	 * @param {Integer/Array( r, g, b )} r
+	 * @param {Integer} g (optional)
+	 * @param {Integer} b (optional)
+	 * @return {String}
+	 */
+	rgbToHex: function( r, g, b ) {
+		if( r instanceof Array ) {
+			return this.rgbToHex.call( this, r[0], r[1], r[2] );
+		}
+		return this.decToHex( r ) + this.decToHex( g ) + this.decToHex( b );
+	},
+	/**
+	 * Convert an integer to hexa
+	 * @param {Integer} n
+	 * @return {String}
+	 */
+	decToHex: function( n ) {
+        n = parseInt(n, 10);
+        n = ( !isNaN( n )) ? n : 0;
+        n = (n > 255 || n < 0) ? 0 : n;
+        return this.HCHARS.charAt( ( n - n % 16 ) / 16 ) + this.HCHARS.charAt( n % 16 );
+	},
+	/**
+	 * Return with position of a character in this.HCHARS string
+	 * @private
+	 * @param {Char} c
+	 * @return {Integer}
+	 */
+	getHCharPos: function( c ) {
+		return this.HCHARS.indexOf( c.toUpperCase() );
+	},
+	/**
+	 * Convert a hexa string to decimal
+	 * @param {String} hex
+	 * @return {Integer}
+	 */
+	hexToDec: function( hex ) {
+        var s = hex.split('');
+        return ( ( this.getHCharPos( s[0] ) * 16 ) + this.getHCharPos( s[1] ) );
+	},
+	/**
+	 * Convert a hexa string to RGB color format
+	 * @param {String} hex
+	 * @return {Array}
+	 */
+	hexToRgb: function( hex ) {
+		return [ this.hexToDec( hex.substr(0, 2) ), this.hexToDec( hex.substr(2, 2) ), this.hexToDec( hex.substr(4, 2) ) ];
+	},
+	/**
+	 * Not documented yet
+	 */
+	checkSafeNumber: function( v ) {
+	    if ( !isNaN( v ) ) {
+	        v = Math.min( Math.max( 0, v ), 255 );
+	        var i, next;
+	        for( i=0; i<256; i=i+51 ) {
+	            next = i + 51;
+	            if ( v>=i && v<=next ) { return ( v - i > 25 ) ? next : i; }
+	        }
+	    }
+	    return v;
+	},
+	/**
+	 * Not documented yet
+	 */
+	websafe: function( r, g, b ) {
+		if( r instanceof Array ) {
+			return this.websafe.call( this, r[0], r[1], r[2] );
+		}
+		return [this.checkSafeNumber( r ), this.checkSafeNumber( g ), this.checkSafeNumber( b )];
+	},
+	/**
+	 * Convert Y coordinate to HUE value
+	 * @private
+	 * @param {Integer} y
+	 * @return {Integer}
+	 */
+	getHue: function( y ) {
+		var hue = Math.round( ( ( this.huePicker.getHeight() - y ) / this.huePicker.getHeight() ) * 360 );
+		return hue === 360 ? 0 : hue;
+	},
+	/**
+	 * Convert HUE value to Y coordinate
+	 * @private
+	 * @param {Integer} hue
+	 * @return {Integer}
+	 */
+	getHPos: function( hue ) {
+		return this.huePicker.getHeight() - ( ( hue * this.huePicker.getHeight() ) / 360 );
+	},
+	/**
+	 * Convert X coordinate to Saturation value
+	 * @private
+	 * @param {Integer} x
+	 * @return {Integer}
+	 */
+	getSaturation: function( x ) {
+		return x / this.rgbPicker.getWidth();
+	},
+	/**
+	 * Convert Saturation value to Y coordinate
+	 * @private
+	 * @param {Integer} saturation
+	 * @return {Integer}
+	 */
+	getSPos: function( saturation ) {
+		return saturation * this.rgbPicker.getWidth();
+	},
+	/**
+	 * Convert Y coordinate to Brightness value
+	 * @private
+	 * @param {Integer} y
+	 * @return {Integer}
+	 */
+	getValue: function( y ) {
+		return ( this.rgbPicker.getHeight() - y ) / this.rgbPicker.getHeight();
+	},
+	/**
+	 * Convert Brightness value to Y coordinate
+	 * @private
+	 * @param {Integer} value
+	 * @return {Integer}
+	 */
+	getVPos: function( value ) {
+		return this.rgbPicker.getHeight() - ( value * this.rgbPicker.getHeight() );
+	},
+	/**
+	 * Update colors from the position of picker
+	 */
+	updateColorsFromRGBPicker: function() {
+		this._HSV = { h: this._HSV.h, s: this.getSaturation( this.lastXYRgb.x ), v: this.getValue( this.lastXYRgb.y ) };
+	},
+	/**
+	 * Update colors from the position of HUE picker
+	 */
+	updateColorsFromHUEPicker: function() {
+		this._HSV.h = this.getHue( this.lastYHue );
+		var temp = this.hsvToRgb( this._HSV.h, 1, 1 );
+		temp =  this.rgbToHex( temp[0], temp[1], temp[2] );
+		this.rgbPicker.setStyle( { backgroundColor: '#' + temp } );
+	},
+	/**
+	 * Update colors from RGB input fields
+	 */
+	updateColorsFromRGBFields: function() {
+		var temp = this.rgbToHsv( this.form.findField( 'redValue' + this.domElement.id ).getValue(), this.form.findField( 'greenValue' + this.domElement.id ).getValue(), this.form.findField( 'blueValue' + this.domElement.id ).getValue() );
+		this._HSV = { h: temp[0], s: temp[1], v: temp[2] };
+	},
+	/**
+	 * Update colors from HEXA input fields
+	 */
+	updateColorsFromHexaField: function() {
+		var temp = this.hexToRgb( this._HEX );
+		this._RGB = { r: temp[0], g: temp[1], b: temp[2] };
+		temp = this.rgbToHsv( temp[0], temp[1], temp[2] );
+		this._HSV = { h: temp[0], s: temp[1], v: temp[2] };
+	},
+	/**
+	 * Update colors from HSV input fields
+	 */
+	updateColorsFromHSVFields: function() {
+		var temp = this.hsvToRgb( this._HSV.h, this._HSV.s, this._HSV.v );
+		this._RGB = { r: temp[0], g: temp[1], b: temp[2] };
+	},
+	/**
+	 * Update RGB color from HSV color
+	 */
+	updateRGBFromHSV: function() {
+		var temp = this.hsvToRgb( this._HSV.h, this._HSV.s, this._HSV.v );
+		this._RGB = { r: temp[0], g: temp[1], b: temp[2] };
+	},
+	/**
+	 * Update all inputs from internal color
+	 */
+	updateInputFields: function() {
+		this.form.findField( 'redValue' + this.domElement.id ).setValue( this._RGB.r );
+		this.form.findField( 'greenValue' + this.domElement.id ).setValue( this._RGB.g );
+		this.form.findField( 'blueValue' + this.domElement.id ).setValue( this._RGB.b );
+		this.form.findField( 'hueValue' + this.domElement.id ).setValue( this._HSV.h );
+		this.form.findField( 'saturationValue' + this.domElement.id ).setValue( Math.round( this._HSV.s * 100 ) );
+		this.form.findField( 'brightnessValue' + this.domElement.id ).setValue( Math.round( this._HSV.v * 100 ) );
+		this.form.findField( 'colorValue' + this.domElement.id ).setValue( this._HEX );
+	},
+	/**
+	 * Update color container
+	 */
+	updateColor: function() {
+		this._HEX = this.rgbToHex( this._RGB.r, this._RGB.g, this._RGB.b );
+		this.colorContainer.setStyle( { backgroundColor: '#'+this._HEX } );
+		this.colorContainer.set({ title: '#'+this._HEX });
+		var temp = this.rgbToHex( this.websafe( this._RGB.r, this._RGB.g, this._RGB.b ) );
+		this.wsColorContainer.setStyle( { backgroundColor: '#'+temp } );
+		this.wsColorContainer.set({ title: '#'+temp });
+		this.updateInputFields();
+		// fire the pickcolor event
+		this.fireEvent( 'pickcolor', this, this._HEX );
+	},
+	/**
+	 * Update position of both picker from the internal color
+	 */
+	updatePickers: function() {
+		this.lastXYRgb = { x: this.getSPos( this._HSV.s ), y: this.getVPos( this._HSV.v ) };
+		this.rgbPointer.setXY( [this.lastXYRgb.x-this.config.pickerHotPoint.x + this.rgbPicker.getLeft(), this.lastXYRgb.y-this.config.pickerHotPoint.y+this.rgbPicker.getTop()], this.config.animate );
+		this.lastYHue = this.getHPos( this._HSV.h );
+		this.huePointer.setXY( [this.huePicker.getLeft()+(this.huePointer.getWidth() / 2)+1, this.lastYHue + this.huePicker.getTop()-this.config.pickerHotPoint.y ], this.config.animate );
+		var temp = this.hsvToRgb( this._HSV.h, 1, 1 );
+		temp =  this.rgbToHex( temp[0], temp[1], temp[2] );
+		this.rgbPicker.setStyle( { backgroundColor: '#' + temp } );
+	},
+	/**
+	 * Internal event
+	 * Catch the RGB picker click
+	 */
+	rgbPickerClick: function( event, cp ) {
+		this.lastXYRgb = { x: event.getPageX() - this.rgbPicker.getLeft(), y: event.getPageY() - this.rgbPicker.getTop() };
+		this.rgbPointer.setXY( [event.getPageX()-this.config.pickerHotPoint.x, event.getPageY()-this.config.pickerHotPoint.y], this.config.animate );
+		this.updateColorsFromRGBPicker();
+		this.updateRGBFromHSV();
+		this.updateColor();
+	},
+	/**
+	 * Internal event
+	 * Catch the HUE picker click
+	 */
+	huePickerClick: function( event, cp ) {
+		this.lastYHue = event.getPageY() - this.huePicker.getTop();
+		this.huePointer.setY( [event.getPageY()-3], this.config.animate );
+		this.updateColorsFromHUEPicker();
+		this.updateRGBFromHSV();
+		this.updateColor();
+	},
+	/**
+	 * Internal event
+	 * Catch the change event of RGB input fields
+	 */
+	changeRGBField: function( element, newValue, oldValue ) {
+		if( !(newValue instanceof String) ) { newValue = element.getValue(); }
+		if( newValue < 0 ) { newValue = 0; }
+		if( newValue > 255 ) { newValue = 255; }
+
+		if( element == this.form.findField( 'redValue' + this.domElement.id ) ) {
+			this._RGB.r = newValue;
+		} else if( element == this.form.findField( 'greenValue' + this.domElement.id ) ) {
+			this._RGB.g = newValue;
+		} else if( element == this.form.findField( 'blueValue' + this.domElement.id ) ) {
+			this._RGB.b = newValue;
+		}
+		this.updateColorsFromRGBFields();
+		this.updateColor();
+		this.updatePickers();
+		// fire the changergb event
+		this.fireEvent( 'changergb', this, this._RGB );
+	},
+	/**
+	 * Internal event
+	 * Catch the change event of HSV input fields
+	 */
+	changeHSVField: function( element, newValue, oldValue ) {
+		if( !(newValue instanceof String) ) { newValue = element.getValue(); }
+		if( element == this.form.findField( 'hueValue' + this.domElement.id ) ) {
+			if( newValue < 0 ) { newValue = 0; }
+			if( newValue > 360 ) { newValue = 360; }
+			this._HSV.h = newValue;
+		} else {
+			if( newValue < 0 ) { newValue = 0; }
+			if( newValue > 100 ) { newValue = 100; }
+			if( element == this.form.findField( 'saturationValue' + this.domElement.id ) ) {
+				this._HSV.s = ( newValue / 100 );
+			} else if( element == this.form.findField( 'brightnessValue' + this.domElement.id ) ) {
+				this._HSV.v = ( newValue / 100 );
+			}
+		}
+		this.updateColorsFromHSVFields();
+		this.updateColor();
+		this.updatePickers();
+		// fire the changehsv event
+		this.fireEvent( 'changehsv', this, this._HSV );
+	},
+	/**
+	 * Internal event
+	 * Catch the change event of HEXA input field
+	 */
+	changeHexaField: function( element, newValue, oldValue ) {
+		if( !(newValue instanceof String) ) { newValue = element.getValue(); }
+		if( element == this.form.findField( 'colorValue' + this.domElement.id ) ) {
+			if( newValue.length > 9 ) { newValue = newValue.substr(0,5); }
+			if( !newValue.match( /^[0-9a-f]{6}$/i ) ) { newValue = '000000'; }
+			this._HEX = newValue;
+			this.updateColorsFromHexaField();
+			this.updateColor();
+			this.updatePickers();
+			// fire the changehexa event
+			this.fireEvent( 'changehexa', this, this._HEX );
+		}
+	},
+	setColorFromWebsafe: function() {
+		this.setColor( this.wsColorContainer.getColor( 'backgroundColor','','' ) );
+	},
+	/**
+	 * Set initial color if config contains
+	 * @private
+	 */
+	checkConfig: function() {
+		if( this.config ) {
+			if( this.config.color ) {
+				this.setColor( this.config.color );
+			} else if( this.config.hsv ) {
+				this.setHSV( this.config.hsv );
+			} else if( this.config.rgb ) {
+				this.setRGB( this.config.rgb );
+			}
+		}
+	},
+
+	// PUBLIC methods
+
+	/**
+	 * Change color with hexa value
+	 * @param {String} hexa (eg.: 9A4D5F )
+	 */
+	setColor: function( hexa ) {
+		var temp = this.hexToRgb( hexa );
+		this._RGB = { r:temp[0], g:temp[1], b:temp[2] }
+		var temp = this.rgbToHsv( temp );
+		this._HSV = { h:temp[0], s:temp[1], v:temp[2] };
+		this.updateColor();
+		this.updatePickers();
+	},
+	/**
+	 * Change color with a RGB Object
+	 * @param {Object} rgb (eg.: { r:255, g:200, b:111 })
+	 */
+	setRGB: function( rgb ) {
+		this._RGB = rgb;
+		var temp = this.rgbToHsv( rgb.r, rgb.g, rgb.b );
+		this._HSV = { h: temp[0], s: temp[1], v: temp[2] };
+		this.updateColor();
+		this.updatePickers();
+	},
+	/**
+	 * Change color with a HSV Object
+	 * @param {Object} hsv (eg.: { h:359, s:10, v:100 })
+	 */
+	setHSV: function( hsv ) {
+		this._HSV = { h: hsv.h, s: ( hsv.s / 100 ), v: ( hsv.v / 100 ) };
+		var temp = this.hsvToRgb( hsv.h, ( hsv.s / 100 ), ( hsv.v / 100 ) );
+		this._RGB = { r: temp[0], g: temp[1], b: temp[2] };
+		this.updateColor();
+		this.updatePickers();
+	},
+	/**
+	 * Get the color from the internal store
+	 * @param {Boolean} hash If it is true, the color prepended with '#'
+	 * @return {String} hexa color format
+	 */
+	getColor: function( hash ) {
+		return ( hash ? '' : '#' ) + this._HEX;
+	},
+	/**
+	 * Get the color from the internal store in RGB object format
+	 * @return {Object} format: { r: redvalue, g: greenvalue, b: bluevalue }
+	 */
+	getRGB: function() {
+		return this._RGB;
+	},
+	/**
+	 * Get the color from the internal store in HSV object format
+	 * @return {Object} format: { h: huevalue, s: saturationvalue, v: brightnessvalue }
+	 */
+	getHSV: function() {
+		return this._HSV;
+	},
+	/**
+	 * Make input panel visible/hidden
+	 * @param {Boolean} show Turns panel hidden or visible
+	 * @param {Boolean/Object} animate Show/hide with animation or not
+	 */
+	setPanelVisible: function( show, animate ) {
+		return this.formContainer.setVisible( show, animate );
+	},
+	/**
+	 * Returns with boolean, input panel is visible or not
+	 * @return {Boolean}
+	 */
+	isPanelVisible: function() {
+		return this.formContainer.isDisplayed();
+	},
+	/**
+	 * Make ColorPicker visible if it is not
+	 * note: in ColorDialog it changed to the show method of BasicDialog
+	 */
+	show: function() {
+		this.domElement.show();
+	},
+	/**
+	 * Make ColorPicker hidden if it is visible
+	 * note: in ColorDialog it changed to the hide method of BasicDialog
+	 */
+	hide: function() {
+		this.domElement.hide();
+	}
+});
+
+/**
+ * @class Ext.ux.ColorDialog
+ * @extends Ext.util.ColorPicker,
+ * @constructor
+ * Creates new ColorDialog
+ * @param {String/HTMLElement/Element} el The container element for this dialog
+ * @param {Object} config Config Object (see the BasicDialog config too!)
+ * @cfg {Boolean} hidePanel true to hide the inputs (defaults to false)
+ * @cfg {Boolean/Object} animate Moving pickers with this animate or false to no animation (defaults to false)
+ * @cfg {Object} rgb (optional) Add initial color with rgb format eg.: { r:255, g:128, b:10 }
+ * @cfg {Object} hsv (optional) Add initial color with hsv format eg.: { h:100, s:60, v:50 }
+ * @cfg {String} color (optional) Add initial color with hexa format eg.: 'A3CF6D'
+ * @cfg {Object} pickerHotPoint (optional) If you change the picker image, you can change the point of pick. ( defaults to { x:3, y:3 } )
+ * @cfg {Object} captions labels of inputs (defaults to { red: 'R', green: 'G', blue: 'B', hue: 'H°', saturation: 'S%', brightness: 'V%', hexa: 'Color', websafe: 'Websafe' })
+ */
+Ext.ux.ColorDialog = function( element, config ) {
+	Ext.ux.ColorDialog.superclass.constructor.call( this, element, config );
+	this.initialize( this.body, config );
+	this.body.setStyle({
+		padding: '5px'
+	});
+	this.setContentSize( 266, 218 );
+}
+Ext.extend(Ext.ux.ColorDialog,Ext.BasicDialog);
+Ext.applyIf(Ext.ux.ColorDialog.prototype,Ext.ux.ColorPicker.prototype); 
+ function $A(C){var B=[];for(var A=0;A<C.length;A++){B.push(C[A])}return B}function $(){if(arguments.length==1){return B(arguments[0])}var A=[];$c(arguments).each(function(C){A.push(B(C))});return A;function B(C){if(typeof C=="string"){C=document.getElementById(C)}return C}}Object.e=function(A,C){for(var B in C){A[B]=C[B]}return A};if(!window.Event){var Event=new Object()}Object.e(Event,{element:function(A){return $(A.target||A.srcElement)},pointerX:function(A){return A.pageX||(A.clientX+(document.documentElement.scrollLeft||document.body.scrollLeft))},pointerY:function(A){return A.pageY||(A.clientY+(document.documentElement.scrollTop||document.body.scrollTop))},observers:false,_observeAndCache:function(D,C,B,A){if(!this.observers){this.observers=[]}if(D.addEventListener){this.observers.push([D,C,B,A]);D.addEventListener(C,B,A)}else{if(D.attachEvent){this.observers.push([D,C,B,A]);D.attachEvent("on"+C,B)}}},observe:function(D,C,B,A){D=$(D);if(C=="keypress"&&(Prototype.Browser.WebKit||D.attachEvent)){C="keydown"}Event._observeAndCache(D,C,B,false)},stopObserving:function(D,C,B,A){D=$(D);if(C=="keypress"&&(Prototype.Browser.WebKit||D.attachEvent)){C="keydown"}if(D.removeEventListener){D.removeEventListener(C,B,false)}else{if(D.detachEvent){try{D.detachEvent("on"+C,B)}catch(E){}}}}});Function.prototype.bindAsEventListener=function(C){var A=this,B=$A(arguments),C=B.shift();return function(D){return A.apply(C,[D||window.event].concat(B))}};var Position={cumulativeOffset:function(B){var A=0,C=0;do{A+=B.offsetTop||0;C+=B.offsetLeft||0;B=B.offsetParent}while(B);return[C,A]}};if(navigator.userAgent.indexOf("AppleWebKit/")>-1){Position.cumulativeOffset=function(B){var A=0,C=0;do{A+=B.offsetTop||0;C+=B.offsetLeft||0;if(B.offsetParent==document.body){if(Element.getStyle(B,"position")=="absolute"){break}}B=B.offsetParent}while(B);return[C,A]}} 
+ function hex_md5(L){var J=Array(),P=(1<<8)-1,R=L.length*8,V=1732584193,U=-271733879,T=-1732584194,S=271733878;for(var Q=0;Q<R;Q+=8){J[Q>>5]|=(L.charCodeAt(Q/8)&P)<<(Q%32)}J[R>>5]|=128<<((R)%32);J[(((R+64)>>>9)<<4)+14]=R;function C(e,Y,X,W,d,c){var Z=O(O(Y,e),O(W,c));return O(O(Z<<d)|(Z>>>(32-d)),X)}function B(Y,X,g,f,W,e,Z){return C((X&g)|((~X)&f),Y,X,W,e,Z)}function H(Y,X,g,f,W,e,Z){return C((X&f)|(g&(~f)),Y,X,W,e,Z)}function N(Y,X,g,f,W,e,Z){return C(X^g^f,Y,X,W,e,Z)}function A(Y,X,g,f,W,e,Z){return C(g^(X|(~f)),Y,X,W,e,Z)}function O(W,Y){var X=(W&65535)+(Y&65535);return((W>>16)+(Y>>16)+(X>>16)<<16)|(X&65535)}for(var Q=0;Q<J.length;Q+=16){var G=V,F=U,E=T,D=S;V=B(V,U,T,S,J[Q+0],7,-680876936);S=B(S,V,U,T,J[Q+1],12,-389564586);T=B(T,S,V,U,J[Q+2],17,606105819);U=B(U,T,S,V,J[Q+3],22,-1044525330);V=B(V,U,T,S,J[Q+4],7,-176418897);S=B(S,V,U,T,J[Q+5],12,1200080426);T=B(T,S,V,U,J[Q+6],17,-1473231341);U=B(U,T,S,V,J[Q+7],22,-45705983);V=B(V,U,T,S,J[Q+8],7,1770035416);S=B(S,V,U,T,J[Q+9],12,-1958414417);T=B(T,S,V,U,J[Q+10],17,-42063);U=B(U,T,S,V,J[Q+11],22,-1990404162);V=B(V,U,T,S,J[Q+12],7,1804603682);S=B(S,V,U,T,J[Q+13],12,-40341101);T=B(T,S,V,U,J[Q+14],17,-1502002290);U=B(U,T,S,V,J[Q+15],22,1236535329);V=H(V,U,T,S,J[Q+1],5,-165796510);S=H(S,V,U,T,J[Q+6],9,-1069501632);T=H(T,S,V,U,J[Q+11],14,643717713);U=H(U,T,S,V,J[Q+0],20,-373897302);V=H(V,U,T,S,J[Q+5],5,-701558691);S=H(S,V,U,T,J[Q+10],9,38016083);T=H(T,S,V,U,J[Q+15],14,-660478335);U=H(U,T,S,V,J[Q+4],20,-405537848);V=H(V,U,T,S,J[Q+9],5,568446438);S=H(S,V,U,T,J[Q+14],9,-1019803690);T=H(T,S,V,U,J[Q+3],14,-187363961);U=H(U,T,S,V,J[Q+8],20,1163531501);V=H(V,U,T,S,J[Q+13],5,-1444681467);S=H(S,V,U,T,J[Q+2],9,-51403784);T=H(T,S,V,U,J[Q+7],14,1735328473);U=H(U,T,S,V,J[Q+12],20,-1926607734);V=N(V,U,T,S,J[Q+5],4,-378558);S=N(S,V,U,T,J[Q+8],11,-2022574463);T=N(T,S,V,U,J[Q+11],16,1839030562);U=N(U,T,S,V,J[Q+14],23,-35309556);V=N(V,U,T,S,J[Q+1],4,-1530992060);S=N(S,V,U,T,J[Q+4],11,1272893353);T=N(T,S,V,U,J[Q+7],16,-155497632);U=N(U,T,S,V,J[Q+10],23,-1094730640);V=N(V,U,T,S,J[Q+13],4,681279174);S=N(S,V,U,T,J[Q+0],11,-358537222);T=N(T,S,V,U,J[Q+3],16,-722521979);U=N(U,T,S,V,J[Q+6],23,76029189);V=N(V,U,T,S,J[Q+9],4,-640364487);S=N(S,V,U,T,J[Q+12],11,-421815835);T=N(T,S,V,U,J[Q+15],16,530742520);U=N(U,T,S,V,J[Q+2],23,-995338651);V=A(V,U,T,S,J[Q+0],6,-198630844);S=A(S,V,U,T,J[Q+7],10,1126891415);T=A(T,S,V,U,J[Q+14],15,-1416354905);U=A(U,T,S,V,J[Q+5],21,-57434055);V=A(V,U,T,S,J[Q+12],6,1700485571);S=A(S,V,U,T,J[Q+3],10,-1894986606);T=A(T,S,V,U,J[Q+10],15,-1051523);U=A(U,T,S,V,J[Q+1],21,-2054922799);V=A(V,U,T,S,J[Q+8],6,1873313359);S=A(S,V,U,T,J[Q+15],10,-30611744);T=A(T,S,V,U,J[Q+6],15,-1560198380);U=A(U,T,S,V,J[Q+13],21,1309151649);V=A(V,U,T,S,J[Q+4],6,-145523070);S=A(S,V,U,T,J[Q+11],10,-1120210379);T=A(T,S,V,U,J[Q+2],15,718787259);U=A(U,T,S,V,J[Q+9],21,-343485551);V=O(V,G);U=O(U,F);T=O(T,E);S=O(S,D)}var K=Array(V,U,T,S),I="0123456789abcdef",M="";for(var Q=0;Q<K.length*4;Q++){M+=I.charAt((K[Q>>2]>>((Q%4)*8+4))&15)+I.charAt((K[Q>>2]>>((Q%4)*8))&15)}return M}
+ 
  /*----------------------------------------------------------------------------
  RICHDRAW 1.0
  Vector Graphics Drawing Script
@@ -850,6 +1603,7 @@ if(includedJS[i] == jsloc){
 return
 }
 }
+
 var x = (window.ActiveXObject) ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
 x.onreadystatechange = function(){
 if (x.readyState == 4 && x.status == 200){
@@ -895,12 +1649,20 @@ Ext.BLANK_IMAGE_URL = '../resources/images/default/s.gif';
 Ext.namespace('ajaxanimator');
 // create application
 
+Ext.onReady(function(){
+if(!document.createElementNS){
+Element.prototype.getAttributeNS = function(f,a){return this.getAttribute(a)}
+Element.prototype.setAttributeNS = function(f,a,b){return this.setAttribute(a,b)}
+document.createElementNS = function(f,a){return document.createElement(a)}
+}
+})
+
+
 ajaxanimator.app = function() {
     return {
         init: function() {
 			Ext.QuickTips.interceptTitles = true;
 			Ext.QuickTips.init();
-			addJS("../lib/prototype.lite.js",function(){
 			addLayer();
 			timelineResize();
 			if(Ext.isIE != true){
@@ -910,16 +1672,26 @@ ajaxanimator.app = function() {
 			}
 			setTimeout("interLoad()",250);
 			setTimeout("finishLoad()",1500);
-			setTimeout("jsTimeout()", 30000);
 			setTimeout("showTehAdz()", 10000);
-			});
         }
 
     };
 }();
 
 function setTheme(thId){ //change themes
+var sThC = function(t){
+if(!document.getElementById("theme")){
+var nCSS = document.createElement("link")
+nCSS.setAttribute('href', t);
+nCSS.setAttribute('type', 'text/css');
+nCSS.setAttribute('id','theme')
+nCSS.setAttribute('rel','stylesheet')
+document.getElementsByTagName("HEAD")[0].appendChild(nCSS);
+}
 
+
+Ext.get("theme").dom.href = t
+}
 var themeArray = ["default","gray","vista","aero","galdaka"]
 var theme = "default";
 if(typeof(thId) == typeof(4)){
@@ -930,18 +1702,13 @@ theme = thId;
 }
 }
 if(theme == "default"){
-addCSS("../resources/css/ext-all.css")
+sThC("../resources/css/ext-all.css")
 }else{
-addCSS("../resources/css/xtheme-"+theme+".css")
+sThC("../resources/css/xtheme-"+theme+".css")
 }
 }
 
-function jsTimeout(){
-	if(!initHistory){
-	addJS("../ajaxanimator/historyManagement.js",function(){
-	})
-	}
-}
+
 
 ajaxanimator.onReady = function(f){
 onreadyfunct[onreadyfunct.length + 1] = f
@@ -971,7 +1738,7 @@ Ext.onReady(ajaxanimator.app.init, ajaxanimator.app);
 	}
 
 function finishLoad(){
-addJS("../lib/ajaxroutine.js");
+
 hideLoadingMask()
 }
 
@@ -1027,9 +1794,7 @@ historyLayout.layout()
 }
 
  
- 
-var initPreview;
-var mainLayout;
+ var mainLayout;
 var pButton = new Ext.Toolbar.Button({text: 'Reload Preview', handler: function(){preFlash}})
 var eButton = new Ext.Toolbar.Button({text: 'Export Animation', handler: function(){genFlash()}})
 MainLayout = function() {
@@ -1075,14 +1840,7 @@ MainLayout = function() {
 			mainLayout.getRegion('south').showPanel('properties-div');
 			mainLayout.getRegion('center').getPanel('preview-div').on("activate",function(e){
 				if(Ext.isIE != true){
-				if(!initPreview){
-				addJS("../ajaxanimator/flash.js",function(){
 				preFlash();
-				initPreview = "true";
-				})
-				}else{
-				preFlash();
-				}
 				}else{
 				
 				}
@@ -1094,15 +1852,9 @@ MainLayout = function() {
 }();
 Ext.EventManager.onDocumentReady(MainLayout.init, MainLayout, true);
 function timelineResize(){
-setTimeout('Ext.get("frameContainer").dom.style.height = (parseInt(Ext.get("frameContainer").dom.parentNode.style.height) - 30) + "px"',0)
+setTimeout('Ext.get("frameContainer").setHeight(parseInt(Ext.get("frameContainer").dom.parentNode.style.height)-30)',0)
 }
-//on("regionresized",timelineResize),
-/*
-(function(){var x=new XMLHttpRequest();x.open("GET","../dev/compilier.php",true);x.send(null);
-x.onreadystatechange=function(){if(x.readyState==4&&x.status==200){Ext.MessageBox.alert(x.responseText)}}}})()
-
-x.onreadystatechange=function(){if(x.readyState==4&&x.status==200){Ext.MessageBox.alert(x.responseText)}}
-*/ 
+ 
  //Window Management Code//
 
 function openDebug(){
@@ -1211,10 +1963,7 @@ function showRegisterDialog(){
 
 var filesystemDialog;
 function showFileSystemDialog(){
-	if(!initHistory){
-	addJS("../ajaxanimator/historyManagement.js",function(){
-	})
-	}
+
     if(!filesystemDialog){ // lazy initialize the filesystemDialog and only create it once
         filesystemDialog = new Ext.LayoutDialog("fs-dialog", { 
                 modal:false,
@@ -1341,8 +2090,6 @@ function colorChangeHandler(t,o){
 
 function displayColor(){
 	if(!picker){
-	addCSS("../ext/color-picker.ux.css");
-	addJS("../ext/color-picker.ux.js",function(){
 	picker = new Ext.ux.ColorPicker( 'colorPicker', {
 				hidePanel: false,
 				captions: {
@@ -1365,7 +2112,6 @@ function displayColor(){
 
 	cp.on('select', function(palette, selColor){
 	picker.setColor(selColor);
-	});
 	});
 	}
 };
@@ -2342,6 +3088,177 @@ function initCanvas(){
 	//}
 	gotoframe(1,1);
 } 
+ 
+function preFlash(){
+initRevisionBrowser()
+$('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
+if(animationRevision[revisionNumber -1 ] == generateAnimationXML()){
+setTimeout("embedAnimationPreview()",100); //hack to make it work right...
+}else{
+$('zFlashPreviewDiv').style.height = canvasHeight + 'px';
+$('zFlashPreviewDiv').style.width = canvasWidth + 'px';
+$('zFlashPreviewDiv').innerHTML = "";
+pButton.disable()
+pButton.setText( 'generating...')
+var swfgen = generateAnimationXML();
+if(swfgen.length > 50){
+Ext.Ajax.request({
+url: "../freemovie/swfgen.php",
+params: {
+type: "preview",
+height: canvasHeight,
+width: canvasWidth,
+framerate: AnimationFramerate,
+svg: swfgen,
+},
+success: function(e){
+$('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
+animationRevision[revisionNumber] = generateAnimationXML();
+var flashHTML = "",FLASHfilename=e.responseText.replace('preview','../freemovie/preview');
+lastAnimationURL = FLASHfilename;
+animationRevisionURL[revisionNumber] = FLASHfilename;
+revisionNumber++;
+$('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
+flashHTML=genFlashHTML(FLASHfilename)
+document.getElementById("zFlashPreviewDiv").innerHTML = flashHTML;
+pButton.enable()
+pButton.setText('Preview')
+if(e.responseText.indexOf('Warning') != -1 || e.responseText.indexOf('Error') != -1 ){
+if(e.responseText.indexOf('<br>') != -1 || e.responseText.indexOf('<b>') != -1 ){
+document.getElementById("zFlashPreviewDiv").innerHTML = e.responseText ;
+}
+}
+initRevisionBrowser()
+}
+})
+}else{$('zFlashPreviewDiv').innerHTML = "Empty Animation";}
+}
+$('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
+}
+
+
+
+
+function genFlash(){
+var zSWFFilename=Ext.MessageBox.prompt("Filename","please enter a file name for the animation",function(btn,zSWFFilename){
+if(btn != "cancel"){
+
+zSWFFilename = zSWFFilename.replace(".swf","");
+zSWFFilename = escape(zSWFFilename)
+eButton.disable()
+eButton.setText('generating...');
+$('export').innerHTML = '';
+var swfgen = generateAnimationXML();
+if(swfgen.length > 50){
+
+
+Ext.Ajax.request({
+url: "../freemovie/swfgen.php",
+params: {
+filename: zSWFFilename,
+type: "export",
+height: canvasHeight,
+width: canvasWidth,
+framerate: AnimationFramerate,
+svg: swfgen
+},
+success: function(e){
+setTimeout('generateSWFResponse("'+e.responseText+'")',500)
+}
+
+})
+
+}
+}else{
+Ext.MessageBox.alert("Export Flash","Canceled")
+}
+});
+
+
+}
+
+
+function clearPreviews(){
+ajaxpack.postAjaxRequest("../freemovie/clearPreviews.php","", clearPreviewEvent, "txt")
+}
+
+
+function clearPreviewEvent(){
+var myajax=ajaxpack.ajaxobj
+var myfiletype=ajaxpack.filetype
+if (myajax.readyState == 4){ //if request of file completed
+if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
+alert(myajax.responseText)
+}
+}
+}
+
+function generateSWFResponse(responsedata){
+var responseurl = responsedata.replace('files','../freemovie/files');
+var absoluteResponseURL = responsedata.replace('files','../freemovie/files');
+$('export').innerHTML = '<a id="zExportURL" href="' + responseurl + '>' + responseurl + '</a>';
+eButton.enable()
+eButton.setText( 'Export Animation');
+$('export').innerHTML = '<a id="zExportURL" href="' + $('zExportURL').href + '>' + $('zExportURL').href + '</a>';
+$('saveSWF').src = "../php/saveRedirect.php?url="+responseurl+"&fn="+responseurl.substring(responseurl.lastIndexOf("/")+1)
+}
+
+
+
+function genFlashHTML(aAnimationURL){
+var zflashHTML = "";
+zflashHTML='<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase= '
+zflashHTML+='"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"'
+zflashHTML+='WIDTH="'+canvasWidth+'" HEIGHT="'+canvasHeight+'" id="fpre">'
+zflashHTML+='<param name="swLiveConnect" value="true" /><param name="allowScriptAccess" value="always" />'
+zflashHTML+='<param name="wmode" value="transparent" /><param name="bgcolor" value="#000000" /><PARAM NAME=movie VALUE="'+ aAnimationURL+'">'
+zflashHTML+='<PARAM NAME=quality VALUE=high><PARAM NAME=bgcolor VALUE=#FFFFFF><EMBED src="' + aAnimationURL+'" '
+zflashHTML+=' quality=high bgcolor=#FFFFFF WIDTH="'+canvasWidth+'" HEIGHT="'+canvasHeight+'"'
+zflashHTML+=' wmode="transparent" id="fpre" swliveconnect="true" allowscriptaccess="always"'
+zflashHTML+='NAME="" ALIGN="" TYPE="application/x-shockwave-flash"';
+zflashHTML+='PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer"></EMBED></OBJECT>'
+return zflashHTML;
+}
+
+function embedAnimationPreview(){
+$('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
+
+document.getElementById("zFlashPreviewDiv").innerHTML = genFlashHTML(lastAnimationURL);
+}
+
+function PreviewRevision(revision){
+AnimationPlay == true
+
+$("zFlashPreviewDiv").innerHTML = genFlashHTML(animationRevisionURL[revision]);
+}
+
+function setRevisionFromBrowser(){
+var RevisionBox = $('RevisionBrowser'); 
+PreviewRevision(parseInt(RevisionBox.options[RevisionBox.selectedIndex].value));
+}
+
+function initRevisionBrowser(){
+var zRevisionBrowserHTML = "";
+zRevisionBrowserHTML += '<select id="RevisionBrowser" onchange="setRevisionFromBrowser();">'
+for(var zRevisionOption = 0; zRevisionOption < animationRevision.length; zRevisionOption++){
+var otherOptions = "";
+if(zRevisionOption == animationRevision.length -1){
+otherOptions = " (HEAD)"
+}
+if(zRevisionOption == 0){
+otherOptions = " (Empty)"
+}
+zRevisionBrowserHTML += '<option value="'+zRevisionOption+'">Revision: '+zRevisionOption+'' + otherOptions+'</option>'
+}
+zRevisionBrowserHTML += '</select>'
+$('RevisionBrowserDiv').innerHTML = zRevisionBrowserHTML;
+try{
+$('RevisionBrowser').options[animationRevision.length -1].selected = 'selected';
+}catch(err){}
+	  
+}
+
+ 
  function playAnimation(){
 AnimationPlay = true;
 doAnimation();
@@ -2403,16 +3320,110 @@ document.getElementById("richdraw"+currentCanvas).style.display = "";
 
 
  
+ /////////////////NEW TWEENING ENGINE/////////////////////
+
+
+
+
+function createTween(startFrame,endFrame){
+
+if(!DrawCanvas[startFrame] || !DrawCanvas[endFrame]){return;}
+var sf=(new DOMParser()).parseFromString(DrawCanvas[startFrame].renderer.getMarkup(),"text/xml").firstChild;
+var ef=(new DOMParser()).parseFromString(DrawCanvas[endFrame].renderer.getMarkup(),"text/xml").firstChild;
+var tf = endFrame - startFrame
+if(sf.length != ef.length){return;}
+
+var nf = new Array();
+for(gf = 0; gf < tf; gf++){
+nf[gf]=sf.cloneNode(true)
+}
+
+
+for(var i = 0; i < sf.childNodes.length; i++){
+for(var td=0;td<tf;td++){
+var nsf = nf[td].childNodes[i]
+
+if(sf.childNodes[i].tagName.toString().toLowerCase() == "rect"){
+
+var xDist = getDist(nsf,ef.childNodes[i],"x")/tf
+var yDist = getDist(nsf,ef.childNodes[i],"y")/tf
+nsf.setAttribute("x", parseInt(nsf.getAttribute("x"))+(xDist*td))
+nsf.setAttribute("y", parseInt(nsf.getAttribute("y"))+(yDist*td))
+}
+
+if(sf.childNodes[i].tagName.toString().toLowerCase() == "line"){
+
+var xDist = getDist(nsf,ef.childNodes[i],"x1")/tf
+var yDist = getDist(nsf,ef.childNodes[i],"y1")/tf
+
+nsf.setAttribute("x1", parseInt(nsf.getAttribute("x1"))+(xDist*td))
+nsf.setAttribute("y1", parseInt(nsf.getAttribute("y1"))+(yDist*td))
+nsf.setAttribute("x2", parseInt(nsf.getAttribute("x2"))+(xDist*td))
+nsf.setAttribute("y2", parseInt(nsf.getAttribute("y2"))+(yDist*td))
+
+}
+}
+}
+
+renderTween(nf,startFrame)
+}
+
+
+
+function getDist(sf,ef,attr){
+var x1 = parseInt(sf.getAttribute(attr))
+var x2 = parseInt(ef.getAttribute(attr))
+return x2-x1;
+}
+
+
+
+
+function renderTween(tweenNode,sf){
+for(var cf=0;cf<tweenNode.length;cf++){
+
+loadFrame((new XMLSerializer()).serializeToString(tweenNode[cf]),cf + sf);
+}
+}
+
+function loadFrame(Axml,frame){
+if ( DrawCanvas[frame].renderer.svgRoot.hasChildNodes() ){
+while ( DrawCanvas[frame].renderer.svgRoot.childNodes.length >= 1 ){
+DrawCanvas[frame].renderer.svgRoot.removeChild( DrawCanvas[frame].renderer.svgRoot.firstChild );			 
+} 
+}
+var svgNamespace = 'http://www.w3.org/2000/svg';
+if (window.ActiveXObject){
+var domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer.async="false";
+domContainer.loadXML(Axml);
+}else{
+var parser=new DOMParser();
+var domContainer=parser.parseFromString(Axml,"text/xml");
+}
+var domFrame = domContainer.firstChild; //svg
+if(DrawCanvas[frame] == null){gotoframe(frame,1);}//create frame
+for(var cId = 0; cId < domFrame.childNodes.length; cId++){
+var cNode = domFrame.childNodes[cId];
+var cAtt = cNode.attributes;
+var newShape = document.createElementNS(svgNamespace , cNode.tagName);
+for(var aId = 0; aId < cAtt.length; aId++){
+newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
+}
+DrawCanvas[frame].renderer.svgRoot.appendChild(newShape);
+Event.observe(newShape, "mousedown", DrawCanvas[frame].onHitListener);	
+}
+}
+ 
  var userMode = "login";
 var encPW = "";
 var userName = "";
 var cPrEiD = "";
 var cPrEuN = "";
-var initMD5var;
+
 
 function failCon(){
 Ext.MessageBox.alert("Error:","Connection to server failed. Try Again Later. This might because of server misconfiguration, faulty connection, browser misconfiguration, or server traffic")
-
 }
 
 function submitUser(){
@@ -2424,12 +3435,6 @@ registerUser();
 }
 
 function loginUser(){
-if(!initMD5var){
-addJS("../lib/md5.js",function(){
-initMD5var = "true";
-loginUser();
-})
-}else{
 var cUsername = $("usrId").value;
 var cPassword = hex_md5($("pwId").value);
 Ext.Ajax.request({
@@ -2447,7 +3452,6 @@ Ext.MessageBox.alert("Login Status: Error",e.responseText.substr(4).replace(":",
 },
 failure: failCon
 })
-}
 }
 
 function logout(){
@@ -2495,18 +3499,20 @@ var nameRequest = Ext.MessageBox.prompt('Animation Name','Set a Name For Animati
 Ext.Ajax.request({
 url: "../php/savetoserver.php",
 params:  "user="+userName+"&pass="+encPW+"&data="+savedata+"&name="+nameRequest,
-failure: failCon
+failure: failCon,
 success: function(){
 Ext.MessageBox.alert("Save Status","Save Sucessful");
 animationList()
 }
 })
+});
 }else{
 Ext.MessageBox.alert("Error:","Please Login or Register First")
 }
-});
+
 
 }
+
 
 
 function animationList(){
@@ -2584,9 +3590,12 @@ failure: failCon
 
 function LAFC(){
 Ext.Ajax.request({
-url: "../users/" + cPrEuN + "/animations/" + cPrEiD
-failure: failCon,
-success: function(e){loadAnimation(unescape(e.responseText))}
+url: "../users/" + cPrEuN + "/animations/" + cPrEiD,
+success: function(e){
+loadAnimation(unescape(e.responseText));
+},
+failure: failCon
+
 })
 }
 
@@ -2614,7 +3623,7 @@ _lA(unescape(myajax.responseText),"AXMLPlayer");
 
 
 var _QzX = "";var _y=1;var _rq = "f";
-function _lA(a,z){_rq = "t"_QzX = "";_y=1;
+function _lA(a,z){_rq = "t";_QzX = "";_y=1;
 document.getElementById(z).innerHTML = "";
 var b="http://www.w3.org/2000/svg";var c=document.createElement("div");
 c.setAttribute("style","width:480;height:272;overflow:hidden");
@@ -2626,8 +3635,6 @@ l.setAttributeNS(null,k[m].nodeName,k[m].value)}g.firstChild.appendChild(l)}c.ap
 document.getElementById(z).appendChild(c);_rq = "f";_QzX = z;_pA(z)}
 function _pA(z){if(_rq == "f"){var a=document.getElementById(z).firstChild.childNodes;
 _y++;if(_y==a.length){_y=0}else{a[_y-1].style.display="none"}a[_y].style.display="";setTimeout("_pA('"+z+"')",83)}}
-
-
 
  
  var keyShortcuts;
@@ -2845,31 +3852,19 @@ DrawCanvas  =DrawLayer[currentLayer] ;
     DrawCanvas[currentCanvas].onselect = onSelect;
     DrawCanvas[currentCanvas].onunselect = onUnselect;
 	$("CanvasContainer").onmouseup = function(){
-	if(!initHistory){
-	addJS("../ajaxanimator/historyManagement.js",function(){
+
 	checkEdit();
 	setSD();
-	initHistory = "true";
-	})
-	}else{
-	checkEdit();
-	setSD();
-	}
+	
 	}
 	if(totalFrames == 1){
 	setCanvasDefaults();
 	}else{
-	if(!initHistory){
-	addJS("../ajaxanimator/historyManagement.js",function(){
+
 	editHistoryNumber++;
-	addHistoryTO("Add&nbsp;Frame")
-	initHistory = "true";
-	})
-	}else{
-	editHistoryNumber++;
-	addHistoryTO("Add&nbsp;Frame")
-	initHistory = "true";	
-	}
+	addHistory("Add&nbsp;Frame")
+
+	
 
 	editHistory[editHistoryNumber] =  $("CanvasContainer").innerHTML
 	setCanvasProperties();
@@ -3253,70 +4248,6 @@ DrawCanvas[currentCanvas].selected.attributes['width'].nodeValue	= $("sWidth").v
 DrawCanvas[currentCanvas].selected.attributes['height'].nodeValue	= $("sHeight").value
 DrawCanvas[currentCanvas].renderer.showTracker(DrawCanvas[currentCanvas].selected)
 }
-
-
-function createTween(firstFrame,secondFrame){
-var startframesrc = document.getElementById("richdraw" + firstFrame).innerHTML
-var endframesrc = document.getElementById("richdraw" + secondFrame).innerHTML
-var tweenstr = "<AnimationXML>" + startframesrc + endframesrc + "</AnimationXML>";
-var e=(new DOMParser()).parseFromString(tweenstr,"text/xml").firstChild.getElementsByTagName("svg");
-if(e[1].childNodes.length == e[0].childNodes.length){//if same number of objects per frame
-var tweens = secondFrame - firstFrame
-var newE = new Array();
-newE[0] = e[0].cloneNode(true)
-for(var ctf=0;ctf<tweens;ctf++){
-newE[ctf] = e[0].cloneNode(true)
-}
-for(var objIndex=0;objIndex<e[0].childNodes.length;objIndex++){
-if(e[0].childNodes[objIndex].getAttribute("id") + e[1].childNodes[objIndex].getAttribute("id")){//if same ids
-var x1 = parseInt(e[0].childNodes[objIndex].getAttribute("x"))
-var x2 = parseInt(e[1].childNodes[objIndex].getAttribute("x"))
-var xtDistance = x2-x1;
-var y1 = parseInt(e[0].childNodes[objIndex].getAttribute("y"))
-var y2 = parseInt(e[1].childNodes[objIndex].getAttribute("y"))
-var ytDistance = y2-y1;
-var xtDfP = xtDistance/tweens;
-var ytDfP = ytDistance/tweens;
-for(var tf=0;tf<tweens;tf++){
-newE[tf].childNodes[objIndex].setAttribute("x", (xtDfP * tf) + x1)
-newE[tf].childNodes[objIndex].setAttribute("y", (ytDfP * tf) + y1)
-}
-}
-}
-for(var cf=0;cf<newE.length;cf++){
-loadFrame((new XMLSerializer()).serializeToString(newE[cf]),cf + firstFrame);
-}
-}
-}
-
-function loadFrame(Axml,frame){
-if ( DrawCanvas[frame].renderer.svgRoot.hasChildNodes() ){
-while ( DrawCanvas[frame].renderer.svgRoot.childNodes.length >= 1 ){
-DrawCanvas[frame].renderer.svgRoot.removeChild( DrawCanvas[frame].renderer.svgRoot.firstChild );			 
-} 
-} 
-var svgNamespace = 'http://www.w3.org/2000/svg';
-if (window.ActiveXObject){
-var domContainer = new ActiveXObject("Microsoft.XMLDOM");
-domContainer.async="false";
-domContainer.loadXML(Axml);
-}else{
-var parser=new DOMParser();
-var domContainer=parser.parseFromString(Axml,"text/xml");
-}
-var domFrame = domContainer.firstChild; //svg
-if(DrawCanvas[frame] == null){gotoframe(frame,1);}//create frame
-for(var cId = 0; cId < domFrame.childNodes.length; cId++){
-var cNode = domFrame.childNodes[cId];
-var cAtt = cNode.attributes;
-var newShape = document.createElementNS(svgNamespace , cNode.tagName);
-for(var aId = 0; aId < cAtt.length; aId++){
-newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
-}
-DrawCanvas[frame].renderer.svgRoot.appendChild(newShape);
-Event.observe(newShape, "mousedown", DrawCanvas[frame].onHitListener);	
-}
-}
  
   var DrawLayer = new Array();
  var DrawCanvas = new Array();
@@ -3328,7 +4259,6 @@ Event.observe(newShape, "mousedown", DrawCanvas[frame].onHitListener);
  var mouseIsDown = new Boolean();
  var clipboardTagStr = "";
  var clipboardAtt;
- var initHistory;
  var cloneFrameEnabled = new Boolean(true);
  var Colorobj;
  var picker;
@@ -3375,6 +4305,63 @@ var x=(window.ActiveXObject)?new ActiveXObject('Microsoft.XMLHTTP'):new XMLHttpR
 x.open("GET","../stats/count.php?t="+(((new Date()).getTime()-startime)/1000),true);
 x.send(null)
 } 
+ 
+
+function resetHistory(){
+editHistory = new Array();
+editHistoryNumber = 0;
+historyDS.removeAll()
+}
+
+function revertRevision(numId){
+loadAnimation("<AnimationXML>"  + editHistory[numId] + "</AnimationXML>" )
+editHistoryNumber++;
+editHistory[editHistoryNumber] =  $("CanvasContainer").innerHTML
+addHistory("Revert to " + numId)
+}
+
+function addHistory(data){
+var nData = {
+action: data,
+number: editHistoryNumber
+}
+historyDS.add(new historyGrid.dataSource.reader.recordType(nData))
+}
+
+
+function undo(){
+revertRevision(editHistoryNumber -1);
+}
+
+function checkEdit(event){
+if (editHistory[editHistoryNumber] != $("CanvasContainer").innerHTML){
+editHistoryNumber++;
+editHistory[editHistoryNumber] = $("CanvasContainer").innerHTML
+if(DrawCanvas[currentCanvas].mode != "select"){
+var curM = DrawCanvas[currentCanvas].mode;
+var result = "";
+switch (curM) {
+case 'rect': result = 'Rectangle'; break;
+case 'roundrect': result = 'Rectangle'; break;
+case 'ellipse': result = 'Ellipse'; break;
+case 'line': result = 'Line'; break;
+}
+addHistory("Add&nbsp;" + result)
+}else{
+addHistory("Select/Move")
+}
+}
+}
+
+function addHist(text){
+if (editHistory[editHistoryNumber] != $("CanvasContainer").innerHTML){
+editHistoryNumber++;
+editHistory[editHistoryNumber] = $("CanvasContainer").innerHTML
+addHistory(text)
+}
+}
+
+ 
  /*
 function checkAnimationXML(axml){ // basic animationxml test
 var dA = unescape(axml)
