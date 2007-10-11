@@ -50,7 +50,7 @@ $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1)
 
 
 function genFlash(){
-var zSWFFilename=Ext.MessageBox.prompt("Filename","please enter a file name for the animation",function(btn,zSWFFilename){
+Ext.MessageBox.prompt("Filename","please enter a file name for the animation",function(btn,zSWFFilename){
 if(btn != "cancel"){
 
 zSWFFilename = zSWFFilename.replace(".swf","");
@@ -88,29 +88,13 @@ Ext.MessageBox.alert("Export Flash","Canceled")
 }
 
 
-function clearPreviews(){
-ajaxpack.postAjaxRequest("../freemovie/clearPreviews.php","", clearPreviewEvent, "txt")
-}
-
-
-function clearPreviewEvent(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-alert(myajax.responseText)
-}
-}
-}
-
 function generateSWFResponse(responsedata){
 var responseurl = responsedata.replace('files','../freemovie/files');
-var absoluteResponseURL = responsedata.replace('files','../freemovie/files');
 $('export').innerHTML = '<a id="zExportURL" href="' + responseurl + '>' + responseurl + '</a>';
 eButton.enable()
 eButton.setText( 'Export Animation');
 $('export').innerHTML = '<a id="zExportURL" href="' + $('zExportURL').href + '>' + $('zExportURL').href + '</a>';
-$('saveSWF').src = "../php/saveRedirect.php?url="+responseurl+"&fn="+responseurl.substring(responseurl.lastIndexOf("/")+1)
+$('saveIframe').src = "../php/saveRedirect.php?url="+responseurl+"&fn="+responseurl.substring(responseurl.lastIndexOf("/")+1)
 }
 
 

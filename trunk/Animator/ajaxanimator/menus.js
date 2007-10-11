@@ -10,13 +10,53 @@ Ext.onReady(function(){
 	var themeMenu = new Ext.menu.Menu({
         id: 'themeMenu',
         items: [
-			{text: 'Default',icon: '../images/application_go.png',handler: function(){setTheme(0)}},
-			{text: 'Gray', icon: '../images/application_go.png',handler: function(){setTheme(1)}},
-			{text: 'Vista',icon: '../images/application_go.png',handler: function(){setTheme(2)}},
-			{text: 'Aero',icon: '../images/application_go.png',handler: function(){setTheme(3)}},
-			{text: 'Galdaka',icon: '../images/application_go.png',handler: function(){setTheme(4)}}
+
+        new Ext.menu.CheckItem({
+            id: 'aero',
+            text: 'Aero Glass',
+            group: 'theme',
+            checkHandler: function(item, checked) {
+                if (checked){ setTheme(item.id)};
+            }
+        }),
+        new Ext.menu.CheckItem({
+            id: 'vista',
+            text: 'Vista Black',
+            group: 'theme',
+            checkHandler: function(item, checked) {
+                if (checked){ setTheme(item.id)};
+            }
+        }),
+        new Ext.menu.CheckItem({
+            id: 'gray',
+            text: 'Gray Theme',
+            group: 'theme',
+            checkHandler: function(item, checked) {
+                if (checked){ setTheme(item.id)};
+            }
+        }),
+        new Ext.menu.CheckItem({
+            id: 'default',
+            text: 'Ext Default',
+            group: 'theme',
+            checked: true,
+            checkHandler: function(item, checked) {
+                if (checked){ setTheme(item.id)};
+            }
+        }),
+        new Ext.menu.CheckItem({
+            id: 'galdaka',
+            text: 'Galdaka Theme',
+            group: 'theme',
+            checkHandler: function(item, checked) {
+                if (checked){ setTheme(item.id)};
+            }
+        })
 		     ]
     });
+	
+	
+
 	//////////////////////SubMenu Items///////////////////////////
     var fileMenu = new Ext.menu.Menu({
 		
@@ -134,6 +174,11 @@ Ext.onReady(function(){
 	menu: helpMenu
     });
 
+	topToolbar.add( new Ext.Toolbar.Fill());
+	
+	topToolbar.addButton({
+    text: 'Login'
+    });
 var loginToolbar = new Ext.Toolbar('login-tb');
 loginToolbar.addText("Login")
 loginToolbar.addSeparator() 
@@ -144,7 +189,7 @@ logoutbutton.setVisible(false)
 var histToolbar = new Ext.Toolbar('history-tb');
 histToolbar.addText("History")
 histToolbar.addSeparator() 
-histToolbar.addButton({text: 'Clear', handler: function(){clearHist()}})
+histToolbar.addButton({text: 'Clear', handler: function(){resetHistory()}})
 
 var centerToolbar = new Ext.Toolbar('center-tb');
 //centerToolbar.addElement($('status'))
@@ -186,6 +231,7 @@ var timelineContextMenu = new Ext.menu.Menu({
     items: [
 		{text: 'To Keyframe',icon: '../images/add.png',handler: function(){toKeyframe()}},
 		{text: 'Add Layer',icon: '../images/add.png',handler: function(){addLayer()}},
+		{text: 'Set Last Frame',icon: '../images/control_end_blue.png',handler: function(){setLastFrame()}},
 		{text: 'Clear Frame',icon: '../images/cancel.png',handler: function(){removeKeyframe()}}
     ]
 });

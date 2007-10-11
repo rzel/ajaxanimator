@@ -5,9 +5,9 @@
 	<title>Ajax Animator</title>
 	<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.css">
 	<!--BeginCSS-->
-	<link rel="stylesheet" type="text/css" href="../ajaxanimator/loading.css">
-	<link rel="stylesheet" type="text/css" href="../ext/color-picker.ux.css">
 	<link rel="stylesheet" type="text/css" href="../ajaxanimator/ajaxanimator.css">
+	<link rel="stylesheet" type="text/css" href="../ajaxanimator/timeline.css">
+	<link rel="stylesheet" type="text/css" href="../ext/color-picker.ux.css">
   <link rel="stylesheet" type="text/css" href="../ext/secure-pass.css">
 	
 	<!--EndCSS-->
@@ -17,16 +17,15 @@
 	<script type="text/javascript" src="../ext/color-picker.ux.js"></script>
 	<script type="text/javascript" src="../ext/secure-pass.js"></script>
 	<script type="text/javascript" src="../lib/prototype.lite.js"></script>
-	<script type="text/javascript" src="../lib/md5-custom.js"></script>
+	<script type="text/javascript" src="../lib/md5.js"></script>
 	<script type="text/javascript" src="../richdraw/richdraw.js"></script>
 	<script type="text/javascript" src="../richdraw/svgrenderer.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/load.js"></script>
 	<script type="text/javascript" src="../ajaxanimator/ajaxanimator.js"></script>
 	<script type="text/javascript" src="../ajaxanimator/layout.js"></script>
 	<script type="text/javascript" src="../ajaxanimator/window.js"></script>
 	<script type="text/javascript" src="../ajaxanimator/color.js"></script>
 	<script type="text/javascript" src="../ajaxanimator/menus.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/timeline.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/timeline2.js"></script>
 	<script type="text/javascript" src="../ajaxanimator/canvas.js"></script>
 	<script type="text/javascript" src="../ajaxanimator/flash.js"></script>
 	<script type="text/javascript" src="../ajaxanimator/animation.js"></script>
@@ -42,26 +41,22 @@
 	<!--EndJS-->
 	</head>
 	<body style="overflow: hidden">
+	
 	<!--BeginBodyJS-->
 	<script type="text/javascript" src="../lib/wz_tooltip-min.js"></script>
 	<!--EndBodyJS-->
-	<!-- Start Loading Window Markup -->
+	
 	<div id="loading">
 	<div class="loading-indicator">
-	<img alt="Loading..." src="../resources/images/default/grid/loading.gif" style="width:16px;height:16px;">&#160;Loading...
+	<img alt="Loading..." src="../resources/images/default/grid/loading.gif" style="width:16px;height:16px;">
+	&#160;Loading...
 	</div>
 	</div>
-  	<div id="loading-mask" style="width:100%;height:100%;background:#c3daf9;position:absolute;z-index:20000;left:0;top:0;">&#160;</div>
-	<!-- End Loading Window Markup -->
-	<div id="GoogAd">
-	<div class="x-dlg-hd">Google Ads</div>
-	<div class="x-dlg-bd">
-	<div id="GoogAdBody">
+  	<div id="loading-mask" class="loadingMask">&#160;</div>
+
 	<!-- GoogAd1-->
-	</div>
-	</div>
-	</div>
-	<iframe id="saveSWF" style="display: none"></iframe>
+	<iframe id="saveIframe" style="display: none"></iframe>
+	
 	<div id="color-dialog">
 	<div class="x-dlg-hd">Color</div>
 	<div class="x-dlg-bd">
@@ -78,6 +73,7 @@
 	</div>
 	</div>
 	</div>
+	
 	<div id="uab-dialog">
 	<div class="x-dlg-hd">Browse User-Made Animations</div>
 	<div class="x-dlg-bd">
@@ -91,11 +87,14 @@
 	<div id="animationViewer">
 	<center>
 	<a href="javascript:LAFC()">Import To Canvas</a>
-	<div id="AXMLPlayer" style="border: 1px solid black; position: relative;width:480px; overflow:hidden; height: 272px; background-color: white; -moz-user-select: none;"></div>
+	<div id="AXMLPlayer" class="svgDisplay"></div>
 	</center>
 	</div>
 	</div>
 	</div>
+	
+	
+	
 	<div id="fs-dialog">
 	<div class="x-dlg-hd">Save/Open</div>
 	<div class="x-dlg-bd">
@@ -126,14 +125,18 @@
 	</div>
 	</div>
 	</div>
+	
+	
 	<div id="north-div">
-		<div id="north-tb"></div>
-		<div id="frameContainer" style="overflow: auto"></div>
+	<div id="north-tb"></div>
+	<div id="frameContainer" style="overflow: auto"></div>
 	</div>
+	
 	<div id="scriptEval-div">
 	<div id="eval-tb"></div>
 	<textarea id="evalScript" cols="20" rows="10" style="width: 100%;height: 99%"></textarea>
 	</div>
+	
 	<div id="properties-div">
 	<div id="prop-tb"></div>
 	<table><tr><td>
@@ -173,8 +176,8 @@
 	</div>
 	<div id="toolbar-div">
 	<div id="tbIcon"></div>
-	<div id="fillcolor" style="font-size:small;text-align: right;background-repeat: no-repeat;background-image:url('../images/bucket.png');color: #ffffff;background-color: #ff0000;" onclick="FillColorChange()">FF0000</div>
-	<div id="linecolor" style="font-size:small;text-align: right;background-repeat: no-repeat;background-image:url('../images/pencil.png');color: #ffffff;background-color: #000000;" onclick="LineColorChange()">000000</div>
+	<div id="fillcolor" class="drawColor" style="background-image:url('../images/bucket.png');background-color: #ff0000;" onclick="FillColorChange()">FF0000</div>
+	<div id="linecolor" class="drawColor" style="background-image:url('../images/pencil.png');background-color: #000000;" onclick="LineColorChange()">000000</div>
 	<input type="text" id="linewidth" size="1">
 	</div>
 	<div id="canvas-div">

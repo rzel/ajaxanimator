@@ -19,10 +19,8 @@ canvasIssueResolved = false;
 
 function makeCanvasFromIE(CanvasId){
 var canvasString;
-canvasString='<div id="richdraw'+CanvasId+'" style="';
-canvasString+='border:1px solid black;position:relative;top:0px'
-canvasString+='width:99%;height:99%;background-color:white;'
-canvasString+='-moz-user-select:none;display:'+canvasDisplayStyle+'"></div>';
+canvasString='<div id="richdraw'+CanvasId+'" class="animationDisplay" style="';
+canvasString+='display:'+canvasDisplayStyle+'"></div>';
 document.getElementById("CanvasContainer").innerHTML+=canvasString;
 canvasDisplayStyle = "none";
 initDraw();
@@ -30,11 +28,9 @@ initDraw();
 
 function makeCanvasFromId(CanvasId){
 var richdrawCanvas = document.createElement('div');
-var richdrawCanvasStyle = "border:1px solid black;position:relative;"
-richdrawCanvasStyle += "top:0px;width:99%;height:99%;background-color:white;"
-richdrawCanvasStyle += "-moz-user-select:none;"
+richdrawCanvas.setAttribute("class","animationDisplay")
 richdrawCanvas.setAttribute('id','richdraw'+CanvasId);
-richdrawCanvas.setAttribute('style',richdrawCanvasStyle+"display:"+canvasDisplayStyle);
+richdrawCanvas.setAttribute('style',"display:"+canvasDisplayStyle);
 document.getElementById('CanvasContainer').appendChild(richdrawCanvas);
 canvasDisplayStyle = 'none'
 initDraw();
@@ -81,16 +77,6 @@ var re = new RegExp(findStr, "g"); // pre replace using regexp
 return origStr.replace(re, repStr);
 }
 
-
-function isIE(){
-    ie = navigator.appVersion.match(/MSIE (\d\.\d)/);
-    opera = (navigator.userAgent.toLowerCase().indexOf("opera") != -1);
-    if ((!ie) || (opera)) {
-	//return false
-	}else{
-	return true
-	}
-}
 
 function initCanvas(){
 	//for(var zxCanvas = 0; zxCanvas > 10; zxCanvas++){

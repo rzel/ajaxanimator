@@ -28,22 +28,6 @@ function stopAnimation(){
 AnimationPlay = false;
 }
 
-function nextFrame(){
-gotoframe(currentFrameSelection+1,1)
-}
-function preFrame(){
-gotoframe(currentFrameSelection-1,1)
-}
-function firstFrame(){
-gotoframe(1,1)
-}
-function lastFrame(){
-gotoframe(totalFrames,1)
-}
-function setLastFrame(){
-changeTotalFrameValue(currentFrameSelection)
-}
-
 function hideCurrentCanvas(){
 try{
 document.getElementById("richdraw"+currentCanvas).style.display = "none";
@@ -55,6 +39,3 @@ try{
 document.getElementById("richdraw"+currentCanvas).style.display = "";
 }catch(err){}
 }
-
-
-
