@@ -60,11 +60,30 @@
 	resetHistory()
 	}
 function confirmNewCanvas(){
-	if (confirm("Do you want to save before continuing?\n press Cancel to proceed anyways")) { 
-		saveDialog();
-	}else{
-	newAnimation();
-	}
+
+ Ext.MessageBox.show({
+           title:'Save Changes?',
+           msg: 'Save Changes?',
+           buttons: Ext.MessageBox.YESNOCANCEL,
+           icon: Ext.MessageBox.QUESTION,
+		   fn: function(a){
+		   
+		   if(a == "no"){
+		   newAnimation();
+		   return
+		   }
+		   if(a == "yes"){
+		   showFileSystemDialog()
+		   return
+		   }
+		   if(a == "cancel"){
+		   return
+		   }
+		   }
+       });
+	   
+	   
+	
 }	
 	
 	
@@ -73,13 +92,14 @@ function loadAnimation(Axml){
 newCanvas();
 cloneFrameEnabled = false;
 var svgNamespace = 'http://www.w3.org/2000/svg';
+var domContainer;
 if (window.ActiveXObject){
-var domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer = new ActiveXObject("Microsoft.XMLDOM");
 domContainer.async="false";
 domContainer.loadXML(Axml);
 }else{
 var parser=new DOMParser();
-var domContainer=parser.parseFromString(Axml,"text/xml");
+domContainer=parser.parseFromString(Axml,"text/xml");
 }
 var domAnimation = domContainer.firstChild;
 for(var dId = 0; dId < domAnimation.getElementsByTagName("svg").length; dId++){
@@ -133,13 +153,14 @@ function clonePreviousFrame(){
 if(cloneFrameEnabled == true){
 var svgNamespace = 'http://www.w3.org/2000/svg';
 var rdX = $("richdraw" + (currentCanvas-1)).innerHTML
+var domContainer;
 if (window.ActiveXObject){
-var domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer = new ActiveXObject("Microsoft.XMLDOM");
 domContainer.async="false";
 domContainer.loadXML(rdX);
 }else{
 var parser=new DOMParser();
-var domContainer=parser.parseFromString(rdX,"text/xml");
+domContainer=parser.parseFromString(rdX,"text/xml");
 }
 
 var domShape = domContainer.getElementsByTagName("svg")[0];
@@ -166,13 +187,14 @@ function cloneFrame(frame){
 if(cloneFrameEnabled == true){
 var svgNamespace = 'http://www.w3.org/2000/svg';
 var rdX = $("richdraw" + frame).innerHTML
+var domContainer;
 if (window.ActiveXObject){
-var domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer = new ActiveXObject("Microsoft.XMLDOM");
 domContainer.async="false";
 domContainer.loadXML(rdX);
 }else{
 var parser=new DOMParser();
-var domContainer=parser.parseFromString(rdX,"text/xml");
+domContainer=parser.parseFromString(rdX,"text/xml");
 }
 
 var domShape = domContainer.getElementsByTagName("svg")[0];
@@ -199,13 +221,14 @@ function moveFrameObj(distance){
 if(cloneFrameEnabled == true){
 var svgNamespace = 'http://www.w3.org/2000/svg';
 var rdX = $("richdraw" + (currentCanvas)).innerHTML
+var domContainer;
 if (window.ActiveXObject){
-var domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer = new ActiveXObject("Microsoft.XMLDOM");
 domContainer.async="false";
 domContainer.loadXML(rdX);
 }else{
 var parser=new DOMParser();
-var domContainer=parser.parseFromString(rdX,"text/xml");
+domContainer=parser.parseFromString(rdX,"text/xml");
 }
 
 var domShape = domContainer.getElementsByTagName("svg")[0];
@@ -237,7 +260,7 @@ return "<AnimationXML>" + $('CanvasContainer').innerHTML + "</AnimationXML>";
 }
 
 function saveAnimation(){
-window.location = dataUrl(escape(animationSaveData()), "application/ajaxanimator")
+saveIframe.src = dataUrl(escape(animationSaveData()), "application/ajaxanimator")
 }
 
 function dataUrl(data, mimeType){ // turns a string into a url that appears as a file. (to ff/op/saf)

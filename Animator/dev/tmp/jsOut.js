@@ -1026,7 +1026,358 @@ Ext.ux.ColorDialog = function( element, config ) {
 }
 Ext.extend(Ext.ux.ColorDialog,Ext.BasicDialog);
 Ext.applyIf(Ext.ux.ColorDialog.prototype,Ext.ux.ColorPicker.prototype); 
- function $A(C){var B=[];for(var A=0;A<C.length;A++){B.push(C[A])}return B}function $(){if(arguments.length==1){return B(arguments[0])}var A=[];$c(arguments).each(function(C){A.push(B(C))});return A;function B(C){if(typeof C=="string"){C=document.getElementById(C)}return C}}Object.e=function(A,C){for(var B in C){A[B]=C[B]}return A};if(!window.Event){var Event=new Object()}Object.e(Event,{element:function(A){return $(A.target||A.srcElement)},pointerX:function(A){return A.pageX||(A.clientX+(document.documentElement.scrollLeft||document.body.scrollLeft))},pointerY:function(A){return A.pageY||(A.clientY+(document.documentElement.scrollTop||document.body.scrollTop))},observers:false,_observeAndCache:function(D,C,B,A){if(!this.observers){this.observers=[]}if(D.addEventListener){this.observers.push([D,C,B,A]);D.addEventListener(C,B,A)}else{if(D.attachEvent){this.observers.push([D,C,B,A]);D.attachEvent("on"+C,B)}}},observe:function(D,C,B,A){D=$(D);if(C=="keypress"&&(Prototype.Browser.WebKit||D.attachEvent)){C="keydown"}Event._observeAndCache(D,C,B,false)},stopObserving:function(D,C,B,A){D=$(D);if(C=="keypress"&&(Prototype.Browser.WebKit||D.attachEvent)){C="keydown"}if(D.removeEventListener){D.removeEventListener(C,B,false)}else{if(D.detachEvent){try{D.detachEvent("on"+C,B)}catch(E){}}}}});Function.prototype.bindAsEventListener=function(C){var A=this,B=$A(arguments),C=B.shift();return function(D){return A.apply(C,[D||window.event].concat(B))}};var Position={cumulativeOffset:function(B){var A=0,C=0;do{A+=B.offsetTop||0;C+=B.offsetLeft||0;B=B.offsetParent}while(B);return[C,A]}};if(navigator.userAgent.indexOf("AppleWebKit/")>-1){Position.cumulativeOffset=function(B){var A=0,C=0;do{A+=B.offsetTop||0;C+=B.offsetLeft||0;if(B.offsetParent==document.body){if(Element.getStyle(B,"position")=="absolute"){break}}B=B.offsetParent}while(B);return[C,A]}} 
+ Ext.namespace('Ext.ux');
+
+Ext.ux.SecurePass = function(config) {
+    Ext.ux.SecurePass.superclass.constructor.call(this, config);
+}
+ 
+Ext.extend(Ext.ux.SecurePass, Ext.form.TextField, {
+    /**
+     * @cfg {String/Object} errors A Error spec, or true for a default spec (defaults to
+     * {
+     *  PwdEmpty: "Please type a password, and then retype it to confirm.",
+     *  PwdDifRPwd: "The new password and the confirmation password don't match. Please type the same password in both boxes.",
+     *  PwdShort: "Your password must be at least 6 characters long. Please type a different password.",
+     *  PwdLong: "Your password can't contain more than 16 characters. Please type a different password.",
+     *  PwdBadChar: "The password contains characters that aren't allowed. Please type a different password.",
+     *  IDInPwd: "Your password can't include the part of your ID. Please type a different password.",
+     *  FNInPwd: "Your password can't contain your first name. Please type a different password.",
+     *  LNInPwd: "Your password can't contain your last name. Please type a different password."
+     * })
+     */
+    // private
+    errors : {
+        PwdEmpty: "Please type a password, and then retype it to confirm.",
+        PwdDifRPwd: "The new password and the confirmation password don't match. Please type the same password in both boxes.",
+        PwdShort: "Your password must be at least 3 characters long. Please type a different password.",
+        PwdLong: "Your password can't contain more than 16 characters. Please type a different password.",
+        PwdBadChar: "The password contains characters that aren't allowed. Please type a different password.",
+        IDInPwd: "Your password can't include the part of your ID. Please type a different password.",
+        FNInPwd: "Your password can't contain your first name. Please type a different password.",
+        LNInPwd: "Your password can't contain your last name. Please type a different password."
+    },
+ 
+    /**
+     * @cfg {String/Object} Label for the strength meter (defaults to
+     * 'Password strength:')
+     */
+    // private
+    meterLabel : '',
+ 
+    /**
+     * @cfg {String/Object} pwdStrengths A pwdStrengths spec, or true for a default spec (defaults to
+     * ['Weak', 'Medium', 'Strong'])
+     */
+    // private
+    pwdStrengths : ['Weak', 'Medium', 'Strong'],
+ 
+    // private
+    strength : 0,
+ 
+    // private
+    _lastPwd : null,
+ 
+    // private
+    kCapitalLetter : 0,
+    kSmallLetter : 1,
+    kDigit : 2,
+    kPunctuation : 3,
+ 
+    // private
+    initEvents : function(){
+        Ext.ux.SecurePass.superclass.initEvents.call(this);
+        this.el.on('keyup', this.checkStrength,  this, {buffer:50});
+    },
+ 
+    // private
+    onRender : function(ct, position){
+        Ext.ux.SecurePass.superclass.onRender.call(this, ct, position);
+        this.wrap = this.el.wrap({cls: "x-form-field-wrap"});
+        this.trigger = this.wrap.createChild({tag: "div", cls: "StrengthMeter "+this.triggerClass});
+        if(this.meterLabel != ''){
+            this.trigger.createChild({tag: "label", html: this.meterLabel});
+        }
+        this.trigger.createChild({tag: "div", cls: "PwdMeterBase", html: '<div class="PwdBack"><div class="PwdMeter" id="PwdMeter"></div></div>'});
+        if(this.hideTrigger){
+            this.trigger.setDisplayed(false);
+        }
+        this.setSize(this.width||'', this.height||'');
+    },
+ 
+    // private
+    onDestroy : function(){
+        if(this.trigger){
+            this.trigger.removeAllListeners();
+            this.trigger.remove();
+        }
+        if(this.wrap){
+            this.wrap.remove();
+        }
+        Ext.form.TriggerField.superclass.onDestroy.call(this);
+    },
+ 
+    // private
+    checkStrength : function(){
+        var pwd = this.el.getValue();
+        if (pwd == this._lastPwd) {
+            return;
+        }
+ 
+        var strength;
+        if (this.ClientSideStrongPassword(pwd)) {
+            strength = 3;
+        } else if(this.ClientSideMediumPassword(pwd)) {
+            strength = 2;
+        } else if(this.ClientSideWeakPassword(pwd)) {
+            strength = 1;
+        } else {
+            strength = 0;
+        }
+ 
+        document.getElementById('PwdMeter').style.width = 40 * strength +'px';
+        if(this.pwdStrengths != null && strength > 0) {
+            document.getElementById('PwdMeter').innerHTML = '&nbsp;'+ this.pwdStrengths[strength - 1];
+        } else {
+            document.getElementById('PwdMeter').innerHTML = '';
+        }
+ 
+        this._lastPwd = pwd;
+    },
+ 
+    // private
+    validateValue : function(value){
+        if(!Ext.form.NumberField.superclass.validateValue.call(this, value)){
+            return false;
+        }
+        if(value.length < 1){ // if it's blank and textfield didn't flag it then it's valid
+             return true;
+        }
+        if(value.length == 0) {
+            this.markInvalid(this.errors.PwdEmpty);
+            return false;
+        }
+        if("[\x21-\x7e]*".match(value)) {
+            this.markInvalid(this.errors.PwdBadChar);
+            return false;
+        }
+        if(value.length < 3) {
+            this.markInvalid(this.errors.PwdShort);
+            return false;
+        }
+        if(value.length > 16) {
+            this.markInvalid(this.errors.PwdLong);
+            return false;
+        }
+        /*if(value.length > 0 && this.iRPwd != 'undefined' && Ext.get(this.iRPwd) != null && value != Ext.get(this.iRPwd).getValue()) {
+            this.markInvalid(this.errors.PwdDifRPwd);
+            return false;
+        }*/
+        return true;
+    },
+ 
+    // private
+    CharacterSetChecks : function(type){
+        this.type = type;
+        this.fResult = false;
+    },
+ 
+    // private
+    isctype : function(character, type){
+        switch (type) { //why needed break after return in js ? very odd bug
+            case this.kCapitalLetter: if (character >= 'A' && character <= 'Z') { return true; } break;
+            case this.kSmallLetter: if (character >= 'a' && character <= 'z') { return true; } break;
+            case this.kDigit: if (character >= '0' && character <= '9') { return true; } break;
+            case this.kPunctuation: if ("!@#$%^&*()_+-='\";:[{]}|.>,</?`~".indexOf(character) >= 0) { return true; } break;
+            default: return false;
+        }
+    },
+ 
+    // private
+    IsLongEnough : function(pwd, size){
+        return !(pwd == null || isNaN(size) || pwd.length < size);
+    },
+ 
+    // private
+    SpansEnoughCharacterSets : function(word, nb){
+        if (!this.IsLongEnough(word, nb))
+        {
+            return false;
+        }
+ 
+        var characterSetChecks = new Array(
+            new this.CharacterSetChecks(this.kCapitalLetter), new this.CharacterSetChecks(this.kSmallLetter),
+            new this.CharacterSetChecks(this.kDigit), new this.CharacterSetChecks(this.kPunctuation));
+        for (var index = 0; index < word.length; ++index) {
+            for (var nCharSet = 0; nCharSet < characterSetChecks.length; ++nCharSet) {
+                if (!characterSetChecks[nCharSet].fResult && this.isctype(word.charAt(index), characterSetChecks[nCharSet].type)) {
+                    characterSetChecks[nCharSet].fResult = true;
+                    break;
+                }
+            }
+        }
+ 
+        var nCharSets = 0;
+        for (var nCharSet = 0; nCharSet < characterSetChecks.length; ++nCharSet) {
+            if (characterSetChecks[nCharSet].fResult) {
+                ++nCharSets;
+            }
+        }
+ 
+        if (nCharSets < nb) {
+            return false;
+        }
+        return true;
+    },
+ 
+    // private
+    ClientSideStrongPassword : function(pwd){
+        return this.IsLongEnough(pwd, 8) && this.SpansEnoughCharacterSets(pwd, 3);
+    },
+ 
+    // private
+    ClientSideMediumPassword : function(pwd){
+        return this.IsLongEnough(pwd, 7) && this.SpansEnoughCharacterSets(pwd, 2);
+    },
+ 
+    // private
+    ClientSideWeakPassword : function(pwd){
+        return this.IsLongEnough(pwd, 6) || !this.IsLongEnough(pwd, 0);
+    }
+}) 
+ /*  Prototype JavaScript framework, version 1.4.0
+ *  (c) 2005 Sam Stephenson <sam@conio.net>
+ *
+ *  Prototype is freely distributable under the terms of an MIT-style license.
+ *  For details, see the Prototype web site: http://prototype.conio.net/
+ *
+/*--------------------------------------------------------------------------*/
+
+
+//Notice: This is a highly compressed version of prototype, to support the richdraw editor: part of the ajax animator source
+
+function $A (iterable) {
+	var nArray = [];
+	for (var i = 0; i < iterable.length; i++) nArray.push(iterable[i]);
+	return nArray;
+};
+
+function $() {
+	if (arguments.length == 1) return get$(arguments[0]);
+	var elements = [];
+	$c(arguments).each(function(el){
+		elements.push(get$(el));
+	});
+	return elements;
+
+	function get$(el){
+		if (typeof el == 'string') el = document.getElementById(el);
+		return el;
+	}
+};
+
+Object.e = function(destination, source) {
+	for (var property in source) destination[property] = source[property];
+	return destination;
+};
+
+
+if (!window.Event) {
+  var Event = new Object();
+}
+
+Object.e(Event, {
+
+  element: function(event) {
+    return $(event.target || event.srcElement);
+  },
+
+  pointerX: function(event) {
+    return event.pageX || (event.clientX +
+      (document.documentElement.scrollLeft || document.body.scrollLeft));
+  },
+
+  pointerY: function(event) {
+    return event.pageY || (event.clientY +
+      (document.documentElement.scrollTop || document.body.scrollTop));
+  },
+  observers: false,
+  
+  _observeAndCache: function(element, name, observer, useCapture) {
+    if (!this.observers) this.observers = [];
+    if (element.addEventListener) {
+      this.observers.push([element, name, observer, useCapture]);
+      element.addEventListener(name, observer, useCapture);
+    } else if (element.attachEvent) {
+      this.observers.push([element, name, observer, useCapture]);
+      element.attachEvent('on' + name, observer);
+    }
+  },
+
+
+  observe: function(element, name, observer, useCapture) {
+    element = $(element);
+    if (name == 'keypress' &&
+      (Prototype.Browser.WebKit || element.attachEvent))
+      name = 'keydown';
+
+    Event._observeAndCache(element, name, observer, false);
+  },
+
+  stopObserving: function(element, name, observer, useCapture) {
+    element = $(element);
+    if (name == 'keypress' &&
+        (Prototype.Browser.WebKit || element.attachEvent))
+      name = 'keydown';
+
+    if (element.removeEventListener) {
+      element.removeEventListener(name, observer, false);
+    } else if (element.detachEvent) {
+      try {
+        element.detachEvent('on' + name, observer);
+      } catch (e) {}
+    }
+  }
+});
+
+Function.prototype.bindAsEventListener = function(object) {
+  var __method = this, args = $A(arguments), object = args.shift();
+  return function(event) {
+    return __method.apply(object, [event || window.event].concat(args));
+  }
+}
+
+var Position = {
+
+  cumulativeOffset: function(element) {
+    var valueT = 0, valueL = 0;
+    do {
+      valueT += element.offsetTop  || 0;
+      valueL += element.offsetLeft || 0;
+      element = element.offsetParent;
+    } while (element);
+    return [valueL, valueT];
+  }
+}
+
+// Safari returns margins on body which is incorrect if the child is absolutely
+// positioned.  For performance reasons, redefine Position.cumulativeOffset for
+// KHTML/WebKit only.
+if (navigator.userAgent.indexOf('AppleWebKit/') > -1) {
+  Position.cumulativeOffset = function(element) {
+    var valueT = 0, valueL = 0;
+    do {
+      valueT += element.offsetTop  || 0;
+      valueL += element.offsetLeft || 0;
+      if (element.offsetParent == document.body)
+        if (Element.getStyle(element, 'position') == 'absolute') break;
+
+      element = element.offsetParent;
+    } while (element);
+
+    return [valueL, valueT];
+  }
+} 
  function hex_md5(L){var J=Array(),P=(1<<8)-1,R=L.length*8,V=1732584193,U=-271733879,T=-1732584194,S=271733878;for(var Q=0;Q<R;Q+=8){J[Q>>5]|=(L.charCodeAt(Q/8)&P)<<(Q%32)}J[R>>5]|=128<<((R)%32);J[(((R+64)>>>9)<<4)+14]=R;function C(e,Y,X,W,d,c){var Z=O(O(Y,e),O(W,c));return O(O(Z<<d)|(Z>>>(32-d)),X)}function B(Y,X,g,f,W,e,Z){return C((X&g)|((~X)&f),Y,X,W,e,Z)}function H(Y,X,g,f,W,e,Z){return C((X&f)|(g&(~f)),Y,X,W,e,Z)}function N(Y,X,g,f,W,e,Z){return C(X^g^f,Y,X,W,e,Z)}function A(Y,X,g,f,W,e,Z){return C(g^(X|(~f)),Y,X,W,e,Z)}function O(W,Y){var X=(W&65535)+(Y&65535);return((W>>16)+(Y>>16)+(X>>16)<<16)|(X&65535)}for(var Q=0;Q<J.length;Q+=16){var G=V,F=U,E=T,D=S;V=B(V,U,T,S,J[Q+0],7,-680876936);S=B(S,V,U,T,J[Q+1],12,-389564586);T=B(T,S,V,U,J[Q+2],17,606105819);U=B(U,T,S,V,J[Q+3],22,-1044525330);V=B(V,U,T,S,J[Q+4],7,-176418897);S=B(S,V,U,T,J[Q+5],12,1200080426);T=B(T,S,V,U,J[Q+6],17,-1473231341);U=B(U,T,S,V,J[Q+7],22,-45705983);V=B(V,U,T,S,J[Q+8],7,1770035416);S=B(S,V,U,T,J[Q+9],12,-1958414417);T=B(T,S,V,U,J[Q+10],17,-42063);U=B(U,T,S,V,J[Q+11],22,-1990404162);V=B(V,U,T,S,J[Q+12],7,1804603682);S=B(S,V,U,T,J[Q+13],12,-40341101);T=B(T,S,V,U,J[Q+14],17,-1502002290);U=B(U,T,S,V,J[Q+15],22,1236535329);V=H(V,U,T,S,J[Q+1],5,-165796510);S=H(S,V,U,T,J[Q+6],9,-1069501632);T=H(T,S,V,U,J[Q+11],14,643717713);U=H(U,T,S,V,J[Q+0],20,-373897302);V=H(V,U,T,S,J[Q+5],5,-701558691);S=H(S,V,U,T,J[Q+10],9,38016083);T=H(T,S,V,U,J[Q+15],14,-660478335);U=H(U,T,S,V,J[Q+4],20,-405537848);V=H(V,U,T,S,J[Q+9],5,568446438);S=H(S,V,U,T,J[Q+14],9,-1019803690);T=H(T,S,V,U,J[Q+3],14,-187363961);U=H(U,T,S,V,J[Q+8],20,1163531501);V=H(V,U,T,S,J[Q+13],5,-1444681467);S=H(S,V,U,T,J[Q+2],9,-51403784);T=H(T,S,V,U,J[Q+7],14,1735328473);U=H(U,T,S,V,J[Q+12],20,-1926607734);V=N(V,U,T,S,J[Q+5],4,-378558);S=N(S,V,U,T,J[Q+8],11,-2022574463);T=N(T,S,V,U,J[Q+11],16,1839030562);U=N(U,T,S,V,J[Q+14],23,-35309556);V=N(V,U,T,S,J[Q+1],4,-1530992060);S=N(S,V,U,T,J[Q+4],11,1272893353);T=N(T,S,V,U,J[Q+7],16,-155497632);U=N(U,T,S,V,J[Q+10],23,-1094730640);V=N(V,U,T,S,J[Q+13],4,681279174);S=N(S,V,U,T,J[Q+0],11,-358537222);T=N(T,S,V,U,J[Q+3],16,-722521979);U=N(U,T,S,V,J[Q+6],23,76029189);V=N(V,U,T,S,J[Q+9],4,-640364487);S=N(S,V,U,T,J[Q+12],11,-421815835);T=N(T,S,V,U,J[Q+15],16,530742520);U=N(U,T,S,V,J[Q+2],23,-995338651);V=A(V,U,T,S,J[Q+0],6,-198630844);S=A(S,V,U,T,J[Q+7],10,1126891415);T=A(T,S,V,U,J[Q+14],15,-1416354905);U=A(U,T,S,V,J[Q+5],21,-57434055);V=A(V,U,T,S,J[Q+12],6,1700485571);S=A(S,V,U,T,J[Q+3],10,-1894986606);T=A(T,S,V,U,J[Q+10],15,-1051523);U=A(U,T,S,V,J[Q+1],21,-2054922799);V=A(V,U,T,S,J[Q+8],6,1873313359);S=A(S,V,U,T,J[Q+15],10,-30611744);T=A(T,S,V,U,J[Q+6],15,-1560198380);U=A(U,T,S,V,J[Q+13],21,1309151649);V=A(V,U,T,S,J[Q+4],6,-145523070);S=A(S,V,U,T,J[Q+11],10,-1120210379);T=A(T,S,V,U,J[Q+2],15,718787259);U=A(U,T,S,V,J[Q+9],21,-343485551);V=O(V,G);U=O(U,F);T=O(T,E);S=O(S,D)}var K=Array(V,U,T,S),I="0123456789abcdef",M="";for(var Q=0;Q<K.length*4;Q++){M+=I.charAt((K[Q>>2]>>((Q%4)*8+4))&15)+I.charAt((K[Q>>2]>>((Q%4)*8))&15)}return M}
  
  /*----------------------------------------------------------------------------
@@ -1593,55 +1944,6 @@ SVGRenderer.prototype.getMarkup = function() {
   return this.container.innerHTML;
 }
  
- var isInitRD;
-var includedJS = new Array();
-
-
-function addJS(jsloc,onfinish){
-for(var i = 0; i < includedJS.length; i++){
-if(includedJS[i] == jsloc){
-return
-}
-}
-
-var x = (window.ActiveXObject) ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
-x.onreadystatechange = function(){
-if (x.readyState == 4 && x.status == 200){
-var nScript = document.createElement("script")
-nScript.setAttribute('language', 'javascript');
-nScript.setAttribute('type', 'text/javascript');
-nScript.text = x.responseText
-document.getElementsByTagName("HEAD")[0].appendChild(nScript);
-includedJS[includedJS.length + 1] = jsloc
-if(onfinish){
-onfinish();
-}
-}
-}
-x.open("GET", jsloc, true);
-x.send(null);
-
-}
-
-function clearPreviews(){
-var x = (window.ActiveXObject) ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
-x.onreadystatechange = function(){
-if (x.readyState == 4 && x.status == 200){
-Ext.MessageBox.alert("Emptying Previews",x.responseText);
-}
-}
-x.open("GET","../freemovie/clearPreviews.php",true)
-x.send(null)
-}
-function addCSS(cssloc){
-var nCSS = document.createElement("link")
-nCSS.setAttribute('href', cssloc);
-nCSS.setAttribute('type', 'text/css');
-nCSS.setAttribute('rel','stylesheet')
-document.getElementsByTagName("HEAD")[0].appendChild(nCSS);
-}
-
- 
  var onreadyfunct = new Array();
 // reference local blank image
 Ext.BLANK_IMAGE_URL = '../resources/images/default/s.gif';
@@ -1751,11 +2053,11 @@ mask.shift({
 	width:loading.getWidth(),
 	height:loading.getHeight(), 
 	remove:true,
-	duration:3,
+	duration:2,
 	opacity:.2,
 	easing:'bounceOut',
 	callback : function(){
-		loading.fadeOut({duration:.5,remove:true});
+		loading.fadeOut({duration:1,remove:true});
 	}
 });
 }
@@ -1778,7 +2080,7 @@ monitorWindowResize: true,
 trackMouseOver: true
 });
 historyGrid.render();
-historyGrid.on("cellclick",function(e,w,s,g){
+historyGrid.on("cellclick",function(e,w){
 revertRevision(w)
 })
 historyLayout = Ext.BorderLayout.create({
@@ -1861,8 +2163,11 @@ function openDebug(){
 if(Ext.log){
 Ext.log("Debug Console Opened")
 }else{
-addJS("../ext/debug-min.js",function(){
+Ext.Ajax.request({
+url: "../ext/debug-min.js",
+success: function(){
 Ext.log("Debug Console Opened")
+}
 })
 }
 }
@@ -1921,11 +2226,8 @@ passwordField.on("change",function(textObj,newVal,oldVal){
 currentRegPassword = newVal
 });
 passwordField.render(Ext.get("registerDialog"))
-addCSS("../lib/secure-pass.css");
-addJS("../lib/secure-pass.js",function(){
 sPwd = new Ext.ux.SecurePass();
 sPwd.applyTo('regPw');
-});
 };
 
 var registerDialog;
@@ -2036,6 +2338,7 @@ function showUADialog(){
 
 
 function showTehAdz(){
+if($("GoogleAd")){ 
 if($("GoogAdBody").innerHTML.replace(/\s+/g,"").length > 15){
 if(!GoogAd){
 GoogAd = new Ext.BasicDialog("GoogAd",{
@@ -2046,12 +2349,12 @@ GoogAd = new Ext.BasicDialog("GoogAd",{
         minWidth:360,
         minHeight:330
 });
-
 }
 GoogAd.show()
 setTimeout("showTehAdz()",30000);
-
 }
+}
+
 }
  
  function hex2rgb(h){
@@ -2262,7 +2565,7 @@ logoutbutton.setVisible(false)
 var histToolbar = new Ext.Toolbar('history-tb');
 histToolbar.addText("History")
 histToolbar.addSeparator() 
-histToolbar.addButton({text: 'Clear', handler: function(){clearHist()}})
+histToolbar.addButton({text: 'Clear', handler: function(){resetHistory()}})
 
 var centerToolbar = new Ext.Toolbar('center-tb');
 //centerToolbar.addElement($('status'))
@@ -2381,612 +2684,188 @@ Ext.get("canvas-div").on("contextmenu",function(e){
 });
 });
  
- //Global Variables
-var layers = 0;
-var kFrameCount = 0;
-var currentFrameSelection = 1;
-
-var currentLayerSelection = 1;
-var KeyFrames = new Array()
-var TweenFrames = new Array()
-var tFrameCount = 0;
-var zDataText = 0;
-var totalFramesPerLayer = 500;
-var nextFA = "";
-//End Global Variables
+ /*Variables*/
+var keyframeArray = new Array();
+var tweenArray = new Array();
+var currentFrame = 1;
+var currentLayer = 1;
+var totalFrames = 1;
+var layerCount = 0;
+var frameTable;
+/* Helper Functions */
 
 
-//Color Variables
-
-var finishedTweenColor = "#80FF8E"
-var KeyframeColor = "#0099CC";
-var frameTextColor = "#000000";
-var selectKeyframeColor = "";
-var selectTextColor = "";
-var FrameColor = "#ebf2f8";
-var selectFrameColor = "";
-var LayerBGColor = "#BED6E0";
-//End Color Variables
-
-
-
-
-function toKeyframe() //Function to convert normal frames to keyframes
-{
-	
-	var zframe;
-	zframe = document.getElementById("frame" + currentFrameSelection + "layer" + currentLayerSelection);
-	zframe.style.color = frameTextColor;
-	zframe.style.backgroundColor=KeyframeColor;
-	KeyFrames[kFrameCount] = currentFrameSelection + "," + currentLayerSelection
-	kFrameCount = kFrameCount + 1
-	currentFrameSelection = currentFrameSelection;
-	currentLayerSelection = currentLayerSelection;
-	gotoframe(currentFrameSelection,currentLayerSelection);
+function setFrameClass(classID,obj){
+if(!obj){
+obj = getFrameObj()
 }
-
-function makeKeyframe(framenumber, layer){
-var ikf = new Boolean(false);
-for(var m = 0; m <= kFrameCount; m++){
-if(KeyFrames[m] == framenumber + "," + layer){
-ikf = true
-}
-}
-if(ikf == false){ //irishguy sucks
-	var zframe;
-	zframe = document.getElementById("frame" + framenumber + "layer" + layer);
-	zframe.style.color = frameTextColor;
-	zframe.style.backgroundColor=KeyframeColor;
-	KeyFrames[kFrameCount] = framenumber + "," + layer
-	kFrameCount = kFrameCount + 1
-	gotoframeInterface(framenumber,layer);
-}
-}
-
-
-
-
-function fullgotoframe() //Function to refresh all data in the timeline
-{
-	if (confirm("Warning: This might take a very long time")) { 
-	alert('you will be alerted when it is done');
-	for(var iz = 1; iz <= layers; iz++)
-	{
-	for(var i = 1; i <= totalFramesPerLayer; i++)
-	{
-	gotoframeInterface(i,iz);
-	}
-	}
-	}
-	alert('done');
-}
-
-//33B843
-
-//80FF8E -light
-
-function tFrame(framenumber,layer){
-var frame = document.getElementById("frame" + framenumber + "layer" + layer);
-frame.style.color = "#000000";
-frame.style.backgroundColor=finishedTweenColor;
-}
-
-function tFrameSel(framenumber,layer){
-var frame = document.getElementById("frame" + framenumber + "layer" + layer);
-frame.style.color = "#000000";
-frame.style.backgroundColor="#33B843";
-}
-
-function timelineInterfaceTween(nFA){
-var kFrameC = parseInt(KeyFrames[kFrameCount -1].toString().split(",")[0])
-if(kFrameC != nextFA){
-nFn = kFrameC
+if(typeof(obj)!="string"){
+obj.className = classID;
 }else{
-nFn = parseInt(KeyFrames[kFrameCount -2].toString().split(",")[0])
-}
-
-for(var fNum = (nFn + 1); fNum < (nFA); fNum++){
-TweenFrames[tFrameCount] = fNum
-tFrameCount++
-tFrame(fNum,layer)
+setFrameClass(classID,$(obj))
 }
 }
 
-function gotoframeInterface(framenumber,layer){
-if(Ext.isIE != true){
-if(nextFA != 0 && kFrameCount > 1){
-var nFn;
-var kFrameC = parseInt(KeyFrames[kFrameCount -1].toString().split(",")[0])
-if(kFrameC != nextFA){
-nFn = kFrameC
+function getFrameObj(frame,layer){
+if(frame&&layer){
+return $("frame"+frame+"layer"+layer);
 }else{
-nFn = parseInt(KeyFrames[kFrameCount -2].toString().split(",")[0])
-}
-
-createTween(nFn,nextFA)
-var nFA = nextFA
-
-var isTweened = "true";
-for(var fNum = (nFn + 1); fNum < (nFA); fNum++){
-TweenFrames[tFrameCount] = fNum
-tFrameCount++
-tFrame(fNum,layer)
-}
-nextFA = 0
+return getFrameObj(currentFrame,currentLayer);
 }
 }
-//start keyframe detection code
-
-	var wasKeyFrame = new Boolean(false); //variable to store wether the selection is a keyframe
-	
-	for(var m = 0; m <= kFrameCount; m++)
-	{
-	if(KeyFrames[m] == currentFrameSelection + "," + currentLayerSelection){
-	wasKeyFrame = true
-	}
-	}
-	//end keyframe detection code
-	
-	var aframe;
-	aframe = document.getElementById("frame" + currentFrameSelection + "layer" + currentLayerSelection);
-	if(wasKeyFrame == false){
-	if(TweenFrames.join(",").indexOf(currentFrameSelection+",") == -1){
-	aframe.style.color = "black";
-	aframe.style.backgroundColor=FrameColor;
-	}else{
-	tFrame(currentFrameSelection,layer)
-	}
-	}
-	if(wasKeyFrame == true){
-	if(TweenFrames.join(",").indexOf(currentFrameSelection+",") == -1){
-	aframe.style.color = frameTextColor;
-	aframe.style.backgroundColor=KeyframeColor;
-	}else{
-	var kfc1 = parseInt(KeyFrames[kFrameCount -2].toString().split(",")[0])
-	var kfc2 = parseInt(KeyFrames[kFrameCount -1].toString().split(",")[0])
-	var cfs = currentFrameSelection
-	if(cfs != 0 && cfs != 1&& cfs != kfc1){
-	tFrame(currentFrameSelection,layer)
-	}
-	}
-	}
-	currentFrameSelection = framenumber
-	currentLayerSelection = layer
-	var frame;
-	frame = document.getElementById("frame" + framenumber + "layer" + layer);
-	var isKeyFrame = new Boolean(false);
-	for(var m = 0; m <= kFrameCount; m++)
-	{
-	if(KeyFrames[m] == framenumber + "," + layer){
-	isKeyFrame = true
-	}
-	}
-
-	if(isKeyFrame == false){
-	frame.style.color = "#F2F2F2";
-	frame.style.backgroundColor="#00BFFF";
-	}
-	if(isKeyFrame == true){
-	if(TweenFrames.join(",").indexOf(currentFrameSelection+",") == -1){
-	frame.style.color = "#F2F2F2";
-	frame.style.backgroundColor="#3579DC";
-	}else{
-	var kfc1 = parseInt(KeyFrames[kFrameCount -2].toString().split(",")[0])
-	var kfc2 = parseInt(KeyFrames[kFrameCount -1].toString().split(",")[0])
-	if(framenumber != 0 && framenumber != 1 && framenumber != kfc1){
-	tFrameSel(framenumber,layer)
-	}
-	}
-	}
-
-	
-}
-
-function repeatChecks(){
-checkFrame(currentFrameSelection,currentLayerSelection);
-
-setTimeout("repeatChecks()",500);
-}
-
-repeatChecks()
 
 
-function checkRepeat(oFrame){
-var tot = 0
-var mt = 0
-var c1a = document.getElementById("richdraw"+oFrame).innerHTML
-
-var c2a = document.getElementById("richdraw"+(oFrame-1)).innerHTML
-
-
-var c1 = (new DOMParser()).parseFromString(c1a, "text/xml").firstChild.cloneNode(true)
-var c2 = (new DOMParser()).parseFromString(c2a, "text/xml").firstChild.cloneNode(true)
-
-if(c1.childNodes.length == c2.childNodes.length){
-for(var q1=0;q1 < c1.childNodes.length;q1++){
-if(c1.childNodes[q1].getAttribute("x")== c2.childNodes[q1].getAttribute("x")){
-if(c1.childNodes[q1].getAttribute("y")== c2.childNodes[q1].getAttribute("y")){
-mt++
-}
-}
-tot++
-/* 
-for(var q2=0;q2 < c1.childNodes[q1].attributes.length;q2++){
-if(c2.childNodes[q1].getAttribute(c1.childNodes[q1].attributes.nodeName)==c1.childNodes[q1].attributes.nodeValue
-){
-mt++
-}
-tot++
-}
-*/
-}
-}
-var gp = "1"
-if(mt == tot){
-//got past level 1
-if(mt != 0){
-//got past level 2
-if(tot != 0){
-gp = "0"
-
-}
-}
-}
-if(gp != "0"){
-return "diff" 
+function isKeyframe(frame,layer){
+if(frame&&layer){
+if(keyframeArray.join(";").indexOf(frame+","+layer) != -1){
+return true;
 }else{
-return "same"
+return false;
 }
-}
-
-function ikf(frame,layer){
-	var wasKeyFrame = new Boolean(false);
-	for(var m = 0; m <= kFrameCount; m++)
-	{
-	if(KeyFrames[m] == frame + "," + layer){
-	wasKeyFrame = true
-	}
-	}
-	return wasKeyFrame;
-	}
-
-	function itf(frame){
-	var wasKeyFrame = new Boolean(false);
-	for(var m = 0; m <= tFrameCount; m++)
-	{
-	if(TweenFrames[m] == frame ){
-	wasKeyFrame = true
-	}
-	}
-	return wasKeyFrame;
-	}
-	
-	
-function checkFrame(oFrame, oLayer){
-try{
-var zisempty = false;
-if(DrawCanvas[oFrame] == null){
-zisempty = true;
 }else{
-if(DrawCanvas[oFrame].renderer.getMarkup().replace(" ","") == "<svg></svg>"){
-zisempty = true;
+return isKeyframe(currentFrame,currentLayer);
 }
-if(oFrame != 1 && oFrame != 0){
-if(checkRepeat(oFrame) == "diff"){
-if(itf(oFrame,oLayer) == false || ikf(oFrame,oLayer) == false){
-nextFA = oFrame;
-//timelineInterfaceTween(oFrame)
+}
+/*Main Functions*/
+
+function nextFrame(){
+gotoframe(parseInt(currentFrame)+1,1)
+}
+function preFrame(){
+gotoframe(parseInt(currentFrame)-1,1)
+}
+function firstFrame(){
+gotoframe(1,1)
+}
+function lastFrame(){
+gotoframe(parseInt(totalFrames),1)
+}
+function setLastFrame(){
+changeTotalFrameValue(currentFrameSelection)
 }
 
-zisempty = false;
-//finishedTween(oFrame,oLayer);
-//tFrame(oFrame,oLayer)
+function toKeyframe(frame,layer){
+frame = (frame)?frame:currentFrame
+layer = (layer)?layer:currentLayer
+keyframeArray.push(frame+","+layer)
+gotoframe(frame,layer)
+}
 
+function removeKeyframe(frame,layer){
+frame = (frame)?frame:currentFrame
+layer = (layer)?layer:currentLayer
+keyframeArray = keyframeArray.join(";").split(frame+","+layer+";").join("").split(";")
+gotoframe(frame,layer)
+}
+
+function basicGotoframeUI(frame,layer){
+frame=(frame)?frame:currentFrame
+layer=(layer)?layer:currentLayer
+renderFrame(currentFrame,currentLayer,true)
+renderFrame(frame,layer)
+}
+
+function renderFrame(frame,layer,deselect){
+frame = (frame)?frame:currentFrame
+layer = (layer)?layer:currentLayer
+var ud = (deselect)?"un":"";
+if(isKeyframe(frame,layer)){ 
+setFrameClass(ud+"selKeyframe",getFrameObj(frame,layer)) 
 }else{
-
-zisempty = true
+setFrameClass(ud+"selFrame",getFrameObj(frame,layer)) 
 }
 }
+
+function reRender(key){
+var  ojr=Ext.select(key)['elements']
+for(var alf = 0; alf < ojr.length; alf++){
+var lfc = ojr[alf].id.replace("frame","").split("layer");
+renderFrame(lfc[0],lfc[1],true)
 }
-if(zisempty == false && itf(oFrame,oLayer) == false ){
-
-makeKeyframe(oFrame,oLayer);
-}
-}catch(err){}
-}
-
-function setTotalFrameValue(){
-	var qframe;
-	qframe = document.getElementById("frame" + totalFrames + "layer" + 1);
-	qframe.style.color = "#ffffff";
-	qframe.style.backgroundColor="#FF9900";
-}
-
-function changeTotalFrameValue(tfValue){
-totalFrames = tfValue;
-setTotalFrameValue();
-gotoframe(currentFrameSelection,currentLayerSelection);
-}
-
-function gotoframe(framenumber, layer){
-	if(Ext.isIE != true){
-	if(KeyFrames.join(",").indexOf(framenumber+","+layer) == -1){
-	}
-
-	var preCnvs = currentCanvas;
-	DrawCanvas[currentCanvas].unselect();
-	if(framenumber > 0 && framenumber < totalFramesPerLayer){
-	checkFrame(currentFrameSelection, layer);
-	previousCanvas = currentCanvas;
-	if(framenumber > totalFrames){
-	gotoframeInterface(totalFrames, layer);
-	totalFrames = framenumber;
-	}
-	gotoframeInterface(framenumber,layer);
-	if(framenumber < totalFrames){
-	setTotalFrameValue()
-	}
-	hideCurrentCanvas();
-	currentCanvas = framenumber;
-	if(DrawCanvas[currentCanvas]==null){
-	if(Ext.isIE == true){
-	makeCanvasFromIE(framenumber);
-	}else{
-	makeCanvasFromId(framenumber);
-	if($("richdraw"+preCnvs).firstChild.childNodes.length > 0){
-		cloneFrame(preCnvs)
-	}
-	}
-	}
-	showCurrentCanvas();
-	checkFrame(framenumber, layer);
-	}
-
-	}else{
-		gotoframeInterface(framenumber,layer);
-	}
 }
 
 
-
-function removeFrame(frameId,layer){
-var qzmy = currentCanvas;
-DrawCanvas[frameId] = null;
-$("richdraw" + frameId).innerHTML = "";
-currentCanvas = frameId;
-initDraw()
-currentCanvas = qzmy
-addHist("Remove Frame")
+function gotoframeUI(frame,layer){
+frame=(frame)?frame:currentFrame
+layer=(layer)?layer:currentLayer
+basicGotoframeUI(frame,layer)
+reRender("td[class=lastFrame]")
+setFrameClass("lastFrame",getFrameObj(totalFrames,currentLayer)) 
+renderFrame(frame,layer)
+currentFrame = frame
+currentLayer = layer
 }
 
+function gotoframe(frame,layer){
+if(frame>totalFrames){totalFrames=frame}
 
-function removeKeyframe(){ //Function to delete selected keyframe
-/*
-	var wasKeyFrame = new Boolean(false);
-	for(var m = 0; m <= kFrameCount; m++)
-	{
-	if(KeyFrames[m] == currentFrameSelection + "," + currentLayerSelection){
-	wasKeyFrame = true
-	}
-	}
-	if(wasKeyFrame == false){
-	alert("Error: This isn't a Key Frame!")
-	}
-	if(wasKeyFrame == true){
-	if (confirm("Are You Sure you want to delete this frame?")) { 
-	*/
-	for(var m = 0; m <= kFrameCount; m++)
-	{
-	if(KeyFrames[m] == currentFrameSelection + "," + currentLayerSelection){
-	KeyFrames[m] = "0,0";
-	}
-	}
-	removeFrame(currentFrameSelection , currentLayerSelection)
-	
-	gotoframe(currentFrameSelection,currentLayerSelection);
-	
-	//}
-	//}
+gotoframeUI(frame,layer);
 }
 
-function isKeyframe(frame, layer){
-	var pKeyFrame = new Boolean();
-	pKeyFrame = false
-	for(var m = 0; m <= kFrameCount; m++)
-	{
-	if(KeyFrames[m] == frame + "," + layer){
-	pKeyFrame = true
-	}
-	}
-	return pKeyFrame;
+function initTimelineTable(frameContainer){
+frameTable = document.createElement("table");
+frameTable.className = "timeline";
+frameTable.setAttribute("cellspacing","0px")
+frameTable.setAttribute("border","1px")
+frameTable.setAttribute("width","100%")
+frameTable.appendChild(document.createElement("tbody"))
+frameContainer.appendChild(frameTable)
 }
-
-function ClearAllKeyframes(){ //Empties timeline
-
-	if (confirm("Are you sure you want to delete ALL the keyframes?")) { 
-	for(var m = 0; m <= kFrameCount; m++)
-	{
-	KeyFrames[m] = "0,0";
-	gotoframe(currentFrameSelection,currentLayerSelection);
-	}
-	alert("Done.");
-	}
-}
-
-var TDCount = 0;
-
 
 function addLayer(){
-
-var asdf; //create the string that stores the layer data
-
-layers = layers + 1;
-
-asdf =  "<div id='framesDiv'><table width='100%' cellspacing='0px' id='framesTable" + layers + "'"; //Create the Layer
-
-asdf = asdf + (" cellspacing='0' border='1' onmouseover=\"document.body.style.cursor='default';\"> ");
-
-asdf = asdf + ("<tr>")
-
-asdf = asdf + ("<td onmouseover=\"try{document.body.style.cursor='default';Tip('Layer "+layers+"');}catch(err){}\" height='5' bgcolor='"+LayerBGColor+"'");
-
-
-asdf = asdf + (">Layer" + layers + "</td>")
-for (var x = 1; x <= totalFramesPerLayer; x++) //Start adding frames
-{
-
-asdf = asdf + ("<td id='frame" + x + "layer" + layers + "'height='5' cellpadding='0px' cellspacing='0px'");//Main attributes/'Frame' declaration
-
-asdf = asdf + ("style='-moz-user-select: none; background-color:"+FrameColor+";' ");//css styling
-
-asdf = asdf + ("onmousedown='gotoframe(" + x +", " + layers +");'"); //Start Javascript event handling
-
-asdf = asdf + ("onmouseover=\"try{Tip(setTooltipData('"+x+"','"+layers+"'),TITLE, 'Frame "+x+"');}catch(err){}\" "); 
-
-
-asdf = asdf + (">" + x);//Text in each frame
-
-asdf = asdf + ("</td>")//End Frame
-
+layerCount++; //register new layer
+if(!frameTable){
+initTimelineTable($("frameContainer"))
 }
-//End adding layer
-asdf = asdf + ("</tr></table></div>")//Create end tags for layer
-
-changeInnerHTML("frameContainer",asdf)//Add the layer to the actual page
-
-
-}
-
-
-function setTooltipData(uFrame,uLayer){
-var wasKeyFrame = new Boolean(false);
-for(var m = 0; m <= kFrameCount; m++)
-{
-if(KeyFrames[m] == uFrame + "," + uLayer){
-wasKeyFrame = true
-}
-}
-var ziskeyframe = 'false';
-ziskeyframe = 'false';
-if(wasKeyFrame == true){
-ziskeyframe = 'true';
-}
-var zisselected = 'false';
-if (currentFrameSelection == uFrame){
-if (currentLayerSelection == uLayer){
-zisselected = 'true';
-}
-}
-var zisempty = false;
-if(DrawCanvas[uFrame] == null){
-zisempty = true;
-}else{
-if(DrawCanvas[uFrame].renderer.getMarkup().replace(" ","") == "<svg></svg>"){
-zisempty = true;
-}
-}
-var canvasframepreview = "empty";
-if(DrawCanvas[uFrame] != null){
-canvasframepreview = DrawCanvas[uFrame].renderer.getMarkup()
-}
-
-if(zisempty == false){
-var pstr = DrawCanvas[uFrame].renderer.getMarkup();
-count = 0; 
-var key = "rect";
-pos = pstr.indexOf(key);
-while ( pos != -1 ) {
-count++;
-pos = pstr.indexOf(key,pos+1);
-}
-key = "line";
-pos = pstr.indexOf(key);
-while ( pos != -1 ) {
-count++;
-pos = pstr.indexOf(key,pos+1);
-}
-}
-
-//zDataText = '<b>frame:</b> '+uFrame+'<br><b>layer:</b> '+uLayer
-zDataText = '<b>layer:</b> '+uLayer
-zDataText+='<br><b>keyframe:</b>'+ziskeyframe+'<br><b>selected:</b> '+zisselected;
-zDataText+='<br><b>empty:</b>' + zisempty;
-if(zisempty == false){
-zDataText+='<br><b>Total Objects:</b> ' + count/2;
-}
-if(uFrame == totalFrames){
-zDataText+='<br><b>Last Frame</b>';
-}
-//zDataText+='<br><b>Preview:</b><br>' +  canvasframepreview.replace('_moz-userdefined=""','');
-//document.getElementById("ToolTipData").innerHTML=zDataText
-if(zisempty == false){
-zDataText += "<div id='timPreDiv' style='width: 120px; height: 68px;border: 1px black solid;z-index: 100000'></div>";
-setTimeout("generateFramePreview("+uFrame+")",500);
-}else{
-zDataText += "<div id='timPreDiv' style='width: 120px; height: 68px;border: 1px black solid;z-index: 100000'><center>No Preview Availiable</center></div>";
-}
-return zDataText;
-
-
-
-}
-
-function generateFramePreview(frameNumber){
-if(document.getElementById("timPreDiv")){
-document.getElementById("timPreDiv").innerHTML = "";
-var svgNamespace = 'http://www.w3.org/2000/svg';
-var newSVGE = document.createElementNS(svgNamespace,"svg")
-newSVGE.setAttributeNS(null, "viewBox", "0 0 480 272");
-document.getElementById("timPreDiv").appendChild(newSVGE);
-var rdX = $("richdraw" + frameNumber).innerHTML
-if (window.ActiveXObject){
-var domContainer = new ActiveXObject("Microsoft.XMLDOM");
-domContainer.async="false";
-domContainer.loadXML(rdX);
-}else{
-var parser=new DOMParser();
-var domContainer=parser.parseFromString(rdX,"text/xml");
-}
-
-var domShape = domContainer.getElementsByTagName("svg")[0];
-for(var cId = 0; cId < domShape.childNodes.length; cId++){
+var fBody = frameTable.firstChild
+var nLayer = document.createElement("tr")
+nLayer.className=""
+var layerTitle = document.createElement("td")
+layerTitle.innerHTML = "Layer&nbsp;"+layerCount.toString();
+layerTitle.className = "layerTitle"
+nLayer.appendChild(layerTitle)
+for(var i = 1; i < 500; i++){
+var nFrame = document.createElement("td");
+setFrameClass("unselFrame",nFrame)
+nFrame.id = "frame"+i.toString()+"layer"+layerCount.toString()
+nFrame.innerHTML = i.toString();
+nFrame.onmousedown = function(e){
 try{
-var cNode = domShape.childNodes[cId];
-var cAtt = cNode.attributes;
-var newShape = document.createElementNS(svgNamespace , cNode.tagName);
-for(var aId = 0; aId < cAtt.length; aId++){
-newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
-}
-document.getElementById("timPreDiv").firstChild.appendChild(newShape);
+var eventObj = (!e)?window.event.srcElement:e.target
+var evArray = eventObj.id.replace("frame","").split("layer")
+gotoframe(evArray[0],evArray[1])
 }catch(err){}
 }
+nFrame.onmouseover = function(e){
+try{
+var eventObj = (!e)?window.event.srcElement:e.target
+var evArray = eventObj.id.replace("frame","").split("layer")
+Tip(tooltipData(evArray[0],evArray[1]),TITLE, 'Frame&nbsp;'+evArray[0]);
+}catch(err){}
 }
+nLayer.appendChild(nFrame)
 }
-
-
-function changeInnerHTML (elm, txt) {
-
-	if(document.getElementById && elm != null && txt != null){
-	var el = document.getElementById(elm);
-	el.innerHTML = el.innerHTML + txt;
-	return true;
-	}
-	return false;
-	
+fBody.appendChild(nLayer)
 }
 
 
-function overwriteInnerHTML (elm, txt) {
-	if(document.getElementById && elm != null && txt != null) {
-	var el = document.getElementById(elm);
-	el.innerHTML =  txt;
-	return true;
-	}
-	return false;
+function tooltipData(frame,layer){
+var tData = "";
+bold = function(str){return "<b>"+str+"</b>"}
+format = function(title,info){
+tData+="<table cellspacing='0px' border='0px' width='100%'><tr><td>"+bold(title+":")+"</td><td align='right'>"+info+"</td></tr></table>"}
+format("frame",frame)
+format("layer",layer)
+format("selected",((currentFrame==frame)?"true":"false"))
+if(typeof(DrawCanvas)!=typeof(undefined)&&(DrawCanvas[frame])?((DrawCanvas[frame].renderer.getMarkup().length>15)?"false":"true"):"true" == false){
+format("empty","false")
+format("total objects",DrawCanvas[frame].renderer.svgRoot.childNodes.length)
+}else{
+format("empty","true")
 }
-
-
-//<div id="frameContainer" onmouseover="document.body.style.cursor='default';" style="width:100%;overflow:scroll"></div>
+tData+="<div id='timPreDiv' class='previewTooltip'><center>No Preview Availiable</center></div>"
+return tData;
+}
  
  var canvasNumber = 1;
 var previousCanvas = 0;
@@ -3009,10 +2888,8 @@ canvasIssueResolved = false;
 
 function makeCanvasFromIE(CanvasId){
 var canvasString;
-canvasString='<div id="richdraw'+CanvasId+'" style="';
-canvasString+='border:1px solid black;position:relative;top:0px'
-canvasString+='width:99%;height:99%;background-color:white;'
-canvasString+='-moz-user-select:none;display:'+canvasDisplayStyle+'"></div>';
+canvasString='<div id="richdraw'+CanvasId+'" class="animationDisplay" style="';
+canvasString+='display:'+canvasDisplayStyle+'"></div>';
 document.getElementById("CanvasContainer").innerHTML+=canvasString;
 canvasDisplayStyle = "none";
 initDraw();
@@ -3020,11 +2897,9 @@ initDraw();
 
 function makeCanvasFromId(CanvasId){
 var richdrawCanvas = document.createElement('div');
-var richdrawCanvasStyle = "border:1px solid black;position:relative;"
-richdrawCanvasStyle += "top:0px;width:99%;height:99%;background-color:white;"
-richdrawCanvasStyle += "-moz-user-select:none;"
+richdrawCanvas.setAttribute("class","animationDisplay")
 richdrawCanvas.setAttribute('id','richdraw'+CanvasId);
-richdrawCanvas.setAttribute('style',richdrawCanvasStyle+"display:"+canvasDisplayStyle);
+richdrawCanvas.setAttribute('style',"display:"+canvasDisplayStyle);
 document.getElementById('CanvasContainer').appendChild(richdrawCanvas);
 canvasDisplayStyle = 'none'
 initDraw();
@@ -3071,16 +2946,6 @@ var re = new RegExp(findStr, "g"); // pre replace using regexp
 return origStr.replace(re, repStr);
 }
 
-
-function isIE(){
-    ie = navigator.appVersion.match(/MSIE (\d\.\d)/);
-    opera = (navigator.userAgent.toLowerCase().indexOf("opera") != -1);
-    if ((!ie) || (opera)) {
-	//return false
-	}else{
-	return true
-	}
-}
 
 function initCanvas(){
 	//for(var zxCanvas = 0; zxCanvas > 10; zxCanvas++){
@@ -3140,7 +3005,7 @@ $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1)
 
 
 function genFlash(){
-var zSWFFilename=Ext.MessageBox.prompt("Filename","please enter a file name for the animation",function(btn,zSWFFilename){
+Ext.MessageBox.prompt("Filename","please enter a file name for the animation",function(btn,zSWFFilename){
 if(btn != "cancel"){
 
 zSWFFilename = zSWFFilename.replace(".swf","");
@@ -3178,29 +3043,13 @@ Ext.MessageBox.alert("Export Flash","Canceled")
 }
 
 
-function clearPreviews(){
-ajaxpack.postAjaxRequest("../freemovie/clearPreviews.php","", clearPreviewEvent, "txt")
-}
-
-
-function clearPreviewEvent(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
-alert(myajax.responseText)
-}
-}
-}
-
 function generateSWFResponse(responsedata){
 var responseurl = responsedata.replace('files','../freemovie/files');
-var absoluteResponseURL = responsedata.replace('files','../freemovie/files');
 $('export').innerHTML = '<a id="zExportURL" href="' + responseurl + '>' + responseurl + '</a>';
 eButton.enable()
 eButton.setText( 'Export Animation');
 $('export').innerHTML = '<a id="zExportURL" href="' + $('zExportURL').href + '>' + $('zExportURL').href + '</a>';
-$('saveSWF').src = "../php/saveRedirect.php?url="+responseurl+"&fn="+responseurl.substring(responseurl.lastIndexOf("/")+1)
+$('saveIframe').src = "../php/saveRedirect.php?url="+responseurl+"&fn="+responseurl.substring(responseurl.lastIndexOf("/")+1)
 }
 
 
@@ -3289,22 +3138,6 @@ function stopAnimation(){
 AnimationPlay = false;
 }
 
-function nextFrame(){
-gotoframe(currentFrameSelection+1,1)
-}
-function preFrame(){
-gotoframe(currentFrameSelection-1,1)
-}
-function firstFrame(){
-gotoframe(1,1)
-}
-function lastFrame(){
-gotoframe(totalFrames,1)
-}
-function setLastFrame(){
-changeTotalFrameValue(currentFrameSelection)
-}
-
 function hideCurrentCanvas(){
 try{
 document.getElementById("richdraw"+currentCanvas).style.display = "none";
@@ -3316,9 +3149,6 @@ try{
 document.getElementById("richdraw"+currentCanvas).style.display = "";
 }catch(err){}
 }
-
-
-
  
  /////////////////NEW TWEENING ENGINE/////////////////////
 
@@ -3334,7 +3164,7 @@ var tf = endFrame - startFrame
 if(sf.length != ef.length){return;}
 
 var nf = new Array();
-for(gf = 0; gf < tf; gf++){
+for(var gf = 0; gf < tf; gf++){
 nf[gf]=sf.cloneNode(true)
 }
 
@@ -3345,21 +3175,21 @@ var nsf = nf[td].childNodes[i]
 
 if(sf.childNodes[i].tagName.toString().toLowerCase() == "rect"){
 
-var xDist = getDist(nsf,ef.childNodes[i],"x")/tf
-var yDist = getDist(nsf,ef.childNodes[i],"y")/tf
-nsf.setAttribute("x", parseInt(nsf.getAttribute("x"))+(xDist*td))
-nsf.setAttribute("y", parseInt(nsf.getAttribute("y"))+(yDist*td))
+var xRectDist = getDist(nsf,ef.childNodes[i],"x")/tf
+var yRectDist = getDist(nsf,ef.childNodes[i],"y")/tf
+nsf.setAttribute("x", parseInt(nsf.getAttribute("x"))+(xRectDist*td))
+nsf.setAttribute("y", parseInt(nsf.getAttribute("y"))+(yRectDist*td))
 }
 
 if(sf.childNodes[i].tagName.toString().toLowerCase() == "line"){
 
-var xDist = getDist(nsf,ef.childNodes[i],"x1")/tf
-var yDist = getDist(nsf,ef.childNodes[i],"y1")/tf
+var xLineDist = getDist(nsf,ef.childNodes[i],"x1")/tf
+var yLineDist = getDist(nsf,ef.childNodes[i],"y1")/tf
 
-nsf.setAttribute("x1", parseInt(nsf.getAttribute("x1"))+(xDist*td))
-nsf.setAttribute("y1", parseInt(nsf.getAttribute("y1"))+(yDist*td))
-nsf.setAttribute("x2", parseInt(nsf.getAttribute("x2"))+(xDist*td))
-nsf.setAttribute("y2", parseInt(nsf.getAttribute("y2"))+(yDist*td))
+nsf.setAttribute("x1", parseInt(nsf.getAttribute("x1"))+(xLineDist*td))
+nsf.setAttribute("y1", parseInt(nsf.getAttribute("y1"))+(yLineDist*td))
+nsf.setAttribute("x2", parseInt(nsf.getAttribute("x2"))+(xLineDist*td))
+nsf.setAttribute("y2", parseInt(nsf.getAttribute("y2"))+(yLineDist*td))
 
 }
 }
@@ -3393,13 +3223,14 @@ DrawCanvas[frame].renderer.svgRoot.removeChild( DrawCanvas[frame].renderer.svgRo
 } 
 }
 var svgNamespace = 'http://www.w3.org/2000/svg';
+var domContainer;
 if (window.ActiveXObject){
-var domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer = new ActiveXObject("Microsoft.XMLDOM");
 domContainer.async="false";
 domContainer.loadXML(Axml);
 }else{
 var parser=new DOMParser();
-var domContainer=parser.parseFromString(Axml,"text/xml");
+domContainer=parser.parseFromString(Axml,"text/xml");
 }
 var domFrame = domContainer.firstChild; //svg
 if(DrawCanvas[frame] == null){gotoframe(frame,1);}//create frame
@@ -3495,7 +3326,7 @@ Ext.MessageBox.alert("Registration Status",e.responseText.substr(4).replace(":",
 function savetoserver(){
 if($("userProfile").style.display == ""){
 var savedata = escape(escape(animationSaveData()));
-var nameRequest = Ext.MessageBox.prompt('Animation Name','Set a Name For Animation', function(a,nameRequest){
+Ext.MessageBox.prompt('Animation Name','Set a Name For Animation', function(a,nameRequest){
 Ext.Ajax.request({
 url: "../php/savetoserver.php",
 params:  "user="+userName+"&pass="+encPW+"&data="+savedata+"&name="+nameRequest,
@@ -3607,19 +3438,7 @@ cPrEuN = uAn
 ajaxpack.postAjaxRequest("../users/" + uAn + "/animations/" + fLn, "", loadAnimationEvent2, "txt")
 }
 
-function loadAnimationEvent2(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
 
-uablayout.getRegion('center').showPanel('animationViewer');
-
-_lA(unescape(myajax.responseText),"AXMLPlayer");
-
-}
-}
-}
 
 
 var _QzX = "";var _y=1;var _rq = "f";
@@ -4027,11 +3846,30 @@ DrawCanvas[currentCanvas].editCommand('linecolor', slc);
 	resetHistory()
 	}
 function confirmNewCanvas(){
-	if (confirm("Do you want to save before continuing?\n press Cancel to proceed anyways")) { 
-		saveDialog();
-	}else{
-	newAnimation();
-	}
+
+ Ext.MessageBox.show({
+           title:'Save Changes?',
+           msg: 'Save Changes?',
+           buttons: Ext.MessageBox.YESNOCANCEL,
+           icon: Ext.MessageBox.QUESTION,
+		   fn: function(a){
+		   
+		   if(a == "no"){
+		   newAnimation();
+		   return
+		   }
+		   if(a == "yes"){
+		   showFileSystemDialog()
+		   return
+		   }
+		   if(a == "cancel"){
+		   return
+		   }
+		   }
+       });
+	   
+	   
+	
 }	
 	
 	
@@ -4040,13 +3878,14 @@ function loadAnimation(Axml){
 newCanvas();
 cloneFrameEnabled = false;
 var svgNamespace = 'http://www.w3.org/2000/svg';
+var domContainer;
 if (window.ActiveXObject){
-var domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer = new ActiveXObject("Microsoft.XMLDOM");
 domContainer.async="false";
 domContainer.loadXML(Axml);
 }else{
 var parser=new DOMParser();
-var domContainer=parser.parseFromString(Axml,"text/xml");
+domContainer=parser.parseFromString(Axml,"text/xml");
 }
 var domAnimation = domContainer.firstChild;
 for(var dId = 0; dId < domAnimation.getElementsByTagName("svg").length; dId++){
@@ -4100,13 +3939,14 @@ function clonePreviousFrame(){
 if(cloneFrameEnabled == true){
 var svgNamespace = 'http://www.w3.org/2000/svg';
 var rdX = $("richdraw" + (currentCanvas-1)).innerHTML
+var domContainer;
 if (window.ActiveXObject){
-var domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer = new ActiveXObject("Microsoft.XMLDOM");
 domContainer.async="false";
 domContainer.loadXML(rdX);
 }else{
 var parser=new DOMParser();
-var domContainer=parser.parseFromString(rdX,"text/xml");
+domContainer=parser.parseFromString(rdX,"text/xml");
 }
 
 var domShape = domContainer.getElementsByTagName("svg")[0];
@@ -4133,13 +3973,14 @@ function cloneFrame(frame){
 if(cloneFrameEnabled == true){
 var svgNamespace = 'http://www.w3.org/2000/svg';
 var rdX = $("richdraw" + frame).innerHTML
+var domContainer;
 if (window.ActiveXObject){
-var domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer = new ActiveXObject("Microsoft.XMLDOM");
 domContainer.async="false";
 domContainer.loadXML(rdX);
 }else{
 var parser=new DOMParser();
-var domContainer=parser.parseFromString(rdX,"text/xml");
+domContainer=parser.parseFromString(rdX,"text/xml");
 }
 
 var domShape = domContainer.getElementsByTagName("svg")[0];
@@ -4166,13 +4007,14 @@ function moveFrameObj(distance){
 if(cloneFrameEnabled == true){
 var svgNamespace = 'http://www.w3.org/2000/svg';
 var rdX = $("richdraw" + (currentCanvas)).innerHTML
+var domContainer;
 if (window.ActiveXObject){
-var domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer = new ActiveXObject("Microsoft.XMLDOM");
 domContainer.async="false";
 domContainer.loadXML(rdX);
 }else{
 var parser=new DOMParser();
-var domContainer=parser.parseFromString(rdX,"text/xml");
+domContainer=parser.parseFromString(rdX,"text/xml");
 }
 
 var domShape = domContainer.getElementsByTagName("svg")[0];
@@ -4204,7 +4046,7 @@ return "<AnimationXML>" + $('CanvasContainer').innerHTML + "</AnimationXML>";
 }
 
 function saveAnimation(){
-window.location = dataUrl(escape(animationSaveData()), "application/ajaxanimator")
+saveIframe.src = dataUrl(escape(animationSaveData()), "application/ajaxanimator")
 }
 
 function dataUrl(data, mimeType){ // turns a string into a url that appears as a file. (to ff/op/saf)
@@ -4293,6 +4135,9 @@ paramString = paramString.substring(1)
 
 function sendStats(){
 var ajaxstat=(window.ActiveXObject)?new ActiveXObject('Microsoft.XMLHTTP'):new XMLHttpRequest();
+
+
+
 ajaxstat.open("POST","../stats/load.php",true)
 ajaxstat.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 ajaxstat.send(paramString)

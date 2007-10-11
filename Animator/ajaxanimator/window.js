@@ -179,6 +179,7 @@ function showUADialog(){
 
 
 function showTehAdz(){
+if($("GoogleAd")){ 
 if($("GoogAdBody").innerHTML.replace(/\s+/g,"").length > 15){
 if(!GoogAd){
 GoogAd = new Ext.BasicDialog("GoogAd",{
@@ -189,10 +190,10 @@ GoogAd = new Ext.BasicDialog("GoogAd",{
         minWidth:360,
         minHeight:330
 });
-
 }
 GoogAd.show()
 setTimeout("showTehAdz()",30000);
-
 }
+}
+
 }

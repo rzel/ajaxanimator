@@ -49,7 +49,8 @@ if(KeyFrames[m] == framenumber + "," + layer){
 ikf = true
 }
 }
-if(ikf == false){ //irishguy sucks
+
+if(ikf == false){ 
 	var zframe;
 	zframe = document.getElementById("frame" + framenumber + "layer" + layer);
 	zframe.style.color = frameTextColor;
@@ -123,7 +124,6 @@ nFn = parseInt(KeyFrames[kFrameCount -2].toString().split(",")[0])
 createTween(nFn,nextFA)
 var nFA = nextFA
 
-var isTweened = "true";
 for(var fNum = (nFn + 1); fNum < (nFA); fNum++){
 TweenFrames[tFrameCount] = fNum
 tFrameCount++
@@ -160,7 +160,6 @@ nextFA = 0
 	aframe.style.backgroundColor=KeyframeColor;
 	}else{
 	var kfc1 = parseInt(KeyFrames[kFrameCount -2].toString().split(",")[0])
-	var kfc2 = parseInt(KeyFrames[kFrameCount -1].toString().split(",")[0])
 	var cfs = currentFrameSelection
 	if(cfs != 0 && cfs != 1&& cfs != kfc1){
 	tFrame(currentFrameSelection,layer)
@@ -189,7 +188,6 @@ nextFA = 0
 	frame.style.backgroundColor="#3579DC";
 	}else{
 	var kfc1 = parseInt(KeyFrames[kFrameCount -2].toString().split(",")[0])
-	var kfc2 = parseInt(KeyFrames[kFrameCount -1].toString().split(",")[0])
 	if(framenumber != 0 && framenumber != 1 && framenumber != kfc1){
 	tFrameSel(framenumber,layer)
 	}
@@ -351,11 +349,12 @@ function gotoframe(framenumber, layer){
 	}else{
 	makeCanvasFromId(framenumber);
 	if($("richdraw"+preCnvs).firstChild.childNodes.length > 0){
-		cloneFrame(preCnvs)
+	cloneFrame(preCnvs)
 	}
 	}
 	}
 	showCurrentCanvas();
+	
 	checkFrame(framenumber, layer);
 	}
 
@@ -556,13 +555,14 @@ var newSVGE = document.createElementNS(svgNamespace,"svg")
 newSVGE.setAttributeNS(null, "viewBox", "0 0 480 272");
 document.getElementById("timPreDiv").appendChild(newSVGE);
 var rdX = $("richdraw" + frameNumber).innerHTML
+var domContainer;
 if (window.ActiveXObject){
-var domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer = new ActiveXObject("Microsoft.XMLDOM");
 domContainer.async="false";
 domContainer.loadXML(rdX);
 }else{
 var parser=new DOMParser();
-var domContainer=parser.parseFromString(rdX,"text/xml");
+domContainer=parser.parseFromString(rdX,"text/xml");
 }
 
 var domShape = domContainer.getElementsByTagName("svg")[0];

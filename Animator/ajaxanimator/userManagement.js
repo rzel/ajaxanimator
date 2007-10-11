@@ -78,7 +78,7 @@ Ext.MessageBox.alert("Registration Status",e.responseText.substr(4).replace(":",
 function savetoserver(){
 if($("userProfile").style.display == ""){
 var savedata = escape(escape(animationSaveData()));
-var nameRequest = Ext.MessageBox.prompt('Animation Name','Set a Name For Animation', function(a,nameRequest){
+Ext.MessageBox.prompt('Animation Name','Set a Name For Animation', function(a,nameRequest){
 Ext.Ajax.request({
 url: "../php/savetoserver.php",
 params:  "user="+userName+"&pass="+encPW+"&data="+savedata+"&name="+nameRequest,
@@ -190,19 +190,7 @@ cPrEuN = uAn
 ajaxpack.postAjaxRequest("../users/" + uAn + "/animations/" + fLn, "", loadAnimationEvent2, "txt")
 }
 
-function loadAnimationEvent2(){
-var myajax=ajaxpack.ajaxobj
-var myfiletype=ajaxpack.filetype
-if (myajax.readyState == 4){ //if request of file completed
-if (myajax.status==200 || window.location.href.indexOf("http")==-1){ //if request was successful or running script locally
 
-uablayout.getRegion('center').showPanel('animationViewer');
-
-_lA(unescape(myajax.responseText),"AXMLPlayer");
-
-}
-}
-}
 
 
 var _QzX = "";var _y=1;var _rq = "f";

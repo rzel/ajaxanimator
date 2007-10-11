@@ -1,0 +1,42 @@
+TD.unselKeyframe {
+color: #000000;
+background-color: #0099CC;
+}
+TD.selKeyframe {
+color: #F2F2F2;
+background-color: #3579DC;
+}
+TD.unselFrame {
+color: #000000;
+background-color: #ebf2f8;
+}
+TD.selFrame {
+color: #F2F2F2;
+background-color: #00BFFF;
+}
+TD.unselTween {
+color: #000000;
+background-color: #80FF8E;
+}
+TD.selTween {
+color: #000000;
+background-color: #33B843;
+}
+
+TD.lastFrame {
+color: #FFFFFF;
+background-color: #fc9300;
+}
+TABLE.timeline {
+width: 100%;
+cursor: default;
+-moz-user-select: none;
+}
+TD.layerTitle {
+background-color: #BED6E0;
+}
+DIV.previewTooltip {
+width: 120px;
+height: 68px;
+border: 1px black solid;
+}
