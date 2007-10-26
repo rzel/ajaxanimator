@@ -7,8 +7,11 @@ var totalFrames = 1;
 var layerCount = 0;
 var frameTable;
 /* Helper Functions */
+function getObjects(frame){
 
+return DrawCanvas[frame].renderer.svgRoot.childNodes.length
 
+}
 function setFrameClass(classID,obj){
 if(!obj){
 obj = getFrameObj()
@@ -118,12 +121,28 @@ currentLayer = layer
 }
 
 function gotoframe(frame,layer){
-if(frame>frameTable.firstChild.childNodes[currentLayer-1].childNodes.length-1){addFrame()}
+if(typeof(frame)!=typeof(42)){frame=parseInt(frame)}
+if(typeof(layer)!=typeof(42)){layer=parseInt(layer)}
+if(frame<1){return}
+if(frame>frameTable.firstChild.childNodes[currentLayer-1].childNodes.length-1){
+addFrame();$("frameContainer").scrollLeft=$("frameContainer").scrollWidth}
 if(frame>totalFrames){totalFrames=frame}
-
+gotoframeCanvas(frame,layer)
 gotoframeUI(frame,layer);
 }
 
+function gotoframeCanvas(frame,layer){
+previousCanvas = currentCanvas;
+hideCurrentCanvas();
+currentCanvas = frame;
+if(DrawCanvas[currentCanvas]==null){
+makeCanvasFromId(frame);
+if(getObjects(previousCanvas) > 0){
+cloneFrame(previousCanvas)
+}
+}
+showCurrentCanvas();
+}
 function initTimelineTable(frameContainer){
 frameTable = document.createElement("table");
 frameTable.className = "timeline";
@@ -135,7 +154,6 @@ frameContainer.appendChild(frameTable)
 }
 
 function addFrame(frameNumber){
-
 if(!frameNumber){
 var timeLayer = frameTable.firstChild.childNodes[currentLayer-1]
 i = timeLayer.childNodes.length;

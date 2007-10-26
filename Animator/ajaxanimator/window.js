@@ -1,4 +1,5 @@
 //Window Management Code//
+var disablePopupAds = true;
 
 function openDebug(){
 if(Ext.log){
@@ -39,7 +40,7 @@ function showColorDialog(){
                 }
         });
         colorDialog.addKeyListener(27, colorDialog.hide, colorDialog);
-        colorDialog.addButton('Close', colorDialog.hide, colorDialog);
+//        colorDialog.addButton('Close', colorDialog.hide, colorDialog);
         
         var layout = colorDialog.getLayout();
         layout.beginUpdate();
@@ -156,7 +157,7 @@ function showUADialog(){
                 }
         });
         userAnimationBrowserDialog.addKeyListener(27, userAnimationBrowserDialog.hide, userAnimationBrowserDialog);
-        userAnimationBrowserDialog.addButton('Close', userAnimationBrowserDialog.hide, userAnimationBrowserDialog);
+        //userAnimationBrowserDialog.addButton('Close', userAnimationBrowserDialog.hide, userAnimationBrowserDialog);
         uablayout = userAnimationBrowserDialog.getLayout();
         uablayout.beginUpdate();
         uablayout.add('center', new Ext.ContentPanel('animationBrowser', {title: 'Browse'}));
@@ -179,7 +180,8 @@ function showUADialog(){
 
 
 function showTehAdz(){
-if($("GoogleAd")){ 
+if(disablePopupAds){return}
+if($("GoogleAd")){
 if($("GoogAdBody").innerHTML.replace(/\s+/g,"").length > 15){
 if(!GoogAd){
 GoogAd = new Ext.BasicDialog("GoogAd",{

@@ -14,14 +14,17 @@
 	currentCanvas = 1;
 	$("CanvasContainer").innerHTML = "";
 	KeyFrames = new Array();
+	
+	
 	$("frameContainer").innerHTML = "";
-	layers = 0;
-	kFrameCount = 0
-	TweenFrames = new Array()
-	tFrameCount = 0;
+	layerCount = 0;
+	keyframeArray = new Array();
+	tweenArray = new Array();
+	currentFrame = 1;
+	currentLayer = 1;
 	totalFrames = 1;
-	currentFrameSelection = 1;
-	currentLayerSelection = 1;
+	layerCount = 0;
+	frameTable = null;
 	addLayer()
 	makeCanvasFromIE(1)
 	gotoframe(1,1)
@@ -34,31 +37,6 @@
 
 
 
-	function toggleLoadInput(){
-	if($("STRINPT").style.display == "none"){
-	$("STRINPT").style.display = ""
-	}else{
-	$("STRINPT").style.display = "none"
-	}
-	}
-	
-	function toggleSaveInput(){
-	if($("STROUT").style.display == "none"){
-	$("STROUT").style.display = ""
-	}else{
-	$("STROUT").style.display = "none"
-	}
-	}
-	
- 
-	function saveAXTxt(){
-	$("AXTxt").value = escape(animationSaveData());
-	}
-	
-	function loadAXIT(){
-	loadAnimation(unescape($("AXIT").value));
-	resetHistory()
-	}
 function confirmNewCanvas(){
 
  Ext.MessageBox.show({
@@ -67,7 +45,6 @@ function confirmNewCanvas(){
            buttons: Ext.MessageBox.YESNOCANCEL,
            icon: Ext.MessageBox.QUESTION,
 		   fn: function(a){
-		   
 		   if(a == "no"){
 		   newAnimation();
 		   return
@@ -80,10 +57,7 @@ function confirmNewCanvas(){
 		   return
 		   }
 		   }
-       });
-	   
-	   
-	
+})
 }	
 	
 	
@@ -125,6 +99,7 @@ catch(err)
 }
 }
 cloneFrameEnabled == true;
+setCanvasProperties()
 }
 
 

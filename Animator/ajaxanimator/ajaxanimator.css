@@ -1,10 +1,7 @@
+	
 	/*Drawing Toolbar Code To Center Images vertically and horizontally*/
 	
-	/*
-	 Ext.get('loading').remove();
-            Ext.get('loading-mask').fadeOut({remove:true});
-	*/
-	
+
 	IMG.toolbarItem {
 	display: block;
 	margin-left: auto;
@@ -32,6 +29,7 @@
     }
 
     /* Some Loading Mask Code */
+	
     DIV.loadingMask {
     width:100%;
     height:100%;
@@ -40,41 +38,58 @@
     z-index:20000;
     left:0;
     top:0;
-	
     }
-	.loading-indicator {
-    font-size:8pt;
-    background-image:url('../resources/images/grid/loading.gif');
-    background-repeat: no-repeat;
-    background-position:top left;
-    padding-left:20px;
-	height:18px;
-	text-align:left;
-}
-	#class .loading-indicator{
-	font-size:12px;
-	height:18px;
+	
+    #loading{
+    position:absolute;
+    left:45%;
+    top:40%;
+    padding:2px;
+    z-index:20001;
+    height:auto;
+    border:1px solid #ccc;
+	width:190px;
+    }
+    #loading a {
+    color:#225588;
+    }
+    #loading .loading-indicator{
+    background:white;
+    color:#444;
+    font:bold 13px tahoma,arial,helvetica;
+    padding:10px;
+    margin:0;
+    height:auto;
+    }
+    #loading-msg {
+    font: normal 10px arial,tahoma,sans-serif;
+	margin-bottom:8px;
+	margin-top:3px;
+	display:block;
+    }
+
+	#loadProgressBorder {
+	height: 5px;
+	background: #ffffff;
+	border: 1px solid silver;
+	margin: 0;
+	padding: 0;
+	}
+	#loadingIcon {
+	width: 32px;
+	height: 32px;
+	margin-right:8px;
+	float:left;
+	vertical-align:top;
+	}
+	 
+	#loadProgressBar {
+	height: 3px;
+	margin: 1px;
+	padding: 0;
+	background: #3974AF;
 	}
 
-	#loading{
-	position:absolute;
-	left:45%;
-	top:40%;
-	border:1px solid #6593cf;
-	padding:2px;
-	background:#c3daf9;
-	width:150px;
-	text-align:center;
-	z-index:20001;
-	}
-	#loading .loading-indicator{
-	border:1px solid #a3bad9;
-	background:white url(../images/block-bg.gif) repeat-x;
-	color:#003366;
-	font:bold 13px tahoma,arial,helvetica;
-	padding:10px;
-	margin:0;
-	}
     /* Some Animation Preview/Richdraw Editor CSS Code */
     DIV.animationDisplay {
     border:1px solid black;
@@ -89,9 +104,21 @@
     border: 1px solid black;
     position: relative;
     width:480px;
+	margin-left: auto;
+	margin-right: auto;
     overflow:hidden;
     height: 272px;
     background-color: white;
     -moz-user-select: none;
     }
-    
+	
+	.msg .x-box-mc {
+    font-size:14px;
+	}
+	#msg-div {
+    position:absolute;
+    left:35%;
+    top:10px;
+    width:250px;
+    z-index:20000;
+	}

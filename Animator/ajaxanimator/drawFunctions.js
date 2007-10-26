@@ -1,4 +1,4 @@
-Ext.onReady(function(){
+ajaxanimator.onReady(function(){
 var genDB = [
 	"select|select.gif",
 	"rect|rectangle.gif",
@@ -23,7 +23,7 @@ var genDB = [
 	var tcvDiv = document.createElement("div")
 	tcvDiv.className = "centerVertical"
 	var tvImg = document.createElement("img")
-	tvImg.src = "../images/"+tsAD[1]
+	tvImg.src = imgURL+"/"+tsAD[1]
 	tvImg.className = "toolbarItem";
 	tcvDiv.appendChild(tvImg)
 	tCDiv.appendChild(tcvDiv)
@@ -43,14 +43,15 @@ drawTools.roundrect = function(){setMode('roundrect', 'Rounded Rectangle');}
 drawTools.ellipse = function(){setMode('ellipse', 'Ellipse / Circle');}
 drawTools.line = function(){setMode('line', 'Line');}
 
-var iconId = new Array("select","rect","roundrect","ellipse","line","delete") 
+var iconId;
 var lineWidth;
-Ext.onReady(function(){
+ajaxanimator.onReady(function(){
+iconId = new Array("select","rect","roundrect","ellipse","line","delete") 
 for(var iid = 0; iid < iconId.length; iid++){
 (function(id){
 Ext.get(id).on("mouseover",function(){
 if($(id).style.backgroundImage.indexOf("selectedMask") == -1){
-$(id).style.backgroundImage = "url(../images/buttonMask.png)"
+$(id).style.backgroundImage = "url("+imgURL+"/buttonMask.png)"
 }
 })
 Ext.get(id).on("mouseout",function(){
@@ -167,10 +168,12 @@ DrawCanvas  =DrawLayer[currentLayer] ;
 	DrawCanvas[currentCanvas].editCommand('mode', zCurrentCanvasMode);
   }
   function changeSelectedUI(id) {
+  if(iconId){
     for(var iid = 0; iid < iconId.length; iid++){
 	$(iconId[iid]).style.backgroundImage = "";
 	}
 	$(id).style.backgroundImage = "url(../images/selectedMask.png)"
+	}
   }
   function setMode(mode, status) {
 	changeSelectedUI(mode)

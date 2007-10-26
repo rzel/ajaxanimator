@@ -29,13 +29,11 @@ paramString = paramString.substring(1)
 function sendStats(){
 var ajaxstat=(window.ActiveXObject)?new ActiveXObject('Microsoft.XMLHTTP'):new XMLHttpRequest();
 
-
-
 ajaxstat.open("POST","../stats/load.php",true)
 ajaxstat.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 ajaxstat.send(paramString)
 }
-setTimeout("sendStats()",1000)
+
 //Measure Visit Length// Featuring Ajax!!!
 var startime=(new Date()).getTime();
 window.onunload=function(){

@@ -3,6 +3,69 @@ var encPW = "";
 var userName = "";
 var cPrEiD = "";
 var cPrEuN = "";
+var passField;
+var userField;
+var fileDS;
+var fileLayout;
+
+ajaxanimator.onReady(drawLogin)
+
+function drawFileList(){
+$("userFiles").style.display = ""
+fileDS = new Ext.data.SimpleStore({
+fields: ['filename'],
+data : null
+});
+var fileCM = new Ext.grid.ColumnModel([
+	{header: "File Name", sortable: true,  dataIndex: 'filename'}
+]);
+fileGrid = new Ext.grid.Grid("userFileList", {
+ds: fileDS,
+cm: fileCM,
+autoSizeColumns: true,
+monitorWindowResize: true,
+trackMouseOver: true
+});
+fileGrid.render();
+fileGrid.on("cellclick",function(e,w){
+loadAnimationFromURL(fileDS.getAt(w)['data']['filename']+".xml")
+})
+fileLayout = Ext.BorderLayout.create({
+ 	monitorWindowResize: true,
+center: {
+margins:{left:.1,top:.1,right:.1,bottom:.1},
+panels: [new Ext.GridPanel(fileGrid)]
+}
+}, 'userFiles');
+
+mainLayout.getRegion('east').getPanel('user-div').on("resize",function(){
+fileLayout.layout()
+})
+}
+
+function drawLogin(){
+userField = new Ext.form.TextField({
+    name: 'loginUsername',
+    id: 'loginUsername',
+    allowBlank: false,
+	value:"Username"
+    })
+	
+passField = new Ext.form.TextField({
+    name: 'loginPassword',
+	inputType: 'password',
+    allowBlank: false,
+	value: "Password"
+})
+userField.render("userLogin")
+passField.render("userLogin")
+var submitLogin = new Ext.Button("userLogin",{
+	text: 'Login',
+	handler: function(){
+		loginUser(userField.getValue(),passField.getValue())
+	}
+})
+}
 
 
 function failCon(){
@@ -17,17 +80,16 @@ registerUser();
 }
 }
 
-function loginUser(){
-var cUsername = $("usrId").value;
-var cPassword = hex_md5($("pwId").value);
+function loginUser(cUsername,PW){
+var cPassword = hex_md5(PW);
 Ext.Ajax.request({
 url: "../php/login.php",
 params: "user="+cUsername+"&pass="+cPassword+"&valid=true&rem=true",
 success: function(e){
 if(e.responseText.substr(1,3).indexOf("S") != -1){
-Ext.MessageBox.alert("Login Status: Successful","Login Successful")
-encPW = hex_md5($("pwId").value);
-userName = $("usrId").value
+msg("Login Status: Successful","Login Successful")
+encPW = PW;
+userName = cUsername
 loginSucessful()
 }else{
 Ext.MessageBox.alert("Login Status: Error",e.responseText.substr(4).replace(":",""))
@@ -48,12 +110,20 @@ logoutbutton.setVisible(false)
 
 
 function loginSucessful(){
-$("userQuery").style.display = "none"
-$("usrNme").innerHTML = "Welcome&nbsp;" + userName;
-$("userProfile").style.display = "";
+Ext.get("userLogin").slideOut("b",{duration: 1,callback: function(){
+Ext.get("userLogin").dom.style.display = "none"
+}})
+
+Ext.get("userProfile").fadeOut(0)
+Ext.get("userFiles").fadeOut(0)
+
+Ext.get("userProfile").fadeIn(1)
+Ext.get("userFiles").fadeIn(4)
 animationList()
 regbutton.setVisible(false)
 logoutbutton.setVisible(true)
+userMessage.setText("Welcome " + userName)
+userMessage.enable()
 }
 
 
@@ -66,7 +136,8 @@ params:  "user="+user+"&pass="+pass+"&valid=true",
 failure: failCon,
 success: function(e){
 if(e.responseText.substr(1,2).indexOf("S") != -1){
-Ext.MessageBox.alert("Registration Status","Registration Sucessful")
+msg("Registration Status","Registration Sucessful")
+
 }else{
 Ext.MessageBox.alert("Registration Status",e.responseText.substr(4).replace(":",""))
 }
@@ -84,7 +155,7 @@ url: "../php/savetoserver.php",
 params:  "user="+userName+"&pass="+encPW+"&data="+savedata+"&name="+nameRequest,
 failure: failCon,
 success: function(){
-Ext.MessageBox.alert("Save Status","Save Sucessful");
+msg("Save Status","Save Sucessful");
 animationList()
 }
 })
@@ -104,14 +175,18 @@ Ext.Ajax.request({
 url: "../php/listAnimations.php",
 params: "user=" + userName,
 success: function(e){
+if(!fileDS){
+drawFileList()
+}
+fileDS.removeAll()
 var animationList = e.responseText.split(",");
 var animations = "";
-var qt = '"';
-for(var q = 0; q < animationList.length; q++){
+
+for(var q = 0; q < animationList.length - 1; q++){
 var au = animationList[q].replace(".xml","")
-animations += "<a href="+qt+"javascript:loadAnimationFromURL('"+animationList[q]+"')"+qt+">"+au+"</a><br>";
+
+fileDS.add(new historyGrid.dataSource.reader.recordType({filename:au}))
 }
-$("userFiles").innerHTML = animations;
 },
 failure: failCon
 })
