@@ -5,6 +5,20 @@ Ext.BLANK_IMAGE_URL = '../resources/images/default/s.gif';
 Ext.namespace('ajaxanimator');
 // create application
 
+var themeURL = "../resources";
+var imgURL = "../images";
+var alternateHost = "http://ajaxanimator.googlecode.com/svn/trunk/Animator/"
+var alternateStaticHost = false;
+if(window.location.href.indexOf("110mb.com")!=-1){ 
+if(window.location.href.indexOf("nohotlink")==-1){
+alternateStaticHost = true;
+themeURL = alternateHost+"resources";
+imgURL = alternateHost+"images";
+cssURL = themeURL+"/css/ext-all.css"; 
+}
+}
+
+	
 Ext.onReady(function(){
 if(!document.createElementNS){
 Element.prototype.getAttributeNS = function(f,a){return this.getAttribute(a)}
@@ -17,22 +31,22 @@ document.createElementNS = function(f,a){return document.createElement(a)}
 ajaxanimator.app = function() {
     return {
         init: function() {
+		stopPseudo = true;
 			Ext.QuickTips.interceptTitles = true;
 			Ext.QuickTips.init();
-			addLayer();
-			timelineResize();
-			if(Ext.isIE != true){
-			setTimeout("initCanvas();",0)
-			}else{
-			IEMessage();
-			}
-			setTimeout("interLoad()",250);
-			setTimeout("finishLoad()",1500);
-			setTimeout("showTehAdz()", 10000);
         }
 
     };
 }();
+
+function setLoad(status,percent){
+
+document.getElementById("loading-msg").innerHTML = status
+var pdT = ((percent/100)*(Ext.get("loadProgressBorder").getWidth()))-3
+Ext.get("loadProgressBar").shift({width: pdT})
+
+}
+
 
 function setTheme(thId){ //change themes
 var sThC = function(t){
@@ -58,18 +72,20 @@ theme = thId;
 }
 }
 if(theme == "default"){
-sThC("../resources/css/ext-all.css")
+Ext.get("theme").remove()
 }else{
-sThC("../resources/css/xtheme-"+theme+".css")
+sThC(themeURL+"/css/xtheme-"+theme+".css")
 }
 }
 
 
 
 ajaxanimator.onReady = function(f){
-onreadyfunct[onreadyfunct.length + 1] = f
+onreadyfunct.push(f)
 }
+
 ajaxanimator.doReady = function(){
+//for(var orf = onreadyfunct.length; orf > 0; orf--){
 for(var orf = 0; orf < onreadyfunct.length; orf++){
 if(onreadyfunct[orf]){
 onreadyfunct[orf]()
@@ -93,59 +109,62 @@ Ext.onReady(ajaxanimator.app.init, ajaxanimator.app);
 	$("CanvasContainer").innerHTML+=cS;
 	}
 
-function finishLoad(){
 
-hideLoadingMask()
+
+window.onload=function(){
+			setTimeout("interLoad()",0);
+			setTimeout("showTehAdz()", 10000);
+}
+
+function finalizeInit(){
+setLoad("Finalizing Load...",99)
+setTimeout("hideLoadingMask();sendStats();",200)
 }
 
 function hideLoadingMask(){
+
 var loading = Ext.get('loading');
 var mask = Ext.get('loading-mask');
 mask.setOpacity(.8);
 mask.shift({
-	xy:loading.getXY(),
-	width:loading.getWidth(),
-	height:loading.getHeight(), 
 	remove:true,
-	duration:2,
+	duration:.5,
 	opacity:.2,
-	easing:'bounceOut',
 	callback : function(){
 		loading.fadeOut({duration:1,remove:true});
 	}
 });
+
 }
+
+ajaxanimator.onReady(function(){
+addLayer();
+if(Ext.isIE != true){
+setTimeout("initCanvas();",0)
+}else{
+IEMessage();
+}
+})
 
 
 function interLoad(){
-historyDS = new Ext.data.SimpleStore({
-fields: ['number','action'],
-data : [["0","New Animation"]]
-});
-var historyCM = new Ext.grid.ColumnModel([
-	{header: "#", sortable: true,  dataIndex: 'number'},
-	{header: "Action", sortable: true,  dataIndex: 'action'},
-]);
-historyGrid = new Ext.grid.Grid("HistoryContainer", {
-ds: historyDS,
-cm: historyCM,
-autoSizeColumns: true,
-monitorWindowResize: true,
-trackMouseOver: true
-});
-historyGrid.render();
-historyGrid.on("cellclick",function(e,w){
-revertRevision(w)
-})
-historyLayout = Ext.BorderLayout.create({
- 	monitorWindowResize: true,
-center: {
-margins:{left:.1,top:.1,right:.1,bottom:.1},
-panels: [new Ext.GridPanel(historyGrid)]
+setLoad("Building UI...",65)
+setTimeout("ajaxanimator.doReady()",10);//take a breath
+setTimeout("finalizeInit()",300)
 }
-}, 'HistoryLayout');
-mainLayout.getRegion('east').getPanel('history-div').on("resize",function(){
-historyLayout.layout()
-})
+
+ var msgCt;
+ function msg(title, data){
+    if(!msgCt){
+        msgCt = Ext.DomHelper.insertFirst(document.body, {id:'msg-div'}, true);
+    }
+    msgCt.alignTo(document, 't-t');
+    Ext.DomHelper.append(msgCt, {html:
+	(['<div class="msg">',
+    '<div class="x-box-tl"><div class="x-box-tr"><div class="x-box-tc"></div></div></div>',
+    '<div class="x-box-ml"><div class="x-box-mr"><div class="x-box-mc"><h3>', title, '</h3>', data, '</div></div></div>',
+    '<div class="x-box-bl"><div class="x-box-br"><div class="x-box-bc"></div></div></div>',
+    '</div>'].join(''))
+	}, true).slideIn('t').pause(1).ghost("t", {remove:true});
 }
 

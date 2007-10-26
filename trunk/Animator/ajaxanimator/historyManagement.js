@@ -1,4 +1,34 @@
-
+ajaxanimator.onReady(function(){
+historyDS = new Ext.data.SimpleStore({
+fields: ['number','action'],
+data : [["0","New Animation"]]
+});
+var historyCM = new Ext.grid.ColumnModel([
+	{header: "#", sortable: true,  dataIndex: 'number'},
+	{header: "Action", sortable: true,  dataIndex: 'action'},
+]);
+historyGrid = new Ext.grid.Grid("HistoryContainer", {
+ds: historyDS,
+cm: historyCM,
+autoSizeColumns: true,
+monitorWindowResize: true,
+trackMouseOver: true
+});
+historyGrid.render();
+historyGrid.on("cellclick",function(e,w){
+revertRevision(w)
+})
+historyLayout = Ext.BorderLayout.create({
+ 	monitorWindowResize: true,
+center: {
+margins:{left:.1,top:.1,right:.1,bottom:.1},
+panels: [new Ext.GridPanel(historyGrid)]
+}
+}, 'HistoryLayout');
+mainLayout.getRegion('east').getPanel('history-div').on("resize",function(){
+historyLayout.layout()
+})
+});
 
 function resetHistory(){
 editHistory = new Array();

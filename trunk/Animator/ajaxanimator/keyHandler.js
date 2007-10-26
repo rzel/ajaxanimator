@@ -1,5 +1,5 @@
 var keyShortcuts;
-Ext.onReady(function(){
+ajaxanimator.onReady(function(){
 var x = document.getElementsByTagName("textarea")
 
 for (var i = 0;i<x.length;i++){
@@ -35,7 +35,7 @@ Ext.MessageBox.alert("Keyboard Shortcuts:",txt)
 
 
 
-Ext.onReady(function(){
+ajaxanimator.onReady(function(){
 keyShortcuts = new Ext.KeyMap(document, [
 	{
         key: "c",ctrl:true,

@@ -3,8 +3,9 @@ var canvasWidthField;
 var framerateField;
 var regbutton;
 var logoutbutton;
+var userMessage;
+ajaxanimator.onReady(function(){
 
-Ext.onReady(function(){
 	var topToolbar = new Ext.Toolbar('north-tb');
 	//////////////////////SubSub Menu Items////////////////////
 	var themeMenu = new Ext.menu.Menu({
@@ -62,77 +63,77 @@ Ext.onReady(function(){
 		
         id: 'fileMenu',
         items: [
-			{text: 'New', icon: '../images/new.png', handler: function(){confirmNewCanvas()}},
-			{text: 'Open', icon: '../images/open.gif', handler: function(){showFileSystemDialog()}},
-			{text: 'Save', icon: '../images/disk.gif',handler: function(){showFileSystemDialog()}},
-			{text: 'Save As', icon: '../images/disk.gif',handler: function(){showFileSystemDialog()}},
+			{text: 'New', icon: imgURL+'/new.png', handler: function(){confirmNewCanvas()}},
+			{text: 'Open', icon: imgURL+'/open.gif', handler: function(){showFileSystemDialog()}},
+			{text: 'Save', icon: imgURL+'/disk.gif',handler: function(){showFileSystemDialog()}},
+			{text: 'Save As', icon: imgURL+'/disk.gif',handler: function(){showFileSystemDialog()}},
 			'-',
-			{text: 'Publish', icon: '../images/page_white_flash.png',handler: function(){mainLayout.getRegion('center').showPanel('preview-div')}}
+			{text: 'Publish', icon: imgURL+'/page_white_flash.png',handler: function(){mainLayout.getRegion('center').showPanel('preview-div')}}
         ]
     });
 	var editMenu = new Ext.menu.Menu({
         id: 'editMenu',
         items: [
-			{text: 'Undo', icon: '../images/arrow_undo.png',handler: function(){try{undo()}catch(err){}}},
-			{text: 'Copy', icon: '../images/page_copy.png',handler:  function(){copyObj()}},
-			{text: 'Paste', icon: '../images/page_paste.png',handler: function(){ pasteObj()}}
+			{text: 'Undo', icon: imgURL+'/arrow_undo.png',handler: function(){try{undo()}catch(err){}}},
+			{text: 'Copy', icon: imgURL+'/page_copy.png',handler:  function(){copyObj()}},
+			{text: 'Paste', icon: imgURL+'/page_paste.png',handler: function(){ pasteObj()}}
         ]
     });
 	var viewMenu = new Ext.menu.Menu({
         id: 'viewMenu',
         items: [
-			{text: 'Animation', icon: '../images/page_white_flash.png',handler: function(){mainLayout.getRegion('center').showPanel('preview-div')}},
-			{text: 'Theme', icon: '../images/application_double.png',menu: themeMenu}
+			{text: 'Animation', icon: imgURL+'/page_white_flash.png',handler: function(){mainLayout.getRegion('center').showPanel('preview-div')}},
+			{text: 'Theme', icon: imgURL+'/application_double.png',menu: themeMenu}
 		]
     });
 	var toolsMenu = new Ext.menu.Menu({
         id: 'toolsMenu',
         items: [
-			{text: 'Clear Timeline', icon: '../images/cancel.png',handler: function(){mainLayout.getRegion('center').showPanel('preview-div');}},
-			{text: 'Color Picker', icon: '../images/color_wheel.png',handler:  function(){showColorDialog()}},
-			{text: 'Script/Macro Executor', icon: '../images/application_xp_terminal.png',handler: function(){mainLayout.getRegion('south').showPanel('scriptExec-div');}},
-			{text: 'Debug Window',icon: '../images/brick_go.png',handler:  function(){ openDebug()}}
+			{text: 'Clear Timeline', icon: imgURL+'/cancel.png',handler: function(){mainLayout.getRegion('center').showPanel('preview-div');}},
+			{text: 'Color Picker', icon: imgURL+'/color_wheel.png',handler:  function(){showColorDialog()}},
+			{text: 'Script/Macro Executor', icon: imgURL+'/application_xp_terminal.png',handler: function(){mainLayout.getRegion('south').showPanel('scriptExec-div');}},
+			{text: 'Debug Window',icon: imgURL+'/brick_go.png',handler:  function(){ openDebug()}}
         ]
     });
 	var timelineMenu = new Ext.menu.Menu({
         id: 'timelineMenu',
         items: [
-			{text: 'To Keyframe',icon: '../images/add.png',handler:  function(){toKeyframe()}},
-			{text: 'Clear Frame',icon: '../images/delete.png',handler:  function(){removeKeyframe()}},
-			{text: 'Refresh Data',icon: '../images/action_refresh.gif',handler:  function(){fullgotoframe()}},
-			{text: 'New Layer',icon: '../images/add.png',handler:  function(){addLayer()}}
+			{text: 'To Keyframe',icon: imgURL+'/add.png',handler:  function(){toKeyframe()}},
+			{text: 'Clear Frame',icon: imgURL+'/delete.png',handler:  function(){removeKeyframe()}},
+			{text: 'Refresh Data',icon: imgURL+'/action_refresh.gif',handler:  function(){fullgotoframe()}},
+			{text: 'New Layer',icon: imgURL+'/add.png',handler:  function(){addLayer()}}
         ]
     });
 	
 	var animationMenu = new Ext.menu.Menu({
         id: 'animationMenu',
         items: [
-			{text: 'Play',icon: '../images/control_play_blue.png',handler: function(){playAnimation()}},
-			{text: 'Stop',icon: '../images/control_stop_blue.png',handler: function(){stopAnimation()}},
-			{text: 'Next Frame',icon: '../images/control_fastforward_blue.png',handler: function(){nextFrame()}},
-			{text: 'Previous Frame',icon: '../images/control_rewind_blue.png',handler: function(){preFrame()}},
-			{text: 'Last Frame',icon: '../images/control_end_blue.png',handler: function(){lastFrame()}},
-			{text: 'First Frame',icon: '../images/control_start_blue.png',handler: function(){firstFrame()}},
-			{text: 'Set Last Frame',icon: '../images/control_end_blue.png',handler: function(){setLastFrame()}}
+			{text: 'Play',icon: imgURL+'/control_play_blue.png',handler: function(){playAnimation()}},
+			{text: 'Stop',icon: imgURL+'/control_stop_blue.png',handler: function(){stopAnimation()}},
+			{text: 'Next Frame',icon: imgURL+'/control_fastforward_blue.png',handler: function(){nextFrame()}},
+			{text: 'Previous Frame',icon: imgURL+'/control_rewind_blue.png',handler: function(){preFrame()}},
+			{text: 'Last Frame',icon: imgURL+'/control_end_blue.png',handler: function(){lastFrame()}},
+			{text: 'First Frame',icon: imgURL+'/control_start_blue.png',handler: function(){firstFrame()}},
+			{text: 'Set Last Frame',icon: imgURL+'/control_end_blue.png',handler: function(){setLastFrame()}}
         ]
     });
 	var userMenu = new Ext.menu.Menu({
         id: 'userMenu',
         items: [
-			{text: 'Logout',icon: '../images/logout.png',handler: function(){logout()}},
-			{text: 'Refresh Animation List',icon: '../images/action_refresh.gif',handler: function(){animationList()}},
-			{text: 'Browse Animations',icon: '../images/user_go.png',handler: function(){showUADialog()}}
+			{text: 'Logout',icon: imgURL+'/logout.png',handler: function(){logout()}},
+			{text: 'Refresh Animation List',icon: imgURL+'/action_refresh.gif',handler: function(){animationList()}},
+			{text: 'Browse Animations',icon: imgURL+'/user_go.png',handler: function(){showUADialog()}}
         ]
     });
 	var helpMenu = new Ext.menu.Menu({
         id: 'helpMenu',
         items: [
-			{text: 'About',icon: '../images/help.png',handler: function(){Ext.MessageBox.alert("This was developed entirely by Antimatter15, the special thanks to section isnt here yet because of ajax issues...")}},
-			{text: 'Key Shortcuts', icon: '../images/help.png',handler: function(){showKeyGuide()}},
-			{text: 'Manual',icon: '../images/help.png',handler: function(){Ext.MessageBox.alert("LA LA LA","Okay, so um.... play around until it breaks?")}},
-			{text: 'FAQ',icon: '../images/help.png',handler: poop},
-			{text: 'Seizure',icon: '../images/help.png',handler: function(){Ext.MessageBox.alert("Yo!","Hey, this is a Flash ANIMATOR application, ISN'T it? Make one yourself")}},
-			{text: 'Support',icon: '../images/money.png',handler: function(){Ext.MessageBox.alert("Blah","Um... Hi")}}
+			{text: 'About',icon: imgURL+'/help.png',handler: function(){Ext.MessageBox.alert("This was developed entirely by Antimatter15, the special thanks to section isnt here yet because of ajax issues...")}},
+			{text: 'Key Shortcuts', icon: imgURL+'/help.png',handler: function(){showKeyGuide()}},
+			{text: 'Manual',icon: imgURL+'/help.png',handler: function(){Ext.MessageBox.alert("LA LA LA","Okay, so um.... play around until it breaks?")}},
+			{text: 'FAQ',icon: imgURL+'/help.png',handler: poop},
+			{text: 'Seizure',icon: imgURL+'/help.png',handler: function(){Ext.MessageBox.alert("Yo!","Hey, this is a Flash ANIMATOR application, ISN'T it? Make one yourself")}},
+			{text: 'Support',icon: imgURL+'/money.png',handler: function(){Ext.MessageBox.alert("Blah","Um... Hi")}}
         ]
     });
 
@@ -176,11 +177,16 @@ Ext.onReady(function(){
 
 	topToolbar.add( new Ext.Toolbar.Fill());
 	
-	topToolbar.addButton({
-    text: 'Login'
-    });
-var loginToolbar = new Ext.Toolbar('login-tb');
-loginToolbar.addText("Login")
+	userMessage = topToolbar.addButton({
+            text: 'Welcome Guest',
+			handler: function(){
+			mainLayout.getRegion('east').showPanel('-div');
+			}
+    })
+		
+
+var loginToolbar = new Ext.Toolbar('user-tb');
+loginToolbar.addText("User")
 loginToolbar.addSeparator() 
 regbutton = loginToolbar.addButton({id: 'registerButton',text: 'Register', handler: function(){showRegisterDialog()}})
 logoutbutton = loginToolbar.addButton({id: 'logoutButton',text: 'Logout', handler: function(){logout()}})
@@ -194,8 +200,16 @@ histToolbar.addButton({text: 'Clear', handler: function(){resetHistory()}})
 var centerToolbar = new Ext.Toolbar('center-tb');
 //centerToolbar.addElement($('status'))
 
-canvasWidthField = new Ext.form.TextField({value: '480',width: '50px'})
-canvasHeightField = new Ext.form.TextField({value: '272',width: '50px'})
+canvasWidthField = new Ext.form.TextField({
+value: '480',
+width: '50px',
+tooltip: "Set the Width of the Canvas"
+})
+
+canvasHeightField = new Ext.form.TextField({
+value: '272',
+width: '50px'
+})
 framerateField = new Ext.form.TextField({value: '12',width: '50px'})
 canvasWidthField.on("change",function(textObj,newVal,oldVal){
 canvasWidth = parseInt(newVal)
@@ -208,12 +222,37 @@ setCP()
 framerateField.on("change",function(textObj,newVal,oldVal){
 AnimationFramerate = parseInt(newVal)
 });
+
 centerToolbar.addText("Width:")
 centerToolbar.addField(canvasWidthField)
 centerToolbar.addText("Height:")
 centerToolbar.addField(canvasHeightField)
 centerToolbar.addText("Framerate:")
 centerToolbar.addField(framerateField)
+centerToolbar.add( new Ext.Toolbar.Fill());
+centerToolbar.addText("Zoom:")
+
+    var canvasZoomStore = new Ext.data.SimpleStore({
+        fields: ['size'],
+        data : [["10%"],["50%"],["75%"],["100%"],["150%"],["200%"]]
+    });
+    var canvasZoom = new Ext.form.ComboBox({
+        store: canvasZoomStore,
+        displayField:'size',
+        typeAhead: true,
+        mode: 'local',
+		value: "100%",
+		width: 100,
+        triggerAction: 'all',
+        selectOnFocus:true,
+        resizable:true
+    });
+	canvasZoom.on("select",function(c){
+	console.log(c.value)
+	})
+
+	
+centerToolbar.addField(canvasZoom)
 });
 
 function poop(){
@@ -225,14 +264,14 @@ Ext.MessageBox.alert("Error!","This version you are using is incomplete, or this
 ////////////////////////////Begin Context Menus///////////////////////////////
 
 
-Ext.onReady(function(){
+ajaxanimator.onReady(function(){
 var timelineContextMenu = new Ext.menu.Menu({
     id: 'timelineContextMenu',
     items: [
-		{text: 'To Keyframe',icon: '../images/add.png',handler: function(){toKeyframe()}},
-		{text: 'Add Layer',icon: '../images/add.png',handler: function(){addLayer()}},
-		{text: 'Set Last Frame',icon: '../images/control_end_blue.png',handler: function(){setLastFrame()}},
-		{text: 'Clear Frame',icon: '../images/cancel.png',handler: function(){removeKeyframe()}}
+		{text: 'To Keyframe',icon: imgURL+'/add.png',handler: function(){toKeyframe()}},
+		{text: 'Add Layer',icon: imgURL+'/add.png',handler: function(){addLayer()}},
+		{text: 'Set Last Frame',icon: imgURL+'/control_end_blue.png',handler: function(){setLastFrame()}},
+		{text: 'Clear Frame',icon: imgURL+'/cancel.png',handler: function(){removeKeyframe()}}
     ]
 });
 Ext.get("frameContainer").on("contextmenu",function(e){
@@ -245,11 +284,11 @@ Ext.get("frameContainer").on("contextmenu",function(e){
 var drawToolSubmenu = new Ext.menu.Menu({
     id: 'drawToolSubmenu',
     items: [
-		{text: 'Select',icon: '../images/select.gif',handler: function(){poop()}},
-		{text: 'Rectangle',icon: '../images/rectangle.gif',handler: function(){poop()} },
-		{text: 'Round Rectangle',icon: '../images/roundrect.gif',handler:function(){poop()} },
-		{text: 'Ellipse/Circle',icon: '../images/circle.gif',handler:function(){ removeKeyframe()}},
-		{text: 'Line',icon: '../images/line.gif',handler: function(){ removeKeyframe()}}
+		{text: 'Select',icon: imgURL+'/select.gif',handler: function(){poop()}},
+		{text: 'Rectangle',icon: imgURL+'/rectangle.gif',handler: function(){poop()} },
+		{text: 'Round Rectangle',icon: imgURL+'/roundrect.gif',handler:function(){poop()} },
+		{text: 'Ellipse/Circle',icon: imgURL+'/circle.gif',handler:function(){ removeKeyframe()}},
+		{text: 'Line',icon: imgURL+'/line.gif',handler: function(){ removeKeyframe()}}
     ]
 });
 
@@ -289,15 +328,15 @@ var fillColorMenu = new Ext.menu.Menu({
 var canvasContextMenu = new Ext.menu.Menu({
     id: 'canvasContextMenu',
     items: [
-		{text: 'Next Frame',icon: '../images/control_fastforward_blue.png',handler: poop},
-		{text: 'Previous Frame',icon: '../images/control_rewind_blue.png',handler: poop},
-		{text: 'Play',icon: '../images/control_play_blue.png',handler: poop},
-		{text: 'Delete Shape',icon: '../images/delete.png',handler: poop},
-		{text: 'Clear Frame',icon: '../images/cancel.png',handler: poop},
-		{text: 'Undo',icon: '../images/arrow_undo.png',handler: poop},
-	    {text: 'Drawing Tool',icon: '../images/paintbrush.png', menu: drawToolSubmenu},
-	    {text: 'Fill Color',icon: '../images/color_wheel.png', menu: fillColorMenu},
-		{text: 'Line Color',icon: '../images/color_wheel.png', menu: lineColorMenu}
+		{text: 'Next Frame',icon: imgURL+'/control_fastforward_blue.png',handler: poop},
+		{text: 'Previous Frame',icon: imgURL+'/control_rewind_blue.png',handler: poop},
+		{text: 'Play',icon: imgURL+'/control_play_blue.png',handler: poop},
+		{text: 'Delete Shape',icon: imgURL+'/delete.png',handler: poop},
+		{text: 'Clear Frame',icon: imgURL+'/cancel.png',handler: poop},
+		{text: 'Undo',icon: imgURL+'/arrow_undo.png',handler: poop},
+	    {text: 'Drawing Tool',icon: imgURL+'/paintbrush.png', menu: drawToolSubmenu},
+	    {text: 'Fill Color',icon: imgURL+'/color_wheel.png', menu: fillColorMenu},
+		{text: 'Line Color',icon: imgURL+'/color_wheel.png', menu: lineColorMenu}
 	]
 });
 

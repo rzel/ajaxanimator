@@ -4,55 +4,23 @@
 <head>
 	<title>Ajax Animator</title>
 	<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.css">
+	
 	<!--BeginCSS-->
 	<link rel="stylesheet" type="text/css" href="../ajaxanimator/ajaxanimator.css">
 	<link rel="stylesheet" type="text/css" href="../ajaxanimator/timeline.css">
 	<link rel="stylesheet" type="text/css" href="../ext/color-picker.ux.css">
-  <link rel="stylesheet" type="text/css" href="../ext/secure-pass.css">
-	
+	<link rel="stylesheet" type="text/css" href="../ext/secure-pass.css">
 	<!--EndCSS-->
-	<!--BeginJS-->
-	<script type="text/javascript" src="../ext/ext-base.js"></script>
-	<script type="text/javascript" src="../ext/ext-all-debug.js"></script>
-	<script type="text/javascript" src="../ext/color-picker.ux.js"></script>
-	<script type="text/javascript" src="../ext/secure-pass.js"></script>
-	<script type="text/javascript" src="../lib/prototype.lite.js"></script>
-	<script type="text/javascript" src="../lib/md5.js"></script>
-	<script type="text/javascript" src="../richdraw/richdraw.js"></script>
-	<script type="text/javascript" src="../richdraw/svgrenderer.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/ajaxanimator.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/layout.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/window.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/color.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/menus.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/timeline2.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/canvas.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/flash.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/animation.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/tweening.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/userManagement.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/keyHandler.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/drawFunctions.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/animationLoader.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/globalvars.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/stats.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/historyManagement.js"></script>
-	<script type="text/javascript" src="../ajaxanimator/animationxml.js"></script>
-	<!--EndJS-->
+	
 	</head>
 	<body style="overflow: hidden">
 	
-	<!--BeginBodyJS-->
-	<script type="text/javascript" src="../lib/wz_tooltip-min.js"></script>
-	<!--EndBodyJS-->
-	
-	<div id="loading">
-	<div class="loading-indicator">
-	<img alt="Loading..." src="../resources/images/default/grid/loading.gif" style="width:16px;height:16px;">
-	&#160;Loading...
-	</div>
-	</div>
-  	<div id="loading-mask" class="loadingMask">&#160;</div>
+	<div id="loading"><div class="loading-indicator"><table border="0px"><tr><td>
+	<img src="../images/loading-large.gif" alt="" class="loadingIcon">
+	</td><td>&nbsp;</td><td><span style="text-align:center">Ajax Animator</span><br>
+	<span id="loading-msg">Loading JS/CSS...</span></td></tr></table>
+	<div id="loadProgressBorder"><div id="loadProgressBar" style="width: 5px">
+	</div></div></div></div><div id="loading-mask" class="loadingMask">&#160;</div>
 
 	<!-- GoogAd1-->
 	<iframe id="saveIframe" style="display: none"></iframe>
@@ -75,20 +43,13 @@
 	</div>
 	
 	<div id="uab-dialog">
-	<div class="x-dlg-hd">Browse User-Made Animations</div>
+	<div class="x-dlg-hd">Browse Animations</div>
 	<div class="x-dlg-bd">
 	<div id="animationBrowser">
-	<center>
-	<img alt="Refresh" src="../images/arrow_refresh.png" onclick="javascript:refreshOtherAnimations()">
-	<img alt="Back" src="../images/arrow_left.png" onclick="javascript:browseOtherAnimations()">
-	</center>
-	<div id="UAB"></div>
+	<div id="browserDisplay"></div>
 	</div>
 	<div id="animationViewer">
-	<center>
-	<a href="javascript:LAFC()">Import To Canvas</a>
 	<div id="AXMLPlayer" class="svgDisplay"></div>
-	</center>
 	</div>
 	</div>
 	</div>
@@ -102,25 +63,14 @@
 	<center>
 	<input type="button" onclick="saveAnimation()" value="Save To Computer">
 	<input type="button" onclick="savetoserver()" value="Save To Webserver">
-    <hr>
-	<a href="javascript:toggleSaveInput()">Save as text</a>
-	<div id="STROUT" style="display:none">
-	<textarea id="AXTxt" cols="20" rows="10" style="width: 200px;"></textarea><br>
-	<input type="button" value="Save" onclick="saveAXTxt()">
-	</div>
 	</center>
 	</div>
+
 	<div id="openTab">
 	<center>
 	<form enctype="multipart/form-data" target="uploadFrame" action="../php/upload.php" method="post">
     Open: <input name="uploaded" type="file"> <input type="submit" onclick="setTimeout('openAnimation()',1000);" value="Upload">
     </form><iframe name="uploadFrame" id="uploadFrame" style="display:none;visibility: hidden; height: 1px; width: 1px"></iframe>
-	<hr>
-	<a href="javascript:toggleLoadInput()">Open from text</a>
-	<div id="STRINPT" style="display:none">
-	<textarea id="AXIT" cols="20" rows="10" style="width: 200px"></textarea><br>
-	<input type="button" value="Load" onclick="loadAXIT()">
-	</div>
 	</center>
 	</div>
 	</div>
@@ -149,6 +99,8 @@
 	<!-- GoogAd2-->
 	</td></tr></table>
 	</div>
+	
+	
 	<div id="history-div">
 	<div id="history-tb"></div>
 	<div id="HistoryLayout">
@@ -156,24 +108,22 @@
 	</div>
 	</div>
 	</div>
-	<div id="login-div">
-	<div id="login-tb">
+	
+	
+	<div id="user-div">
+	<div id="user-tb"></div>
+	
+	
+    <div id="userLogin"></div>
+	<div id="userProfile"style="display:none">My Animations:</div>
+<div id="userFiles" style="display:none">
+<div id="userFileList"></div>
+</div>
+
 	</div>
-    <div id="userContent">
-	<div id="userQuery">
-	<div id="userManMode">Login</div>
-	<input type="text" id="usrId" title="Username" value="Username">
-	<input type="password" id="pwId"  title="Password" value="Password">
-	<input type="password" id="pwId2" title="Repeat Password" style="display:none" value="Password">
-	<input type="button" id="submitAction" value="Login" title="ooh! press this button!" onclick="submitUser()">
-	</div>
-	<div id="userProfile" style="display:none">
-	<div id="usrNme"style="font-size:small;"></div>
-	<hr>My&nbsp;Animations:
-	<div id="userFiles"></div>
-	</div>
-	</div>
-	</div>
+	
+	
+	
 	<div id="toolbar-div">
 	<div id="tbIcon"></div>
 	<div id="fillcolor" class="drawColor" style="background-image:url('../images/bucket.png');background-color: #ff0000;" onclick="FillColorChange()">FF0000</div>
@@ -191,18 +141,16 @@
 	<!-- GoogAd4-->
 	<td>
 	<div id="CanvasContainer"  style="margin-left: auto; margin-right: auto;width: 480px; height: 272px;overflow:auto"></div>
-		<div id="playControls">
 		<center>
 		<img alt="&lt;--" src="../images/player_rew.png" onclick="preFrame();">
 		<img alt="play" src="../images/player_play.png" onclick="playAnimation();">
 		<img alt="stop" src="../images/player_stop.png" onclick="stopAnimation();">
 		<img alt="--&gt;" src="../images/player_fwd.png" onclick="nextFrame();">
-		</center>
-		</div>
-	<center>
+		
+
 	<br>
 	<div style="font-size:x-small" id="status"></div>
-    </center>
+</center>
 	</td>
 	<!-- GoogAd5-->
 	</tr>
@@ -221,6 +169,36 @@
     </center>
     </div>
 	</div>
-	<!--JS Page Bottom-->
+	
+	<!--BeginJS-->
+	<script type="text/javascript" src="../lib/wz_tooltip-min.js"></script>
+	<script type="text/javascript" src="../ext/ext-base.js"></script>
+	<script type="text/javascript" src="../ext/ext-all-debug.js"></script>
+	<script type="text/javascript" src="../ext/color-picker.ux.js"></script>
+	<script type="text/javascript" src="../ext/secure-pass.js"></script>
+	<script type="text/javascript" src="../lib/prototype.lite.js"></script>
+	<script type="text/javascript" src="../lib/md5.js"></script>
+	<script type="text/javascript" src="../richdraw/richdraw.js"></script>
+	<script type="text/javascript" src="../richdraw/svgrenderer.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/ajaxanimator.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/layout.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/window.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/color.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/menus.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/timeline2.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/canvas.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/flash.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/animation.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/tweening.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/userManagement.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/keyHandler.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/drawFunctions.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/animationLoader.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/globalvars.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/stats.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/historyManagement.js"></script>
+	<script type="text/javascript" src="../ajaxanimator/animationxml.js"></script>
+	<!--EndJS-->
+	
 </body>
 </html>
