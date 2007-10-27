@@ -124,14 +124,17 @@ function gotoframe(frame,layer){
 if(typeof(frame)!=typeof(42)){frame=parseInt(frame)}
 if(typeof(layer)!=typeof(42)){layer=parseInt(layer)}
 if(frame<1){return}
-if(frame>frameTable.firstChild.childNodes[currentLayer-1].childNodes.length-1){
-addFrame();$("frameContainer").scrollLeft=$("frameContainer").scrollWidth}
+var cL=frameTable.firstChild.childNodes[currentLayer-1].childNodes.length-1
+if(frame>cL){for(var p=1;p<frame-cL;p++){addFrame();}
+$("frameContainer").scrollLeft=$("frameContainer").scrollWidth}
 if(frame>totalFrames){totalFrames=frame}
+
 gotoframeCanvas(frame,layer)
 gotoframeUI(frame,layer);
 }
 
 function gotoframeCanvas(frame,layer){
+DrawCanvas[currentCanvas].unselect();
 previousCanvas = currentCanvas;
 hideCurrentCanvas();
 currentCanvas = frame;
@@ -142,6 +145,7 @@ cloneFrame(previousCanvas)
 }
 }
 showCurrentCanvas();
+setCanvasProperties();
 }
 function initTimelineTable(frameContainer){
 frameTable = document.createElement("table");
