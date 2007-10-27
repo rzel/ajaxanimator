@@ -3,19 +3,27 @@
 <html>
 <head>
 	<title>Ajax Animator</title>
-	<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.css">
-	
+
 	<link rel="stylesheet" type="text/css" href="../ajaxanimator/ajaxanimator-all.css.php">
+	
+	<style type="text/css">#loading-mask{width:100%;height:100%;background:#c3daf9;position:absolute;
+	z-index:20000;left:0;top:0;}#loadingIcon{width:32px;height:32px;margin-right:8px;float:left;
+	vertical-align:top;}#loadProgressBar{height:3px;margin:1px;padding:0;background:#3974AF;}#loading{
+	position:absolute;left:45%;top:40%;z-index:20001;border:1px solid #ccc;width:150px;background:white;
+    color:#444;font:bold 13px tahoma,arial,helvetica;padding:10px;margin:0;height:auto;}
+	#loadProgressBorder{height:5px;background:#fff;border:1px solid silver;margin:0;padding:0;}#loading-msg{
+    font:normal 10px arial,tahoma,sans-serif;margin-bottom:8px;margin-top:3px;display:block;}</style>
 	
 	</head>
 	<body style="overflow: hidden">
-	
-	<div id="loading"><div class="loading-indicator"><table border="0px"><tr><td>
+
+	<div id="loading"><table border="0px"><tr><td>
 	<img src="../images/loading-large.gif" alt="" class="loadingIcon">
 	</td><td>&nbsp;</td><td><span style="text-align:center">Ajax Animator</span><br>
 	<span id="loading-msg">Loading JS/CSS...</span></td></tr></table>
 	<div id="loadProgressBorder"><div id="loadProgressBar" style="width: 5px">
-	</div></div></div></div><div id="loading-mask" class="loadingMask">&#160;</div>
+	</div></div></div>
+	<div id="loading-mask">&#160;</div>
 
 	<!-- GoogAd1-->
 	<iframe id="saveIframe" style="display: none"></iframe>
@@ -71,6 +79,21 @@
 	</div>
 	</div>
 	
+
+		
+		
+	<map name="ControlMap1" id="ControlMap1">
+	<area shape="poly" coords="31,28,31,2,19,9,19,4,1,15,19,27,19,20" onclick="preFrame();" alt="&lt;--">
+	<area shape="poly" coords="36,31,36,0,65,16" onclick="playAnimation();" alt="Play">
+	<area shape="rect" coords="67,2,95,30" onclick="stopAnimation();" alt="Stop">
+	<area shape="poly" coords="96,3,96,27,107,21,107,27,127,15,107,2,107,8" onclick="nextFrame();" alt="--&gt">
+	</map>
+	<map name="ControlMap2" id="ControlMap2">
+	<area shape="poly" coords="31,28,31,2,19,9,19,4,1,15,19,27,19,20" onclick="fPre();" alt="&lt;--">
+	<area shape="poly" coords="36,31,36,0,65,16" onclick="fPlay();" alt="Play">
+	<area shape="rect" coords="67,2,95,30" onclick="fStop();" alt="Stop">
+	<area shape="poly" coords="96,3,96,27,107,21,107,27,127,15,107,2,107,8" onclick="fNext();" alt="--&gt">
+	</map>
 	
 	<div id="north-div">
 	<div id="north-tb"></div>
@@ -111,18 +134,16 @@
 	
     <div id="userLogin"></div>
 	<div id="userProfile"style="display:none">My Animations:</div>
-<div id="userFiles" style="display:none">
-<div id="userFileList"></div>
-</div>
+	<div id="userFiles" style="display:none">
+	<div id="userFileList"></div>
+	</div>
 
 	</div>
 	
-	
-	
 	<div id="toolbar-div">
 	<div id="tbIcon"></div>
-	<div id="fillcolor" class="drawColor" style="background-image:url('../images/bucket.png');background-color: #ff0000;" onclick="FillColorChange()">FF0000</div>
-	<div id="linecolor" class="drawColor" style="background-image:url('../images/pencil.png');background-color: #000000;" onclick="LineColorChange()">000000</div>
+	<div id="fillcolor" class="drawColor" onclick="FillColorChange()">FF0000</div>
+	<div id="linecolor" class="drawColor" onclick="LineColorChange()">000000</div>
 	<input type="text" id="linewidth" size="1">
 	</div>
 	<div id="canvas-div">
@@ -136,16 +157,11 @@
 	<!-- GoogAd4-->
 	<td>
 	<div id="CanvasContainer"  style="margin-left: auto; margin-right: auto;width: 480px; height: 272px;overflow:auto"></div>
-		<center>
-		<img alt="&lt;--" src="../images/player_rew.png" onclick="preFrame();">
-		<img alt="play" src="../images/player_play.png" onclick="playAnimation();">
-		<img alt="stop" src="../images/player_stop.png" onclick="stopAnimation();">
-		<img alt="--&gt;" src="../images/player_fwd.png" onclick="nextFrame();">
-		
-
+	<center>
+	<div id="canvasControlBar"></div>
 	<br>
 	<div style="font-size:x-small" id="status"></div>
-</center>
+	</center>
 	</td>
 	<!-- GoogAd5-->
 	</tr>
@@ -158,9 +174,10 @@
 	<div id="preview-tb"></div>
     <div id="FlashPreview">
     <center>
-    <div style="border: 1px black solid;" id="zFlashPreviewDiv"></div><br>
+    <div style="border: 1px black solid;" id="zFlashPreviewDiv"></div>
+	<div id="previewControlBar"></div>
+	<br>
     <div id="previewStatus" style="font-size:x-small">Mode: Preview</div>
-    <div id="RevisionBrowserDiv"></div>
     </center>
     </div>
 	</div>

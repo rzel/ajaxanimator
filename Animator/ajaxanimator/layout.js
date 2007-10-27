@@ -1,4 +1,5 @@
 var mainLayout;
+var exportText;
 var pButton = new Ext.Toolbar.Button({text: 'Reload Preview', handler: function(){preFlash}})
 var eButton = new Ext.Toolbar.Button({text: 'Export Animation', handler: function(){genFlash()}})
 ajaxanimator.onReady(function(){
@@ -13,12 +14,9 @@ ajaxanimator.onReady(function(){
 	propToolbar.addText("Properties")
 	var histToolbar = new Ext.Toolbar('history-tb');
 	var previewToolbar = new Ext.Toolbar('preview-tb');
-	previewToolbar.addText("Preview");
-	previewToolbar.add("-")
 	
-	previewToolbar.addButton(pButton);
-	previewToolbar.addButton(eButton);
-	previewToolbar.addText('<div id="export"></div>');
+
+	
 	//previewToolbar.add("<div id=''")
 	mainLayout = new Ext.BorderLayout(document.body, {
 		north:{ titlebar: false, split: true, initialSize: 120 , collapsible: true, toolbar: topToolbar}, 
@@ -41,6 +39,7 @@ ajaxanimator.onReady(function(){
 	mainLayout.getRegion('east').showPanel('history-div');
 	mainLayout.getRegion('south').showPanel('properties-div');
 	mainLayout.getRegion('center').getPanel('preview-div').on("activate",function(e){
+	editControlToolbar("previewControlBar",2)
 	if(Ext.isIE != true){
 	preFlash();
 	}else{}

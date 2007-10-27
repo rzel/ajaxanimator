@@ -1,5 +1,7 @@
 var canvasHeightField;
 var canvasWidthField;
+var previewRevisionStore;
+var previewRevision;
 var framerateField;
 var regbutton;
 var logoutbutton;
@@ -128,7 +130,7 @@ ajaxanimator.onReady(function(){
 	var helpMenu = new Ext.menu.Menu({
         id: 'helpMenu',
         items: [
-			{text: 'About',icon: imgURL+'/help.png',handler: function(){Ext.MessageBox.alert("This was developed entirely by Antimatter15, the special thanks to section isnt here yet because of ajax issues...")}},
+			{text: 'About',icon: imgURL+'/help.png',handler: function(){Ext.MessageBox.alert("Don't worry, a real one will be implemented soon.... hopefully...","This was developed entirely by Antimatter15, the special thanks to section isnt here yet because of ajax issues...")}},
 			{text: 'Key Shortcuts', icon: imgURL+'/help.png',handler: function(){showKeyGuide()}},
 			{text: 'Manual',icon: imgURL+'/help.png',handler: function(){Ext.MessageBox.alert("LA LA LA","Okay, so um.... play around until it breaks?")}},
 			{text: 'FAQ',icon: imgURL+'/help.png',handler: poop},
@@ -253,8 +255,37 @@ centerToolbar.addText("Zoom:")
 
 	
 centerToolbar.addField(canvasZoom)
-});
 
+var previewToolbar = new Ext.Toolbar("preview-tb")
+	previewToolbar.addText("Preview");
+	previewToolbar.add("-")
+	previewToolbar.addButton(pButton);
+	previewToolbar.addButton(eButton);
+	exportText = new Ext.menu.TextItem("")
+	previewToolbar.add(exportText)
+	previewToolbar.add( new Ext.Toolbar.Fill());
+	
+    previewRevisionStore = new Ext.data.SimpleStore({
+        fields: ['revision'],
+        data : [["Revision: 0(Empty)"]]
+    });
+    previewRevision = new Ext.form.ComboBox({
+        store: previewRevisionStore,
+        displayField:'revision',
+        typeAhead: true,
+        mode: 'local',
+		value: "Revision: 0(Empty)",
+        triggerAction: 'all',
+        selectOnFocus:true,
+        resizable:true
+    });
+	previewRevision.on("select",function(c){
+	$("zFlashPreviewDiv").innerHTML = genFlashHTML(animationRevisionURL[parseInt(c.value.substring(c.value.indexOf(":")+1))])
+	})
+	previewToolbar.add(previewRevision)
+
+});
+//previewRevisionStore.add(new historyGrid.dataSource.reader.recordType({revision: "treestookovertheworld"}))
 function poop(){
 Ext.MessageBox.alert("Error!","This version you are using is incomplete, or this feature has not yet been implemented, and/or transferred from dhtmlgoodies to Ext, or being rewritten")
 }

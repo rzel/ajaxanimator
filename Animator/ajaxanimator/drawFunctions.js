@@ -1,4 +1,11 @@
 ajaxanimator.onReady(function(){
+
+$("fillcolor").style.backgroundImage = "url('"+imgURL+"/bucket.png')"
+$("linecolor").style.backgroundImage = "url('"+imgURL+"/pencil.png')"
+
+$("fillcolor").style.backgroundColor =  "#ff0000"
+$("linecolor").style.backgroundColor = " #000000"
+
 var genDB = [
 	"select|select.gif",
 	"rect|rectangle.gif",
@@ -45,6 +52,7 @@ drawTools.line = function(){setMode('line', 'Line');}
 
 var iconId;
 var lineWidth;
+
 ajaxanimator.onReady(function(){
 iconId = new Array("select","rect","roundrect","ellipse","line","delete") 
 for(var iid = 0; iid < iconId.length; iid++){
@@ -172,7 +180,7 @@ DrawCanvas  =DrawLayer[currentLayer] ;
     for(var iid = 0; iid < iconId.length; iid++){
 	$(iconId[iid]).style.backgroundImage = "";
 	}
-	$(id).style.backgroundImage = "url(../images/selectedMask.png)"
+	$(id).style.backgroundImage = "url("+imgURL+"/selectedMask.png)"
 	}
   }
   function setMode(mode, status) {

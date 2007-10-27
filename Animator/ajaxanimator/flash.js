@@ -1,6 +1,6 @@
-
+var fGenDir = "../freemovie/"
 function preFlash(){
-initRevisionBrowser()
+updateRevisionList()
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
 if(animationRevision[revisionNumber -1 ] == generateAnimationXML()){
 setTimeout("embedAnimationPreview()",100); //hack to make it work right...
@@ -13,7 +13,7 @@ pButton.setText( 'generating...')
 var swfgen = generateAnimationXML();
 if(swfgen.length > 50){
 Ext.Ajax.request({
-url: "../freemovie/swfgen.php",
+url: fGenDir+"swfgen.php",
 params: {
 type: "preview",
 height: canvasHeight,
@@ -24,7 +24,7 @@ svg: swfgen,
 success: function(e){
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
 animationRevision[revisionNumber] = generateAnimationXML();
-var flashHTML = "",FLASHfilename=e.responseText.replace('preview','../freemovie/preview');
+var flashHTML = "",FLASHfilename=fGenDir+e.responseText
 lastAnimationURL = FLASHfilename;
 animationRevisionURL[revisionNumber] = FLASHfilename;
 revisionNumber++;
@@ -38,8 +38,9 @@ if(e.responseText.indexOf('<br>') != -1 || e.responseText.indexOf('<b>') != -1 )
 document.getElementById("zFlashPreviewDiv").innerHTML = e.responseText ;
 }
 }
-initRevisionBrowser()
-}
+updateRevisionList()
+},
+failure: failCon 
 })
 }else{$('zFlashPreviewDiv').innerHTML = "Empty Animation";}
 }
@@ -57,13 +58,13 @@ zSWFFilename = zSWFFilename.replace(".swf","");
 zSWFFilename = escape(zSWFFilename)
 eButton.disable()
 eButton.setText('generating...');
-$('export').innerHTML = '';
+exportText.getEl().dom.innerHTML = ""
 var swfgen = generateAnimationXML();
 if(swfgen.length > 50){
 
 
 Ext.Ajax.request({
-url: "../freemovie/swfgen.php",
+url: fGenDir+"swfgen.php",
 params: {
 filename: zSWFFilename,
 type: "export",
@@ -89,11 +90,11 @@ Ext.MessageBox.alert("Export Flash","Canceled")
 
 
 function generateSWFResponse(responsedata){
-var responseurl = responsedata.replace('files','../freemovie/files');
-$('export').innerHTML = '<a id="zExportURL" href="' + responseurl + '>' + responseurl + '</a>';
+var responseurl =fGenDir+responsedata
+exportText.getEl().dom.innerHTML = '<a id="zExportURL" href="' + responseurl + '>' + responseurl + '</a>';
 eButton.enable()
 eButton.setText( 'Export Animation');
-$('export').innerHTML = '<a id="zExportURL" href="' + $('zExportURL').href + '>' + $('zExportURL').href + '</a>';
+exportText.getEl().dom.innerHTML = '<a id="zExportURL" href="' + $('zExportURL').href + '>' + $('zExportURL').href + '</a>';
 $('saveIframe').src = "../php/saveRedirect.php?url="+responseurl+"&fn="+responseurl.substring(responseurl.lastIndexOf("/")+1)
 }
 
@@ -120,35 +121,43 @@ $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1)
 document.getElementById("zFlashPreviewDiv").innerHTML = genFlashHTML(lastAnimationURL);
 }
 
-function PreviewRevision(revision){
-AnimationPlay == true
-
-$("zFlashPreviewDiv").innerHTML = genFlashHTML(animationRevisionURL[revision]);
-}
-
-function setRevisionFromBrowser(){
-var RevisionBox = $('RevisionBrowser'); 
-PreviewRevision(parseInt(RevisionBox.options[RevisionBox.selectedIndex].value));
-}
-
-function initRevisionBrowser(){
-var zRevisionBrowserHTML = "";
-zRevisionBrowserHTML += '<select id="RevisionBrowser" onchange="setRevisionFromBrowser();">'
+function updateRevisionList(){
+previewRevisionStore.removeAll()
+var v;
 for(var zRevisionOption = 0; zRevisionOption < animationRevision.length; zRevisionOption++){
-var otherOptions = "";
-if(zRevisionOption == animationRevision.length -1){
-otherOptions = " (HEAD)"
+v = 'Revision: '+zRevisionOption
+if(zRevisionOption == animationRevision.length -1){v+=" (HEAD)"}
+if(zRevisionOption==0){v+=" (Empty)"}
+previewRevisionStore.add(new historyGrid.dataSource.reader.recordType({revision:v}))
 }
-if(zRevisionOption == 0){
-otherOptions = " (Empty)"
-}
-zRevisionBrowserHTML += '<option value="'+zRevisionOption+'">Revision: '+zRevisionOption+'' + otherOptions+'</option>'
-}
-zRevisionBrowserHTML += '</select>'
-$('RevisionBrowserDiv').innerHTML = zRevisionBrowserHTML;
-try{
-$('RevisionBrowser').options[animationRevision.length -1].selected = 'selected';
-}catch(err){}
-	  
+previewRevision.setValue(v)
 }
 
+function getFlashObject(movieName){
+
+if(navigator.appName.indexOf("Microsoft Internet")==-1){
+if(document.embeds && document.embeds[movieName]){
+return document.embeds[movieName]; 
+}
+if (window.document[movieName]) {
+return window.document[movieName];
+}
+}else{
+return document.getElementById(movieName);
+}
+}
+
+function fNext(){
+ var currentFrame=getFlashObject("fpre").TGetProperty("/", 4);
+ getFlashObject("fpre").GotoFrame(parseInt(currentFrame));
+}
+function fPre(){
+ var currentFrame=getFlashObject("fpre").TGetProperty("/", 4);
+ getFlashObject("fpre").GotoFrame(parseInt(currentFrame)-2);
+}
+function fPlay(){
+getFlashObject("fpre").Play()
+}
+function fStop(){
+getFlashObject("fpre").StopPlay()
+}

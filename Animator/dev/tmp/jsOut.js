@@ -1948,7 +1948,6 @@ SVGRenderer.prototype.getMarkup = function() {
 
 var onreadyfunct = new Array();
 // reference local blank image
-Ext.BLANK_IMAGE_URL = '../resources/images/default/s.gif';
 // create namespace
 Ext.namespace('ajaxanimator');
 // create application
@@ -1965,7 +1964,7 @@ imgURL = alternateHost+"images";
 cssURL = themeURL+"/css/ext-all.css"; 
 }
 }
-
+Ext.BLANK_IMAGE_URL = themeURL+'/images/default/s.gif';
 	
 Ext.onReady(function(){
 if(!document.createElementNS){
@@ -1975,10 +1974,36 @@ document.createElementNS = function(f,a){return document.createElement(a)}
 }
 })
 
+function loadCSS(cssUri){
 
+
+/*
+var impCSS = document.createElement("style")
+impCSS.setAttribute("type","text/css")
+impCSS.innerHTML = "@import url('"+cssUri+"');";
+document.getElementsByTagName("HEAD")[0].appendChild(impCSS)
+*/
+//$("cssImporter").innerHTML = "@import url('"+cssUri+"');";
+/*
+if(document.styleSheets){
+document.styleSheets[0].insertRule("@import url('"+cssUri+"');", 0)
+}else if(document.stylesheets){
+document.stylesheets[0].addRule("@import url('"+cssUri+"');", 0)
+}
+*/
+
+var nCSS = document.createElement("link")
+nCSS.setAttribute('href', cssUri);
+nCSS.setAttribute('type', 'text/css');
+nCSS.setAttribute('rel','stylesheet')
+document.getElementsByTagName("HEAD")[0].appendChild(nCSS);
+
+}
+//<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.css">
 ajaxanimator.app = function() {
     return {
         init: function() {
+		
 		stopPseudo = true;
 			Ext.QuickTips.interceptTitles = true;
 			Ext.QuickTips.init();
@@ -2060,8 +2085,9 @@ Ext.onReady(ajaxanimator.app.init, ajaxanimator.app);
 
 
 window.onload=function(){
-			setTimeout("interLoad()",0);
-			setTimeout("showTehAdz()", 10000);
+loadCSS(themeURL+"/css/ext-all.css")
+setTimeout("interLoad()",0);
+setTimeout("showTehAdz()", 10000);
 }
 
 function finalizeInit(){
@@ -2116,8 +2142,23 @@ setTimeout("finalizeInit()",300)
 	}, true).slideIn('t').pause(1).ghost("t", {remove:true});
 }
 
+ajaxanimator.onReady(function(){
+editControlToolbar("canvasControlBar",1)
+})
+
+function editControlToolbar(con,map){
+if($(con)){
+if(!$(con).firstChild){
+var nImg = document.createElement("img")
+nImg.usemap = "#ControlMap"+map
+nImg.src = imgURL+"/controlToolbar.png"
+$(con).appendChild(nImg)
+}
+}
+}
 
 var mainLayout;
+var exportText;
 var pButton = new Ext.Toolbar.Button({text: 'Reload Preview', handler: function(){preFlash}})
 var eButton = new Ext.Toolbar.Button({text: 'Export Animation', handler: function(){genFlash()}})
 ajaxanimator.onReady(function(){
@@ -2132,12 +2173,9 @@ ajaxanimator.onReady(function(){
 	propToolbar.addText("Properties")
 	var histToolbar = new Ext.Toolbar('history-tb');
 	var previewToolbar = new Ext.Toolbar('preview-tb');
-	previewToolbar.addText("Preview");
-	previewToolbar.add("-")
 	
-	previewToolbar.addButton(pButton);
-	previewToolbar.addButton(eButton);
-	previewToolbar.addText('<div id="export"></div>');
+
+	
 	//previewToolbar.add("<div id=''")
 	mainLayout = new Ext.BorderLayout(document.body, {
 		north:{ titlebar: false, split: true, initialSize: 120 , collapsible: true, toolbar: topToolbar}, 
@@ -2160,6 +2198,7 @@ ajaxanimator.onReady(function(){
 	mainLayout.getRegion('east').showPanel('history-div');
 	mainLayout.getRegion('south').showPanel('properties-div');
 	mainLayout.getRegion('center').getPanel('preview-div').on("activate",function(e){
+	editControlToolbar("previewControlBar",2)
 	if(Ext.isIE != true){
 	preFlash();
 	}else{}
@@ -2437,6 +2476,8 @@ function displayColor(){
 
 var canvasHeightField;
 var canvasWidthField;
+var previewRevisionStore;
+var previewRevision;
 var framerateField;
 var regbutton;
 var logoutbutton;
@@ -2565,7 +2606,7 @@ ajaxanimator.onReady(function(){
 	var helpMenu = new Ext.menu.Menu({
         id: 'helpMenu',
         items: [
-			{text: 'About',icon: imgURL+'/help.png',handler: function(){Ext.MessageBox.alert("This was developed entirely by Antimatter15, the special thanks to section isnt here yet because of ajax issues...")}},
+			{text: 'About',icon: imgURL+'/help.png',handler: function(){Ext.MessageBox.alert("Don't worry, a real one will be implemented soon.... hopefully...","This was developed entirely by Antimatter15, the special thanks to section isnt here yet because of ajax issues...")}},
 			{text: 'Key Shortcuts', icon: imgURL+'/help.png',handler: function(){showKeyGuide()}},
 			{text: 'Manual',icon: imgURL+'/help.png',handler: function(){Ext.MessageBox.alert("LA LA LA","Okay, so um.... play around until it breaks?")}},
 			{text: 'FAQ',icon: imgURL+'/help.png',handler: poop},
@@ -2690,8 +2731,37 @@ centerToolbar.addText("Zoom:")
 
 	
 centerToolbar.addField(canvasZoom)
-});
 
+var previewToolbar = new Ext.Toolbar("preview-tb")
+	previewToolbar.addText("Preview");
+	previewToolbar.add("-")
+	previewToolbar.addButton(pButton);
+	previewToolbar.addButton(eButton);
+	exportText = new Ext.menu.TextItem("")
+	previewToolbar.add(exportText)
+	previewToolbar.add( new Ext.Toolbar.Fill());
+	
+    previewRevisionStore = new Ext.data.SimpleStore({
+        fields: ['revision'],
+        data : [["Revision: 0(Empty)"]]
+    });
+    previewRevision = new Ext.form.ComboBox({
+        store: previewRevisionStore,
+        displayField:'revision',
+        typeAhead: true,
+        mode: 'local',
+		value: "Revision: 0(Empty)",
+        triggerAction: 'all',
+        selectOnFocus:true,
+        resizable:true
+    });
+	previewRevision.on("select",function(c){
+	$("zFlashPreviewDiv").innerHTML = genFlashHTML(animationRevisionURL[parseInt(c.value.substring(c.value.indexOf(":")+1))])
+	})
+	previewToolbar.add(previewRevision)
+
+});
+//previewRevisionStore.add(new historyGrid.dataSource.reader.recordType({revision: "treestookovertheworld"}))
 function poop(){
 Ext.MessageBox.alert("Error!","This version you are using is incomplete, or this feature has not yet been implemented, and/or transferred from dhtmlgoodies to Ext, or being rewritten")
 }
@@ -2911,14 +2981,17 @@ function gotoframe(frame,layer){
 if(typeof(frame)!=typeof(42)){frame=parseInt(frame)}
 if(typeof(layer)!=typeof(42)){layer=parseInt(layer)}
 if(frame<1){return}
-if(frame>frameTable.firstChild.childNodes[currentLayer-1].childNodes.length-1){
-addFrame();$("frameContainer").scrollLeft=$("frameContainer").scrollWidth}
+var cL=frameTable.firstChild.childNodes[currentLayer-1].childNodes.length-1
+if(frame>cL){for(var p=1;p<frame-cL;p++){addFrame();}
+$("frameContainer").scrollLeft=$("frameContainer").scrollWidth}
 if(frame>totalFrames){totalFrames=frame}
+
 gotoframeCanvas(frame,layer)
 gotoframeUI(frame,layer);
 }
 
 function gotoframeCanvas(frame,layer){
+DrawCanvas[currentCanvas].unselect();
 previousCanvas = currentCanvas;
 hideCurrentCanvas();
 currentCanvas = frame;
@@ -2929,6 +3002,7 @@ cloneFrame(previousCanvas)
 }
 }
 showCurrentCanvas();
+setCanvasProperties();
 }
 function initTimelineTable(frameContainer){
 frameTable = document.createElement("table");
@@ -3095,9 +3169,9 @@ function initCanvas(){
 	//}
 	gotoframe(1,1);
 }
-
+var fGenDir = "../freemovie/"
 function preFlash(){
-initRevisionBrowser()
+updateRevisionList()
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
 if(animationRevision[revisionNumber -1 ] == generateAnimationXML()){
 setTimeout("embedAnimationPreview()",100); //hack to make it work right...
@@ -3110,7 +3184,7 @@ pButton.setText( 'generating...')
 var swfgen = generateAnimationXML();
 if(swfgen.length > 50){
 Ext.Ajax.request({
-url: "../freemovie/swfgen.php",
+url: fGenDir+"swfgen.php",
 params: {
 type: "preview",
 height: canvasHeight,
@@ -3121,7 +3195,7 @@ svg: swfgen,
 success: function(e){
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
 animationRevision[revisionNumber] = generateAnimationXML();
-var flashHTML = "",FLASHfilename=e.responseText.replace('preview','../freemovie/preview');
+var flashHTML = "",FLASHfilename=fGenDir+e.responseText
 lastAnimationURL = FLASHfilename;
 animationRevisionURL[revisionNumber] = FLASHfilename;
 revisionNumber++;
@@ -3135,8 +3209,9 @@ if(e.responseText.indexOf('<br>') != -1 || e.responseText.indexOf('<b>') != -1 )
 document.getElementById("zFlashPreviewDiv").innerHTML = e.responseText ;
 }
 }
-initRevisionBrowser()
-}
+updateRevisionList()
+},
+failure: failCon 
 })
 }else{$('zFlashPreviewDiv').innerHTML = "Empty Animation";}
 }
@@ -3154,13 +3229,13 @@ zSWFFilename = zSWFFilename.replace(".swf","");
 zSWFFilename = escape(zSWFFilename)
 eButton.disable()
 eButton.setText('generating...');
-$('export').innerHTML = '';
+exportText.getEl().dom.innerHTML = ""
 var swfgen = generateAnimationXML();
 if(swfgen.length > 50){
 
 
 Ext.Ajax.request({
-url: "../freemovie/swfgen.php",
+url: fGenDir+"swfgen.php",
 params: {
 filename: zSWFFilename,
 type: "export",
@@ -3186,11 +3261,11 @@ Ext.MessageBox.alert("Export Flash","Canceled")
 
 
 function generateSWFResponse(responsedata){
-var responseurl = responsedata.replace('files','../freemovie/files');
-$('export').innerHTML = '<a id="zExportURL" href="' + responseurl + '>' + responseurl + '</a>';
+var responseurl =fGenDir+responsedata
+exportText.getEl().dom.innerHTML = '<a id="zExportURL" href="' + responseurl + '>' + responseurl + '</a>';
 eButton.enable()
 eButton.setText( 'Export Animation');
-$('export').innerHTML = '<a id="zExportURL" href="' + $('zExportURL').href + '>' + $('zExportURL').href + '</a>';
+exportText.getEl().dom.innerHTML = '<a id="zExportURL" href="' + $('zExportURL').href + '>' + $('zExportURL').href + '</a>';
 $('saveIframe').src = "../php/saveRedirect.php?url="+responseurl+"&fn="+responseurl.substring(responseurl.lastIndexOf("/")+1)
 }
 
@@ -3217,39 +3292,46 @@ $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1)
 document.getElementById("zFlashPreviewDiv").innerHTML = genFlashHTML(lastAnimationURL);
 }
 
-function PreviewRevision(revision){
-AnimationPlay == true
-
-$("zFlashPreviewDiv").innerHTML = genFlashHTML(animationRevisionURL[revision]);
-}
-
-function setRevisionFromBrowser(){
-var RevisionBox = $('RevisionBrowser'); 
-PreviewRevision(parseInt(RevisionBox.options[RevisionBox.selectedIndex].value));
-}
-
-function initRevisionBrowser(){
-var zRevisionBrowserHTML = "";
-zRevisionBrowserHTML += '<select id="RevisionBrowser" onchange="setRevisionFromBrowser();">'
+function updateRevisionList(){
+previewRevisionStore.removeAll()
+var v;
 for(var zRevisionOption = 0; zRevisionOption < animationRevision.length; zRevisionOption++){
-var otherOptions = "";
-if(zRevisionOption == animationRevision.length -1){
-otherOptions = " (HEAD)"
+v = 'Revision: '+zRevisionOption
+if(zRevisionOption == animationRevision.length -1){v+=" (HEAD)"}
+if(zRevisionOption==0){v+=" (Empty)"}
+previewRevisionStore.add(new historyGrid.dataSource.reader.recordType({revision:v}))
 }
-if(zRevisionOption == 0){
-otherOptions = " (Empty)"
-}
-zRevisionBrowserHTML += '<option value="'+zRevisionOption+'">Revision: '+zRevisionOption+'' + otherOptions+'</option>'
-}
-zRevisionBrowserHTML += '</select>'
-$('RevisionBrowserDiv').innerHTML = zRevisionBrowserHTML;
-try{
-$('RevisionBrowser').options[animationRevision.length -1].selected = 'selected';
-}catch(err){}
-	  
+previewRevision.setValue(v)
 }
 
+function getFlashObject(movieName){
 
+if(navigator.appName.indexOf("Microsoft Internet")==-1){
+if(document.embeds && document.embeds[movieName]){
+return document.embeds[movieName]; 
+}
+if (window.document[movieName]) {
+return window.document[movieName];
+}
+}else{
+return document.getElementById(movieName);
+}
+}
+
+function fNext(){
+ var currentFrame=getFlashObject("fpre").TGetProperty("/", 4);
+ getFlashObject("fpre").GotoFrame(parseInt(currentFrame));
+}
+function fPre(){
+ var currentFrame=getFlashObject("fpre").TGetProperty("/", 4);
+ getFlashObject("fpre").GotoFrame(parseInt(currentFrame)-2);
+}
+function fPlay(){
+getFlashObject("fpre").Play()
+}
+function fStop(){
+getFlashObject("fpre").StopPlay()
+}
 function playAnimation(){
 AnimationPlay = true;
 doAnimation();
@@ -3770,6 +3852,13 @@ keyShortcuts = new Ext.KeyMap(document, [
 
 
 ajaxanimator.onReady(function(){
+
+$("fillcolor").style.backgroundImage = "url('"+imgURL+"/bucket.png')"
+$("linecolor").style.backgroundImage = "url('"+imgURL+"/pencil.png')"
+
+$("fillcolor").style.backgroundColor =  "#ff0000"
+$("linecolor").style.backgroundColor = " #000000"
+
 var genDB = [
 	"select|select.gif",
 	"rect|rectangle.gif",
@@ -3816,6 +3905,7 @@ drawTools.line = function(){setMode('line', 'Line');}
 
 var iconId;
 var lineWidth;
+
 ajaxanimator.onReady(function(){
 iconId = new Array("select","rect","roundrect","ellipse","line","delete") 
 for(var iid = 0; iid < iconId.length; iid++){
@@ -3943,7 +4033,7 @@ DrawCanvas  =DrawLayer[currentLayer] ;
     for(var iid = 0; iid < iconId.length; iid++){
 	$(iconId[iid]).style.backgroundImage = "";
 	}
-	$(id).style.backgroundImage = "url(../images/selectedMask.png)"
+	$(id).style.backgroundImage = "url("+imgURL+"/selectedMask.png)"
 	}
   }
   function setMode(mode, status) {

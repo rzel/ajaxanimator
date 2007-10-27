@@ -1,6 +1,5 @@
 var onreadyfunct = new Array();
 // reference local blank image
-Ext.BLANK_IMAGE_URL = '../resources/images/default/s.gif';
 // create namespace
 Ext.namespace('ajaxanimator');
 // create application
@@ -17,7 +16,7 @@ imgURL = alternateHost+"images";
 cssURL = themeURL+"/css/ext-all.css"; 
 }
 }
-
+Ext.BLANK_IMAGE_URL = themeURL+'/images/default/s.gif';
 	
 Ext.onReady(function(){
 if(!document.createElementNS){
@@ -27,10 +26,36 @@ document.createElementNS = function(f,a){return document.createElement(a)}
 }
 })
 
+function loadCSS(cssUri){
 
+
+/*
+var impCSS = document.createElement("style")
+impCSS.setAttribute("type","text/css")
+impCSS.innerHTML = "@import url('"+cssUri+"');";
+document.getElementsByTagName("HEAD")[0].appendChild(impCSS)
+*/
+//$("cssImporter").innerHTML = "@import url('"+cssUri+"');";
+/*
+if(document.styleSheets){
+document.styleSheets[0].insertRule("@import url('"+cssUri+"');", 0)
+}else if(document.stylesheets){
+document.stylesheets[0].addRule("@import url('"+cssUri+"');", 0)
+}
+*/
+
+var nCSS = document.createElement("link")
+nCSS.setAttribute('href', cssUri);
+nCSS.setAttribute('type', 'text/css');
+nCSS.setAttribute('rel','stylesheet')
+document.getElementsByTagName("HEAD")[0].appendChild(nCSS);
+
+}
+//<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.css">
 ajaxanimator.app = function() {
     return {
         init: function() {
+		
 		stopPseudo = true;
 			Ext.QuickTips.interceptTitles = true;
 			Ext.QuickTips.init();
@@ -112,8 +137,9 @@ Ext.onReady(ajaxanimator.app.init, ajaxanimator.app);
 
 
 window.onload=function(){
-			setTimeout("interLoad()",0);
-			setTimeout("showTehAdz()", 10000);
+loadCSS(themeURL+"/css/ext-all.css")
+setTimeout("interLoad()",0);
+setTimeout("showTehAdz()", 10000);
 }
 
 function finalizeInit(){
@@ -168,3 +194,17 @@ setTimeout("finalizeInit()",300)
 	}, true).slideIn('t').pause(1).ghost("t", {remove:true});
 }
 
+ajaxanimator.onReady(function(){
+editControlToolbar("canvasControlBar",1)
+})
+
+function editControlToolbar(con,map){
+if($(con)){
+if(!$(con).firstChild){
+var nImg = document.createElement("img")
+nImg.usemap = "#ControlMap"+map
+nImg.src = imgURL+"/controlToolbar.png"
+$(con).appendChild(nImg)
+}
+}
+}
