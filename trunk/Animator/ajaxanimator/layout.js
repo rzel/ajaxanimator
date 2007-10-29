@@ -16,8 +16,6 @@ ajaxanimator.onReady(function(){
 	var previewToolbar = new Ext.Toolbar('preview-tb');
 	
 
-	
-	//previewToolbar.add("<div id=''")
 	mainLayout = new Ext.BorderLayout(document.body, {
 		north:{ titlebar: false, split: true, initialSize: 120 , collapsible: true, toolbar: topToolbar}, 
 		south:{ tilebar: false, split: true, initialSize: 100 , collapsible: true}, 

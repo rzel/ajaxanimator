@@ -5,7 +5,7 @@ data : [["0","New Animation"]]
 });
 var historyCM = new Ext.grid.ColumnModel([
 	{header: "#", sortable: true,  dataIndex: 'number'},
-	{header: "Action", sortable: true,  dataIndex: 'action'},
+	{header: "Action", sortable: true,  dataIndex: 'action'}
 ]);
 historyGrid = new Ext.grid.Grid("HistoryContainer", {
 ds: historyDS,
@@ -74,6 +74,7 @@ addHistory("Add&nbsp;" + result)
 addHistory("Select/Move")
 }
 }
+frameCheckEdit()
 }
 
 function addHist(text){

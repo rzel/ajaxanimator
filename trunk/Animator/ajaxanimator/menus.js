@@ -94,8 +94,9 @@ ajaxanimator.onReady(function(){
 			{text: 'Clear Timeline', icon: imgURL+'/cancel.png',handler: function(){mainLayout.getRegion('center').showPanel('preview-div');}},
 			{text: 'Color Picker', icon: imgURL+'/color_wheel.png',handler:  function(){showColorDialog()}},
 			{text: 'Script/Macro Executor', icon: imgURL+'/application_xp_terminal.png',handler: function(){mainLayout.getRegion('south').showPanel('scriptExec-div');}},
-			{text: 'Debug Window',icon: imgURL+'/brick_go.png',handler:  function(){ openDebug()}}
-        ]
+			{text: 'Debug Window',icon: imgURL+'/brick_go.png',handler:  function(){ openDebug()}},
+			{text: 'Reload Application', icon: imgURL+'/action_refresh.gif',handler: function(){window.location.reload(true)}}
+		]
     });
 	var timelineMenu = new Ext.menu.Menu({
         id: 'timelineMenu',
@@ -180,7 +181,7 @@ ajaxanimator.onReady(function(){
 	topToolbar.add( new Ext.Toolbar.Fill());
 	
 	userMessage = topToolbar.addButton({
-            text: 'Welcome Guest',
+            text: 'Welcome&nbsp;Guest',
 			handler: function(){
 			mainLayout.getRegion('east').showPanel('-div');
 			}

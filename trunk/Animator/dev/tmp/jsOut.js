@@ -1953,57 +1953,69 @@ Ext.namespace('ajaxanimator');
 // create application
 
 var themeURL = "../resources";
+var cssLoaded = false;
 var imgURL = "../images";
 var alternateHost = "http://ajaxanimator.googlecode.com/svn/trunk/Animator/"
 var alternateStaticHost = false;
-if(window.location.href.indexOf("110mb.com")!=-1){ 
-if(window.location.href.indexOf("nohotlink")==-1){
+if(window.location.search.indexOf("110mb.com")!=-1){ 
+if(window.location.search.indexOf("nohotlink")==-1){
 alternateStaticHost = true;
 themeURL = alternateHost+"resources";
 imgURL = alternateHost+"images";
 cssURL = themeURL+"/css/ext-all.css"; 
 }
 }
+
 Ext.BLANK_IMAGE_URL = themeURL+'/images/default/s.gif';
-	
+
+if(window.location.search.indexOf("useslow")==true){
+themeURL = "http://antimatter15.110mb.com/Animator/resources"
+}
+
 Ext.onReady(function(){
 if(!document.createElementNS){
-Element.prototype.getAttributeNS = function(f,a){return this.getAttribute(a)}
-Element.prototype.setAttributeNS = function(f,a,b){return this.setAttribute(a,b)}
-document.createElementNS = function(f,a){return document.createElement(a)}
+//Element.prototype.getAttributeNS = function(f,a){return this.getAttribute(a)}
+//Element.prototype.setAttributeNS = function(f,a,b){return this.setAttribute(a,b)}
+//document.createElementNS = function(ns,f,a){return document.createElement(a)}
 }
 })
 
-function loadCSS(cssUri){
-
-
-/*
-var impCSS = document.createElement("style")
-impCSS.setAttribute("type","text/css")
-impCSS.innerHTML = "@import url('"+cssUri+"');";
-document.getElementsByTagName("HEAD")[0].appendChild(impCSS)
-*/
-//$("cssImporter").innerHTML = "@import url('"+cssUri+"');";
-/*
-if(document.styleSheets){
-document.styleSheets[0].insertRule("@import url('"+cssUri+"');", 0)
-}else if(document.stylesheets){
-document.stylesheets[0].addRule("@import url('"+cssUri+"');", 0)
+function loadCSS(cssUri,opt){
+if(!cssUri){
+cssUri=themeURL+"/css/ext-all.css"
 }
-*/
+
+if(cssLoaded){return}
+
+if(opt==2)return
+
+if(opt==2){if(Ext.isIE==true){return}}
+
+if(opt){if(window.location.search.indexOf("nocss")!=-1){return 1}}
+
+
 
 var nCSS = document.createElement("link")
 nCSS.setAttribute('href', cssUri);
 nCSS.setAttribute('type', 'text/css');
 nCSS.setAttribute('rel','stylesheet')
 document.getElementsByTagName("HEAD")[0].appendChild(nCSS);
+cssLoaded = true;
+
+if(opt==1){
+
+return 2000}
+
+while(document.styleSheets[5].cssRules.length < 100){
+
+}
 
 }
 //<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.css">
 ajaxanimator.app = function() {
     return {
         init: function() {
-		
+		loadCSS(themeURL+"/css/ext-all.css",2)
 		stopPseudo = true;
 			Ext.QuickTips.interceptTitles = true;
 			Ext.QuickTips.init();
@@ -2085,8 +2097,8 @@ Ext.onReady(ajaxanimator.app.init, ajaxanimator.app);
 
 
 window.onload=function(){
-loadCSS(themeURL+"/css/ext-all.css")
-setTimeout("interLoad()",0);
+var delay = loadCSS(themeURL+"/css/ext-all.css",1)
+setTimeout("interLoad()",delay);
 setTimeout("showTehAdz()", 10000);
 }
 
@@ -2123,7 +2135,10 @@ IEMessage();
 
 function interLoad(){
 setLoad("Building UI...",65)
+if(window.location.search.indexOf("noload")==-1){
 setTimeout("ajaxanimator.doReady()",10);//take a breath
+}
+loadCSS(themeURL+"/css/ext-all.css",3)
 setTimeout("finalizeInit()",300)
 }
 
@@ -2149,8 +2164,37 @@ editControlToolbar("canvasControlBar",1)
 function editControlToolbar(con,map){
 if($(con)){
 if(!$(con).firstChild){
+
+Ext.get("TpreFrame").on("click",function(e){
+if(mainLayout.getRegion('center').activePanel.getId()=="canvas-div"){
+preFrame()
+}else{
+fPre()
+}
+})
+Ext.get("TnxtFrame").on("click",function(e){
+if(mainLayout.getRegion('center').activePanel.getId()=="canvas-div"){
+nextFrame()
+}else{
+fNext()
+}
+})
+Ext.get("TplayAnim").on("click",function(e){
+if(mainLayout.getRegion('center').activePanel.getId()=="canvas-div"){
+playAnimation()
+}else{
+fPlay()
+}})
+Ext.get("TstopAnim").on("click",function(e){
+if(mainLayout.getRegion('center').activePanel.getId()=="canvas-div"){
+stopAnimation()
+}else{
+fStop()
+}})
+
 var nImg = document.createElement("img")
-nImg.usemap = "#ControlMap"+map
+nImg.usemap = "#ControlMap"
+nImg.setAttribute("usemap","#ControlMap")
 nImg.src = imgURL+"/controlToolbar.png"
 $(con).appendChild(nImg)
 }
@@ -2175,8 +2219,6 @@ ajaxanimator.onReady(function(){
 	var previewToolbar = new Ext.Toolbar('preview-tb');
 	
 
-	
-	//previewToolbar.add("<div id=''")
 	mainLayout = new Ext.BorderLayout(document.body, {
 		north:{ titlebar: false, split: true, initialSize: 120 , collapsible: true, toolbar: topToolbar}, 
 		south:{ tilebar: false, split: true, initialSize: 100 , collapsible: true}, 
@@ -2570,8 +2612,9 @@ ajaxanimator.onReady(function(){
 			{text: 'Clear Timeline', icon: imgURL+'/cancel.png',handler: function(){mainLayout.getRegion('center').showPanel('preview-div');}},
 			{text: 'Color Picker', icon: imgURL+'/color_wheel.png',handler:  function(){showColorDialog()}},
 			{text: 'Script/Macro Executor', icon: imgURL+'/application_xp_terminal.png',handler: function(){mainLayout.getRegion('south').showPanel('scriptExec-div');}},
-			{text: 'Debug Window',icon: imgURL+'/brick_go.png',handler:  function(){ openDebug()}}
-        ]
+			{text: 'Debug Window',icon: imgURL+'/brick_go.png',handler:  function(){ openDebug()}},
+			{text: 'Reload Application', icon: imgURL+'/action_refresh.gif',handler: function(){window.location.reload(true)}}
+		]
     });
 	var timelineMenu = new Ext.menu.Menu({
         id: 'timelineMenu',
@@ -2656,7 +2699,7 @@ ajaxanimator.onReady(function(){
 	topToolbar.add( new Ext.Toolbar.Fill());
 	
 	userMessage = topToolbar.addButton({
-            text: 'Welcome Guest',
+            text: 'Welcome&nbsp;Guest',
 			handler: function(){
 			mainLayout.getRegion('east').showPanel('-div');
 			}
@@ -2856,7 +2899,7 @@ Ext.get("canvas-div").on("contextmenu",function(e){
 });
 
 /*Variables*/
-var keyframeArray = new Array();
+var keyframeArray = new Array("1,1");
 var tweenArray = new Array();
 var currentFrame = 1;
 var currentLayer = 1;
@@ -2864,11 +2907,15 @@ var totalFrames = 1;
 var layerCount = 0;
 var frameTable;
 /* Helper Functions */
+
 function getObjects(frame){
-
 return DrawCanvas[frame].renderer.svgRoot.childNodes.length
-
 }
+
+function getFrameSVG(frame){
+	return DrawCanvas[frame].renderer.svgRoot;
+}
+
 function setFrameClass(classID,obj){
 if(!obj){
 obj = getFrameObj()
@@ -2888,10 +2935,21 @@ return getFrameObj(currentFrame,currentLayer);
 }
 }
 
+function isTween(frame,layer){
+	if(frame&&layer){
+	if((";"+tweenArray.join(";")).indexOf(";"+frame+","+layer) !=-1){
+		return true	
+	}else{
+		return false
+	}
+	}else{
+		return isTween(currentFrame,currentLayer)
+	}
+}
 
 function isKeyframe(frame,layer){
 if(frame&&layer){
-if(keyframeArray.join(";").indexOf(frame+","+layer) != -1){
+if((";"+keyframeArray.join(";")).indexOf(";"+frame+","+layer) != -1){
 return true;
 }else{
 return false;
@@ -2903,17 +2961,18 @@ return isKeyframe(currentFrame,currentLayer);
 /*Main Functions*/
 
 function nextFrame(){
-gotoframe(parseInt(currentFrame)+1,1)
+gotoframe(parseInt(currentFrame)+1,currentLayer)
 }
 function preFrame(){
-gotoframe(parseInt(currentFrame)-1,1)
+gotoframe(parseInt(currentFrame)-1,currentLayer)
 }
 function firstFrame(){
-gotoframe(1,1)
+gotoframe(1,currentLayer)
 }
 function lastFrame(){
-gotoframe(parseInt(totalFrames),1)
+gotoframe(parseInt(totalFrames),currentLayer)
 }
+
 function setLastFrame(frame){
 if(!frame){
 totalFrames = currentFrame
@@ -2926,10 +2985,12 @@ renderFrame(frame,currentLayer)
 }
 }
 function toKeyframe(frame,layer){
+if(!isTween(frame,layer)){
 frame = (frame)?frame:currentFrame
 layer = (layer)?layer:currentLayer
 keyframeArray.push(frame+","+layer)
 gotoframe(frame,layer)
+}
 }
 
 function removeKeyframe(frame,layer){
@@ -2953,7 +3014,11 @@ var ud = (deselect)?"un":"";
 if(isKeyframe(frame,layer)){ 
 setFrameClass(ud+"selKeyframe",getFrameObj(frame,layer)) 
 }else{
+if(!isTween(frame,layer)){
 setFrameClass(ud+"selFrame",getFrameObj(frame,layer)) 
+}else{
+setFrameClass(ud+"selTween",getFrameObj(frame,layer)) 
+}
 }
 }
 
@@ -2992,6 +3057,7 @@ gotoframeUI(frame,layer);
 
 function gotoframeCanvas(frame,layer){
 DrawCanvas[currentCanvas].unselect();
+frameCheckEdit()
 previousCanvas = currentCanvas;
 hideCurrentCanvas();
 currentCanvas = frame;
@@ -3004,6 +3070,28 @@ cloneFrame(previousCanvas)
 showCurrentCanvas();
 setCanvasProperties();
 }
+
+function frameCheckEdit(){
+	var p = parseInt(keyframeArray[keyframeArray.length-1].split(",")[0]);
+	if(p==currentFrame&&p!=1){
+	p=parseInt(keyframeArray[keyframeArray.length-2].split(",")[0])}
+	var res = parseDiff(getFrameSVG(currentFrame),getFrameSVG(p))
+	if(res=="D2"){
+		createTween(p,currentFrame)
+		for(var q = p+1; q < currentFrame; q++){
+			tweenArray.push(q+","+currentLayer)
+			renderFrame(q,currentLayer,true)
+		}
+		toKeyframe(currentFrame,currentLayer)
+	}
+	if(res=="D1"){
+		if(!isTween(currentFrame,currentLayer)){
+		toKeyframe(currentFrame,currentLayer)
+		}
+	}
+	
+}
+
 function initTimelineTable(frameContainer){
 frameTable = document.createElement("table");
 frameTable.className = "timeline";
@@ -3190,7 +3278,7 @@ type: "preview",
 height: canvasHeight,
 width: canvasWidth,
 framerate: AnimationFramerate,
-svg: swfgen,
+svg: swfgen
 },
 success: function(e){
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
@@ -3210,8 +3298,7 @@ document.getElementById("zFlashPreviewDiv").innerHTML = e.responseText ;
 }
 }
 updateRevisionList()
-},
-failure: failCon 
+}
 })
 }else{$('zFlashPreviewDiv').innerHTML = "Empty Animation";}
 }
@@ -3572,7 +3659,7 @@ failure: failCon
 }
 
 function logout(){
-$("userQuery").style.display = ""
+$("userLogin").style.display = ""
 $("userProfile").style.display = "none";
 encPW = "";
 userName = "";
@@ -3594,7 +3681,7 @@ Ext.get("userFiles").fadeIn(4)
 animationList()
 regbutton.setVisible(false)
 logoutbutton.setVisible(true)
-userMessage.setText("Welcome " + userName)
+userMessage.setText("Welcome&nbsp;" + userName)
 userMessage.enable()
 }
 
@@ -3856,17 +3943,17 @@ ajaxanimator.onReady(function(){
 $("fillcolor").style.backgroundImage = "url('"+imgURL+"/bucket.png')"
 $("linecolor").style.backgroundImage = "url('"+imgURL+"/pencil.png')"
 
-$("fillcolor").style.backgroundColor =  "#ff0000"
-$("linecolor").style.backgroundColor = " #000000"
+$("fillcolor").style.backgroundColor = "#ff0000"
+$("linecolor").style.backgroundColor = "#000000"
 
-var genDB = [
+var genDB = new Array(
 	"select|select.gif",
 	"rect|rectangle.gif",
 	"roundrect|roundrect.gif",
 	"ellipse|circle.gif",
 	"line|line.gif",
 	"delete|delete.gif"
-	]
+	)
 	var tbdiv = document.getElementById("tbIcon")
 	var toolTable = document.createElement("table")
 	var toolTBody = document.createElement("tbody")
@@ -4440,7 +4527,7 @@ data : [["0","New Animation"]]
 });
 var historyCM = new Ext.grid.ColumnModel([
 	{header: "#", sortable: true,  dataIndex: 'number'},
-	{header: "Action", sortable: true,  dataIndex: 'action'},
+	{header: "Action", sortable: true,  dataIndex: 'action'}
 ]);
 historyGrid = new Ext.grid.Grid("HistoryContainer", {
 ds: historyDS,
@@ -4509,6 +4596,7 @@ addHistory("Add&nbsp;" + result)
 addHistory("Select/Move")
 }
 }
+frameCheckEdit()
 }
 
 function addHist(text){
@@ -4530,3 +4618,28 @@ return "valid"
 }
 }
 */
+
+function parseDiff(faXd,saXd){
+	var sXd = saXd.cloneNode(true)
+	var fXd = faXd.cloneNode(true)
+	if(fXd.childNodes.length==sXd.childNodes.length){
+		var lng = fXd.childNodes.length
+		var plng = 0;
+		for(var i = 0; i < fXd.childNodes.length; i++){
+			var fcn = fXd.childNodes[i]
+			var scn = sXd.childNodes[i]
+			if(fcn.getAttribute("x")==scn.getAttribute("x")){
+				if(fcn.getAttribute("y")==scn.getAttribute("y")){
+					plng++
+				}
+			}
+		}
+		if(lng==plng){
+			return "S1"
+		}else{
+			return "D2"
+		}
+	}else{
+		return "D1"
+	}
+}
