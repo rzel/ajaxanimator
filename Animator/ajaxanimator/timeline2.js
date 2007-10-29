@@ -263,10 +263,33 @@ format("layer",layer)
 format("selected",((currentFrame==frame)?"true":"false"))
 if(typeof(DrawCanvas)!=typeof(undefined)&&(DrawCanvas[frame])?((DrawCanvas[frame].renderer.getMarkup().length>15)?"false":"true"):"true" == false){
 format("empty","false")
+setTimeout("timelinePreview("+frame+")");
 format("total objects",DrawCanvas[frame].renderer.svgRoot.childNodes.length)
 }else{
 format("empty","true")
 }
 tData+="<div id='timPreDiv' class='previewTooltip'><center>No Preview Availiable</center></div>"
+
 return tData;
+}
+
+function timelinePreview(frameNumber){
+if(document.getElementById("timPreDiv")){
+document.getElementById("timPreDiv").innerHTML = "";
+var svgNamespace = 'http://www.w3.org/2000/svg';
+var newSVGE = document.createElementNS(svgNamespace,"svg")
+newSVGE.setAttributeNS(null, "viewBox", "0 0 480 272");
+document.getElementById("timPreDiv").appendChild(newSVGE);
+var rdX = $("richdraw" + frameNumber).innerHTML
+var domShape = parseSVG(rdX).getElementsByTagName("svg")[0];
+for(var cId = 0; cId < domShape.childNodes.length; cId++){
+var cNode = domShape.childNodes[cId];
+var cAtt = cNode.attributes;
+var newShape = document.createElementNS(svgNamespace , cNode.tagName);
+for(var aId = 0; aId < cAtt.length; aId++){
+newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
+}
+document.getElementById("timPreDiv").firstChild.appendChild(newShape);
+}
+}
 }

@@ -65,22 +65,13 @@ loadFrame((new XMLSerializer()).serializeToString(tweenNode[cf]),cf + sf);
 }
 
 function loadFrame(Axml,frame){
+var svgNamespace = 'http://www.w3.org/2000/svg';
 if ( DrawCanvas[frame].renderer.svgRoot.hasChildNodes() ){
 while ( DrawCanvas[frame].renderer.svgRoot.childNodes.length >= 1 ){
 DrawCanvas[frame].renderer.svgRoot.removeChild( DrawCanvas[frame].renderer.svgRoot.firstChild );			 
 } 
 }
-var svgNamespace = 'http://www.w3.org/2000/svg';
-var domContainer;
-if (window.ActiveXObject){
-domContainer = new ActiveXObject("Microsoft.XMLDOM");
-domContainer.async="false";
-domContainer.loadXML(Axml);
-}else{
-var parser=new DOMParser();
-domContainer=parser.parseFromString(Axml,"text/xml");
-}
-var domFrame = domContainer.firstChild; //svg
+var domFrame = parseSVG(Axml).firstChild; //svg
 if(DrawCanvas[frame] == null){gotoframe(frame,1);}//create frame
 for(var cId = 0; cId < domFrame.childNodes.length; cId++){
 var cNode = domFrame.childNodes[cId];
@@ -92,4 +83,21 @@ newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
 DrawCanvas[frame].renderer.svgRoot.appendChild(newShape);
 Event.observe(newShape, "mousedown", DrawCanvas[frame].onHitListener);	
 }
+}
+
+
+//timPreDiv
+
+function parseSVG(Axml){
+var svgNamespace = 'http://www.w3.org/2000/svg';
+var domContainer;
+if (window.ActiveXObject){
+domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer.async="false";
+domContainer.loadXML(Axml);
+}else{
+var parser=new DOMParser();
+domContainer=parser.parseFromString(Axml,"text/xml");
+}
+return domContainer
 }
