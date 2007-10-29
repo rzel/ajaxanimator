@@ -27,8 +27,7 @@
 	</td><td>&nbsp;</td><td><span style="text-align:center">Ajax Animator</span><br>
 	<span id="loading-msg">Loading JS/CSS...</span></td></tr></table>
 	<div id="loadProgressBorder"><div id="loadProgressBar" style="width: 5px">
-	</div></div></div>
-	<div id="loading-mask">&#160;</div>
+	</div></div></div><div id="loading-mask">&#160;</div>
 
 	<!-- GoogAd1-->
 	<iframe id="saveIframe" style="display: none"></iframe>
@@ -84,14 +83,17 @@
 	</div>
 	</div>
 	
-
-		
-		
 	<map name="ControlMap1" id="ControlMap1">
 	<area shape="poly" coords="31,28,31,2,19,9,19,4,1,15,19,27,19,20" onclick="preFrame();" alt="&lt;--">
 	<area shape="poly" coords="36,31,36,0,65,16" onclick="playAnimation();" alt="Play">
 	<area shape="rect" coords="67,2,95,30" onclick="stopAnimation();" alt="Stop">
 	<area shape="poly" coords="96,3,96,27,107,21,107,27,127,15,107,2,107,8" onclick="nextFrame();" alt="--&gt">
+	</map>
+	<map name="ControlMap" id="ControlMap">
+	<area shape="poly" id="TpreFrame" coords="31,28,31,2,19,9,19,4,1,15,19,27,19,20" alt="&lt;--">
+	<area shape="poly" id="TplayAnim" coords="36,31,36,0,65,16" alt="Play">
+	<area shape="rect" id="TstopAnim" coords="67,2,95,30" alt="Stop">
+	<area shape="poly" id="TnxtFrame" coords="96,3,96,27,107,21,107,27,127,15,107,2,107,8" alt="--&gt">
 	</map>
 	<map name="ControlMap2" id="ControlMap2">
 	<area shape="poly" coords="31,28,31,2,19,9,19,4,1,15,19,27,19,20" onclick="fPre();" alt="&lt;--">
@@ -182,7 +184,7 @@
     <div style="border: 1px black solid;" id="zFlashPreviewDiv"></div>
 	<div id="previewControlBar"></div>
 	<br>
-    <div id="previewStatus" style="font-size:x-small">Mode: Preview</div>
+    <div id="previewStatus" style="font-size:x-small"></div>
     </center>
     </div>
 	</div>

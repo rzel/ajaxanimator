@@ -100,7 +100,7 @@ failure: failCon
 }
 
 function logout(){
-$("userQuery").style.display = ""
+$("userLogin").style.display = ""
 $("userProfile").style.display = "none";
 encPW = "";
 userName = "";
@@ -122,7 +122,7 @@ Ext.get("userFiles").fadeIn(4)
 animationList()
 regbutton.setVisible(false)
 logoutbutton.setVisible(true)
-userMessage.setText("Welcome " + userName)
+userMessage.setText("Welcome&nbsp;" + userName)
 userMessage.enable()
 }
 

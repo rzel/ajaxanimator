@@ -1,5 +1,5 @@
 /*Variables*/
-var keyframeArray = new Array();
+var keyframeArray = new Array("1,1");
 var tweenArray = new Array();
 var currentFrame = 1;
 var currentLayer = 1;
@@ -7,11 +7,15 @@ var totalFrames = 1;
 var layerCount = 0;
 var frameTable;
 /* Helper Functions */
+
 function getObjects(frame){
-
 return DrawCanvas[frame].renderer.svgRoot.childNodes.length
-
 }
+
+function getFrameSVG(frame){
+	return DrawCanvas[frame].renderer.svgRoot;
+}
+
 function setFrameClass(classID,obj){
 if(!obj){
 obj = getFrameObj()
@@ -31,10 +35,21 @@ return getFrameObj(currentFrame,currentLayer);
 }
 }
 
+function isTween(frame,layer){
+	if(frame&&layer){
+	if((";"+tweenArray.join(";")).indexOf(";"+frame+","+layer) !=-1){
+		return true	
+	}else{
+		return false
+	}
+	}else{
+		return isTween(currentFrame,currentLayer)
+	}
+}
 
 function isKeyframe(frame,layer){
 if(frame&&layer){
-if(keyframeArray.join(";").indexOf(frame+","+layer) != -1){
+if((";"+keyframeArray.join(";")).indexOf(";"+frame+","+layer) != -1){
 return true;
 }else{
 return false;
@@ -46,17 +61,18 @@ return isKeyframe(currentFrame,currentLayer);
 /*Main Functions*/
 
 function nextFrame(){
-gotoframe(parseInt(currentFrame)+1,1)
+gotoframe(parseInt(currentFrame)+1,currentLayer)
 }
 function preFrame(){
-gotoframe(parseInt(currentFrame)-1,1)
+gotoframe(parseInt(currentFrame)-1,currentLayer)
 }
 function firstFrame(){
-gotoframe(1,1)
+gotoframe(1,currentLayer)
 }
 function lastFrame(){
-gotoframe(parseInt(totalFrames),1)
+gotoframe(parseInt(totalFrames),currentLayer)
 }
+
 function setLastFrame(frame){
 if(!frame){
 totalFrames = currentFrame
@@ -69,10 +85,12 @@ renderFrame(frame,currentLayer)
 }
 }
 function toKeyframe(frame,layer){
+if(!isTween(frame,layer)){
 frame = (frame)?frame:currentFrame
 layer = (layer)?layer:currentLayer
 keyframeArray.push(frame+","+layer)
 gotoframe(frame,layer)
+}
 }
 
 function removeKeyframe(frame,layer){
@@ -96,7 +114,11 @@ var ud = (deselect)?"un":"";
 if(isKeyframe(frame,layer)){ 
 setFrameClass(ud+"selKeyframe",getFrameObj(frame,layer)) 
 }else{
+if(!isTween(frame,layer)){
 setFrameClass(ud+"selFrame",getFrameObj(frame,layer)) 
+}else{
+setFrameClass(ud+"selTween",getFrameObj(frame,layer)) 
+}
 }
 }
 
@@ -135,6 +157,7 @@ gotoframeUI(frame,layer);
 
 function gotoframeCanvas(frame,layer){
 DrawCanvas[currentCanvas].unselect();
+frameCheckEdit()
 previousCanvas = currentCanvas;
 hideCurrentCanvas();
 currentCanvas = frame;
@@ -147,6 +170,28 @@ cloneFrame(previousCanvas)
 showCurrentCanvas();
 setCanvasProperties();
 }
+
+function frameCheckEdit(){
+	var p = parseInt(keyframeArray[keyframeArray.length-1].split(",")[0]);
+	if(p==currentFrame&&p!=1){
+	p=parseInt(keyframeArray[keyframeArray.length-2].split(",")[0])}
+	var res = parseDiff(getFrameSVG(currentFrame),getFrameSVG(p))
+	if(res=="D2"){
+		createTween(p,currentFrame)
+		for(var q = p+1; q < currentFrame; q++){
+			tweenArray.push(q+","+currentLayer)
+			renderFrame(q,currentLayer,true)
+		}
+		toKeyframe(currentFrame,currentLayer)
+	}
+	if(res=="D1"){
+		if(!isTween(currentFrame,currentLayer)){
+		toKeyframe(currentFrame,currentLayer)
+		}
+	}
+	
+}
+
 function initTimelineTable(frameContainer){
 frameTable = document.createElement("table");
 frameTable.className = "timeline";

@@ -3,17 +3,17 @@ ajaxanimator.onReady(function(){
 $("fillcolor").style.backgroundImage = "url('"+imgURL+"/bucket.png')"
 $("linecolor").style.backgroundImage = "url('"+imgURL+"/pencil.png')"
 
-$("fillcolor").style.backgroundColor =  "#ff0000"
-$("linecolor").style.backgroundColor = " #000000"
+$("fillcolor").style.backgroundColor = "#ff0000"
+$("linecolor").style.backgroundColor = "#000000"
 
-var genDB = [
+var genDB = new Array(
 	"select|select.gif",
 	"rect|rectangle.gif",
 	"roundrect|roundrect.gif",
 	"ellipse|circle.gif",
 	"line|line.gif",
 	"delete|delete.gif"
-	]
+	)
 	var tbdiv = document.getElementById("tbIcon")
 	var toolTable = document.createElement("table")
 	var toolTBody = document.createElement("tbody")

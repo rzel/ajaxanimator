@@ -19,7 +19,7 @@ type: "preview",
 height: canvasHeight,
 width: canvasWidth,
 framerate: AnimationFramerate,
-svg: swfgen,
+svg: swfgen
 },
 success: function(e){
 $('previewStatus').innerHTML = "Mode: Preview (Revision " + (revisionNumber - 1) + ")"
@@ -39,8 +39,7 @@ document.getElementById("zFlashPreviewDiv").innerHTML = e.responseText ;
 }
 }
 updateRevisionList()
-},
-failure: failCon 
+}
 })
 }else{$('zFlashPreviewDiv').innerHTML = "Empty Animation";}
 }
