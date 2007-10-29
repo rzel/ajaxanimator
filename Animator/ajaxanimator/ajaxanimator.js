@@ -9,7 +9,7 @@ var cssLoaded = false;
 var imgURL = "../images";
 var alternateHost = "http://ajaxanimator.googlecode.com/svn/trunk/Animator/"
 var alternateStaticHost = false;
-if(window.location.search.indexOf("110mb.com")!=-1){ 
+if(window.location.href.indexOf("110mb.com")!=-1){ 
 if(window.location.search.indexOf("nohotlink")==-1){
 alternateStaticHost = true;
 themeURL = alternateHost+"resources";
