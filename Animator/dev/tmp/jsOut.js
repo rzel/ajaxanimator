@@ -1,7 +1,5 @@
 
 
-var cg=new Object();var tt_Debug=true;var tt_Enabled=true;var TTT=true;cg.Above=false;cg.BgColor="#E4E7FF";cg.BgImg="";cg.BorderColor="#002299";cg.BorderStyle="solid";cg.BorderWidth=1;cg.CenterMouse=false;cg.ClickClose=false;cg.CloseBtn=false;cg.CloseBtnColors=["#990000","#FFFFFF","#DD3333","#FFFFFF"];cg.CloseBtnText=" X ";cg.CopyContent=true;cg.Delay=400;cg.Duration=0;cg.FadeIn=0;cg.FadeOut=0;cg.FadeInterval=30;cg.Fix=null;cg.FollowMouse=true;cg.FontColor="#000044";cg.FontFace="Verdana,Geneva,sans-serif";cg.FontSize="8pt";cg.FontWeight="normal";cg.Left=false;cg.OffsetX=14;cg.OffsetY=8;cg.Opacity=100;cg.Padding=3;cg.Shadow=false;cg.ShadowColor="#C0C0C0";cg.ShadowWidth=5;cg.Sticky=false;cg.TextAlign="left";cg.Title="";cg.TitleAlign="left";cg.TitleBgColor="";cg.TitleFontColor="#ffffff";cg.TitleFontFace="";cg.TitleFontSize="";cg.Width=0;function Tip(){tt_Tip(arguments,null)}function TagToTip(){if(TTT){var B=tt_GetElt(arguments[0]);if(B){tt_Tip(arguments,B)}}}var tt_aElt=new Array(10),tt_aV=new Array(),tt_sContent,tt_scrlX=0,tt_scrlY=0,tt_musX,tt_musY,tt_over,tt_x,tt_y,tt_w,tt_h;function tt_Extension(){tt_ExtCmdEnum();tt_aExt[tt_aExt.length]=this;return this}function tt_SetTipPos(H,F){var G=tt_aElt[0].style;tt_x=H;tt_y=F;G.left=H+"px";G.top=F+"px";if(tt_ie56){var E=tt_aElt[tt_aElt.length-1];if(E){E.style.left=G.left;E.style.top=G.top}}}function tt_Hide(){if(tt_db&&tt_iState){if(tt_iState&2){tt_aElt[0].style.visibility="hidden";tt_ExtCallFncs(0,"Hide")}tt_tShow.EndTimer();tt_tHide.EndTimer();tt_tDurt.EndTimer();tt_tFade.EndTimer();if(!tt_op&&!tt_ie){tt_tWaitMov.EndTimer();tt_bWait=false}if(tt_aV[CLICKCLOSE]){tt_RemEvtFnc(document,"mouseup",tt_HideInit)}tt_AddRemOutFnc(false);tt_ExtCallFncs(0,"Kill");if(tt_t2t&&!tt_aV[COPYCONTENT]){tt_t2t.style.display="none";tt_MovDomNode(tt_t2t,tt_aElt[6],tt_t2tDad)}tt_iState=0;tt_over=null;tt_ResetMainDiv();if(tt_aElt[tt_aElt.length-1]){tt_aElt[tt_aElt.length-1].style.display="none"}}}function tt_GetElt(B){return(document.getElementById?document.getElementById(B):document.all?document.all[B]:null)}function tt_GetDivW(B){return(B?(B.offsetWidth||B.style.pixelWidth||0):0)}function tt_GetDivH(B){return(B?(B.offsetHeight||B.style.pixelHeight||0):0)}function tt_GetScrollX(){return(window.pageXOffset||(tt_db?(tt_db.scrollLeft||0):0))}function tt_GetScrollY(){return(window.pageYOffset||(tt_db?(tt_db.scrollTop||0):0))}function tt_GetClientW(){return(document.body&&(typeof (document.body.clientWidth)!=tt_u)?document.body.clientWidth:(typeof (window.innerWidth)!=tt_u)?window.innerWidth:tt_db?(tt_db.clientWidth||0):0)}function tt_GetClientH(){return(document.body&&(typeof (document.body.clientHeight)!=tt_u)?document.body.clientHeight:(typeof (window.innerHeight)!=tt_u)?window.innerHeight:tt_db?(tt_db.clientHeight||0):0)}function tt_GetEvtX(B){return(B?((typeof (B.pageX)!=tt_u)?B.pageX:(B.clientX+tt_scrlX)):0)}function tt_GetEvtY(B){return(B?((typeof (B.pageY)!=tt_u)?B.pageY:(B.clientY+tt_scrlY)):0)}function tt_AddEvtFnc(F,D,E){if(F){if(F.addEventListener){F.addEventListener(D,E,false)}else{F.attachEvent("on"+D,E)}}}function tt_RemEvtFnc(F,D,E){if(F){if(F.removeEventListener){F.removeEventListener(D,E,false)}else{F.detachEvent("on"+D,E)}}}var tt_aExt=new Array(),tt_db,tt_op,tt_ie,tt_ie56,tt_bBoxOld,tt_body,tt_flagOpa,tt_maxPosX,tt_maxPosY,tt_iState=0,tt_opa,tt_bJmpVert,tt_t2t,tt_t2tDad,tt_elDeHref,tt_tShow=new Number(0),tt_tHide=new Number(0),tt_tDurt=new Number(0),tt_tFade=new Number(0),tt_tWaitMov=new Number(0),tt_bWait=false,tt_u="undefined";function tt_Init(){tt_MkCmdEnum();if(!tt_Browser()||!tt_MkMainDiv()){return }tt_IsW3cBox();tt_OpaSupport();tt_AddEvtFnc(document,"mousemove",tt_Move);if(TTT||tt_Debug){tt_SetOnloadFnc()}tt_AddEvtFnc(window,"scroll",function(){tt_scrlX=tt_GetScrollX();tt_scrlY=tt_GetScrollY();if(tt_iState&&!(tt_aV[STICKY]&&(tt_iState&2))){tt_HideInit()}});tt_AddEvtFnc(window,"unload",tt_Hide);tt_Hide()}function tt_MkCmdEnum(){var n=0;for(var i in cg){eval("window."+i.toString().toUpperCase()+" = "+n++)}tt_aV.length=n}function tt_Browser(){var n,nv,n6,w3c;n=navigator.userAgent.toLowerCase(),nv=navigator.appVersion;tt_op=(document.defaultView&&typeof (eval("w"+"indow"+"."+"o"+"p"+"er"+"a"))!=tt_u);tt_ie=n.indexOf("msie")!=-1&&document.all&&!tt_op;if(tt_ie){var ieOld=(!document.compatMode||document.compatMode=="BackCompat");tt_db=!ieOld?document.documentElement:(document.body||null);if(tt_db){tt_ie56=parseFloat(nv.substring(nv.indexOf("MSIE")+5))>=5.5&&typeof document.body.style.maxHeight==tt_u}}else{tt_db=document.documentElement||document.body||(document.getElementsByTagName?document.getElementsByTagName("body")[0]:null);if(!tt_op){n6=document.defaultView&&typeof document.defaultView.getComputedStyle!=tt_u;w3c=!n6&&document.getElementById}}tt_body=(document.getElementsByTagName?document.getElementsByTagName("body")[0]:(document.body||null));if(tt_ie||n6||tt_op||w3c){if(tt_body&&tt_db){if(document.attachEvent||document.addEventListener){return true}}else{tt_Err("wz_tooltip.js must be included INSIDE the body section,"+" immediately after the opening <body> tag.")}}tt_db=null;return false}function tt_MkMainDiv(){if(tt_body.insertAdjacentHTML){tt_body.insertAdjacentHTML("afterBegin",tt_MkMainDivHtm())}else{if(typeof tt_body.innerHTML!=tt_u&&document.createElement&&tt_body.appendChild){tt_body.appendChild(tt_MkMainDivDom())}}if(window.tt_GetMainDivRefs&&tt_GetMainDivRefs()){return true}tt_db=null;return false}function tt_MkMainDivHtm(){return("<div id=\"WzTtDiV\"></div>"+(tt_ie56?("<iframe id=\"WzTtIfRm\" src=\"javascript:false\" scrolling=\"no\" frameborder=\"0\" style=\"filter:Alpha(opacity=0);position:absolute;top:0px;left:0px;display:none;\"></iframe>"):""))}function tt_MkMainDivDom(){var B=document.createElement("div");if(B){B.id="WzTtDiV"}return B}function tt_GetMainDivRefs(){tt_aElt[0]=tt_GetElt("WzTtDiV");if(tt_ie56&&tt_aElt[0]){tt_aElt[tt_aElt.length-1]=tt_GetElt("WzTtIfRm");if(!tt_aElt[tt_aElt.length-1]){tt_aElt[0]=null}}if(tt_aElt[0]){var B=tt_aElt[0].style;B.visibility="hidden";B.position="absolute";B.overflow="hidden";return true}return false}function tt_ResetMainDiv(){var B=(window.screen&&screen.width)?screen.width:10000;tt_SetTipPos(-B,0);tt_aElt[0].innerHTML="";tt_aElt[0].style.width=(B-1)+"px"}function tt_IsW3cBox(){var B=tt_aElt[0].style;B.padding="10px";B.width="40px";tt_bBoxOld=(tt_GetDivW(tt_aElt[0])==40);B.padding="0px";tt_ResetMainDiv()}function tt_OpaSupport(){var B=tt_body.style;tt_flagOpa=(typeof (B.filter)!=tt_u)?1:(typeof (B.KhtmlOpacity)!=tt_u)?2:(typeof (B.KHTMLOpacity)!=tt_u)?3:(typeof (B.MozOpacity)!=tt_u)?4:(typeof (B.opacity)!=tt_u)?5:0}function tt_SetOnloadFnc(){tt_AddEvtFnc(document,"DOMContentLoaded",tt_HideSrcTags);tt_AddEvtFnc(window,"load",tt_HideSrcTags);if(tt_body.attachEvent){tt_body.attachEvent("onreadystatechange",function(){if(tt_body.readyState=="complete"){tt_HideSrcTags()}})}if(/WebKit|KHTML/i.test(navigator.userAgent)){var B=setInterval(function(){if(/loaded|complete/.test(document.readyState)){clearInterval(B);tt_HideSrcTags()}},10)}}function tt_HideSrcTags(){if(!window.tt_HideSrcTags||window.tt_HideSrcTags.done){return }window.tt_HideSrcTags.done=true;if(!tt_HideSrcTagsRecurs(tt_body)){tt_Err("To enable the capability to convert HTML elements to tooltips,"+" you must set TTT in the global tooltip cguration"+" to true.")}}function tt_HideSrcTagsRecurs(J){var F,G,H;F=J.childNodes||J.children||null;for(var I=F?F.length:0;I;){--I;if(!tt_HideSrcTagsRecurs(F[I])){return false}G=F[I].getAttribute?F[I].getAttribute("onmouseover"):(typeof F[I].onmouseover=="function")?F[I].onmouseover:null;if(G){H=G.toString().match(/TagToTip\s*\(\s*'[^'.]+'\s*[\),]/);if(H&&H.length){if(!tt_HideSrcTag(H[0])){return false}}}}return true}function tt_HideSrcTag(F){var E,D;E=F.replace(/.+'([^'.]+)'.+/,"$1");D=tt_GetElt(E);if(D){if(tt_Debug&&!TTT){return false}else{D.style.display="none"}}else{tt_Err("Invalid ID\n'"+E+"'\npassed to TagToTip()."+" There exists no HTML element with that ID.")}return true}function tt_Tip(C,D){if(!tt_db){return }if(tt_iState){tt_Hide()}if(!tt_Enabled){return }tt_t2t=D;if(!tt_ReadCmds(C)){return }tt_iState=1|4;tt_Adaptcg1();tt_MkTipContent(C);tt_MkTipSubDivs();tt_FormatTip();tt_bJmpVert=false;tt_maxPosX=tt_GetClientW()+tt_scrlX-tt_w-1;tt_maxPosY=tt_GetClientH()+tt_scrlY-tt_h-1;tt_Adaptcg2();tt_Move();tt_ShowInit()}function tt_ReadCmds(D){var E;E=0;for(var F in cg){tt_aV[E++]=cg[F]}if(D.length&1){for(E=D.length-1;E>0;E-=2){tt_aV[D[E-1]]=D[E]}return true}tt_Err("Incorrect call of Tip() or TagToTip().\n"+"Each command must be followed by a value.");return false}function tt_Adaptcg1(){tt_ExtCallFncs(0,"Loadcg");if(!tt_aV[TITLEBGCOLOR].length){tt_aV[TITLEBGCOLOR]=tt_aV[BORDERCOLOR]}if(!tt_aV[TITLEFONTCOLOR].length){tt_aV[TITLEFONTCOLOR]=tt_aV[BGCOLOR]}if(!tt_aV[TITLEFONTFACE].length){tt_aV[TITLEFONTFACE]=tt_aV[FONTFACE]}if(!tt_aV[TITLEFONTSIZE].length){tt_aV[TITLEFONTSIZE]=tt_aV[FONTSIZE]}if(tt_aV[CLOSEBTN]){if(!tt_aV[CLOSEBTNCOLORS]){tt_aV[CLOSEBTNCOLORS]=new Array("","","","")}for(var B=4;B;){--B;if(!tt_aV[CLOSEBTNCOLORS][B].length){tt_aV[CLOSEBTNCOLORS][B]=(B&1)?tt_aV[TITLEFONTCOLOR]:tt_aV[TITLEBGCOLOR]}}if(!tt_aV[TITLE].length){tt_aV[TITLE]=" "}}if(tt_aV[OPACITY]==100&&typeof tt_aElt[0].style.MozOpacity!=tt_u&&!Array.every){tt_aV[OPACITY]=99}if(tt_aV[FADEIN]&&tt_flagOpa&&tt_aV[DELAY]>100){tt_aV[DELAY]=Math.max(tt_aV[DELAY]-tt_aV[FADEIN],100)}}function tt_Adaptcg2(){if(tt_aV[CENTERMOUSE]){tt_aV[OFFSETX]-=((tt_w-(tt_aV[SHADOW]?tt_aV[SHADOWWIDTH]:0))>>1)}}function tt_MkTipContent(B){if(tt_t2t){if(tt_aV[COPYCONTENT]){tt_sContent=tt_t2t.innerHTML}else{tt_sContent=""}}else{tt_sContent=B[0]}tt_ExtCallFncs(0,"CreateContentString")}function tt_MkTipSubDivs(){var D="position:relative;margin:0px;padding:0px;border-width:0px;left:0px;top:0px;line-height:normal;width:auto;",C=" cellspacing=0 cellpadding=0 border=0 style=\""+D+"\"><tbody style=\""+D+"\"><tr><td ";tt_aElt[0].innerHTML=(""+(tt_aV[TITLE].length?("<div id=\"WzTiTl\" style=\"position:relative;z-index:1;\">"+"<table id=\"WzTiTlTb\""+C+"id=\"WzTiTlI\" style=\""+D+"\">"+tt_aV[TITLE]+"</td>"+(tt_aV[CLOSEBTN]?("<td align=\"right\" style=\""+D+"text-align:right;\">"+"<span id=\"WzClOsE\" style=\"padding-left:2px;padding-right:2px;"+"cursor:"+(tt_ie?"hand":"pointer")+";\" onmouseover=\"tt_OnCloseBtnOver(1)\" onmouseout=\"tt_OnCloseBtnOver(0)\" onclick=\"tt_HideInit()\">"+tt_aV[CLOSEBTNTEXT]+"</span></td>"):"")+"</tr></tbody></table></div>"):"")+"<div id=\"WzBoDy\" style=\"position:relative;z-index:0;\">"+"<table"+C+"id=\"WzBoDyI\" style=\""+D+"\">"+tt_sContent+"</td></tr></tbody></table></div>"+(tt_aV[SHADOW]?("<div id=\"WzTtShDwR\" style=\"position:absolute;overflow:hidden;\"></div>"+"<div id=\"WzTtShDwB\" style=\"position:relative;overflow:hidden;\"></div>"):""));tt_GetSubDivRefs();if(tt_t2t&&!tt_aV[COPYCONTENT]){tt_t2tDad=tt_t2t.parentNode||tt_t2t.parentElement||tt_t2t.offsetParent||null;if(tt_t2tDad){tt_MovDomNode(tt_t2t,tt_t2tDad,tt_aElt[6]);tt_t2t.style.display="block"}}tt_ExtCallFncs(0,"SubDivsCreated")}function tt_GetSubDivRefs(){var D=new Array("WzTiTl","WzTiTlTb","WzTiTlI","WzClOsE","WzBoDy","WzBoDyI","WzTtShDwB","WzTtShDwR");for(var C=D.length;C;--C){tt_aElt[C]=tt_GetElt(D[C-1])}}function tt_FormatTip(){var F,H,E,G;if(tt_aV[TITLE].length){F=tt_aElt[1].style;F.background=tt_aV[TITLEBGCOLOR];F.paddingTop=(tt_aV[CLOSEBTN]?2:0)+"px";F.paddingBottom="1px";F.paddingLeft=F.paddingRight=tt_aV[PADDING]+"px";F=tt_aElt[3].style;F.color=tt_aV[TITLEFONTCOLOR];F.fontFamily=tt_aV[TITLEFONTFACE];F.fontSize=tt_aV[TITLEFONTSIZE];F.fontWeight="bold";F.textAlign=tt_aV[TITLEALIGN];if(tt_aElt[4]){F.paddingRight=(tt_aV[PADDING]<<1)+"px";F=tt_aElt[4].style;F.background=tt_aV[CLOSEBTNCOLORS][0];F.color=tt_aV[CLOSEBTNCOLORS][1];F.fontFamily=tt_aV[TITLEFONTFACE];F.fontSize=tt_aV[TITLEFONTSIZE];F.fontWeight="bold"}if(tt_aV[WIDTH]>0){tt_w=tt_aV[WIDTH]+((tt_aV[PADDING]+tt_aV[BORDERWIDTH])<<1)}else{tt_w=tt_GetDivW(tt_aElt[3])+tt_GetDivW(tt_aElt[4]);if(tt_aElt[4]){tt_w+=tt_aV[PADDING]}}E=-tt_aV[BORDERWIDTH]}else{tt_w=0;E=0}F=tt_aElt[5].style;F.top=E+"px";if(tt_aV[BORDERWIDTH]){F.borderColor=tt_aV[BORDERCOLOR];F.borderStyle=tt_aV[BORDERSTYLE];F.borderWidth=tt_aV[BORDERWIDTH]+"px"}if(tt_aV[BGCOLOR].length){F.background=tt_aV[BGCOLOR]}if(tt_aV[BGIMG].length){F.backgroundImage="url("+tt_aV[BGIMG]+")"}F.padding=tt_aV[PADDING]+"px";F.textAlign=tt_aV[TEXTALIGN];F=tt_aElt[6].style;F.color=tt_aV[FONTCOLOR];F.fontFamily=tt_aV[FONTFACE];F.fontSize=tt_aV[FONTSIZE];F.fontWeight=tt_aV[FONTWEIGHT];F.background="";F.textAlign=tt_aV[TEXTALIGN];if(tt_aV[WIDTH]>0){H=tt_aV[WIDTH]+((tt_aV[PADDING]+tt_aV[BORDERWIDTH])<<1)}else{H=tt_GetDivW(tt_aElt[6])+((tt_aV[PADDING]+tt_aV[BORDERWIDTH])<<1)}if(H>tt_w){tt_w=H}if(tt_aV[SHADOW]){tt_w+=tt_aV[SHADOWWIDTH];G=Math.floor((tt_aV[SHADOWWIDTH]*4)/3);F=tt_aElt[7].style;F.top=E+"px";F.left=G+"px";F.width=(tt_w-G-tt_aV[SHADOWWIDTH])+"px";F.height=tt_aV[SHADOWWIDTH]+"px";F.background=tt_aV[SHADOWCOLOR];F=tt_aElt[8].style;F.top=G+"px";F.left=(tt_w-tt_aV[SHADOWWIDTH])+"px";F.width=tt_aV[SHADOWWIDTH]+"px";F.background=tt_aV[SHADOWCOLOR]}else{G=0}tt_SetTipOpa(tt_aV[FADEIN]?0:tt_aV[OPACITY]);tt_FixSize(E,G)}function tt_FixSize(F,I){var G,H,J;tt_aElt[0].style.width=tt_w+"px";tt_aElt[0].style.pixelWidth=tt_w;H=tt_w-((tt_aV[SHADOW])?tt_aV[SHADOWWIDTH]:0);G=H;if(!tt_bBoxOld){G-=((tt_aV[PADDING]+tt_aV[BORDERWIDTH])<<1)}tt_aElt[5].style.width=G+"px";if(tt_aElt[1]){G=H-(tt_aV[PADDING]<<1);if(!tt_bBoxOld){H=G}tt_aElt[1].style.width=H+"px";tt_aElt[2].style.width=G+"px"}tt_h=tt_GetDivH(tt_aElt[0])+F;if(tt_aElt[8]){tt_aElt[8].style.height=(tt_h-I)+"px"}J=tt_aElt.length-1;if(tt_aElt[J]){tt_aElt[J].style.width=tt_w+"px";tt_aElt[J].style.height=tt_h+"px"}}function tt_DeAlt(E){var D;if(E.alt){E.alt=""}if(E.title){E.title=""}D=E.childNodes||E.children||null;if(D){for(var F=D.length;F;){tt_DeAlt(D[--F])}}}function tt_OpDeHref(B){if(!tt_op){return }if(tt_elDeHref){tt_OpReHref()}while(B){if(B.hasAttribute("href")){B.t_href=B.getAttribute("href");B.t_stats=window.status;B.removeAttribute("href");B.style.cursor="hand";tt_AddEvtFnc(B,"mousedown",tt_OpReHref);window.status=B.t_href;tt_elDeHref=B;break}B=B.parentElement}}function tt_ShowInit(){tt_tShow.Timer("tt_Show()",tt_aV[DELAY],true);if(tt_aV[CLICKCLOSE]){tt_AddEvtFnc(document,"mouseup",tt_HideInit)}}function tt_OverInit(B){tt_over=B.target||B.srcElement;tt_DeAlt(tt_over);tt_OpDeHref(tt_over);tt_AddRemOutFnc(true)}function tt_Show(){var B=tt_aElt[0].style;B.zIndex=Math.max((window.dd&&dd.z)?(dd.z+2):0,1010);if(tt_aV[STICKY]||!tt_aV[FOLLOWMOUSE]){tt_iState&=~4}if(tt_aV[DURATION]>0){tt_tDurt.Timer("tt_HideInit()",tt_aV[DURATION],true)}tt_ExtCallFncs(0,"Show");B.visibility="visible";tt_iState|=2;if(tt_aV[FADEIN]){tt_Fade(0,0,tt_aV[OPACITY],Math.round(tt_aV[FADEIN]/tt_aV[FADEINTERVAL]))}tt_ShowIfrm()}function tt_ShowIfrm(){if(tt_ie56){var C=tt_aElt[tt_aElt.length-1];if(C){var D=C.style;D.zIndex=tt_aElt[0].style.zIndex-1;D.display="block"}}}function tt_Move(B){B=window.event||B;if(B){tt_musX=tt_GetEvtX(B);tt_musY=tt_GetEvtY(B)}if(tt_iState){if(!tt_over&&B){tt_OverInit(B)}if(tt_iState&4){if(!tt_op&&!tt_ie){if(tt_bWait){return }tt_bWait=true;tt_tWaitMov.Timer("tt_bWait = false;",1,true)}if(tt_aV[FIX]){tt_iState&=~4;tt_SetTipPos(tt_aV[FIX][0],tt_aV[FIX][1])}else{if(!tt_ExtCallFncs(B,"MoveBefore")){tt_SetTipPos(tt_PosX(),tt_PosY())}}tt_ExtCallFncs([tt_musX,tt_musY],"MoveAfter")}}}function tt_PosX(){var B;B=tt_musX;if(tt_aV[LEFT]){B-=tt_w+tt_aV[OFFSETX]-(tt_aV[SHADOW]?tt_aV[SHADOWWIDTH]:0)}else{B+=tt_aV[OFFSETX]}if(B>tt_maxPosX){B=tt_maxPosX}return((B<tt_scrlX)?tt_scrlX:B)}function tt_PosY(){var B;if(tt_aV[ABOVE]&&(!tt_bJmpVert||tt_CalcPosYAbove()>=tt_scrlY+16)){B=tt_DoPosYAbove()}else{if(!tt_aV[ABOVE]&&tt_bJmpVert&&tt_CalcPosYBelow()>tt_maxPosY-16){B=tt_DoPosYAbove()}else{B=tt_DoPosYBelow()}}if(B>tt_maxPosY){B=tt_DoPosYAbove()}if(B<tt_scrlY){B=tt_DoPosYBelow()}return B}function tt_DoPosYBelow(){tt_bJmpVert=tt_aV[ABOVE];return tt_CalcPosYBelow()}function tt_DoPosYAbove(){tt_bJmpVert=!tt_aV[ABOVE];return tt_CalcPosYAbove()}function tt_CalcPosYBelow(){return(tt_musY+tt_aV[OFFSETY])}function tt_CalcPosYAbove(){var B=tt_aV[OFFSETY]-(tt_aV[SHADOW]?tt_aV[SHADOWWIDTH]:0);if(tt_aV[OFFSETY]>0&&B<=0){B=1}return(tt_musY-tt_h-B)}function tt_OnOut(){tt_AddRemOutFnc(false);if(!(tt_aV[STICKY]&&(tt_iState&2))){tt_HideInit()}}function tt_HideInit(){tt_ExtCallFncs(0,"HideInit");tt_iState&=~4;if(tt_flagOpa&&tt_aV[FADEOUT]){tt_tFade.EndTimer();if(tt_opa){var B=Math.round(tt_aV[FADEOUT]/(tt_aV[FADEINTERVAL]*(tt_aV[OPACITY]/tt_opa)));tt_Fade(tt_opa,tt_opa,0,B);return }}tt_tHide.Timer("tt_Hide();",1,false)}function tt_OpReHref(){if(tt_elDeHref){tt_elDeHref.setAttribute("href",tt_elDeHref.t_href);tt_RemEvtFnc(tt_elDeHref,"mousedown",tt_OpReHref);window.status=tt_elDeHref.t_stats;tt_elDeHref=null}}function tt_Fade(E,H,G,F){if(F){H+=Math.round((G-H)/F);if((G>E)?(H>=G):(H<=G)){H=G}else{tt_tFade.Timer("tt_Fade("+E+","+H+","+G+","+(F-1)+")",tt_aV[FADEINTERVAL],true)}}H?tt_SetTipOpa(H):tt_Hide()}function tt_SetTipOpa(B){tt_SetOpa(tt_aElt[5].style,B);if(tt_aElt[1]){tt_SetOpa(tt_aElt[1].style,B)}if(tt_aV[SHADOW]){B=Math.round(B*0.8);tt_SetOpa(tt_aElt[7].style,B);tt_SetOpa(tt_aElt[8].style,B)}}function tt_OnCloseBtnOver(D){var C=tt_aElt[4].style;D<<=1;C.background=tt_aV[CLOSEBTNCOLORS][D];C.color=tt_aV[CLOSEBTNCOLORS][D+1]}function tt_Int(C){var D;return(isNaN(D=parseInt(C))?0:D)}function tt_AddRemOutFnc(C){var D=C?tt_AddEvtFnc:tt_RemEvtFnc;if(C!=tt_AddRemOutFnc.bOn){D(tt_over,"mouseout",tt_OnOut);tt_AddRemOutFnc.bOn=C;if(!C){tt_OpReHref()}}}tt_AddRemOutFnc.bOn=false;Number.prototype.Timer=function(E,F,D){if(!this.value||D){this.value=window.setTimeout(E,F)}};Number.prototype.EndTimer=function(){if(this.value){window.clearTimeout(this.value);this.value=0}};function tt_SetOpa(F,D){tt_opa=D;if(tt_flagOpa==1){if(D<100){var E=F.visibility!="hidden";F.zoom="100%";if(!E){F.visibility="visible"}F.filter="alpha(opacity="+D+")";if(!E){F.visibility="hidden"}}else{F.filter=""}}else{D/=100;switch(tt_flagOpa){case 2:F.KhtmlOpacity=D;break;case 3:F.KHTMLOpacity=D;break;case 4:F.MozOpacity=D;break;case 5:F.opacity=D;break}}}function tt_MovDomNode(F,D,E){if(D){D.removeChild(F)}if(E){E.appendChild(F)}}function tt_Err(B){if(tt_Debug){alert("Tooltip Script Error Message:\n\n"+B)}}function tt_ExtCmdEnum(){var s;for(var i in cg){s="window."+i.toString().toUpperCase();if(eval("typeof("+s+") == tt_u")){eval(s+" = "+tt_aV.length);tt_aV[tt_aV.length]=null}}}function tt_ExtCallFncs(J,I){var F=false;for(var H=tt_aExt.length;H;){--H;var G=tt_aExt[H]["On"+I];if(G&&G(J)){F=true}}return F}tt_Init()
-
 /*
  * Ext JS Library 1.1
  * Copyright(c) 2006-2007, Ext JS, LLC.
@@ -278,975 +276,6 @@ Ext.grid.PropertyRecord=Ext.data.Record.create([{name:"name",type:"string"},"val
 
 Ext.LoadMask=function(el,_2){this.el=Ext.get(el);Ext.apply(this,_2);if(this.store){this.store.on("beforeload",this.onBeforeLoad,this);this.store.on("load",this.onLoad,this);this.store.on("loadexception",this.onLoad,this);this.removeMask=false;}else{var um=this.el.getUpdateManager();um.showLoadIndicator=false;um.on("beforeupdate",this.onBeforeLoad,this);um.on("update",this.onLoad,this);um.on("failure",this.onLoad,this);this.removeMask=true;}};Ext.LoadMask.prototype={msg:"Loading...",msgCls:"x-mask-loading",disabled:false,disable:function(){this.disabled=true;},enable:function(){this.disabled=false;},onLoad:function(){this.el.unmask(this.removeMask);},onBeforeLoad:function(){if(!this.disabled){this.el.mask(this.msg,this.msgCls);}},destroy:function(){if(this.store){this.store.un("beforeload",this.onBeforeLoad,this);this.store.un("load",this.onLoad,this);this.store.un("loadexception",this.onLoad,this);}else{var um=this.el.getUpdateManager();um.un("beforeupdate",this.onBeforeLoad,this);um.un("update",this.onLoad,this);um.un("failure",this.onLoad,this);}}};
 
-// Create user extensions namespace (Ext.ux)
-Ext.namespace('Ext.ux');
-
-/**
- * Ext.ux.ColorPicker Extension Class
- *
- * @author Amon
- * @version 1.1.1
- *
- * Webpage: http://colorpicker.theba.hu
- *
- * @class Ext.ux.ColorPicker
- * @extends Ext.util.Observable
- * @constructor
- * Creates new ColorPicker
- * @param {String/HTMLElement/Element} el The container element for this picker
- * @param {Object} config Config Object
- * @cfg {Boolean} hidePanel true to hide the inputs (defaults to false)
- * @cfg {Boolean/Object} animate Moving pickers with this animate or false to no animation (defaults to false)
- * @cfg {Object} rgb (optional) Add initial color with rgb format eg.: { r:255, g:128, b:10 }
- * @cfg {Object} hsv (optional) Add initial color with hsv format eg.: { h:100, s:60, v:50 }
- * @cfg {String} color (optional) Add initial color with hexa format eg.: 'A3CF6D'
- * @cfg {Object} pickerHotPoint (optional) If you change the picker image, you can change the point of pick. ( defaults to { x:3, y:3 } )
- * @cfg {Object} captions labels of inputs (defaults to { red: 'R', green: 'G', blue: 'B', hue: 'H°', saturation: 'S%', brightness: 'V%', hexa: 'Color', websafe: 'Websafe' })
- */
-Ext.ux.ColorPicker = function( element, config ) {
-	Ext.ux.ColorPicker.superclass.constructor.call( this, element, config );
-	this.initialize( element, config );
-}
-// extend Ext.ux.ColorPicker with Ext.util.Observable
-Ext.extend(Ext.ux.ColorPicker, Ext.util.Observable, {
-
-	// help for convert hexa
-	HCHARS: '0123456789ABCDEF',
-
-	// initialization
-	initialize: function( element, config ) {
-		this.events = {};
-		this.config = config;
-		this.config.captions = this.config.captions ? this.config.captions : {};
-		this.config.pickerHotPoint = this.config.pickerHotPoint ? this.config.pickerHotPoint : { x:3, y:3 };
-		this.dialog = null;
-		this._HSV = { h: 0, s: 100, v: 100 };
-		this._RGB = { r: 255, g: 255, b: 255 };
-		this._HEX = '000000';
-		this.lastXYRgb = { x: 0, y: 0 };
-		this.lastYHue = 0;
-		this.domElement = Ext.get( element );
-		this.createDomObjects();
-		if( this.config.hidePanel ) {
-			this.formContainer.hide();
-		}
-		// init internal events
-		this.rgbPicker.on( 'mousedown', this.rgbPickerClick.createDelegate( this ), this );
-		this.huePicker.on( 'mousedown', this.huePickerClick.createDelegate( this ), this );
-		this.wsColorContainer.on( 'mousedown', this.setColorFromWebsafe.createDelegate( this ), this );
-		this.form.findField( 'redValue' + this.domElement.id ).on( 'change', this.changeRGBField.createDelegate( this ) );
-		this.form.findField( 'greenValue' + this.domElement.id ).on( 'change', this.changeRGBField.createDelegate( this ) );
-		this.form.findField( 'blueValue' + this.domElement.id ).on( 'change', this.changeRGBField.createDelegate( this ) );
-		this.form.findField( 'hueValue' + this.domElement.id ).on( 'change', this.changeHSVField.createDelegate( this ) );
-		this.form.findField( 'saturationValue' + this.domElement.id ).on( 'change', this.changeHSVField.createDelegate( this ) );
-		this.form.findField( 'brightnessValue' + this.domElement.id ).on( 'change', this.changeHSVField.createDelegate( this ) );
-		this.form.findField( 'colorValue' + this.domElement.id ).on( 'change', this.changeHexaField.createDelegate( this ) );
-
-		this.form.findField( 'redValue' + this.domElement.id ).on( 'specialkey', this.changeRGBField.createDelegate( this ) );
-		this.form.findField( 'greenValue' + this.domElement.id ).on( 'specialkey', this.changeRGBField.createDelegate( this ) );
-		this.form.findField( 'blueValue' + this.domElement.id ).on( 'specialkey', this.changeRGBField.createDelegate( this ) );
-		this.form.findField( 'hueValue' + this.domElement.id ).on( 'specialkey', this.changeHSVField.createDelegate( this ) );
-		this.form.findField( 'saturationValue' + this.domElement.id ).on( 'specialkey', this.changeHSVField.createDelegate( this ) );
-		this.form.findField( 'brightnessValue' + this.domElement.id ).on( 'specialkey', this.changeHSVField.createDelegate( this ) );
-		this.form.findField( 'colorValue' + this.domElement.id ).on( 'specialkey', this.changeHexaField.createDelegate( this ) );
-		// initial color check
-		this.checkConfig();
-		// register events
-		this.addEvents({
-			/**
-			 * @event pickcolor
-			 * Fires when a new color selected
-			 * @param {Ext.util.ColorPicker} this
-			 * @param {String} color
-			 */
-			pickcolor: true,
-			/**
-			 * @event changergb
-			 * Fires when change rgb input
-			 * @param {Ext.util.ColorPicker} this
-			 * @param {Object} color ({ r: redvalue, g: greenvalue, b: bluevalue })
-			 */
-			changergb: true,
-			/**
-			 * @event changehsv
-			 * Fires when change hsv input
-			 * @param {Ext.util.ColorPicker} this
-			 * @param {Object} color ({ h: huevalue, s: saturationvalue, v: brightnessvalue })
-			 */
-			changehsv: true,
-			/**
-			 * @event changehexa
-			 * Fires when change hexa input
-			 * @param {Ext.util.ColorPicker} this
-			 * @param {String} color
-			 */
-			changehexa: true
-		});
-	},
-	// create internal DOM objects
-	createDomObjects: function() {
-		this.rgbPicker = Ext.DomHelper.append( this.domElement, {
-			tag: 'div',
-			cls: 'x-cp-rgb-msk'
-		}, true );
-		this.rgbPointer = Ext.DomHelper.append( this.rgbPicker, {
-			tag: 'div',
-			cls: 'x-cp-rgb-picker'
-		}, true );
-		this.rgbPointer.setXY( [ this.rgbPicker.getLeft()-this.config.pickerHotPoint.x, this.rgbPicker.getTop()-this.config.pickerHotPoint.y ] );
-		this.huePicker = Ext.DomHelper.append( this.domElement, {
-			tag: 'div',
-			cls: 'x-cp-hue-msk'
-		}, true );
-		this.huePointer = Ext.DomHelper.append( this.huePicker, {
-			tag: 'div',
-			cls: 'x-cp-hue-picker'
-		}, true );
-		this.huePointer.setXY( [ this.huePicker.getLeft()+(this.huePointer.getWidth() / 2)+1, this.huePicker.getTop()-this.config.pickerHotPoint.y ] );
-		this.container = Ext.DomHelper.append( this.domElement, {
-			tag: 'div',
-			cls: 'x-cp-control-container'
-		}, true );
-		this.formContainer = Ext.DomHelper.append( this.container, {
-			tag: 'div',
-			cls: 'x-cp-rgb-container'
-		}, true );
-		// create input form
-		this.form = new Ext.form.Form({
-			labelAlign:'top',
-			labelWidth: 30,
-			labelSeparator: '',
-			cls: 'x-cp-form',
-			id: 'form' + this.domElement.id
-		});
-		this.form.column({
-			width: 22,
-			labelSeparator: ''
-		},
-			new Ext.form.NumberField({
-				id: 'redValue' + this.domElement.id,
-				fieldLabel: ( this.config.captions.red || 'R' ),
-				allowDecimals: false,
-				allowNegative: false,
-				maxLength: 3,
-				maxValue: 255,
-				minLength: 1,
-				minValue: 0,
-				value: 255,
-				emptyText: '0'
-			}),
-			new Ext.form.NumberField({
-				id: 'greenValue' + this.domElement.id,
-				fieldLabel: ( this.config.captions.green || 'G' ),
-				allowDecimals: false,
-				allowNegative: false,
-				maxLength: 3,
-				maxValue: 255,
-				minLength: 1,
-				minValue: 0,
-				value: 255,
-				emptyText: '0'
-			}),
-			new Ext.form.NumberField({
-				id: 'blueValue' + this.domElement.id,
-				fieldLabel: ( this.config.captions.blue || 'B' ),
-				allowDecimals: false,
-				allowNegative: false,
-				maxLength: 3,
-				maxValue: 255,
-				minLength: 1,
-				minValue: 0,
-				value: 255,
-				emptyText: '0'
-			})
-		);
-		this.form.column({
-			width: 22,
-			labelSeparator: ''
-		},
-			new Ext.form.NumberField({
-				id: 'hueValue' + this.domElement.id,
-				fieldLabel: ( this.config.captions.hue || 'H°' ),
-				allowDecimals: false,
-				allowNegative: false,
-				maxLength: 3,
-				maxValue: 360,
-				minLength: 1,
-				minValue: 0,
-				value: 0,
-				emptyText: '0'
-			}),
-			new Ext.form.NumberField({
-				id: 'saturationValue' + this.domElement.id,
-				fieldLabel: ( this.config.captions.saturation || 'S%' ),
-				allowDecimals: false,
-				allowNegative: false,
-				maxLength: 3,
-				maxValue: 100,
-				minLength: 1,
-				minValue: 0,
-				value: 100,
-				emptyText: '0'
-			}),
-			new Ext.form.NumberField({
-				id: 'brightnessValue' + this.domElement.id,
-				fieldLabel: ( this.config.captions.brightness || 'V%' ),
-				allowDecimals: false,
-				allowNegative: false,
-				maxLength: 3,
-				maxValue: 100,
-				minLength: 1,
-				minValue: 0,
-				value: 100,
-				emptyText: '0'
-			})
-		);
-		this.form.column({
-			width: 42,
-			height: 30,
-			cls: 'x-cp-clear x-cp-hexa-panel',
-			labelSeparator: ''
-		},
-			new Ext.form.TextField({
-				id: 'colorValue' + this.domElement.id,
-				fieldLabel: ( this.config.captions.hexa || 'Color' ),
-				maxLength: 6,
-				minLeght: 6,
-				width: 42,
-				value: 'FFFFFF',
-				emptyText: '000000'
-			})
-		);
-		this.colorContainer = Ext.DomHelper.append( this.container, {
-			tag: 'div',
-			cls: 'x-cp-color-container'
-		}, true );
-		Ext.DomHelper.append( this.container, {
-			tag: 'label',
-			cls: 'x-cp-control-container x-cp-clear',
-			style: { 'display': 'block', 'float': 'none' }
-		}, true ).update( this.config.captions.websafe || 'Websafe' );
-		this.wsColorContainer = Ext.DomHelper.append( this.container, {
-			tag: 'div',
-			cls: 'x-cp-wscolor-container'
-		}, true );
-		this.form.render( this.formContainer );
-		// clear float
-		Ext.DomHelper.append( this.domElement, { tag: 'div', style: 'height:0px;border:none;clear:both;font-size:1px;' });
-	},
-	/**
-	 * Convert a float to decimal
-	 * @param {Float} n
-	 * @return {Integer}
-	 */
-	realToDec: function( n ) {
-		return Math.min( 255, Math.round( n * 256 ) );
-	},
-	/**
-	 * Convert HSV color format to RGB color format
-	 * @param {Integer/Array( h, s, v )} h
-	 * @param {Integer} s (optional)
-	 * @param {Integer} v (optional)
-	 * @return {Array}
-	 */
-	hsvToRgb: function( h, s, v ) {
-		if( h instanceof Array ) {
-			return this.hsvToRgb.call( this, h[0], h[1], h[2] );
-		}
-		var r, g, b, i, f, p, q, t;
-	    i = Math.floor( ( h / 60 ) % 6 );
-	    f = ( h / 60 ) - i;
-	    p = v * ( 1 - s );
-	    q = v * ( 1 - f * s );
-	    t = v * ( 1 - ( 1 - f ) * s );
-	    switch(i) {
-	        case 0: r=v; g=t; b=p; break;
-	        case 1: r=q; g=v; b=p; break;
-	        case 2: r=p; g=v; b=t; break;
-	        case 3: r=p; g=q; b=v; break;
-	        case 4: r=t; g=p; b=v; break;
-	        case 5: r=v; g=p; b=q; break;
-	    }
-	    return [this.realToDec( r ), this.realToDec( g ), this.realToDec( b )];
-	},
-	/**
-	 * Convert RGB color format to HSV color format
-	 * @param {Integer/Array( r, g, b )} r
-	 * @param {Integer} g (optional)
-	 * @param {Integer} b (optional)
-	 * @return {Array}
-	 */
-	rgbToHsv: function( r, g, b ) {
-		if( r instanceof Array ) {
-			return this.rgbToHsv.call( this, r[0], r[1], r[2] );
-		}
-        r = r / 255;
-        g = g / 255;
-        b = b / 255;
-        var min, max, delta, h, s, v;
-        min = Math.min( Math.min( r, g ), b );
-        max = Math.max( Math.max( r, g ), b );
-        delta = max - min;
-        switch (max) {
-            case min: h = 0; break;
-            case r:   h = 60 * ( g - b ) / delta;
-                      if ( g < b ) { h += 360; }
-                      break;
-            case g:   h = ( 60 * ( b - r ) / delta ) + 120; break;
-            case b:   h = ( 60 * ( r - g ) / delta ) + 240; break;
-        }
-        s = ( max === 0 ) ? 0 : 1 - ( min / max );
-        return [Math.round( h ), s, max];
-	},
-	/**
-	 * Convert RGB color format to Hexa color format
-	 * @param {Integer/Array( r, g, b )} r
-	 * @param {Integer} g (optional)
-	 * @param {Integer} b (optional)
-	 * @return {String}
-	 */
-	rgbToHex: function( r, g, b ) {
-		if( r instanceof Array ) {
-			return this.rgbToHex.call( this, r[0], r[1], r[2] );
-		}
-		return this.decToHex( r ) + this.decToHex( g ) + this.decToHex( b );
-	},
-	/**
-	 * Convert an integer to hexa
-	 * @param {Integer} n
-	 * @return {String}
-	 */
-	decToHex: function( n ) {
-        n = parseInt(n, 10);
-        n = ( !isNaN( n )) ? n : 0;
-        n = (n > 255 || n < 0) ? 0 : n;
-        return this.HCHARS.charAt( ( n - n % 16 ) / 16 ) + this.HCHARS.charAt( n % 16 );
-	},
-	/**
-	 * Return with position of a character in this.HCHARS string
-	 * @private
-	 * @param {Char} c
-	 * @return {Integer}
-	 */
-	getHCharPos: function( c ) {
-		return this.HCHARS.indexOf( c.toUpperCase() );
-	},
-	/**
-	 * Convert a hexa string to decimal
-	 * @param {String} hex
-	 * @return {Integer}
-	 */
-	hexToDec: function( hex ) {
-        var s = hex.split('');
-        return ( ( this.getHCharPos( s[0] ) * 16 ) + this.getHCharPos( s[1] ) );
-	},
-	/**
-	 * Convert a hexa string to RGB color format
-	 * @param {String} hex
-	 * @return {Array}
-	 */
-	hexToRgb: function( hex ) {
-		return [ this.hexToDec( hex.substr(0, 2) ), this.hexToDec( hex.substr(2, 2) ), this.hexToDec( hex.substr(4, 2) ) ];
-	},
-	/**
-	 * Not documented yet
-	 */
-	checkSafeNumber: function( v ) {
-	    if ( !isNaN( v ) ) {
-	        v = Math.min( Math.max( 0, v ), 255 );
-	        var i, next;
-	        for( i=0; i<256; i=i+51 ) {
-	            next = i + 51;
-	            if ( v>=i && v<=next ) { return ( v - i > 25 ) ? next : i; }
-	        }
-	    }
-	    return v;
-	},
-	/**
-	 * Not documented yet
-	 */
-	websafe: function( r, g, b ) {
-		if( r instanceof Array ) {
-			return this.websafe.call( this, r[0], r[1], r[2] );
-		}
-		return [this.checkSafeNumber( r ), this.checkSafeNumber( g ), this.checkSafeNumber( b )];
-	},
-	/**
-	 * Convert Y coordinate to HUE value
-	 * @private
-	 * @param {Integer} y
-	 * @return {Integer}
-	 */
-	getHue: function( y ) {
-		var hue = Math.round( ( ( this.huePicker.getHeight() - y ) / this.huePicker.getHeight() ) * 360 );
-		return hue === 360 ? 0 : hue;
-	},
-	/**
-	 * Convert HUE value to Y coordinate
-	 * @private
-	 * @param {Integer} hue
-	 * @return {Integer}
-	 */
-	getHPos: function( hue ) {
-		return this.huePicker.getHeight() - ( ( hue * this.huePicker.getHeight() ) / 360 );
-	},
-	/**
-	 * Convert X coordinate to Saturation value
-	 * @private
-	 * @param {Integer} x
-	 * @return {Integer}
-	 */
-	getSaturation: function( x ) {
-		return x / this.rgbPicker.getWidth();
-	},
-	/**
-	 * Convert Saturation value to Y coordinate
-	 * @private
-	 * @param {Integer} saturation
-	 * @return {Integer}
-	 */
-	getSPos: function( saturation ) {
-		return saturation * this.rgbPicker.getWidth();
-	},
-	/**
-	 * Convert Y coordinate to Brightness value
-	 * @private
-	 * @param {Integer} y
-	 * @return {Integer}
-	 */
-	getValue: function( y ) {
-		return ( this.rgbPicker.getHeight() - y ) / this.rgbPicker.getHeight();
-	},
-	/**
-	 * Convert Brightness value to Y coordinate
-	 * @private
-	 * @param {Integer} value
-	 * @return {Integer}
-	 */
-	getVPos: function( value ) {
-		return this.rgbPicker.getHeight() - ( value * this.rgbPicker.getHeight() );
-	},
-	/**
-	 * Update colors from the position of picker
-	 */
-	updateColorsFromRGBPicker: function() {
-		this._HSV = { h: this._HSV.h, s: this.getSaturation( this.lastXYRgb.x ), v: this.getValue( this.lastXYRgb.y ) };
-	},
-	/**
-	 * Update colors from the position of HUE picker
-	 */
-	updateColorsFromHUEPicker: function() {
-		this._HSV.h = this.getHue( this.lastYHue );
-		var temp = this.hsvToRgb( this._HSV.h, 1, 1 );
-		temp =  this.rgbToHex( temp[0], temp[1], temp[2] );
-		this.rgbPicker.setStyle( { backgroundColor: '#' + temp } );
-	},
-	/**
-	 * Update colors from RGB input fields
-	 */
-	updateColorsFromRGBFields: function() {
-		var temp = this.rgbToHsv( this.form.findField( 'redValue' + this.domElement.id ).getValue(), this.form.findField( 'greenValue' + this.domElement.id ).getValue(), this.form.findField( 'blueValue' + this.domElement.id ).getValue() );
-		this._HSV = { h: temp[0], s: temp[1], v: temp[2] };
-	},
-	/**
-	 * Update colors from HEXA input fields
-	 */
-	updateColorsFromHexaField: function() {
-		var temp = this.hexToRgb( this._HEX );
-		this._RGB = { r: temp[0], g: temp[1], b: temp[2] };
-		temp = this.rgbToHsv( temp[0], temp[1], temp[2] );
-		this._HSV = { h: temp[0], s: temp[1], v: temp[2] };
-	},
-	/**
-	 * Update colors from HSV input fields
-	 */
-	updateColorsFromHSVFields: function() {
-		var temp = this.hsvToRgb( this._HSV.h, this._HSV.s, this._HSV.v );
-		this._RGB = { r: temp[0], g: temp[1], b: temp[2] };
-	},
-	/**
-	 * Update RGB color from HSV color
-	 */
-	updateRGBFromHSV: function() {
-		var temp = this.hsvToRgb( this._HSV.h, this._HSV.s, this._HSV.v );
-		this._RGB = { r: temp[0], g: temp[1], b: temp[2] };
-	},
-	/**
-	 * Update all inputs from internal color
-	 */
-	updateInputFields: function() {
-		this.form.findField( 'redValue' + this.domElement.id ).setValue( this._RGB.r );
-		this.form.findField( 'greenValue' + this.domElement.id ).setValue( this._RGB.g );
-		this.form.findField( 'blueValue' + this.domElement.id ).setValue( this._RGB.b );
-		this.form.findField( 'hueValue' + this.domElement.id ).setValue( this._HSV.h );
-		this.form.findField( 'saturationValue' + this.domElement.id ).setValue( Math.round( this._HSV.s * 100 ) );
-		this.form.findField( 'brightnessValue' + this.domElement.id ).setValue( Math.round( this._HSV.v * 100 ) );
-		this.form.findField( 'colorValue' + this.domElement.id ).setValue( this._HEX );
-	},
-	/**
-	 * Update color container
-	 */
-	updateColor: function() {
-		this._HEX = this.rgbToHex( this._RGB.r, this._RGB.g, this._RGB.b );
-		this.colorContainer.setStyle( { backgroundColor: '#'+this._HEX } );
-		this.colorContainer.set({ title: '#'+this._HEX });
-		var temp = this.rgbToHex( this.websafe( this._RGB.r, this._RGB.g, this._RGB.b ) );
-		this.wsColorContainer.setStyle( { backgroundColor: '#'+temp } );
-		this.wsColorContainer.set({ title: '#'+temp });
-		this.updateInputFields();
-		// fire the pickcolor event
-		this.fireEvent( 'pickcolor', this, this._HEX );
-	},
-	/**
-	 * Update position of both picker from the internal color
-	 */
-	updatePickers: function() {
-		this.lastXYRgb = { x: this.getSPos( this._HSV.s ), y: this.getVPos( this._HSV.v ) };
-		this.rgbPointer.setXY( [this.lastXYRgb.x-this.config.pickerHotPoint.x + this.rgbPicker.getLeft(), this.lastXYRgb.y-this.config.pickerHotPoint.y+this.rgbPicker.getTop()], this.config.animate );
-		this.lastYHue = this.getHPos( this._HSV.h );
-		this.huePointer.setXY( [this.huePicker.getLeft()+(this.huePointer.getWidth() / 2)+1, this.lastYHue + this.huePicker.getTop()-this.config.pickerHotPoint.y ], this.config.animate );
-		var temp = this.hsvToRgb( this._HSV.h, 1, 1 );
-		temp =  this.rgbToHex( temp[0], temp[1], temp[2] );
-		this.rgbPicker.setStyle( { backgroundColor: '#' + temp } );
-	},
-	/**
-	 * Internal event
-	 * Catch the RGB picker click
-	 */
-	rgbPickerClick: function( event, cp ) {
-		this.lastXYRgb = { x: event.getPageX() - this.rgbPicker.getLeft(), y: event.getPageY() - this.rgbPicker.getTop() };
-		this.rgbPointer.setXY( [event.getPageX()-this.config.pickerHotPoint.x, event.getPageY()-this.config.pickerHotPoint.y], this.config.animate );
-		this.updateColorsFromRGBPicker();
-		this.updateRGBFromHSV();
-		this.updateColor();
-	},
-	/**
-	 * Internal event
-	 * Catch the HUE picker click
-	 */
-	huePickerClick: function( event, cp ) {
-		this.lastYHue = event.getPageY() - this.huePicker.getTop();
-		this.huePointer.setY( [event.getPageY()-3], this.config.animate );
-		this.updateColorsFromHUEPicker();
-		this.updateRGBFromHSV();
-		this.updateColor();
-	},
-	/**
-	 * Internal event
-	 * Catch the change event of RGB input fields
-	 */
-	changeRGBField: function( element, newValue, oldValue ) {
-		if( !(newValue instanceof String) ) { newValue = element.getValue(); }
-		if( newValue < 0 ) { newValue = 0; }
-		if( newValue > 255 ) { newValue = 255; }
-
-		if( element == this.form.findField( 'redValue' + this.domElement.id ) ) {
-			this._RGB.r = newValue;
-		} else if( element == this.form.findField( 'greenValue' + this.domElement.id ) ) {
-			this._RGB.g = newValue;
-		} else if( element == this.form.findField( 'blueValue' + this.domElement.id ) ) {
-			this._RGB.b = newValue;
-		}
-		this.updateColorsFromRGBFields();
-		this.updateColor();
-		this.updatePickers();
-		// fire the changergb event
-		this.fireEvent( 'changergb', this, this._RGB );
-	},
-	/**
-	 * Internal event
-	 * Catch the change event of HSV input fields
-	 */
-	changeHSVField: function( element, newValue, oldValue ) {
-		if( !(newValue instanceof String) ) { newValue = element.getValue(); }
-		if( element == this.form.findField( 'hueValue' + this.domElement.id ) ) {
-			if( newValue < 0 ) { newValue = 0; }
-			if( newValue > 360 ) { newValue = 360; }
-			this._HSV.h = newValue;
-		} else {
-			if( newValue < 0 ) { newValue = 0; }
-			if( newValue > 100 ) { newValue = 100; }
-			if( element == this.form.findField( 'saturationValue' + this.domElement.id ) ) {
-				this._HSV.s = ( newValue / 100 );
-			} else if( element == this.form.findField( 'brightnessValue' + this.domElement.id ) ) {
-				this._HSV.v = ( newValue / 100 );
-			}
-		}
-		this.updateColorsFromHSVFields();
-		this.updateColor();
-		this.updatePickers();
-		// fire the changehsv event
-		this.fireEvent( 'changehsv', this, this._HSV );
-	},
-	/**
-	 * Internal event
-	 * Catch the change event of HEXA input field
-	 */
-	changeHexaField: function( element, newValue, oldValue ) {
-		if( !(newValue instanceof String) ) { newValue = element.getValue(); }
-		if( element == this.form.findField( 'colorValue' + this.domElement.id ) ) {
-			if( newValue.length > 9 ) { newValue = newValue.substr(0,5); }
-			if( !newValue.match( /^[0-9a-f]{6}$/i ) ) { newValue = '000000'; }
-			this._HEX = newValue;
-			this.updateColorsFromHexaField();
-			this.updateColor();
-			this.updatePickers();
-			// fire the changehexa event
-			this.fireEvent( 'changehexa', this, this._HEX );
-		}
-	},
-	setColorFromWebsafe: function() {
-		this.setColor( this.wsColorContainer.getColor( 'backgroundColor','','' ) );
-	},
-	/**
-	 * Set initial color if config contains
-	 * @private
-	 */
-	checkConfig: function() {
-		if( this.config ) {
-			if( this.config.color ) {
-				this.setColor( this.config.color );
-			} else if( this.config.hsv ) {
-				this.setHSV( this.config.hsv );
-			} else if( this.config.rgb ) {
-				this.setRGB( this.config.rgb );
-			}
-		}
-	},
-
-	// PUBLIC methods
-
-	/**
-	 * Change color with hexa value
-	 * @param {String} hexa (eg.: 9A4D5F )
-	 */
-	setColor: function( hexa ) {
-		var temp = this.hexToRgb( hexa );
-		this._RGB = { r:temp[0], g:temp[1], b:temp[2] }
-		var temp = this.rgbToHsv( temp );
-		this._HSV = { h:temp[0], s:temp[1], v:temp[2] };
-		this.updateColor();
-		this.updatePickers();
-	},
-	/**
-	 * Change color with a RGB Object
-	 * @param {Object} rgb (eg.: { r:255, g:200, b:111 })
-	 */
-	setRGB: function( rgb ) {
-		this._RGB = rgb;
-		var temp = this.rgbToHsv( rgb.r, rgb.g, rgb.b );
-		this._HSV = { h: temp[0], s: temp[1], v: temp[2] };
-		this.updateColor();
-		this.updatePickers();
-	},
-	/**
-	 * Change color with a HSV Object
-	 * @param {Object} hsv (eg.: { h:359, s:10, v:100 })
-	 */
-	setHSV: function( hsv ) {
-		this._HSV = { h: hsv.h, s: ( hsv.s / 100 ), v: ( hsv.v / 100 ) };
-		var temp = this.hsvToRgb( hsv.h, ( hsv.s / 100 ), ( hsv.v / 100 ) );
-		this._RGB = { r: temp[0], g: temp[1], b: temp[2] };
-		this.updateColor();
-		this.updatePickers();
-	},
-	/**
-	 * Get the color from the internal store
-	 * @param {Boolean} hash If it is true, the color prepended with '#'
-	 * @return {String} hexa color format
-	 */
-	getColor: function( hash ) {
-		return ( hash ? '' : '#' ) + this._HEX;
-	},
-	/**
-	 * Get the color from the internal store in RGB object format
-	 * @return {Object} format: { r: redvalue, g: greenvalue, b: bluevalue }
-	 */
-	getRGB: function() {
-		return this._RGB;
-	},
-	/**
-	 * Get the color from the internal store in HSV object format
-	 * @return {Object} format: { h: huevalue, s: saturationvalue, v: brightnessvalue }
-	 */
-	getHSV: function() {
-		return this._HSV;
-	},
-	/**
-	 * Make input panel visible/hidden
-	 * @param {Boolean} show Turns panel hidden or visible
-	 * @param {Boolean/Object} animate Show/hide with animation or not
-	 */
-	setPanelVisible: function( show, animate ) {
-		return this.formContainer.setVisible( show, animate );
-	},
-	/**
-	 * Returns with boolean, input panel is visible or not
-	 * @return {Boolean}
-	 */
-	isPanelVisible: function() {
-		return this.formContainer.isDisplayed();
-	},
-	/**
-	 * Make ColorPicker visible if it is not
-	 * note: in ColorDialog it changed to the show method of BasicDialog
-	 */
-	show: function() {
-		this.domElement.show();
-	},
-	/**
-	 * Make ColorPicker hidden if it is visible
-	 * note: in ColorDialog it changed to the hide method of BasicDialog
-	 */
-	hide: function() {
-		this.domElement.hide();
-	}
-});
-
-/**
- * @class Ext.ux.ColorDialog
- * @extends Ext.util.ColorPicker,
- * @constructor
- * Creates new ColorDialog
- * @param {String/HTMLElement/Element} el The container element for this dialog
- * @param {Object} config Config Object (see the BasicDialog config too!)
- * @cfg {Boolean} hidePanel true to hide the inputs (defaults to false)
- * @cfg {Boolean/Object} animate Moving pickers with this animate or false to no animation (defaults to false)
- * @cfg {Object} rgb (optional) Add initial color with rgb format eg.: { r:255, g:128, b:10 }
- * @cfg {Object} hsv (optional) Add initial color with hsv format eg.: { h:100, s:60, v:50 }
- * @cfg {String} color (optional) Add initial color with hexa format eg.: 'A3CF6D'
- * @cfg {Object} pickerHotPoint (optional) If you change the picker image, you can change the point of pick. ( defaults to { x:3, y:3 } )
- * @cfg {Object} captions labels of inputs (defaults to { red: 'R', green: 'G', blue: 'B', hue: 'H°', saturation: 'S%', brightness: 'V%', hexa: 'Color', websafe: 'Websafe' })
- */
-Ext.ux.ColorDialog = function( element, config ) {
-	Ext.ux.ColorDialog.superclass.constructor.call( this, element, config );
-	this.initialize( this.body, config );
-	this.body.setStyle({
-		padding: '5px'
-	});
-	this.setContentSize( 266, 218 );
-}
-Ext.extend(Ext.ux.ColorDialog,Ext.BasicDialog);
-Ext.applyIf(Ext.ux.ColorDialog.prototype,Ext.ux.ColorPicker.prototype);
-Ext.namespace('Ext.ux');
-
-Ext.ux.SecurePass = function(config) {
-    Ext.ux.SecurePass.superclass.constructor.call(this, config);
-}
- 
-Ext.extend(Ext.ux.SecurePass, Ext.form.TextField, {
-    /**
-     * @cfg {String/Object} errors A Error spec, or true for a default spec (defaults to
-     * {
-     *  PwdEmpty: "Please type a password, and then retype it to confirm.",
-     *  PwdDifRPwd: "The new password and the confirmation password don't match. Please type the same password in both boxes.",
-     *  PwdShort: "Your password must be at least 6 characters long. Please type a different password.",
-     *  PwdLong: "Your password can't contain more than 16 characters. Please type a different password.",
-     *  PwdBadChar: "The password contains characters that aren't allowed. Please type a different password.",
-     *  IDInPwd: "Your password can't include the part of your ID. Please type a different password.",
-     *  FNInPwd: "Your password can't contain your first name. Please type a different password.",
-     *  LNInPwd: "Your password can't contain your last name. Please type a different password."
-     * })
-     */
-    // private
-    errors : {
-        PwdEmpty: "Please type a password, and then retype it to confirm.",
-        PwdDifRPwd: "The new password and the confirmation password don't match. Please type the same password in both boxes.",
-        PwdShort: "Your password must be at least 3 characters long. Please type a different password.",
-        PwdLong: "Your password can't contain more than 16 characters. Please type a different password.",
-        PwdBadChar: "The password contains characters that aren't allowed. Please type a different password.",
-        IDInPwd: "Your password can't include the part of your ID. Please type a different password.",
-        FNInPwd: "Your password can't contain your first name. Please type a different password.",
-        LNInPwd: "Your password can't contain your last name. Please type a different password."
-    },
- 
-    /**
-     * @cfg {String/Object} Label for the strength meter (defaults to
-     * 'Password strength:')
-     */
-    // private
-    meterLabel : '',
- 
-    /**
-     * @cfg {String/Object} pwdStrengths A pwdStrengths spec, or true for a default spec (defaults to
-     * ['Weak', 'Medium', 'Strong'])
-     */
-    // private
-    pwdStrengths : ['Weak', 'Medium', 'Strong'],
- 
-    // private
-    strength : 0,
- 
-    // private
-    _lastPwd : null,
- 
-    // private
-    kCapitalLetter : 0,
-    kSmallLetter : 1,
-    kDigit : 2,
-    kPunctuation : 3,
- 
-    // private
-    initEvents : function(){
-        Ext.ux.SecurePass.superclass.initEvents.call(this);
-        this.el.on('keyup', this.checkStrength,  this, {buffer:50});
-    },
- 
-    // private
-    onRender : function(ct, position){
-        Ext.ux.SecurePass.superclass.onRender.call(this, ct, position);
-        this.wrap = this.el.wrap({cls: "x-form-field-wrap"});
-        this.trigger = this.wrap.createChild({tag: "div", cls: "StrengthMeter "+this.triggerClass});
-        if(this.meterLabel != ''){
-            this.trigger.createChild({tag: "label", html: this.meterLabel});
-        }
-        this.trigger.createChild({tag: "div", cls: "PwdMeterBase", html: '<div class="PwdBack"><div class="PwdMeter" id="PwdMeter"></div></div>'});
-        if(this.hideTrigger){
-            this.trigger.setDisplayed(false);
-        }
-        this.setSize(this.width||'', this.height||'');
-    },
- 
-    // private
-    onDestroy : function(){
-        if(this.trigger){
-            this.trigger.removeAllListeners();
-            this.trigger.remove();
-        }
-        if(this.wrap){
-            this.wrap.remove();
-        }
-        Ext.form.TriggerField.superclass.onDestroy.call(this);
-    },
- 
-    // private
-    checkStrength : function(){
-        var pwd = this.el.getValue();
-        if (pwd == this._lastPwd) {
-            return;
-        }
- 
-        var strength;
-        if (this.ClientSideStrongPassword(pwd)) {
-            strength = 3;
-        } else if(this.ClientSideMediumPassword(pwd)) {
-            strength = 2;
-        } else if(this.ClientSideWeakPassword(pwd)) {
-            strength = 1;
-        } else {
-            strength = 0;
-        }
- 
-        document.getElementById('PwdMeter').style.width = 40 * strength +'px';
-        if(this.pwdStrengths != null && strength > 0) {
-            document.getElementById('PwdMeter').innerHTML = '&nbsp;'+ this.pwdStrengths[strength - 1];
-        } else {
-            document.getElementById('PwdMeter').innerHTML = '';
-        }
- 
-        this._lastPwd = pwd;
-    },
- 
-    // private
-    validateValue : function(value){
-        if(!Ext.form.NumberField.superclass.validateValue.call(this, value)){
-            return false;
-        }
-        if(value.length < 1){ // if it's blank and textfield didn't flag it then it's valid
-             return true;
-        }
-        if(value.length == 0) {
-            this.markInvalid(this.errors.PwdEmpty);
-            return false;
-        }
-        if("[\x21-\x7e]*".match(value)) {
-            this.markInvalid(this.errors.PwdBadChar);
-            return false;
-        }
-        if(value.length < 3) {
-            this.markInvalid(this.errors.PwdShort);
-            return false;
-        }
-        if(value.length > 16) {
-            this.markInvalid(this.errors.PwdLong);
-            return false;
-        }
-        /*if(value.length > 0 && this.iRPwd != 'undefined' && Ext.get(this.iRPwd) != null && value != Ext.get(this.iRPwd).getValue()) {
-            this.markInvalid(this.errors.PwdDifRPwd);
-            return false;
-        }*/
-        return true;
-    },
- 
-    // private
-    CharacterSetChecks : function(type){
-        this.type = type;
-        this.fResult = false;
-    },
- 
-    // private
-    isctype : function(character, type){
-        switch (type) { //why needed break after return in js ? very odd bug
-            case this.kCapitalLetter: if (character >= 'A' && character <= 'Z') { return true; } break;
-            case this.kSmallLetter: if (character >= 'a' && character <= 'z') { return true; } break;
-            case this.kDigit: if (character >= '0' && character <= '9') { return true; } break;
-            case this.kPunctuation: if ("!@#$%^&*()_+-='\";:[{]}|.>,</?`~".indexOf(character) >= 0) { return true; } break;
-            default: return false;
-        }
-    },
- 
-    // private
-    IsLongEnough : function(pwd, size){
-        return !(pwd == null || isNaN(size) || pwd.length < size);
-    },
- 
-    // private
-    SpansEnoughCharacterSets : function(word, nb){
-        if (!this.IsLongEnough(word, nb))
-        {
-            return false;
-        }
- 
-        var characterSetChecks = new Array(
-            new this.CharacterSetChecks(this.kCapitalLetter), new this.CharacterSetChecks(this.kSmallLetter),
-            new this.CharacterSetChecks(this.kDigit), new this.CharacterSetChecks(this.kPunctuation));
-        for (var index = 0; index < word.length; ++index) {
-            for (var nCharSet = 0; nCharSet < characterSetChecks.length; ++nCharSet) {
-                if (!characterSetChecks[nCharSet].fResult && this.isctype(word.charAt(index), characterSetChecks[nCharSet].type)) {
-                    characterSetChecks[nCharSet].fResult = true;
-                    break;
-                }
-            }
-        }
- 
-        var nCharSets = 0;
-        for (var nCharSet = 0; nCharSet < characterSetChecks.length; ++nCharSet) {
-            if (characterSetChecks[nCharSet].fResult) {
-                ++nCharSets;
-            }
-        }
- 
-        if (nCharSets < nb) {
-            return false;
-        }
-        return true;
-    },
- 
-    // private
-    ClientSideStrongPassword : function(pwd){
-        return this.IsLongEnough(pwd, 8) && this.SpansEnoughCharacterSets(pwd, 3);
-    },
- 
-    // private
-    ClientSideMediumPassword : function(pwd){
-        return this.IsLongEnough(pwd, 7) && this.SpansEnoughCharacterSets(pwd, 2);
-    },
- 
-    // private
-    ClientSideWeakPassword : function(pwd){
-        return this.IsLongEnough(pwd, 6) || !this.IsLongEnough(pwd, 0);
-    }
-})
 /*  Prototype JavaScript framework, version 1.4.0
  *  (c) 2005 Sam Stephenson <sam@conio.net>
  *
@@ -1380,572 +409,6 @@ if (navigator.userAgent.indexOf('AppleWebKit/') > -1) {
     return [valueL, valueT];
   }
 }
-function hex_md5(L){var J=Array(),P=(1<<8)-1,R=L.length*8,V=1732584193,U=-271733879,T=-1732584194,S=271733878;for(var Q=0;Q<R;Q+=8){J[Q>>5]|=(L.charCodeAt(Q/8)&P)<<(Q%32)}J[R>>5]|=128<<((R)%32);J[(((R+64)>>>9)<<4)+14]=R;function C(e,Y,X,W,d,c){var Z=O(O(Y,e),O(W,c));return O(O(Z<<d)|(Z>>>(32-d)),X)}function B(Y,X,g,f,W,e,Z){return C((X&g)|((~X)&f),Y,X,W,e,Z)}function H(Y,X,g,f,W,e,Z){return C((X&f)|(g&(~f)),Y,X,W,e,Z)}function N(Y,X,g,f,W,e,Z){return C(X^g^f,Y,X,W,e,Z)}function A(Y,X,g,f,W,e,Z){return C(g^(X|(~f)),Y,X,W,e,Z)}function O(W,Y){var X=(W&65535)+(Y&65535);return((W>>16)+(Y>>16)+(X>>16)<<16)|(X&65535)}for(var Q=0;Q<J.length;Q+=16){var G=V,F=U,E=T,D=S;V=B(V,U,T,S,J[Q+0],7,-680876936);S=B(S,V,U,T,J[Q+1],12,-389564586);T=B(T,S,V,U,J[Q+2],17,606105819);U=B(U,T,S,V,J[Q+3],22,-1044525330);V=B(V,U,T,S,J[Q+4],7,-176418897);S=B(S,V,U,T,J[Q+5],12,1200080426);T=B(T,S,V,U,J[Q+6],17,-1473231341);U=B(U,T,S,V,J[Q+7],22,-45705983);V=B(V,U,T,S,J[Q+8],7,1770035416);S=B(S,V,U,T,J[Q+9],12,-1958414417);T=B(T,S,V,U,J[Q+10],17,-42063);U=B(U,T,S,V,J[Q+11],22,-1990404162);V=B(V,U,T,S,J[Q+12],7,1804603682);S=B(S,V,U,T,J[Q+13],12,-40341101);T=B(T,S,V,U,J[Q+14],17,-1502002290);U=B(U,T,S,V,J[Q+15],22,1236535329);V=H(V,U,T,S,J[Q+1],5,-165796510);S=H(S,V,U,T,J[Q+6],9,-1069501632);T=H(T,S,V,U,J[Q+11],14,643717713);U=H(U,T,S,V,J[Q+0],20,-373897302);V=H(V,U,T,S,J[Q+5],5,-701558691);S=H(S,V,U,T,J[Q+10],9,38016083);T=H(T,S,V,U,J[Q+15],14,-660478335);U=H(U,T,S,V,J[Q+4],20,-405537848);V=H(V,U,T,S,J[Q+9],5,568446438);S=H(S,V,U,T,J[Q+14],9,-1019803690);T=H(T,S,V,U,J[Q+3],14,-187363961);U=H(U,T,S,V,J[Q+8],20,1163531501);V=H(V,U,T,S,J[Q+13],5,-1444681467);S=H(S,V,U,T,J[Q+2],9,-51403784);T=H(T,S,V,U,J[Q+7],14,1735328473);U=H(U,T,S,V,J[Q+12],20,-1926607734);V=N(V,U,T,S,J[Q+5],4,-378558);S=N(S,V,U,T,J[Q+8],11,-2022574463);T=N(T,S,V,U,J[Q+11],16,1839030562);U=N(U,T,S,V,J[Q+14],23,-35309556);V=N(V,U,T,S,J[Q+1],4,-1530992060);S=N(S,V,U,T,J[Q+4],11,1272893353);T=N(T,S,V,U,J[Q+7],16,-155497632);U=N(U,T,S,V,J[Q+10],23,-1094730640);V=N(V,U,T,S,J[Q+13],4,681279174);S=N(S,V,U,T,J[Q+0],11,-358537222);T=N(T,S,V,U,J[Q+3],16,-722521979);U=N(U,T,S,V,J[Q+6],23,76029189);V=N(V,U,T,S,J[Q+9],4,-640364487);S=N(S,V,U,T,J[Q+12],11,-421815835);T=N(T,S,V,U,J[Q+15],16,530742520);U=N(U,T,S,V,J[Q+2],23,-995338651);V=A(V,U,T,S,J[Q+0],6,-198630844);S=A(S,V,U,T,J[Q+7],10,1126891415);T=A(T,S,V,U,J[Q+14],15,-1416354905);U=A(U,T,S,V,J[Q+5],21,-57434055);V=A(V,U,T,S,J[Q+12],6,1700485571);S=A(S,V,U,T,J[Q+3],10,-1894986606);T=A(T,S,V,U,J[Q+10],15,-1051523);U=A(U,T,S,V,J[Q+1],21,-2054922799);V=A(V,U,T,S,J[Q+8],6,1873313359);S=A(S,V,U,T,J[Q+15],10,-30611744);T=A(T,S,V,U,J[Q+6],15,-1560198380);U=A(U,T,S,V,J[Q+13],21,1309151649);V=A(V,U,T,S,J[Q+4],6,-145523070);S=A(S,V,U,T,J[Q+11],10,-1120210379);T=A(T,S,V,U,J[Q+2],15,718787259);U=A(U,T,S,V,J[Q+9],21,-343485551);V=O(V,G);U=O(U,F);T=O(T,E);S=O(S,D)}var K=Array(V,U,T,S),I="0123456789abcdef",M="";for(var Q=0;Q<K.length*4;Q++){M+=I.charAt((K[Q>>2]>>((Q%4)*8+4))&15)+I.charAt((K[Q>>2]>>((Q%4)*8))&15)}return M}
-
-/*----------------------------------------------------------------------------
- RICHDRAW 1.0
- Vector Graphics Drawing Script
- -----------------------------------------------------------------------------
- Created by Mark Finkle (mark.finkle@gmail.com)
- Implementation of simple vector graphic drawing control using SVG or VML.
- -----------------------------------------------------------------------------
- Copyright (c) 2006 Mark Finkle
-
- This program is  free software;  you can redistribute  it and/or  modify it
- under the terms of the MIT License.
-
- Permission  is hereby granted,  free of charge, to  any person  obtaining a
- copy of this software and associated documentation files (the "Software"),
- to deal in the  Software without restriction,  including without limitation
- the  rights to use, copy, modify,  merge, publish, distribute,  sublicense,
- and/or  sell copies  of the  Software, and to  permit persons to  whom  the
- Software is  furnished  to do  so, subject  to  the  following  conditions:
- The above copyright notice and this  permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS",  WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED,  INCLUDING BUT NOT LIMITED TO  THE WARRANTIES  OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR  COPYRIGHT  HOLDERS BE  LIABLE FOR  ANY CLAIM,  DAMAGES OR OTHER
- LIABILITY, WHETHER  IN AN  ACTION OF CONTRACT, TORT OR  OTHERWISE,  ARISING
- FROM,  OUT OF OR  IN  CONNECTION  WITH  THE  SOFTWARE OR THE  USE OR  OTHER
- DEALINGS IN THE SOFTWARE.
- -----------------------------------------------------------------------------
- Dependencies: (SVG or VML rendering implementations)
- History:
- 2006-04-05 | Created
- --------------------------------------------------------------------------*/
-
-
-function RichDrawEditor(elem, renderer) {
-  this.container = elem;
-	this.gridX = 10;
-	this.gridY = 10;
-  this.mouseDownX = 0;
-  this.mouseDownY = 0;
-  this.mode = '';
-  this.fillColor = '';
-  this.lineColor = '';
-  this.lineWidth = '';
-  this.selected = null;
-  this.selectedBounds = { x:0, y:0, width:0, height: 0 };
-
-	this.onselect = function() {}
-	this.onunselect = function() {}
-
-  this.renderer = renderer;
-  this.renderer.init(this.container);
-
-  this.onMouseDownListener = this.onMouseDown.bindAsEventListener(this);
-  this.onMouseUpListener = this.onMouseUp.bindAsEventListener(this);
-  this.onDragListener = this.onDrag.bindAsEventListener(this);
-  this.onResizeListener = this.onResize.bindAsEventListener(this);
-  this.onDrawListener = this.onDraw.bindAsEventListener(this);
-
-  this.onHitListener = this.onHit.bindAsEventListener(this);
-
-  this.onSelectStartListener = this.onSelectStart.bindAsEventListener(this);
-
-  Event.observe(this.container, "mousedown", this.onMouseDownListener);
-  Event.observe(this.container, "mouseup", this.onMouseUpListener);
-  Event.observe(this.container, "selectstart", this.onSelectStartListener);  
-}
-
-
-RichDrawEditor.prototype.clearWorkspace = function() {
-	this.container.innerHTML = '';
-};
-
-
-RichDrawEditor.prototype.deleteSelection = function() {
-  if (this.selected) {
-    this.renderer.remove(this.container.ownerDocument.getElementById('tracker'));
-    this.renderer.remove(this.selected);
-    this.selected = null;
-  }
-};
-
-
-RichDrawEditor.prototype.select = function(elem) {
-  if (elem == this.selected)
-    return;
-
-  this.selected = elem;
-  this.renderer.showTracker(this.selected);
-  this.onselect(this);
-};
-
-
-RichDrawEditor.prototype.unselect = function() {
-  if (this.selected) {
-    this.renderer.remove(this.container.ownerDocument.getElementById('tracker'));
-    this.selected = null;
-    this.onunselect(this);
-  }
-};
-
-
-RichDrawEditor.prototype.getSelectedElement = function() {
-  return this.selected;
-};
-
-
-RichDrawEditor.prototype.setGrid = function(horizontal, vertical) {
-  this.gridX = horizontal;
-  this.gridY = vertical;
-};
-
-
-RichDrawEditor.prototype.editCommand = function(cmd, value)
-{
-  if (cmd == 'mode') {
-    this.mode = value;
-  }
-  else if (this.selected == null) {
-    if (cmd == 'fillcolor') {
-      this.fillColor = value;
-    }
-    else if (cmd == 'linecolor') {
-      this.lineColor = value;
-    }
-    else if (cmd == 'linewidth') {
-      this.lineWidth = parseInt(value) + 'px';
-    }
-  }
-  else {
-    this.renderer.editCommand(this.selected, cmd, value);
-  }
-}
-
-
-RichDrawEditor.prototype.queryCommand = function(cmd)
-{
-  if (cmd == 'mode') {
-    return this.mode;
-  }
-  else if (this.selected == null) {
-    if (cmd == 'fillcolor') {
-      return this.fillColor;
-    }
-    else if (cmd == 'linecolor') {
-      return this.lineColor;
-    }
-    else if (cmd == 'linewidth') {
-      return this.lineWidth;
-    }
-  }
-  else {
-    return this.renderer.queryCommand(this.selected, cmd);
-  }
-}
-
-
-RichDrawEditor.prototype.onSelectStart = function(event) {
-  return false;
-}
-
-
-RichDrawEditor.prototype.onMouseDown = function(event) {
-  var offset = Position.cumulativeOffset(this.container);
-  var snappedX = Math.round((Event.pointerX(event) - offset[0]) / this.gridX) * this.gridX;
-  var snappedY = Math.round((Event.pointerY(event) - offset[1]) / this.gridY) * this.gridY;
-
-  if (this.mode != 'select') {
-    this.unselect();
-
-    this.mouseDownX = snappedX;
-    this.mouseDownY = snappedY;
-
-    this.selected = this.renderer.create(this.mode, this.fillColor, this.lineColor, this.lineWidth, this.mouseDownX, this.mouseDownY, 1, 1);
-    this.selected.id = 'shape:' + createUUID();
-    Event.observe(this.selected, "mousedown", this.onHitListener);  
-
-    Event.observe(this.container, "mousemove", this.onDrawListener);  
-  }
-  else {
-    if (this.mouseDownX != snappedX || this.mouseDownY != snappedY)
-      this.unselect();
-  }
-  
-  return false;
-};
-
-
-RichDrawEditor.prototype.onMouseUp = function(event) {
-  Event.stopObserving(this.container, "mousemove", this.onDrawListener);  
-  Event.stopObserving(this.container, "mousemove", this.onDragListener);  
-
-  if (this.mode != 'select') {
-    this.selected = null;
-  }
-};
-
-
-RichDrawEditor.prototype.onDrag = function(event) {
-  var offset = Position.cumulativeOffset(this.container);
-  var snappedX = Math.round((Event.pointerX(event) - offset[0]) / this.gridX) * this.gridX;
-  var snappedY = Math.round((Event.pointerY(event) - offset[1]) / this.gridY) * this.gridY;
-
-  var deltaX = snappedX - this.mouseDownX;
-  var deltaY = snappedY - this.mouseDownY;
-
-  this.renderer.move(this.selected, this.selectedBounds.x + deltaX, this.selectedBounds.y + deltaY);
-
-  // Update selection tracker
-  this.renderer.showTracker(this.selected);
-//  hide_tracker();
-};
-
-
-RichDrawEditor.prototype.onResize = function(event) {
-  var offset = Position.cumulativeOffset(this.container);
-  var snappedX = Math.round((Event.pointerX(event) - offset[0]) / this.gridX) * this.gridX;
-  var snappedY = Math.round((Event.pointerY(event) - offset[1]) / this.gridY) * this.gridY;
-
-  var deltaX = snappedX - this.mouseDownX;
-  var deltaY = snappedY - this.mouseDownY;
-
-  this.renderer.track(handle, deltaX, deltaY);
-
-  // Update selection tracker
-  show_tracker();
-//  hide_tracker();
-};
-
-
-RichDrawEditor.prototype.onDraw = function(event) {
-  if (this.selected == null)
-    return;
-
-  var offset = Position.cumulativeOffset(this.container);
-  var snappedX = Math.round((Event.pointerX(event) - offset[0]) / this.gridX) * this.gridX;
-  var snappedY = Math.round((Event.pointerY(event) - offset[1]) / this.gridY) * this.gridY;
-
-  this.renderer.resize(this.selected, this.mouseDownX, this.mouseDownY, snappedX, snappedY);
-};
-
-
-RichDrawEditor.prototype.onHit = function(event) {
-  if (this.mode == 'select') {
-    this.select(Event.element(event));
-    this.selectedBounds = this.renderer.bounds(this.selected);
-    
-    var offset = Position.cumulativeOffset(this.container);
-    this.mouseDownX = Math.round((Event.pointerX(event) - offset[0]) / this.gridX) * this.gridX;
-    this.mouseDownY = Math.round((Event.pointerY(event) - offset[1]) / this.gridY) * this.gridY;
-
-    Event.observe(this.container, "mousemove", this.onDragListener);  
-  }
-};
-
-
-function createUUID()
-{
-  return [4, 2, 2, 2, 6].map(function(length) {
-    var uuidpart = "";
-    for (var i=0; i<length; i++) {
-      var uuidchar = parseInt((Math.random() * 256)).toString(16);
-      if (uuidchar.length == 1)
-        uuidchar = "0" + uuidchar;
-      uuidpart += uuidchar;
-    }
-    return uuidpart;
-  }).join('-');
-}
-
-//----------------------------------------------------------------------------
-// AbstractRenderer
-//
-// Abstract base class defining the drawing API. Can not be used directly.
-//----------------------------------------------------------------------------
-
-function AbstractRenderer() {
-
-};
-
-AbstractRenderer.prototype.init = function(elem) {};
-AbstractRenderer.prototype.bounds = function(shape) { return { x:0, y:0, width:0, height: 0 }; };
-AbstractRenderer.prototype.create = function(shape, fillColor, lineColor, lineWidth, left, top, width, height) {};
-AbstractRenderer.prototype.remove = function(shape) {};
-AbstractRenderer.prototype.move = function(shape, left, top) {};
-AbstractRenderer.prototype.track = function(shape) {};
-AbstractRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {};
-AbstractRenderer.prototype.editCommand = function(shape, cmd, value) {};
-AbstractRenderer.prototype.queryCommand = function(shape, cmd) {};
-AbstractRenderer.prototype.showTracker = function(shape) {};
-AbstractRenderer.prototype.getMarkup = function() { return null; };
-
-/*----------------------------------------------------------------------------
- SVGRENDERER 1.0
- SVG Renderer For RichDraw
- -----------------------------------------------------------------------------
- Created by Mark Finkle (mark.finkle@gmail.com)
- Implementation of SVG based renderer.
- -----------------------------------------------------------------------------
- Copyright (c) 2006 Mark Finkle
-
- This program is  free software;  you can redistribute  it and/or  modify it
- under the terms of the MIT License.
-
- Permission  is hereby granted,  free of charge, to  any person  obtaining a
- copy of this software and associated documentation files (the "Software"),
- to deal in the  Software without restriction,  including without limitation
- the  rights to use, copy, modify,  merge, publish, distribute,  sublicense,
- and/or  sell copies  of the  Software, and to  permit persons to  whom  the
- Software is  furnished  to do  so, subject  to  the  following  conditions:
- The above copyright notice and this  permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS",  WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED,  INCLUDING BUT NOT LIMITED TO  THE WARRANTIES  OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR  COPYRIGHT  HOLDERS BE  LIABLE FOR  ANY CLAIM,  DAMAGES OR OTHER
- LIABILITY, WHETHER  IN AN  ACTION OF CONTRACT, TORT OR  OTHERWISE,  ARISING
- FROM,  OUT OF OR  IN  CONNECTION  WITH  THE  SOFTWARE OR THE  USE OR  OTHER
- DEALINGS IN THE SOFTWARE.
- -----------------------------------------------------------------------------
- Dependencies:
- History:
- 2006-04-05 | Created
- --------------------------------------------------------------------------*/
-
-
-function SVGRenderer() {
-	this.base = AbstractRenderer;
-	this.svgRoot = null;
-}
-
-
-SVGRenderer.prototype = new AbstractRenderer;
-
-
-SVGRenderer.prototype.init = function(elem) {
-  this.container = elem;
-  this.container.style.MozUserSelect = 'none';
-  var svgNamespace = 'http://www.w3.org/2000/svg';
-  this.svgRoot = this.container.ownerDocument.createElementNS(svgNamespace, "svg");
-  this.container.appendChild(this.svgRoot);
-}
-
-
-SVGRenderer.prototype.bounds = function(shape) {
-  var rect = new Object();
-  var box = shape.getBBox();
-  rect['x'] = box.x;
-  rect['y'] = box.y;
-  rect['width'] =  box.width;
-  rect['height'] = box.height;
-  return rect;
-}
-
-
-SVGRenderer.prototype.create = function(shape, fillColor, lineColor, lineWidth, left, top, width, height) {
-  var svgNamespace = 'http://www.w3.org/2000/svg';
-  var svg;
-
-  if (shape == 'rect') {
-    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'rect');
-    svg.setAttributeNS(null, 'x', left + 'px');
-    svg.setAttributeNS(null, 'y', top + 'px');
-    svg.setAttributeNS(null, 'width', width + 'px');
-    svg.setAttributeNS(null, 'height', height + 'px');
-  }
-  else if (shape == 'ellipse') {
-    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'ellipse');
-    svg.setAttributeNS(null, 'cx', (left + width / 2) + 'px');
-    svg.setAttributeNS(null, 'cy', (top + height / 2) + 'px');
-    svg.setAttributeNS(null, 'rx', (width / 2) + 'px');
-    svg.setAttributeNS(null, 'ry', (height / 2) + 'px');
-  }
-  else if (shape == 'roundrect') {
-    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'rect');
-    svg.setAttributeNS(null, 'x', left + 'px');
-    svg.setAttributeNS(null, 'y', top + 'px');
-    svg.setAttributeNS(null, 'rx', '20px');
-    svg.setAttributeNS(null, 'ry', '20px');
-    svg.setAttributeNS(null, 'width', width + 'px');
-    svg.setAttributeNS(null, 'height', height + 'px');
-  }
-  else if (shape == 'line') {
-    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'line');
-    svg.setAttributeNS(null, 'x1', left + 'px');
-    svg.setAttributeNS(null, 'y1', top + 'px');
-    svg.setAttributeNS(null, 'x2', left + 'px');
-    svg.setAttributeNS(null, 'y2', top + 'px');
-  }
-
-  try{
-  svg.style.position = 'absolute';
-  }catch(err){}
-  if (fillColor.length == 0)
-    fillColor = 'none';
-  svg.setAttributeNS(null, 'fill', fillColor);
-
-  if (lineColor.length == 0)
-    lineColor = 'none';
-  svg.setAttributeNS(null, 'stroke', lineColor);
-  svg.setAttributeNS(null, 'stroke-width', lineWidth);
-      
-  this.svgRoot.appendChild(svg);
-  
-  return svg;
-};
-
-
-SVGRenderer.prototype.remove = function(shape) {
-  shape.parentNode.removeChild(shape);
-}
-
-
-SVGRenderer.prototype.move = function(shape, left, top) {
-  if (shape.tagName == 'line') {
-    var deltaX = shape.getBBox().width;
-    var deltaY = shape.getBBox().height;
-    shape.setAttributeNS(null, 'x1', left);
-    shape.setAttributeNS(null, 'y1', top);
-    shape.setAttributeNS(null, 'x2', left + deltaX);
-    shape.setAttributeNS(null, 'y2', top + deltaY);
-  }
-  else if (shape.tagName == 'ellipse') {
-    shape.setAttributeNS(null, 'cx', left + (shape.getBBox().width / 2));
-    shape.setAttributeNS(null, 'cy', top + (shape.getBBox().height / 2));
-  }
-  else {
-    shape.setAttributeNS(null, 'x', left);
-    shape.setAttributeNS(null, 'y', top);
-  }
-};
-
-
-SVGRenderer.prototype.track = function(shape) {
-  // TODO
-};
-
-
-SVGRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
-  var deltaX = toX - fromX;
-  var deltaY = toY - fromY;
-
-  if (shape.tagName == 'line') {
-    shape.setAttributeNS(null, 'x2', toX);
-    shape.setAttributeNS(null, 'y2', toY);
-  }
-  else if (shape.tagName == 'ellipse') {
-    if (deltaX < 0) {
-      shape.setAttributeNS(null, 'cx', (fromX + deltaX / 2) + 'px');
-      shape.setAttributeNS(null, 'rx', (-deltaX / 2) + 'px');
-    }
-    else {
-      shape.setAttributeNS(null, 'cx', (fromX + deltaX / 2) + 'px');
-      shape.setAttributeNS(null, 'rx', (deltaX / 2) + 'px');
-    }
-  
-    if (deltaY < 0) {
-      shape.setAttributeNS(null, 'cy', (fromY + deltaY / 2) + 'px');
-      shape.setAttributeNS(null, 'ry', (-deltaY / 2) + 'px');
-    }
-    else {
-      shape.setAttributeNS(null, 'cy', (fromY + deltaY / 2) + 'px');
-      shape.setAttributeNS(null, 'ry', (deltaY / 2) + 'px');
-    }
-  }
-  else { 
-    if (deltaX < 0) {
-      shape.setAttributeNS(null, 'x', toX + 'px');
-      shape.setAttributeNS(null, 'width', -deltaX + 'px');
-    }
-    else {
-      shape.setAttributeNS(null, 'width', deltaX + 'px');
-    }
-  
-    if (deltaY < 0) {
-      shape.setAttributeNS(null, 'y', toY + 'px');
-      shape.setAttributeNS(null, 'height', -deltaY + 'px');
-    }
-    else {
-      shape.setAttributeNS(null, 'height', deltaY + 'px');
-    }
-  }
-};
-
-
-SVGRenderer.prototype.editCommand = function(shape, cmd, value)
-{
-  if (shape != null) {
-    if (cmd == 'fillcolor') {
-      if (value != '')
-        shape.setAttributeNS(null, 'fill', value);
-      else
-        shape.setAttributeNS(null, 'fill', 'none');
-    }
-    else if (cmd == 'linecolor') {
-      if (value != '')
-        shape.setAttributeNS(null, 'stroke', value);
-      else
-        shape.setAttributeNS(null, 'stroke', 'none');
-    }
-    else if (cmd == 'linewidth') {
-      shape.setAttributeNS(null, 'stroke-width', parseInt(value) + 'px');
-    }
-  }
-}
-
-
-SVGRenderer.prototype.queryCommand = function(shape, cmd)
-{
-  var result = '';
-  
-  if (shape != null) {
-    if (cmd == 'fillcolor') {
-      result = shape.getAttributeNS(null, 'fill');
-      if (result == 'none')
-        result = '';
-    }
-    else if (cmd == 'linecolor') {
-      result = shape.getAttributeNS(null, 'stroke');
-      if (result == 'none')
-        result = '';
-    }
-    else if (cmd == 'linewidth') {
-      result = shape.getAttributeNS(null, 'stroke');
-      if (result == 'none')
-        result = '';
-      else
-        result = shape.getAttributeNS(null, 'stroke-width');
-    }
-  }
-  
-  return result;
-}
-
-
-SVGRenderer.prototype.showTracker = function(shape) {
-  var box = shape.getBBox();
-
-  var tracker = document.getElementById('tracker');
-  if (tracker) {
-    this.remove(tracker);
-  }
-
-  var svgNamespace = 'http://www.w3.org/2000/svg';
-
-  tracker = document.createElementNS(svgNamespace, 'rect');
-  tracker.setAttributeNS(null, 'id', 'tracker');
-  tracker.setAttributeNS(null, 'x', box.x - 10);
-  tracker.setAttributeNS(null, 'y', box.y - 10);
-  tracker.setAttributeNS(null, 'width', box.width + 20);
-  tracker.setAttributeNS(null, 'height', box.height + 20);
-  tracker.setAttributeNS(null, 'fill', 'none');
-  tracker.setAttributeNS(null, 'stroke', 'blue');
-  tracker.setAttributeNS(null, 'stroke-width', '1');
-  this.svgRoot.appendChild(tracker);
-}
-
-
-SVGRenderer.prototype.getMarkup = function() {
-  return this.container.innerHTML;
-}
-
 var onreadyfunct = new Array();
 // reference local blank image
 // create namespace
@@ -1957,7 +420,7 @@ var cssLoaded = false;
 var imgURL = "../images";
 var alternateHost = "http://ajaxanimator.googlecode.com/svn/trunk/Animator/"
 var alternateStaticHost = false;
-if(window.location.search.indexOf("110mb.com")!=-1){ 
+if(window.location.href.indexOf("110mb.com")!=-1){ 
 if(window.location.search.indexOf("nohotlink")==-1){
 alternateStaticHost = true;
 themeURL = alternateHost+"resources";
@@ -2904,6 +1367,7 @@ var tweenArray = new Array();
 var currentFrame = 1;
 var currentLayer = 1;
 var totalFrames = 1;
+var layerMaxFrames = 300;
 var layerCount = 0;
 var frameTable;
 /* Helper Functions */
@@ -3047,10 +1511,9 @@ if(typeof(frame)!=typeof(42)){frame=parseInt(frame)}
 if(typeof(layer)!=typeof(42)){layer=parseInt(layer)}
 if(frame<1){return}
 var cL=frameTable.firstChild.childNodes[currentLayer-1].childNodes.length-1
-if(frame>cL){for(var p=1;p<frame-cL;p++){addFrame();}
+if(frame>cL){for(var p=1;p<1+(frame-cL);p++){addFrame();layerMaxFrames++}
 $("frameContainer").scrollLeft=$("frameContainer").scrollWidth}
 if(frame>totalFrames){totalFrames=frame}
-
 gotoframeCanvas(frame,layer)
 gotoframeUI(frame,layer);
 }
@@ -3102,7 +1565,7 @@ frameTable.appendChild(document.createElement("tbody"))
 frameContainer.appendChild(frameTable)
 }
 
-function addFrame(frameNumber){
+function addFrame(frameNumber,layerId){
 if(!frameNumber){
 var timeLayer = frameTable.firstChild.childNodes[currentLayer-1]
 i = timeLayer.childNodes.length;
@@ -3132,6 +1595,7 @@ return nFrame;
 }else{
 timeLayer.appendChild(nFrame)
 }
+
 }
 
 function addLayer(){
@@ -3146,7 +1610,7 @@ var layerTitle = document.createElement("td")
 layerTitle.innerHTML = "Layer&nbsp;"+layerCount.toString();
 layerTitle.className = "layerTitle"
 nLayer.appendChild(layerTitle)
-for(var i = 1; i < 300; i++){
+for(var i = 1; i < layerMaxFrames; i++){
 nLayer.appendChild(addFrame(i))
 }
 fBody.appendChild(nLayer)
@@ -3163,14 +1627,36 @@ format("layer",layer)
 format("selected",((currentFrame==frame)?"true":"false"))
 if(typeof(DrawCanvas)!=typeof(undefined)&&(DrawCanvas[frame])?((DrawCanvas[frame].renderer.getMarkup().length>15)?"false":"true"):"true" == false){
 format("empty","false")
+setTimeout("timelinePreview("+frame+")");
 format("total objects",DrawCanvas[frame].renderer.svgRoot.childNodes.length)
 }else{
 format("empty","true")
 }
 tData+="<div id='timPreDiv' class='previewTooltip'><center>No Preview Availiable</center></div>"
+
 return tData;
 }
 
+function timelinePreview(frameNumber){
+if(document.getElementById("timPreDiv")){
+document.getElementById("timPreDiv").innerHTML = "";
+var svgNamespace = 'http://www.w3.org/2000/svg';
+var newSVGE = document.createElementNS(svgNamespace,"svg")
+newSVGE.setAttributeNS(null, "viewBox", "0 0 480 272");
+document.getElementById("timPreDiv").appendChild(newSVGE);
+var rdX = $("richdraw" + frameNumber).innerHTML
+var domShape = parseSVG(rdX).getElementsByTagName("svg")[0];
+for(var cId = 0; cId < domShape.childNodes.length; cId++){
+var cNode = domShape.childNodes[cId];
+var cAtt = cNode.attributes;
+var newShape = document.createElementNS(svgNamespace , cNode.tagName);
+for(var aId = 0; aId < cAtt.length; aId++){
+newShape.setAttributeNS(null, cAtt[aId].nodeName, cAtt[aId].value);
+}
+document.getElementById("timPreDiv").firstChild.appendChild(newShape);
+}
+}
+}
 var canvasNumber = 1;
 var previousCanvas = 0;
 var canvasDisplayStyle = "";
@@ -3528,22 +2014,13 @@ loadFrame((new XMLSerializer()).serializeToString(tweenNode[cf]),cf + sf);
 }
 
 function loadFrame(Axml,frame){
+var svgNamespace = 'http://www.w3.org/2000/svg';
 if ( DrawCanvas[frame].renderer.svgRoot.hasChildNodes() ){
 while ( DrawCanvas[frame].renderer.svgRoot.childNodes.length >= 1 ){
 DrawCanvas[frame].renderer.svgRoot.removeChild( DrawCanvas[frame].renderer.svgRoot.firstChild );			 
 } 
 }
-var svgNamespace = 'http://www.w3.org/2000/svg';
-var domContainer;
-if (window.ActiveXObject){
-domContainer = new ActiveXObject("Microsoft.XMLDOM");
-domContainer.async="false";
-domContainer.loadXML(Axml);
-}else{
-var parser=new DOMParser();
-domContainer=parser.parseFromString(Axml,"text/xml");
-}
-var domFrame = domContainer.firstChild; //svg
+var domFrame = parseSVG(Axml).firstChild; //svg
 if(DrawCanvas[frame] == null){gotoframe(frame,1);}//create frame
 for(var cId = 0; cId < domFrame.childNodes.length; cId++){
 var cNode = domFrame.childNodes[cId];
@@ -3557,6 +2034,22 @@ Event.observe(newShape, "mousedown", DrawCanvas[frame].onHitListener);
 }
 }
 
+
+//timPreDiv
+
+function parseSVG(Axml){
+var svgNamespace = 'http://www.w3.org/2000/svg';
+var domContainer;
+if (window.ActiveXObject){
+domContainer = new ActiveXObject("Microsoft.XMLDOM");
+domContainer.async="false";
+domContainer.loadXML(Axml);
+}else{
+var parser=new DOMParser();
+domContainer=parser.parseFromString(Axml,"text/xml");
+}
+return domContainer
+}
 var userMode = "login";
 var encPW = "";
 var userName = "";
@@ -4643,3 +3136,2688 @@ function parseDiff(faXd,saXd){
 		return "D1"
 	}
 }
+/* This notice must be untouched at all times.
+
+wz_tooltip.js	 v. 4.12
+
+The latest version is available at
+http://www.walterzorn.com
+or http://www.devira.com
+or http://www.walterzorn.de
+
+Copyright (c) 2002-2007 Walter Zorn. All rights reserved.
+Created 1.12.2002 by Walter Zorn (Web: http://www.walterzorn.com )
+Last modified: 13.7.2007
+
+Easy-to-use cross-browser tooltips.
+Just include the script at the beginning of the <body> section, and invoke
+Tip('Tooltip text') from within the desired HTML onmouseover eventhandlers.
+No container DIV, no onmouseouts required.
+By default, width of tooltips is automatically adapted to content.
+Is even capable of dynamically converting arbitrary HTML elements to tooltips
+by calling TagToTip('ID_of_HTML_element_to_be_converted') instead of Tip(),
+which means you can put important, search-engine-relevant stuff into tooltips.
+Appearance of tooltips can be individually configured
+via commands passed to Tip() or TagToTip().
+
+Tab Width: 4
+LICENSE: LGPL
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License (LGPL) as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+For more details on the GNU Lesser General Public License,
+see http://www.gnu.org/copyleft/lesser.html
+*/
+
+var config = new Object();
+
+
+//===================  GLOBAL TOOPTIP CONFIGURATION  =========================//
+var  tt_Debug	= true		// false or true - recommended: false once you release your page to the public
+var  tt_Enabled	= true		// Allows to (temporarily) suppress tooltips, e.g. by providing the user with a button that sets this global variable to false
+var  TagsToTip	= true		// false or true - if true, the script is capable of converting HTML elements to tooltips
+
+// For each of the following config variables there exists a command, which is
+// just the variablename in uppercase, to be passed to Tip() or TagToTip() to
+// configure tooltips individually. Individual commands override global
+// configuration. Order of commands is arbitrary.
+// Example: onmouseover="Tip('Tooltip text', LEFT, true, BGCOLOR, '#FF9900', FADEIN, 400)"
+
+config. Above			= false 	// false or true - tooltip above mousepointer?
+config. BgColor 		= '#E4E7FF' // Background color
+config. BgImg			= ''		// Path to background image, none if empty string ''
+config. BorderColor 	= '#002299'
+config. BorderStyle 	= 'solid'	// Any permitted CSS value, but I recommend 'solid', 'dotted' or 'dashed'
+config. BorderWidth 	= 1
+config. CenterMouse 	= false 	// false or true - center the tip horizontally below (or above) the mousepointer
+config. ClickClose		= false 	// false or true - close tooltip if the user clicks somewhere
+config. CloseBtn		= false 	// false or true - closebutton in titlebar
+config. CloseBtnColors	= ['#990000', '#FFFFFF', '#DD3333', '#FFFFFF']	  // [Background, text, hovered background, hovered text] - use empty strings '' to inherit title colors
+config. CloseBtnText	= '&nbsp;X&nbsp;'	// Close button text (may also be an image tag)
+config. CopyContent		= true		// When converting a HTML element to a tooltip, copy only the element's content, rather than converting the element by its own
+config. Delay			= 400		// Time span in ms until tooltip shows up
+config. Duration		= 0 		// Time span in ms after which the tooltip disappears; 0 for infinite duration
+config. FadeIn			= 0 		// Fade-in duration in ms, e.g. 400; 0 for no animation
+config. FadeOut 		= 0
+config. FadeInterval	= 30		// Duration of each fade step in ms (recommended: 30) - shorter is smoother but causes more CPU-load
+config. Fix 			= null		// Fixated position - x- an y-oordinates in brackets, e.g. [210, 480], or null for no fixation
+config. FollowMouse		= true		// false or true - tooltip follows the mouse
+config. FontColor		= '#000044'
+config. FontFace		= 'Verdana,Geneva,sans-serif'
+config. FontSize		= '8pt' 	// E.g. '9pt' or '12px' - unit is mandatory
+config. FontWeight		= 'normal'	// 'normal' or 'bold';
+config. Left			= false 	// false or true - tooltip on the left of the mouse
+config. OffsetX 		= 14		// Horizontal offset of left-top corner from mousepointer
+config. OffsetY 		= 8 		// Vertical offset
+config. Opacity 		= 100		// Integer between 0 and 100 - opacity of tooltip in percent
+config. Padding 		= 3 		// Spacing between border and content
+config. Shadow			= false 	// false or true
+config. ShadowColor 	= '#C0C0C0'
+config. ShadowWidth 	= 5
+config. Sticky			= false 	// Do NOT hide tooltip on mouseout? false or true
+config. TextAlign		= 'left'	// 'left', 'right' or 'justify'
+config. Title			= ''		// Default title text applied to all tips (no default title: empty string '')
+config. TitleAlign		= 'left'	// 'left' or 'right' - text alignment inside the title bar
+config. TitleBgColor	= ''		// If empty string '', BorderColor will be used
+config. TitleFontColor	= '#ffffff'	// Color of title text - if '', BgColor (of tooltip body) will be used
+config. TitleFontFace	= ''		// If '' use FontFace (boldified)
+config. TitleFontSize	= ''		// If '' use FontSize
+config. Width			= 0 		// Tooltip width; 0 for automatic adaption to tooltip content
+//=======  END OF TOOLTIP CONFIG, DO NOT CHANGE ANYTHING BELOW  ==============//
+
+
+
+
+//======================  PUBLIC  ============================================//
+function Tip()
+{
+	tt_Tip(arguments, null);
+}
+function TagToTip()
+{
+	if(TagsToTip)
+	{
+		var t2t = tt_GetElt(arguments[0]);
+		if(t2t)
+			tt_Tip(arguments, t2t);
+	}
+}
+
+//==================  PUBLIC EXTENSION API	==================================//
+// Extension eventhandlers currently supported:
+// OnLoadConfig, OnCreateContentString, OnSubDivsCreated, OnShow, OnMoveBefore,
+// OnMoveAfter, OnHideInit, OnHide, OnKill
+
+var tt_aElt = new Array(10), // Container DIV, outer title & body DIVs, inner title & body TDs, closebutton SPAN, shadow DIVs, and IFRAME to cover windowed elements in IE
+tt_aV = new Array(),	// Caches and enumerates config data for currently active tooltip
+tt_sContent,			// Inner tooltip text or HTML
+tt_scrlX = 0, tt_scrlY = 0,
+tt_musX, tt_musY,
+tt_over,
+tt_x, tt_y, tt_w, tt_h; // Position, width and height of currently displayed tooltip
+
+function tt_Extension()
+{
+	tt_ExtCmdEnum();
+	tt_aExt[tt_aExt.length] = this;
+	return this;
+}
+function tt_SetTipPos(x, y)
+{
+	var css = tt_aElt[0].style;
+
+	tt_x = x;
+	tt_y = y;
+	css.left = x + "px";
+	css.top = y + "px";
+	if(tt_ie56)
+	{
+		var ifrm = tt_aElt[tt_aElt.length - 1];
+		if(ifrm)
+		{
+			ifrm.style.left = css.left;
+			ifrm.style.top = css.top;
+		}
+	}
+}
+function tt_Hide()
+{
+	if(tt_db && tt_iState)
+	{
+		if(tt_iState & 0x2)
+		{
+			tt_aElt[0].style.visibility = "hidden";
+			tt_ExtCallFncs(0, "Hide");
+		}
+		tt_tShow.EndTimer();
+		tt_tHide.EndTimer();
+		tt_tDurt.EndTimer();
+		tt_tFade.EndTimer();
+		if(!tt_op && !tt_ie)
+		{
+			tt_tWaitMov.EndTimer();
+			tt_bWait = false;
+		}
+		if(tt_aV[CLICKCLOSE])
+			tt_RemEvtFnc(document, "mouseup", tt_HideInit);
+		tt_AddRemOutFnc(false);
+		tt_ExtCallFncs(0, "Kill");
+		// In case of a TagToTip tooltip, hide converted DOM node and
+		// re-insert it into document
+		if(tt_t2t && !tt_aV[COPYCONTENT])
+		{
+			tt_t2t.style.display = "none";
+			tt_MovDomNode(tt_t2t, tt_aElt[6], tt_t2tDad);
+		}
+		tt_iState = 0;
+		tt_over = null;
+		tt_ResetMainDiv();
+		if(tt_aElt[tt_aElt.length - 1])
+			tt_aElt[tt_aElt.length - 1].style.display = "none";
+	}
+}
+function tt_GetElt(id)
+{
+	return(document.getElementById ? document.getElementById(id)
+			: document.all ? document.all[id]
+			: null);
+}
+function tt_GetDivW(el)
+{
+	return(el ? (el.offsetWidth || el.style.pixelWidth || 0) : 0);
+}
+function tt_GetDivH(el)
+{
+	return(el ? (el.offsetHeight || el.style.pixelHeight || 0) : 0);
+}
+function tt_GetScrollX()
+{
+	return(window.pageXOffset || (tt_db ? (tt_db.scrollLeft || 0) : 0));
+}
+function tt_GetScrollY()
+{
+	return(window.pageYOffset || (tt_db ? (tt_db.scrollTop || 0) : 0));
+}
+function tt_GetClientW()
+{
+	return(document.body && (typeof(document.body.clientWidth) != tt_u) ? document.body.clientWidth
+			: (typeof(window.innerWidth) != tt_u) ? window.innerWidth
+			: tt_db ? (tt_db.clientWidth || 0)
+			: 0);
+}
+function tt_GetClientH()
+{
+	// Exactly this order seems to yield correct values in all major browsers
+	return(document.body && (typeof(document.body.clientHeight) != tt_u) ? document.body.clientHeight
+			: (typeof(window.innerHeight) != tt_u) ? window.innerHeight
+			: tt_db ? (tt_db.clientHeight || 0)
+			: 0);
+}
+function tt_GetEvtX(e)
+{
+	return (e ? ((typeof(e.pageX) != tt_u) ? e.pageX : (e.clientX + tt_scrlX)) : 0);
+}
+function tt_GetEvtY(e)
+{
+	return (e ? ((typeof(e.pageY) != tt_u) ? e.pageY : (e.clientY + tt_scrlY)) : 0);
+}
+function tt_AddEvtFnc(el, sEvt, PFnc)
+{
+	if(el)
+	{
+		if(el.addEventListener)
+			el.addEventListener(sEvt, PFnc, false);
+		else
+			el.attachEvent("on" + sEvt, PFnc);
+	}
+}
+function tt_RemEvtFnc(el, sEvt, PFnc)
+{
+	if(el)
+	{
+		if(el.removeEventListener)
+			el.removeEventListener(sEvt, PFnc, false);
+		else
+			el.detachEvent("on" + sEvt, PFnc);
+	}
+}
+
+//======================  PRIVATE  ===========================================//
+var tt_aExt = new Array(),	// Array of extension objects
+
+tt_db, tt_op, tt_ie, tt_ie56, tt_bBoxOld,	// Browser flags
+tt_body,
+tt_flagOpa, 			// Opacity support: 1=IE, 2=Khtml, 3=KHTML, 4=Moz, 5=W3C
+tt_maxPosX, tt_maxPosY,
+tt_iState = 0,			// Tooltip active |= 1, shown |= 2, move with mouse |= 4
+tt_opa, 				// Currently applied opacity
+tt_bJmpVert,			// Tip above mouse (or ABOVE tip below mouse)
+tt_t2t, tt_t2tDad,		// Tag converted to tip, and its parent element in the document
+tt_elDeHref,			// The tag from which Opera has removed the href attribute
+// Timer
+tt_tShow = new Number(0), tt_tHide = new Number(0), tt_tDurt = new Number(0),
+tt_tFade = new Number(0), tt_tWaitMov = new Number(0),
+tt_bWait = false,
+tt_u = "undefined";
+
+
+function tt_Init()
+{
+	tt_MkCmdEnum();
+	// Send old browsers instantly to hell
+	if(!tt_Browser() || !tt_MkMainDiv())
+		return;
+	tt_IsW3cBox();
+	tt_OpaSupport();
+	tt_AddEvtFnc(document, "mousemove", tt_Move);
+	// In Debug mode we search for TagToTip() calls in order to notify
+	// the user if they've forgotten to set the TagsToTip config flag
+	if(TagsToTip || tt_Debug)
+		tt_SetOnloadFnc();
+	tt_AddEvtFnc(window, "scroll",
+		function()
+		{
+			tt_scrlX = tt_GetScrollX();
+			tt_scrlY = tt_GetScrollY();
+			if(tt_iState && !(tt_aV[STICKY] && (tt_iState & 2)))
+				tt_HideInit();
+		} );
+	// Ensure the tip be hidden when the page unloads
+	tt_AddEvtFnc(window, "unload", tt_Hide);
+	tt_Hide();
+}
+// Creates command names by translating config variable names to upper case
+function tt_MkCmdEnum()
+{
+	var n = 0;
+	for(var i in config)
+		eval("window." + i.toString().toUpperCase() + " = " + n++);
+	tt_aV.length = n;
+}
+function tt_Browser()
+{
+	var n, nv, n6, w3c;
+
+	n = navigator.userAgent.toLowerCase(),
+	nv = navigator.appVersion;
+	tt_op = (document.defaultView && typeof(eval("w" + "indow" + "." + "o" + "p" + "er" + "a")) != tt_u);
+	tt_ie = n.indexOf("msie") != -1 && document.all && !tt_op;
+	if(tt_ie)
+	{
+		var ieOld = (!document.compatMode || document.compatMode == "BackCompat");
+		tt_db = !ieOld ? document.documentElement : (document.body || null);
+		if(tt_db)
+			tt_ie56 = parseFloat(nv.substring(nv.indexOf("MSIE") + 5)) >= 5.5
+					&& typeof document.body.style.maxHeight == tt_u;
+	}
+	else
+	{
+		tt_db = document.documentElement || document.body ||
+				(document.getElementsByTagName ? document.getElementsByTagName("body")[0]
+				: null);
+		if(!tt_op)
+		{
+			n6 = document.defaultView && typeof document.defaultView.getComputedStyle != tt_u;
+			w3c = !n6 && document.getElementById;
+		}
+	}
+	tt_body = (document.getElementsByTagName ? document.getElementsByTagName("body")[0]
+				: (document.body || null));
+	if(tt_ie || n6 || tt_op || w3c)
+	{
+		if(tt_body && tt_db)
+		{
+			if(document.attachEvent || document.addEventListener)
+				return true;
+		}
+		else
+			tt_Err("wz_tooltip.js must be included INSIDE the body section,"
+					+ " immediately after the opening <body> tag.");
+	}
+	tt_db = null;
+	return false;
+}
+function tt_MkMainDiv()
+{
+	// Create the tooltip DIV
+	if(tt_body.insertAdjacentHTML)
+		tt_body.insertAdjacentHTML("afterBegin", tt_MkMainDivHtm());
+	else if(typeof tt_body.innerHTML != tt_u && document.createElement && tt_body.appendChild)
+		tt_body.appendChild(tt_MkMainDivDom());
+	// FireFox Alzheimer bug
+	if(window.tt_GetMainDivRefs && tt_GetMainDivRefs())
+		return true;
+	tt_db = null;
+	return false;
+}
+function tt_MkMainDivHtm()
+{
+	return('<div id="WzTtDiV"></div>' +
+			(tt_ie56 ? ('<iframe id="WzTtIfRm" src="javascript:false" scrolling="no" frameborder="0" style="filter:Alpha(opacity=0);position:absolute;top:0px;left:0px;display:none;"></iframe>')
+			: ''));
+}
+function tt_MkMainDivDom()
+{
+	var el = document.createElement("div");
+	if(el)
+		el.id = "WzTtDiV";
+	return el;
+}
+function tt_GetMainDivRefs()
+{
+	tt_aElt[0] = tt_GetElt("WzTtDiV");
+	if(tt_ie56 && tt_aElt[0])
+	{
+		tt_aElt[tt_aElt.length - 1] = tt_GetElt("WzTtIfRm");
+		if(!tt_aElt[tt_aElt.length - 1])
+			tt_aElt[0] = null;
+	}
+	if(tt_aElt[0])
+	{
+		var css = tt_aElt[0].style;
+
+		css.visibility = "hidden";
+		css.position = "absolute";
+		css.overflow = "hidden";
+		return true;
+	}
+	return false;
+}
+function tt_ResetMainDiv()
+{
+	var w = (window.screen && screen.width) ? screen.width : 10000;
+
+	tt_SetTipPos(-w, 0);
+	tt_aElt[0].innerHTML = "";
+	tt_aElt[0].style.width = (w - 1) + "px";
+}
+function tt_IsW3cBox()
+{
+	var css = tt_aElt[0].style;
+
+	css.padding = "10px";
+	css.width = "40px";
+	tt_bBoxOld = (tt_GetDivW(tt_aElt[0]) == 40);
+	css.padding = "0px";
+	tt_ResetMainDiv();
+}
+function tt_OpaSupport()
+{
+	var css = tt_body.style;
+
+	tt_flagOpa = (typeof(css.filter) != tt_u) ? 1
+				: (typeof(css.KhtmlOpacity) != tt_u) ? 2
+				: (typeof(css.KHTMLOpacity) != tt_u) ? 3
+				: (typeof(css.MozOpacity) != tt_u) ? 4
+				: (typeof(css.opacity) != tt_u) ? 5
+				: 0;
+}
+// Ported from http://dean.edwards.name/weblog/2006/06/again/
+// (Dean Edwards et al.)
+function tt_SetOnloadFnc()
+{
+	tt_AddEvtFnc(document, "DOMContentLoaded", tt_HideSrcTags);
+	tt_AddEvtFnc(window, "load", tt_HideSrcTags);
+	if(tt_body.attachEvent)
+		tt_body.attachEvent("onreadystatechange",
+			function() {
+				if(tt_body.readyState == "complete")
+					tt_HideSrcTags();
+			} );
+	if(/WebKit|KHTML/i.test(navigator.userAgent))
+	{
+		var t = setInterval(function() {
+					if(/loaded|complete/.test(document.readyState))
+					{
+						clearInterval(t);
+						tt_HideSrcTags();
+					}
+				}, 10);
+	}
+}
+function tt_HideSrcTags()
+{
+	if(!window.tt_HideSrcTags || window.tt_HideSrcTags.done)
+		return;
+	window.tt_HideSrcTags.done = true;
+	if(!tt_HideSrcTagsRecurs(tt_body))
+		tt_Err("To enable the capability to convert HTML elements to tooltips,"
+				+ " you must set TagsToTip in the global tooltip configuration"
+				+ " to true.");
+}
+function tt_HideSrcTagsRecurs(dad)
+{
+	var a, ovr, asT2t;
+
+	// Walk the DOM tree for tags that have an onmouseover attribute
+	// containing a TagToTip('...') call.
+	// (.childNodes first since .children is bugous in Safari)
+	a = dad.childNodes || dad.children || null;
+	for(var i = a ? a.length : 0; i;)
+	{--i;
+		if(!tt_HideSrcTagsRecurs(a[i]))
+			return false;
+		ovr = a[i].getAttribute ? a[i].getAttribute("onmouseover")
+				: (typeof a[i].onmouseover == "function") ? a[i].onmouseover
+				: null;
+		if(ovr)
+		{
+			asT2t = ovr.toString().match(/TagToTip\s*\(\s*'[^'.]+'\s*[\),]/);
+			if(asT2t && asT2t.length)
+			{
+				if(!tt_HideSrcTag(asT2t[0]))
+					return false;
+			}
+		}
+	}
+	return true;
+}
+function tt_HideSrcTag(sT2t)
+{
+	var id, el;
+
+	// The ID passed to the found TagToTip() call identifies an HTML element
+	// to be converted to a tooltip, so hide that element
+	id = sT2t.replace(/.+'([^'.]+)'.+/, "$1");
+	el = tt_GetElt(id);
+	if(el)
+	{
+		if(tt_Debug && !TagsToTip)
+			return false;
+		else
+			el.style.display = "none";
+	}
+	else
+		tt_Err("Invalid ID\n'" + id + "'\npassed to TagToTip()."
+				+ " There exists no HTML element with that ID.");
+	return true;
+}
+function tt_Tip(arg, t2t)
+{
+	if(!tt_db)
+		return;
+	if(tt_iState)
+		tt_Hide();
+	if(!tt_Enabled)
+		return;
+	tt_t2t = t2t;
+	if(!tt_ReadCmds(arg))
+		return;
+	tt_iState = 0x1 | 0x4;
+	tt_AdaptConfig1();
+	tt_MkTipContent(arg);
+	tt_MkTipSubDivs();
+	tt_FormatTip();
+	tt_bJmpVert = false;
+	tt_maxPosX = tt_GetClientW() + tt_scrlX - tt_w - 1;
+	tt_maxPosY = tt_GetClientH() + tt_scrlY - tt_h - 1;
+	tt_AdaptConfig2();
+	// We must fake the first mousemove in order to ensure the tip
+	// be immediately shown and positioned
+	tt_Move();
+	tt_ShowInit();
+}
+function tt_ReadCmds(a)
+{
+	var i;
+
+	// First load the global config values, to initialize also values
+	// for which no command has been passed
+	i = 0;
+	for(var j in config)
+		tt_aV[i++] = config[j];
+	// Then replace each cached config value for which a command has been
+	// passed (ensure the # of command args plus value args be even)
+	if(a.length & 1)
+	{
+		for(i = a.length - 1; i > 0; i -= 2)
+			tt_aV[a[i - 1]] = a[i];
+		return true;
+	}
+	tt_Err("Incorrect call of Tip() or TagToTip().\n"
+			+ "Each command must be followed by a value.");
+	return false;
+}
+function tt_AdaptConfig1()
+{
+	tt_ExtCallFncs(0, "LoadConfig");
+	// Inherit unspecified title formattings from body
+	if(!tt_aV[TITLEBGCOLOR].length)
+		tt_aV[TITLEBGCOLOR] = tt_aV[BORDERCOLOR];
+	if(!tt_aV[TITLEFONTCOLOR].length)
+		tt_aV[TITLEFONTCOLOR] = tt_aV[BGCOLOR];
+	if(!tt_aV[TITLEFONTFACE].length)
+		tt_aV[TITLEFONTFACE] = tt_aV[FONTFACE];
+	if(!tt_aV[TITLEFONTSIZE].length)
+		tt_aV[TITLEFONTSIZE] = tt_aV[FONTSIZE];
+	if(tt_aV[CLOSEBTN])
+	{
+		// Use title colors for non-specified closebutton colors
+		if(!tt_aV[CLOSEBTNCOLORS])
+			tt_aV[CLOSEBTNCOLORS] = new Array("", "", "", "");
+		for(var i = 4; i;)
+		{--i;
+			if(!tt_aV[CLOSEBTNCOLORS][i].length)
+				tt_aV[CLOSEBTNCOLORS][i] = (i & 1) ? tt_aV[TITLEFONTCOLOR] : tt_aV[TITLEBGCOLOR];
+		}
+		// Enforce titlebar be shown
+		if(!tt_aV[TITLE].length)
+			tt_aV[TITLE] = " ";
+	}
+	// Circumvents broken display of images and fade-in flicker in Geckos < 1.8
+	if(tt_aV[OPACITY] == 100 && typeof tt_aElt[0].style.MozOpacity != tt_u && !Array.every)
+		tt_aV[OPACITY] = 99;
+	// Smartly shorten the delay for fade-in tooltips
+	if(tt_aV[FADEIN] && tt_flagOpa && tt_aV[DELAY] > 100)
+		tt_aV[DELAY] = Math.max(tt_aV[DELAY] - tt_aV[FADEIN], 100);
+}
+function tt_AdaptConfig2()
+{
+	if(tt_aV[CENTERMOUSE])
+		tt_aV[OFFSETX] -= ((tt_w - (tt_aV[SHADOW] ? tt_aV[SHADOWWIDTH] : 0)) >> 1);
+}
+// Expose content globally so extensions can modify it
+function tt_MkTipContent(a)
+{
+	if(tt_t2t)
+	{
+		if(tt_aV[COPYCONTENT])
+			tt_sContent = tt_t2t.innerHTML;
+		else
+			tt_sContent = "";
+	}
+	else
+		tt_sContent = a[0];
+	tt_ExtCallFncs(0, "CreateContentString");
+}
+function tt_MkTipSubDivs()
+{
+	var sCss = 'position:relative;margin:0px;padding:0px;border-width:0px;left:0px;top:0px;line-height:normal;width:auto;',
+	sTbTrTd = ' cellspacing=0 cellpadding=0 border=0 style="' + sCss + '"><tbody style="' + sCss + '"><tr><td ';
+
+	tt_aElt[0].innerHTML =
+		(''
+		+ (tt_aV[TITLE].length ?
+			('<div id="WzTiTl" style="position:relative;z-index:1;">'
+			+ '<table id="WzTiTlTb"' + sTbTrTd + 'id="WzTiTlI" style="' + sCss + '">'
+			+ tt_aV[TITLE]
+			+ '</td>'
+			+ (tt_aV[CLOSEBTN] ?
+				('<td align="right" style="' + sCss
+				+ 'text-align:right;">'
+				+ '<span id="WzClOsE" style="padding-left:2px;padding-right:2px;'
+				+ 'cursor:' + (tt_ie ? 'hand' : 'pointer')
+				+ ';" onmouseover="tt_OnCloseBtnOver(1)" onmouseout="tt_OnCloseBtnOver(0)" onclick="tt_HideInit()">'
+				+ tt_aV[CLOSEBTNTEXT]
+				+ '</span></td>')
+				: '')
+			+ '</tr></tbody></table></div>')
+			: '')
+		+ '<div id="WzBoDy" style="position:relative;z-index:0;">'
+		+ '<table' + sTbTrTd + 'id="WzBoDyI" style="' + sCss + '">'
+		+ tt_sContent
+		+ '</td></tr></tbody></table></div>'
+		+ (tt_aV[SHADOW]
+			? ('<div id="WzTtShDwR" style="position:absolute;overflow:hidden;"></div>'
+				+ '<div id="WzTtShDwB" style="position:relative;overflow:hidden;"></div>')
+			: '')
+		);
+	tt_GetSubDivRefs();
+	// Convert DOM node to tip
+	if(tt_t2t && !tt_aV[COPYCONTENT])
+	{
+		// Store the tag's parent element so we can restore that DOM branch
+		// once the tooltip is hidden
+		tt_t2tDad = tt_t2t.parentNode || tt_t2t.parentElement || tt_t2t.offsetParent || null;
+		if(tt_t2tDad)
+		{
+			tt_MovDomNode(tt_t2t, tt_t2tDad, tt_aElt[6]);
+			tt_t2t.style.display = "block";
+		}
+	}
+	tt_ExtCallFncs(0, "SubDivsCreated");
+}
+function tt_GetSubDivRefs()
+{
+	var aId = new Array("WzTiTl", "WzTiTlTb", "WzTiTlI", "WzClOsE", "WzBoDy", "WzBoDyI", "WzTtShDwB", "WzTtShDwR");
+
+	for(var i = aId.length; i; --i)
+		tt_aElt[i] = tt_GetElt(aId[i - 1]);
+}
+function tt_FormatTip()
+{
+	var css, w, iOffY, iOffSh;
+
+	//--------- Title DIV ----------
+	if(tt_aV[TITLE].length)
+	{
+		css = tt_aElt[1].style;
+		css.background = tt_aV[TITLEBGCOLOR];
+		css.paddingTop = (tt_aV[CLOSEBTN] ? 2 : 0) + "px";
+		css.paddingBottom = "1px";
+		css.paddingLeft = css.paddingRight = tt_aV[PADDING] + "px";
+		css = tt_aElt[3].style;
+		css.color = tt_aV[TITLEFONTCOLOR];
+		css.fontFamily = tt_aV[TITLEFONTFACE];
+		css.fontSize = tt_aV[TITLEFONTSIZE];
+		css.fontWeight = "bold";
+		css.textAlign = tt_aV[TITLEALIGN];
+		// Close button DIV
+		if(tt_aElt[4])
+		{
+			css.paddingRight = (tt_aV[PADDING] << 1) + "px";
+			css = tt_aElt[4].style;
+			css.background = tt_aV[CLOSEBTNCOLORS][0];
+			css.color = tt_aV[CLOSEBTNCOLORS][1];
+			css.fontFamily = tt_aV[TITLEFONTFACE];
+			css.fontSize = tt_aV[TITLEFONTSIZE];
+			css.fontWeight = "bold";
+		}
+		if(tt_aV[WIDTH] > 0)
+			tt_w = tt_aV[WIDTH] + ((tt_aV[PADDING] + tt_aV[BORDERWIDTH]) << 1);
+		else
+		{
+			tt_w = tt_GetDivW(tt_aElt[3]) + tt_GetDivW(tt_aElt[4]);
+			// Some spacing between title DIV and closebutton
+			if(tt_aElt[4])
+				tt_w += tt_aV[PADDING];
+		}
+		// Ensure the top border of the body DIV be covered by the title DIV
+		iOffY = -tt_aV[BORDERWIDTH];
+	}
+	else
+	{
+		tt_w = 0;
+		iOffY = 0;
+	}
+
+	//-------- Body DIV ------------
+	css = tt_aElt[5].style;
+	css.top = iOffY + "px";
+	if(tt_aV[BORDERWIDTH])
+	{
+		css.borderColor = tt_aV[BORDERCOLOR];
+		css.borderStyle = tt_aV[BORDERSTYLE];
+		css.borderWidth = tt_aV[BORDERWIDTH] + "px";
+	}
+	if(tt_aV[BGCOLOR].length)
+		css.background = tt_aV[BGCOLOR];
+	if(tt_aV[BGIMG].length)
+		css.backgroundImage = "url(" + tt_aV[BGIMG] + ")";
+	css.padding = tt_aV[PADDING] + "px";
+	css.textAlign = tt_aV[TEXTALIGN];
+	// TD inside body DIV
+	css = tt_aElt[6].style;
+	css.color = tt_aV[FONTCOLOR];
+	css.fontFamily = tt_aV[FONTFACE];
+	css.fontSize = tt_aV[FONTSIZE];
+	css.fontWeight = tt_aV[FONTWEIGHT];
+	css.background = "";
+	css.textAlign = tt_aV[TEXTALIGN];
+	if(tt_aV[WIDTH] > 0)
+		w = tt_aV[WIDTH] + ((tt_aV[PADDING] + tt_aV[BORDERWIDTH]) << 1);
+	else
+		// We measure the width of the body's inner TD, because some browsers
+		// expand the width of the container and outer body DIV to 100%
+		w = tt_GetDivW(tt_aElt[6]) + ((tt_aV[PADDING] + tt_aV[BORDERWIDTH]) << 1);
+	if(w > tt_w)
+		tt_w = w;
+
+	//--------- Shadow DIVs ------------
+	if(tt_aV[SHADOW])
+	{
+		tt_w += tt_aV[SHADOWWIDTH];
+		iOffSh = Math.floor((tt_aV[SHADOWWIDTH] * 4) / 3);
+		// Bottom shadow
+		css = tt_aElt[7].style;
+		css.top = iOffY + "px";
+		css.left = iOffSh + "px";
+		css.width = (tt_w - iOffSh - tt_aV[SHADOWWIDTH]) + "px";
+		css.height = tt_aV[SHADOWWIDTH] + "px";
+		css.background = tt_aV[SHADOWCOLOR];
+		// Right shadow
+		css = tt_aElt[8].style;
+		css.top = iOffSh + "px";
+		css.left = (tt_w - tt_aV[SHADOWWIDTH]) + "px";
+		css.width = tt_aV[SHADOWWIDTH] + "px";
+		css.background = tt_aV[SHADOWCOLOR];
+	}
+	else
+		iOffSh = 0;
+
+	//-------- Container DIV -------
+	tt_SetTipOpa(tt_aV[FADEIN] ? 0 : tt_aV[OPACITY]);
+	tt_FixSize(iOffY, iOffSh);
+}
+// Fixate the size so it can't dynamically change while the tooltip is moving.
+function tt_FixSize(iOffY, iOffSh)
+{
+	var wIn, wOut, i;
+
+	tt_aElt[0].style.width = tt_w + "px";
+	tt_aElt[0].style.pixelWidth = tt_w;
+	wOut = tt_w - ((tt_aV[SHADOW]) ? tt_aV[SHADOWWIDTH] : 0);
+	// Body
+	wIn = wOut;
+	if(!tt_bBoxOld)
+		wIn -= ((tt_aV[PADDING] + tt_aV[BORDERWIDTH]) << 1);
+	tt_aElt[5].style.width = wIn + "px";
+	// Title
+	if(tt_aElt[1])
+	{
+		wIn = wOut - (tt_aV[PADDING] << 1);
+		if(!tt_bBoxOld)
+			wOut = wIn;
+		tt_aElt[1].style.width = wOut + "px";
+		tt_aElt[2].style.width = wIn + "px";
+	}
+	tt_h = tt_GetDivH(tt_aElt[0]) + iOffY;
+	// Right shadow
+	if(tt_aElt[8])
+		tt_aElt[8].style.height = (tt_h - iOffSh) + "px";
+	i = tt_aElt.length - 1;
+	if(tt_aElt[i])
+	{
+		tt_aElt[i].style.width = tt_w + "px";
+		tt_aElt[i].style.height = tt_h + "px";
+	}
+}
+function tt_DeAlt(el)
+{
+	var aKid;
+
+	if(el.alt)
+		el.alt = "";
+	if(el.title)
+		el.title = "";
+	aKid = el.childNodes || el.children || null;
+	if(aKid)
+	{
+		for(var i = aKid.length; i;)
+			tt_DeAlt(aKid[--i]);
+	}
+}
+// This hack removes the annoying native tooltips over links in Opera
+function tt_OpDeHref(el)
+{
+	if(!tt_op)
+		return;
+	if(tt_elDeHref)
+		tt_OpReHref();
+	while(el)
+	{
+		if(el.hasAttribute("href"))
+		{
+			el.t_href = el.getAttribute("href");
+			el.t_stats = window.status;
+			el.removeAttribute("href");
+			el.style.cursor = "hand";
+			tt_AddEvtFnc(el, "mousedown", tt_OpReHref);
+			window.status = el.t_href;
+			tt_elDeHref = el;
+			break;
+		}
+		el = el.parentElement;
+	}
+}
+function tt_ShowInit()
+{
+	tt_tShow.Timer("tt_Show()", tt_aV[DELAY], true);
+	if(tt_aV[CLICKCLOSE])
+		tt_AddEvtFnc(document, "mouseup", tt_HideInit);
+}
+function tt_OverInit(e)
+{
+	tt_over = e.target || e.srcElement;
+	tt_DeAlt(tt_over);
+	tt_OpDeHref(tt_over);
+	tt_AddRemOutFnc(true);
+}
+function tt_Show()
+{
+	var css = tt_aElt[0].style;
+
+	// Override the z-index of the topmost wz_dragdrop.js D&D item
+	css.zIndex = Math.max((window.dd && dd.z) ? (dd.z + 2) : 0, 1010);
+	if(tt_aV[STICKY] || !tt_aV[FOLLOWMOUSE])
+		tt_iState &= ~0x4;
+	if(tt_aV[DURATION] > 0)
+		tt_tDurt.Timer("tt_HideInit()", tt_aV[DURATION], true);
+	tt_ExtCallFncs(0, "Show")
+	css.visibility = "visible";
+	tt_iState |= 0x2;
+	if(tt_aV[FADEIN])
+		tt_Fade(0, 0, tt_aV[OPACITY], Math.round(tt_aV[FADEIN] / tt_aV[FADEINTERVAL]));
+	tt_ShowIfrm();
+}
+function tt_ShowIfrm()
+{
+	if(tt_ie56)
+	{
+		var ifrm = tt_aElt[tt_aElt.length - 1];
+		if(ifrm)
+		{
+			var css = ifrm.style;
+			css.zIndex = tt_aElt[0].style.zIndex - 1;
+			css.display = "block";
+		}
+	}
+}
+function tt_Move(e)
+{
+	e = window.event || e;
+	if(e)
+	{
+		tt_musX = tt_GetEvtX(e);
+		tt_musY = tt_GetEvtY(e);
+	}
+	if(tt_iState)
+	{
+		if(!tt_over && e)
+			tt_OverInit(e);
+		if(tt_iState & 0x4)
+		{
+			// Protect some browsers against jam of mousemove events
+			if(!tt_op && !tt_ie)
+			{
+				if(tt_bWait)
+					return;
+				tt_bWait = true;
+				tt_tWaitMov.Timer("tt_bWait = false;", 1, true);
+			}
+			if(tt_aV[FIX])
+			{
+				tt_iState &= ~0x4;
+				tt_SetTipPos(tt_aV[FIX][0], tt_aV[FIX][1]);
+			}
+			else if(!tt_ExtCallFncs(e, "MoveBefore"))
+				tt_SetTipPos(tt_PosX(), tt_PosY());
+			tt_ExtCallFncs([tt_musX, tt_musY], "MoveAfter")
+		}
+	}
+}
+function tt_PosX()
+{
+	var x;
+
+	x = tt_musX;
+	if(tt_aV[LEFT])
+		x -= tt_w + tt_aV[OFFSETX] - (tt_aV[SHADOW] ? tt_aV[SHADOWWIDTH] : 0);
+	else
+		x += tt_aV[OFFSETX];
+	// Prevent tip from extending past right/left clientarea boundary
+	if(x > tt_maxPosX)
+		x = tt_maxPosX;
+	return((x < tt_scrlX) ? tt_scrlX : x);
+}
+function tt_PosY()
+{
+	var y;
+
+	// Apply some hysteresis after the tip has snapped to the other side of the
+	// mouse. In case of insufficient space above and below the mouse, we place
+	// the tip below.
+	if(tt_aV[ABOVE] && (!tt_bJmpVert || tt_CalcPosYAbove() >= tt_scrlY + 16))
+		y = tt_DoPosYAbove();
+	else if(!tt_aV[ABOVE] && tt_bJmpVert && tt_CalcPosYBelow() > tt_maxPosY - 16)
+		y = tt_DoPosYAbove();
+	else
+		y = tt_DoPosYBelow();
+	// Snap to other side of mouse if tip would extend past window boundary
+	if(y > tt_maxPosY)
+		y = tt_DoPosYAbove();
+	if(y < tt_scrlY)
+		y = tt_DoPosYBelow();
+	return y;
+}
+function tt_DoPosYBelow()
+{
+	tt_bJmpVert = tt_aV[ABOVE];
+	return tt_CalcPosYBelow();
+}
+function tt_DoPosYAbove()
+{
+	tt_bJmpVert = !tt_aV[ABOVE];
+	return tt_CalcPosYAbove();
+}
+function tt_CalcPosYBelow()
+{
+	return(tt_musY + tt_aV[OFFSETY]);
+}
+function tt_CalcPosYAbove()
+{
+	var dy = tt_aV[OFFSETY] - (tt_aV[SHADOW] ? tt_aV[SHADOWWIDTH] : 0);
+	if(tt_aV[OFFSETY] > 0 && dy <= 0)
+		dy = 1;
+	return(tt_musY - tt_h - dy);
+}
+function tt_OnOut()
+{
+	tt_AddRemOutFnc(false);
+	if(!(tt_aV[STICKY] && (tt_iState & 0x2)))
+		tt_HideInit();
+}
+function tt_HideInit()
+{
+	tt_ExtCallFncs(0, "HideInit");
+	tt_iState &= ~0x4;
+	if(tt_flagOpa && tt_aV[FADEOUT])
+	{
+		tt_tFade.EndTimer();
+		if(tt_opa)
+		{
+			var n = Math.round(tt_aV[FADEOUT] / (tt_aV[FADEINTERVAL] * (tt_aV[OPACITY] / tt_opa)));
+			tt_Fade(tt_opa, tt_opa, 0, n);
+			return;
+		}
+	}
+	tt_tHide.Timer("tt_Hide();", 1, false);
+}
+function tt_OpReHref()
+{
+	if(tt_elDeHref)
+	{
+		tt_elDeHref.setAttribute("href", tt_elDeHref.t_href);
+		tt_RemEvtFnc(tt_elDeHref, "mousedown", tt_OpReHref);
+		window.status = tt_elDeHref.t_stats;
+		tt_elDeHref = null;
+	}
+}
+function tt_Fade(a, now, z, n)
+{
+	if(n)
+	{
+		now += Math.round((z - now) / n);
+		if((z > a) ? (now >= z) : (now <= z))
+			now = z;
+		else
+			tt_tFade.Timer("tt_Fade("
+							+ a + "," + now + "," + z + "," + (n - 1)
+							+ ")",
+							tt_aV[FADEINTERVAL],
+							true);
+	}
+	now ? tt_SetTipOpa(now) : tt_Hide();
+}
+// To circumvent the opacity nesting flaws of IE, we set the opacity
+// for each sub-DIV separately, rather than for the container DIV.
+function tt_SetTipOpa(opa)
+{
+	tt_SetOpa(tt_aElt[5].style, opa);
+	if(tt_aElt[1])
+		tt_SetOpa(tt_aElt[1].style, opa);
+	if(tt_aV[SHADOW])
+	{
+		opa = Math.round(opa * 0.8);
+		tt_SetOpa(tt_aElt[7].style, opa);
+		tt_SetOpa(tt_aElt[8].style, opa);
+	}
+}
+function tt_OnCloseBtnOver(iOver)
+{
+	var css = tt_aElt[4].style;
+
+	iOver <<= 1;
+	css.background = tt_aV[CLOSEBTNCOLORS][iOver];
+	css.color = tt_aV[CLOSEBTNCOLORS][iOver + 1];
+}
+function tt_Int(x)
+{
+	var y;
+
+	return(isNaN(y = parseInt(x)) ? 0 : y);
+}
+// Adds or removes the document.mousemove or HoveredElem.mouseout handler
+// conveniently. Keeps track of those handlers to prevent them from being
+// set or removed redundantly.
+function tt_AddRemOutFnc(bAdd)
+{
+	var PSet = bAdd ? tt_AddEvtFnc : tt_RemEvtFnc;
+
+	if(bAdd != tt_AddRemOutFnc.bOn)
+	{
+		PSet(tt_over, "mouseout", tt_OnOut);
+		tt_AddRemOutFnc.bOn = bAdd;
+		if(!bAdd)
+			tt_OpReHref();
+	}
+}
+tt_AddRemOutFnc.bOn = false;
+Number.prototype.Timer = function(s, iT, bUrge)
+{
+	if(!this.value || bUrge)
+		this.value = window.setTimeout(s, iT);
+}
+Number.prototype.EndTimer = function()
+{
+	if(this.value)
+	{
+		window.clearTimeout(this.value);
+		this.value = 0;
+	}
+}
+function tt_SetOpa(css, opa)
+{
+	tt_opa = opa;
+	if(tt_flagOpa == 1)
+	{
+		// Hack for bugs of IE:
+		// A DIV cannot be made visible in a single step if an opacity < 100
+		// has been applied while the DIV was hidden.
+		// Moreover, in IE6, applying an opacity < 100 has no effect if the
+		// concerned element has no layout (position, size, zoom, ...).
+		if(opa < 100)
+		{
+			var bVis = css.visibility != "hidden";
+			css.zoom = "100%";
+			if(!bVis)
+				css.visibility = "visible";
+			css.filter = "alpha(opacity=" + opa + ")";
+			if(!bVis)
+				css.visibility = "hidden";
+		}
+		else
+			css.filter = "";
+	}
+	else
+	{
+		opa /= 100.0;
+		switch(tt_flagOpa)
+		{
+		case 2:
+			css.KhtmlOpacity = opa; break;
+		case 3:
+			css.KHTMLOpacity = opa; break;
+		case 4:
+			css.MozOpacity = opa; break;
+		case 5:
+			css.opacity = opa; break;
+		}
+	}
+}
+function tt_MovDomNode(el, dadFrom, dadTo)
+{
+	if(dadFrom)
+		dadFrom.removeChild(el);
+	if(dadTo)
+		dadTo.appendChild(el);
+}
+function tt_Err(sErr)
+{
+	if(tt_Debug)
+		alert("Tooltip Script Error Message:\n\n" + sErr);
+}
+
+//===========  DEALING WITH EXTENSIONS	==============//
+function tt_ExtCmdEnum()
+{
+	var s;
+
+	// Add new command(s) to the commands enum
+	for(var i in config)
+	{
+		s = "window." + i.toString().toUpperCase();
+		if(eval("typeof(" + s + ") == tt_u"))
+		{
+			eval(s + " = " + tt_aV.length);
+			tt_aV[tt_aV.length] = null;
+		}
+	}
+}
+function tt_ExtCallFncs(arg, sFnc)
+{
+	var b = false;
+	for(var i = tt_aExt.length; i;)
+	{--i;
+		var fnc = tt_aExt[i]["On" + sFnc];
+		// Call the method the extension has defined for this event
+		if(fnc && fnc(arg))
+			b = true;
+	}
+	return b;
+}
+
+tt_Init();
+
+function hex_md5(L){var J=Array(),P=(1<<8)-1,R=L.length*8,V=1732584193,U=-271733879,T=-1732584194,S=271733878;for(var Q=0;Q<R;Q+=8){J[Q>>5]|=(L.charCodeAt(Q/8)&P)<<(Q%32)}J[R>>5]|=128<<((R)%32);J[(((R+64)>>>9)<<4)+14]=R;function C(e,Y,X,W,d,c){var Z=O(O(Y,e),O(W,c));return O(O(Z<<d)|(Z>>>(32-d)),X)}function B(Y,X,g,f,W,e,Z){return C((X&g)|((~X)&f),Y,X,W,e,Z)}function H(Y,X,g,f,W,e,Z){return C((X&f)|(g&(~f)),Y,X,W,e,Z)}function N(Y,X,g,f,W,e,Z){return C(X^g^f,Y,X,W,e,Z)}function A(Y,X,g,f,W,e,Z){return C(g^(X|(~f)),Y,X,W,e,Z)}function O(W,Y){var X=(W&65535)+(Y&65535);return((W>>16)+(Y>>16)+(X>>16)<<16)|(X&65535)}for(var Q=0;Q<J.length;Q+=16){var G=V,F=U,E=T,D=S;V=B(V,U,T,S,J[Q+0],7,-680876936);S=B(S,V,U,T,J[Q+1],12,-389564586);T=B(T,S,V,U,J[Q+2],17,606105819);U=B(U,T,S,V,J[Q+3],22,-1044525330);V=B(V,U,T,S,J[Q+4],7,-176418897);S=B(S,V,U,T,J[Q+5],12,1200080426);T=B(T,S,V,U,J[Q+6],17,-1473231341);U=B(U,T,S,V,J[Q+7],22,-45705983);V=B(V,U,T,S,J[Q+8],7,1770035416);S=B(S,V,U,T,J[Q+9],12,-1958414417);T=B(T,S,V,U,J[Q+10],17,-42063);U=B(U,T,S,V,J[Q+11],22,-1990404162);V=B(V,U,T,S,J[Q+12],7,1804603682);S=B(S,V,U,T,J[Q+13],12,-40341101);T=B(T,S,V,U,J[Q+14],17,-1502002290);U=B(U,T,S,V,J[Q+15],22,1236535329);V=H(V,U,T,S,J[Q+1],5,-165796510);S=H(S,V,U,T,J[Q+6],9,-1069501632);T=H(T,S,V,U,J[Q+11],14,643717713);U=H(U,T,S,V,J[Q+0],20,-373897302);V=H(V,U,T,S,J[Q+5],5,-701558691);S=H(S,V,U,T,J[Q+10],9,38016083);T=H(T,S,V,U,J[Q+15],14,-660478335);U=H(U,T,S,V,J[Q+4],20,-405537848);V=H(V,U,T,S,J[Q+9],5,568446438);S=H(S,V,U,T,J[Q+14],9,-1019803690);T=H(T,S,V,U,J[Q+3],14,-187363961);U=H(U,T,S,V,J[Q+8],20,1163531501);V=H(V,U,T,S,J[Q+13],5,-1444681467);S=H(S,V,U,T,J[Q+2],9,-51403784);T=H(T,S,V,U,J[Q+7],14,1735328473);U=H(U,T,S,V,J[Q+12],20,-1926607734);V=N(V,U,T,S,J[Q+5],4,-378558);S=N(S,V,U,T,J[Q+8],11,-2022574463);T=N(T,S,V,U,J[Q+11],16,1839030562);U=N(U,T,S,V,J[Q+14],23,-35309556);V=N(V,U,T,S,J[Q+1],4,-1530992060);S=N(S,V,U,T,J[Q+4],11,1272893353);T=N(T,S,V,U,J[Q+7],16,-155497632);U=N(U,T,S,V,J[Q+10],23,-1094730640);V=N(V,U,T,S,J[Q+13],4,681279174);S=N(S,V,U,T,J[Q+0],11,-358537222);T=N(T,S,V,U,J[Q+3],16,-722521979);U=N(U,T,S,V,J[Q+6],23,76029189);V=N(V,U,T,S,J[Q+9],4,-640364487);S=N(S,V,U,T,J[Q+12],11,-421815835);T=N(T,S,V,U,J[Q+15],16,530742520);U=N(U,T,S,V,J[Q+2],23,-995338651);V=A(V,U,T,S,J[Q+0],6,-198630844);S=A(S,V,U,T,J[Q+7],10,1126891415);T=A(T,S,V,U,J[Q+14],15,-1416354905);U=A(U,T,S,V,J[Q+5],21,-57434055);V=A(V,U,T,S,J[Q+12],6,1700485571);S=A(S,V,U,T,J[Q+3],10,-1894986606);T=A(T,S,V,U,J[Q+10],15,-1051523);U=A(U,T,S,V,J[Q+1],21,-2054922799);V=A(V,U,T,S,J[Q+8],6,1873313359);S=A(S,V,U,T,J[Q+15],10,-30611744);T=A(T,S,V,U,J[Q+6],15,-1560198380);U=A(U,T,S,V,J[Q+13],21,1309151649);V=A(V,U,T,S,J[Q+4],6,-145523070);S=A(S,V,U,T,J[Q+11],10,-1120210379);T=A(T,S,V,U,J[Q+2],15,718787259);U=A(U,T,S,V,J[Q+9],21,-343485551);V=O(V,G);U=O(U,F);T=O(T,E);S=O(S,D)}var K=Array(V,U,T,S),I="0123456789abcdef",M="";for(var Q=0;Q<K.length*4;Q++){M+=I.charAt((K[Q>>2]>>((Q%4)*8+4))&15)+I.charAt((K[Q>>2]>>((Q%4)*8))&15)}return M}
+
+// Create user extensions namespace (Ext.ux)
+Ext.namespace('Ext.ux');
+
+/**
+ * Ext.ux.ColorPicker Extension Class
+ *
+ * @author Amon
+ * @version 1.1.1
+ *
+ * Webpage: http://colorpicker.theba.hu
+ *
+ * @class Ext.ux.ColorPicker
+ * @extends Ext.util.Observable
+ * @constructor
+ * Creates new ColorPicker
+ * @param {String/HTMLElement/Element} el The container element for this picker
+ * @param {Object} config Config Object
+ * @cfg {Boolean} hidePanel true to hide the inputs (defaults to false)
+ * @cfg {Boolean/Object} animate Moving pickers with this animate or false to no animation (defaults to false)
+ * @cfg {Object} rgb (optional) Add initial color with rgb format eg.: { r:255, g:128, b:10 }
+ * @cfg {Object} hsv (optional) Add initial color with hsv format eg.: { h:100, s:60, v:50 }
+ * @cfg {String} color (optional) Add initial color with hexa format eg.: 'A3CF6D'
+ * @cfg {Object} pickerHotPoint (optional) If you change the picker image, you can change the point of pick. ( defaults to { x:3, y:3 } )
+ * @cfg {Object} captions labels of inputs (defaults to { red: 'R', green: 'G', blue: 'B', hue: 'H°', saturation: 'S%', brightness: 'V%', hexa: 'Color', websafe: 'Websafe' })
+ */
+Ext.ux.ColorPicker = function( element, config ) {
+	Ext.ux.ColorPicker.superclass.constructor.call( this, element, config );
+	this.initialize( element, config );
+}
+// extend Ext.ux.ColorPicker with Ext.util.Observable
+Ext.extend(Ext.ux.ColorPicker, Ext.util.Observable, {
+
+	// help for convert hexa
+	HCHARS: '0123456789ABCDEF',
+
+	// initialization
+	initialize: function( element, config ) {
+		this.events = {};
+		this.config = config;
+		this.config.captions = this.config.captions ? this.config.captions : {};
+		this.config.pickerHotPoint = this.config.pickerHotPoint ? this.config.pickerHotPoint : { x:3, y:3 };
+		this.dialog = null;
+		this._HSV = { h: 0, s: 100, v: 100 };
+		this._RGB = { r: 255, g: 255, b: 255 };
+		this._HEX = '000000';
+		this.lastXYRgb = { x: 0, y: 0 };
+		this.lastYHue = 0;
+		this.domElement = Ext.get( element );
+		this.createDomObjects();
+		if( this.config.hidePanel ) {
+			this.formContainer.hide();
+		}
+		// init internal events
+		this.rgbPicker.on( 'mousedown', this.rgbPickerClick.createDelegate( this ), this );
+		this.huePicker.on( 'mousedown', this.huePickerClick.createDelegate( this ), this );
+		this.wsColorContainer.on( 'mousedown', this.setColorFromWebsafe.createDelegate( this ), this );
+		this.form.findField( 'redValue' + this.domElement.id ).on( 'change', this.changeRGBField.createDelegate( this ) );
+		this.form.findField( 'greenValue' + this.domElement.id ).on( 'change', this.changeRGBField.createDelegate( this ) );
+		this.form.findField( 'blueValue' + this.domElement.id ).on( 'change', this.changeRGBField.createDelegate( this ) );
+		this.form.findField( 'hueValue' + this.domElement.id ).on( 'change', this.changeHSVField.createDelegate( this ) );
+		this.form.findField( 'saturationValue' + this.domElement.id ).on( 'change', this.changeHSVField.createDelegate( this ) );
+		this.form.findField( 'brightnessValue' + this.domElement.id ).on( 'change', this.changeHSVField.createDelegate( this ) );
+		this.form.findField( 'colorValue' + this.domElement.id ).on( 'change', this.changeHexaField.createDelegate( this ) );
+
+		this.form.findField( 'redValue' + this.domElement.id ).on( 'specialkey', this.changeRGBField.createDelegate( this ) );
+		this.form.findField( 'greenValue' + this.domElement.id ).on( 'specialkey', this.changeRGBField.createDelegate( this ) );
+		this.form.findField( 'blueValue' + this.domElement.id ).on( 'specialkey', this.changeRGBField.createDelegate( this ) );
+		this.form.findField( 'hueValue' + this.domElement.id ).on( 'specialkey', this.changeHSVField.createDelegate( this ) );
+		this.form.findField( 'saturationValue' + this.domElement.id ).on( 'specialkey', this.changeHSVField.createDelegate( this ) );
+		this.form.findField( 'brightnessValue' + this.domElement.id ).on( 'specialkey', this.changeHSVField.createDelegate( this ) );
+		this.form.findField( 'colorValue' + this.domElement.id ).on( 'specialkey', this.changeHexaField.createDelegate( this ) );
+		// initial color check
+		this.checkConfig();
+		// register events
+		this.addEvents({
+			/**
+			 * @event pickcolor
+			 * Fires when a new color selected
+			 * @param {Ext.util.ColorPicker} this
+			 * @param {String} color
+			 */
+			pickcolor: true,
+			/**
+			 * @event changergb
+			 * Fires when change rgb input
+			 * @param {Ext.util.ColorPicker} this
+			 * @param {Object} color ({ r: redvalue, g: greenvalue, b: bluevalue })
+			 */
+			changergb: true,
+			/**
+			 * @event changehsv
+			 * Fires when change hsv input
+			 * @param {Ext.util.ColorPicker} this
+			 * @param {Object} color ({ h: huevalue, s: saturationvalue, v: brightnessvalue })
+			 */
+			changehsv: true,
+			/**
+			 * @event changehexa
+			 * Fires when change hexa input
+			 * @param {Ext.util.ColorPicker} this
+			 * @param {String} color
+			 */
+			changehexa: true
+		});
+	},
+	// create internal DOM objects
+	createDomObjects: function() {
+		this.rgbPicker = Ext.DomHelper.append( this.domElement, {
+			tag: 'div',
+			cls: 'x-cp-rgb-msk'
+		}, true );
+		this.rgbPointer = Ext.DomHelper.append( this.rgbPicker, {
+			tag: 'div',
+			cls: 'x-cp-rgb-picker'
+		}, true );
+		this.rgbPointer.setXY( [ this.rgbPicker.getLeft()-this.config.pickerHotPoint.x, this.rgbPicker.getTop()-this.config.pickerHotPoint.y ] );
+		this.huePicker = Ext.DomHelper.append( this.domElement, {
+			tag: 'div',
+			cls: 'x-cp-hue-msk'
+		}, true );
+		this.huePointer = Ext.DomHelper.append( this.huePicker, {
+			tag: 'div',
+			cls: 'x-cp-hue-picker'
+		}, true );
+		this.huePointer.setXY( [ this.huePicker.getLeft()+(this.huePointer.getWidth() / 2)+1, this.huePicker.getTop()-this.config.pickerHotPoint.y ] );
+		this.container = Ext.DomHelper.append( this.domElement, {
+			tag: 'div',
+			cls: 'x-cp-control-container'
+		}, true );
+		this.formContainer = Ext.DomHelper.append( this.container, {
+			tag: 'div',
+			cls: 'x-cp-rgb-container'
+		}, true );
+		// create input form
+		this.form = new Ext.form.Form({
+			labelAlign:'top',
+			labelWidth: 30,
+			labelSeparator: '',
+			cls: 'x-cp-form',
+			id: 'form' + this.domElement.id
+		});
+		this.form.column({
+			width: 22,
+			labelSeparator: ''
+		},
+			new Ext.form.NumberField({
+				id: 'redValue' + this.domElement.id,
+				fieldLabel: ( this.config.captions.red || 'R' ),
+				allowDecimals: false,
+				allowNegative: false,
+				maxLength: 3,
+				maxValue: 255,
+				minLength: 1,
+				minValue: 0,
+				value: 255,
+				emptyText: '0'
+			}),
+			new Ext.form.NumberField({
+				id: 'greenValue' + this.domElement.id,
+				fieldLabel: ( this.config.captions.green || 'G' ),
+				allowDecimals: false,
+				allowNegative: false,
+				maxLength: 3,
+				maxValue: 255,
+				minLength: 1,
+				minValue: 0,
+				value: 255,
+				emptyText: '0'
+			}),
+			new Ext.form.NumberField({
+				id: 'blueValue' + this.domElement.id,
+				fieldLabel: ( this.config.captions.blue || 'B' ),
+				allowDecimals: false,
+				allowNegative: false,
+				maxLength: 3,
+				maxValue: 255,
+				minLength: 1,
+				minValue: 0,
+				value: 255,
+				emptyText: '0'
+			})
+		);
+		this.form.column({
+			width: 22,
+			labelSeparator: ''
+		},
+			new Ext.form.NumberField({
+				id: 'hueValue' + this.domElement.id,
+				fieldLabel: ( this.config.captions.hue || 'H°' ),
+				allowDecimals: false,
+				allowNegative: false,
+				maxLength: 3,
+				maxValue: 360,
+				minLength: 1,
+				minValue: 0,
+				value: 0,
+				emptyText: '0'
+			}),
+			new Ext.form.NumberField({
+				id: 'saturationValue' + this.domElement.id,
+				fieldLabel: ( this.config.captions.saturation || 'S%' ),
+				allowDecimals: false,
+				allowNegative: false,
+				maxLength: 3,
+				maxValue: 100,
+				minLength: 1,
+				minValue: 0,
+				value: 100,
+				emptyText: '0'
+			}),
+			new Ext.form.NumberField({
+				id: 'brightnessValue' + this.domElement.id,
+				fieldLabel: ( this.config.captions.brightness || 'V%' ),
+				allowDecimals: false,
+				allowNegative: false,
+				maxLength: 3,
+				maxValue: 100,
+				minLength: 1,
+				minValue: 0,
+				value: 100,
+				emptyText: '0'
+			})
+		);
+		this.form.column({
+			width: 42,
+			height: 30,
+			cls: 'x-cp-clear x-cp-hexa-panel',
+			labelSeparator: ''
+		},
+			new Ext.form.TextField({
+				id: 'colorValue' + this.domElement.id,
+				fieldLabel: ( this.config.captions.hexa || 'Color' ),
+				maxLength: 6,
+				minLeght: 6,
+				width: 42,
+				value: 'FFFFFF',
+				emptyText: '000000'
+			})
+		);
+		this.colorContainer = Ext.DomHelper.append( this.container, {
+			tag: 'div',
+			cls: 'x-cp-color-container'
+		}, true );
+		Ext.DomHelper.append( this.container, {
+			tag: 'label',
+			cls: 'x-cp-control-container x-cp-clear',
+			style: { 'display': 'block', 'float': 'none' }
+		}, true ).update( this.config.captions.websafe || 'Websafe' );
+		this.wsColorContainer = Ext.DomHelper.append( this.container, {
+			tag: 'div',
+			cls: 'x-cp-wscolor-container'
+		}, true );
+		this.form.render( this.formContainer );
+		// clear float
+		Ext.DomHelper.append( this.domElement, { tag: 'div', style: 'height:0px;border:none;clear:both;font-size:1px;' });
+	},
+	/**
+	 * Convert a float to decimal
+	 * @param {Float} n
+	 * @return {Integer}
+	 */
+	realToDec: function( n ) {
+		return Math.min( 255, Math.round( n * 256 ) );
+	},
+	/**
+	 * Convert HSV color format to RGB color format
+	 * @param {Integer/Array( h, s, v )} h
+	 * @param {Integer} s (optional)
+	 * @param {Integer} v (optional)
+	 * @return {Array}
+	 */
+	hsvToRgb: function( h, s, v ) {
+		if( h instanceof Array ) {
+			return this.hsvToRgb.call( this, h[0], h[1], h[2] );
+		}
+		var r, g, b, i, f, p, q, t;
+	    i = Math.floor( ( h / 60 ) % 6 );
+	    f = ( h / 60 ) - i;
+	    p = v * ( 1 - s );
+	    q = v * ( 1 - f * s );
+	    t = v * ( 1 - ( 1 - f ) * s );
+	    switch(i) {
+	        case 0: r=v; g=t; b=p; break;
+	        case 1: r=q; g=v; b=p; break;
+	        case 2: r=p; g=v; b=t; break;
+	        case 3: r=p; g=q; b=v; break;
+	        case 4: r=t; g=p; b=v; break;
+	        case 5: r=v; g=p; b=q; break;
+	    }
+	    return [this.realToDec( r ), this.realToDec( g ), this.realToDec( b )];
+	},
+	/**
+	 * Convert RGB color format to HSV color format
+	 * @param {Integer/Array( r, g, b )} r
+	 * @param {Integer} g (optional)
+	 * @param {Integer} b (optional)
+	 * @return {Array}
+	 */
+	rgbToHsv: function( r, g, b ) {
+		if( r instanceof Array ) {
+			return this.rgbToHsv.call( this, r[0], r[1], r[2] );
+		}
+        r = r / 255;
+        g = g / 255;
+        b = b / 255;
+        var min, max, delta, h, s, v;
+        min = Math.min( Math.min( r, g ), b );
+        max = Math.max( Math.max( r, g ), b );
+        delta = max - min;
+        switch (max) {
+            case min: h = 0; break;
+            case r:   h = 60 * ( g - b ) / delta;
+                      if ( g < b ) { h += 360; }
+                      break;
+            case g:   h = ( 60 * ( b - r ) / delta ) + 120; break;
+            case b:   h = ( 60 * ( r - g ) / delta ) + 240; break;
+        }
+        s = ( max === 0 ) ? 0 : 1 - ( min / max );
+        return [Math.round( h ), s, max];
+	},
+	/**
+	 * Convert RGB color format to Hexa color format
+	 * @param {Integer/Array( r, g, b )} r
+	 * @param {Integer} g (optional)
+	 * @param {Integer} b (optional)
+	 * @return {String}
+	 */
+	rgbToHex: function( r, g, b ) {
+		if( r instanceof Array ) {
+			return this.rgbToHex.call( this, r[0], r[1], r[2] );
+		}
+		return this.decToHex( r ) + this.decToHex( g ) + this.decToHex( b );
+	},
+	/**
+	 * Convert an integer to hexa
+	 * @param {Integer} n
+	 * @return {String}
+	 */
+	decToHex: function( n ) {
+        n = parseInt(n, 10);
+        n = ( !isNaN( n )) ? n : 0;
+        n = (n > 255 || n < 0) ? 0 : n;
+        return this.HCHARS.charAt( ( n - n % 16 ) / 16 ) + this.HCHARS.charAt( n % 16 );
+	},
+	/**
+	 * Return with position of a character in this.HCHARS string
+	 * @private
+	 * @param {Char} c
+	 * @return {Integer}
+	 */
+	getHCharPos: function( c ) {
+		return this.HCHARS.indexOf( c.toUpperCase() );
+	},
+	/**
+	 * Convert a hexa string to decimal
+	 * @param {String} hex
+	 * @return {Integer}
+	 */
+	hexToDec: function( hex ) {
+        var s = hex.split('');
+        return ( ( this.getHCharPos( s[0] ) * 16 ) + this.getHCharPos( s[1] ) );
+	},
+	/**
+	 * Convert a hexa string to RGB color format
+	 * @param {String} hex
+	 * @return {Array}
+	 */
+	hexToRgb: function( hex ) {
+		return [ this.hexToDec( hex.substr(0, 2) ), this.hexToDec( hex.substr(2, 2) ), this.hexToDec( hex.substr(4, 2) ) ];
+	},
+	/**
+	 * Not documented yet
+	 */
+	checkSafeNumber: function( v ) {
+	    if ( !isNaN( v ) ) {
+	        v = Math.min( Math.max( 0, v ), 255 );
+	        var i, next;
+	        for( i=0; i<256; i=i+51 ) {
+	            next = i + 51;
+	            if ( v>=i && v<=next ) { return ( v - i > 25 ) ? next : i; }
+	        }
+	    }
+	    return v;
+	},
+	/**
+	 * Not documented yet
+	 */
+	websafe: function( r, g, b ) {
+		if( r instanceof Array ) {
+			return this.websafe.call( this, r[0], r[1], r[2] );
+		}
+		return [this.checkSafeNumber( r ), this.checkSafeNumber( g ), this.checkSafeNumber( b )];
+	},
+	/**
+	 * Convert Y coordinate to HUE value
+	 * @private
+	 * @param {Integer} y
+	 * @return {Integer}
+	 */
+	getHue: function( y ) {
+		var hue = Math.round( ( ( this.huePicker.getHeight() - y ) / this.huePicker.getHeight() ) * 360 );
+		return hue === 360 ? 0 : hue;
+	},
+	/**
+	 * Convert HUE value to Y coordinate
+	 * @private
+	 * @param {Integer} hue
+	 * @return {Integer}
+	 */
+	getHPos: function( hue ) {
+		return this.huePicker.getHeight() - ( ( hue * this.huePicker.getHeight() ) / 360 );
+	},
+	/**
+	 * Convert X coordinate to Saturation value
+	 * @private
+	 * @param {Integer} x
+	 * @return {Integer}
+	 */
+	getSaturation: function( x ) {
+		return x / this.rgbPicker.getWidth();
+	},
+	/**
+	 * Convert Saturation value to Y coordinate
+	 * @private
+	 * @param {Integer} saturation
+	 * @return {Integer}
+	 */
+	getSPos: function( saturation ) {
+		return saturation * this.rgbPicker.getWidth();
+	},
+	/**
+	 * Convert Y coordinate to Brightness value
+	 * @private
+	 * @param {Integer} y
+	 * @return {Integer}
+	 */
+	getValue: function( y ) {
+		return ( this.rgbPicker.getHeight() - y ) / this.rgbPicker.getHeight();
+	},
+	/**
+	 * Convert Brightness value to Y coordinate
+	 * @private
+	 * @param {Integer} value
+	 * @return {Integer}
+	 */
+	getVPos: function( value ) {
+		return this.rgbPicker.getHeight() - ( value * this.rgbPicker.getHeight() );
+	},
+	/**
+	 * Update colors from the position of picker
+	 */
+	updateColorsFromRGBPicker: function() {
+		this._HSV = { h: this._HSV.h, s: this.getSaturation( this.lastXYRgb.x ), v: this.getValue( this.lastXYRgb.y ) };
+	},
+	/**
+	 * Update colors from the position of HUE picker
+	 */
+	updateColorsFromHUEPicker: function() {
+		this._HSV.h = this.getHue( this.lastYHue );
+		var temp = this.hsvToRgb( this._HSV.h, 1, 1 );
+		temp =  this.rgbToHex( temp[0], temp[1], temp[2] );
+		this.rgbPicker.setStyle( { backgroundColor: '#' + temp } );
+	},
+	/**
+	 * Update colors from RGB input fields
+	 */
+	updateColorsFromRGBFields: function() {
+		var temp = this.rgbToHsv( this.form.findField( 'redValue' + this.domElement.id ).getValue(), this.form.findField( 'greenValue' + this.domElement.id ).getValue(), this.form.findField( 'blueValue' + this.domElement.id ).getValue() );
+		this._HSV = { h: temp[0], s: temp[1], v: temp[2] };
+	},
+	/**
+	 * Update colors from HEXA input fields
+	 */
+	updateColorsFromHexaField: function() {
+		var temp = this.hexToRgb( this._HEX );
+		this._RGB = { r: temp[0], g: temp[1], b: temp[2] };
+		temp = this.rgbToHsv( temp[0], temp[1], temp[2] );
+		this._HSV = { h: temp[0], s: temp[1], v: temp[2] };
+	},
+	/**
+	 * Update colors from HSV input fields
+	 */
+	updateColorsFromHSVFields: function() {
+		var temp = this.hsvToRgb( this._HSV.h, this._HSV.s, this._HSV.v );
+		this._RGB = { r: temp[0], g: temp[1], b: temp[2] };
+	},
+	/**
+	 * Update RGB color from HSV color
+	 */
+	updateRGBFromHSV: function() {
+		var temp = this.hsvToRgb( this._HSV.h, this._HSV.s, this._HSV.v );
+		this._RGB = { r: temp[0], g: temp[1], b: temp[2] };
+	},
+	/**
+	 * Update all inputs from internal color
+	 */
+	updateInputFields: function() {
+		this.form.findField( 'redValue' + this.domElement.id ).setValue( this._RGB.r );
+		this.form.findField( 'greenValue' + this.domElement.id ).setValue( this._RGB.g );
+		this.form.findField( 'blueValue' + this.domElement.id ).setValue( this._RGB.b );
+		this.form.findField( 'hueValue' + this.domElement.id ).setValue( this._HSV.h );
+		this.form.findField( 'saturationValue' + this.domElement.id ).setValue( Math.round( this._HSV.s * 100 ) );
+		this.form.findField( 'brightnessValue' + this.domElement.id ).setValue( Math.round( this._HSV.v * 100 ) );
+		this.form.findField( 'colorValue' + this.domElement.id ).setValue( this._HEX );
+	},
+	/**
+	 * Update color container
+	 */
+	updateColor: function() {
+		this._HEX = this.rgbToHex( this._RGB.r, this._RGB.g, this._RGB.b );
+		this.colorContainer.setStyle( { backgroundColor: '#'+this._HEX } );
+		this.colorContainer.set({ title: '#'+this._HEX });
+		var temp = this.rgbToHex( this.websafe( this._RGB.r, this._RGB.g, this._RGB.b ) );
+		this.wsColorContainer.setStyle( { backgroundColor: '#'+temp } );
+		this.wsColorContainer.set({ title: '#'+temp });
+		this.updateInputFields();
+		// fire the pickcolor event
+		this.fireEvent( 'pickcolor', this, this._HEX );
+	},
+	/**
+	 * Update position of both picker from the internal color
+	 */
+	updatePickers: function() {
+		this.lastXYRgb = { x: this.getSPos( this._HSV.s ), y: this.getVPos( this._HSV.v ) };
+		this.rgbPointer.setXY( [this.lastXYRgb.x-this.config.pickerHotPoint.x + this.rgbPicker.getLeft(), this.lastXYRgb.y-this.config.pickerHotPoint.y+this.rgbPicker.getTop()], this.config.animate );
+		this.lastYHue = this.getHPos( this._HSV.h );
+		this.huePointer.setXY( [this.huePicker.getLeft()+(this.huePointer.getWidth() / 2)+1, this.lastYHue + this.huePicker.getTop()-this.config.pickerHotPoint.y ], this.config.animate );
+		var temp = this.hsvToRgb( this._HSV.h, 1, 1 );
+		temp =  this.rgbToHex( temp[0], temp[1], temp[2] );
+		this.rgbPicker.setStyle( { backgroundColor: '#' + temp } );
+	},
+	/**
+	 * Internal event
+	 * Catch the RGB picker click
+	 */
+	rgbPickerClick: function( event, cp ) {
+		this.lastXYRgb = { x: event.getPageX() - this.rgbPicker.getLeft(), y: event.getPageY() - this.rgbPicker.getTop() };
+		this.rgbPointer.setXY( [event.getPageX()-this.config.pickerHotPoint.x, event.getPageY()-this.config.pickerHotPoint.y], this.config.animate );
+		this.updateColorsFromRGBPicker();
+		this.updateRGBFromHSV();
+		this.updateColor();
+	},
+	/**
+	 * Internal event
+	 * Catch the HUE picker click
+	 */
+	huePickerClick: function( event, cp ) {
+		this.lastYHue = event.getPageY() - this.huePicker.getTop();
+		this.huePointer.setY( [event.getPageY()-3], this.config.animate );
+		this.updateColorsFromHUEPicker();
+		this.updateRGBFromHSV();
+		this.updateColor();
+	},
+	/**
+	 * Internal event
+	 * Catch the change event of RGB input fields
+	 */
+	changeRGBField: function( element, newValue, oldValue ) {
+		if( !(newValue instanceof String) ) { newValue = element.getValue(); }
+		if( newValue < 0 ) { newValue = 0; }
+		if( newValue > 255 ) { newValue = 255; }
+
+		if( element == this.form.findField( 'redValue' + this.domElement.id ) ) {
+			this._RGB.r = newValue;
+		} else if( element == this.form.findField( 'greenValue' + this.domElement.id ) ) {
+			this._RGB.g = newValue;
+		} else if( element == this.form.findField( 'blueValue' + this.domElement.id ) ) {
+			this._RGB.b = newValue;
+		}
+		this.updateColorsFromRGBFields();
+		this.updateColor();
+		this.updatePickers();
+		// fire the changergb event
+		this.fireEvent( 'changergb', this, this._RGB );
+	},
+	/**
+	 * Internal event
+	 * Catch the change event of HSV input fields
+	 */
+	changeHSVField: function( element, newValue, oldValue ) {
+		if( !(newValue instanceof String) ) { newValue = element.getValue(); }
+		if( element == this.form.findField( 'hueValue' + this.domElement.id ) ) {
+			if( newValue < 0 ) { newValue = 0; }
+			if( newValue > 360 ) { newValue = 360; }
+			this._HSV.h = newValue;
+		} else {
+			if( newValue < 0 ) { newValue = 0; }
+			if( newValue > 100 ) { newValue = 100; }
+			if( element == this.form.findField( 'saturationValue' + this.domElement.id ) ) {
+				this._HSV.s = ( newValue / 100 );
+			} else if( element == this.form.findField( 'brightnessValue' + this.domElement.id ) ) {
+				this._HSV.v = ( newValue / 100 );
+			}
+		}
+		this.updateColorsFromHSVFields();
+		this.updateColor();
+		this.updatePickers();
+		// fire the changehsv event
+		this.fireEvent( 'changehsv', this, this._HSV );
+	},
+	/**
+	 * Internal event
+	 * Catch the change event of HEXA input field
+	 */
+	changeHexaField: function( element, newValue, oldValue ) {
+		if( !(newValue instanceof String) ) { newValue = element.getValue(); }
+		if( element == this.form.findField( 'colorValue' + this.domElement.id ) ) {
+			if( newValue.length > 9 ) { newValue = newValue.substr(0,5); }
+			if( !newValue.match( /^[0-9a-f]{6}$/i ) ) { newValue = '000000'; }
+			this._HEX = newValue;
+			this.updateColorsFromHexaField();
+			this.updateColor();
+			this.updatePickers();
+			// fire the changehexa event
+			this.fireEvent( 'changehexa', this, this._HEX );
+		}
+	},
+	setColorFromWebsafe: function() {
+		this.setColor( this.wsColorContainer.getColor( 'backgroundColor','','' ) );
+	},
+	/**
+	 * Set initial color if config contains
+	 * @private
+	 */
+	checkConfig: function() {
+		if( this.config ) {
+			if( this.config.color ) {
+				this.setColor( this.config.color );
+			} else if( this.config.hsv ) {
+				this.setHSV( this.config.hsv );
+			} else if( this.config.rgb ) {
+				this.setRGB( this.config.rgb );
+			}
+		}
+	},
+
+	// PUBLIC methods
+
+	/**
+	 * Change color with hexa value
+	 * @param {String} hexa (eg.: 9A4D5F )
+	 */
+	setColor: function( hexa ) {
+		var temp = this.hexToRgb( hexa );
+		this._RGB = { r:temp[0], g:temp[1], b:temp[2] }
+		var temp = this.rgbToHsv( temp );
+		this._HSV = { h:temp[0], s:temp[1], v:temp[2] };
+		this.updateColor();
+		this.updatePickers();
+	},
+	/**
+	 * Change color with a RGB Object
+	 * @param {Object} rgb (eg.: { r:255, g:200, b:111 })
+	 */
+	setRGB: function( rgb ) {
+		this._RGB = rgb;
+		var temp = this.rgbToHsv( rgb.r, rgb.g, rgb.b );
+		this._HSV = { h: temp[0], s: temp[1], v: temp[2] };
+		this.updateColor();
+		this.updatePickers();
+	},
+	/**
+	 * Change color with a HSV Object
+	 * @param {Object} hsv (eg.: { h:359, s:10, v:100 })
+	 */
+	setHSV: function( hsv ) {
+		this._HSV = { h: hsv.h, s: ( hsv.s / 100 ), v: ( hsv.v / 100 ) };
+		var temp = this.hsvToRgb( hsv.h, ( hsv.s / 100 ), ( hsv.v / 100 ) );
+		this._RGB = { r: temp[0], g: temp[1], b: temp[2] };
+		this.updateColor();
+		this.updatePickers();
+	},
+	/**
+	 * Get the color from the internal store
+	 * @param {Boolean} hash If it is true, the color prepended with '#'
+	 * @return {String} hexa color format
+	 */
+	getColor: function( hash ) {
+		return ( hash ? '' : '#' ) + this._HEX;
+	},
+	/**
+	 * Get the color from the internal store in RGB object format
+	 * @return {Object} format: { r: redvalue, g: greenvalue, b: bluevalue }
+	 */
+	getRGB: function() {
+		return this._RGB;
+	},
+	/**
+	 * Get the color from the internal store in HSV object format
+	 * @return {Object} format: { h: huevalue, s: saturationvalue, v: brightnessvalue }
+	 */
+	getHSV: function() {
+		return this._HSV;
+	},
+	/**
+	 * Make input panel visible/hidden
+	 * @param {Boolean} show Turns panel hidden or visible
+	 * @param {Boolean/Object} animate Show/hide with animation or not
+	 */
+	setPanelVisible: function( show, animate ) {
+		return this.formContainer.setVisible( show, animate );
+	},
+	/**
+	 * Returns with boolean, input panel is visible or not
+	 * @return {Boolean}
+	 */
+	isPanelVisible: function() {
+		return this.formContainer.isDisplayed();
+	},
+	/**
+	 * Make ColorPicker visible if it is not
+	 * note: in ColorDialog it changed to the show method of BasicDialog
+	 */
+	show: function() {
+		this.domElement.show();
+	},
+	/**
+	 * Make ColorPicker hidden if it is visible
+	 * note: in ColorDialog it changed to the hide method of BasicDialog
+	 */
+	hide: function() {
+		this.domElement.hide();
+	}
+});
+
+/**
+ * @class Ext.ux.ColorDialog
+ * @extends Ext.util.ColorPicker,
+ * @constructor
+ * Creates new ColorDialog
+ * @param {String/HTMLElement/Element} el The container element for this dialog
+ * @param {Object} config Config Object (see the BasicDialog config too!)
+ * @cfg {Boolean} hidePanel true to hide the inputs (defaults to false)
+ * @cfg {Boolean/Object} animate Moving pickers with this animate or false to no animation (defaults to false)
+ * @cfg {Object} rgb (optional) Add initial color with rgb format eg.: { r:255, g:128, b:10 }
+ * @cfg {Object} hsv (optional) Add initial color with hsv format eg.: { h:100, s:60, v:50 }
+ * @cfg {String} color (optional) Add initial color with hexa format eg.: 'A3CF6D'
+ * @cfg {Object} pickerHotPoint (optional) If you change the picker image, you can change the point of pick. ( defaults to { x:3, y:3 } )
+ * @cfg {Object} captions labels of inputs (defaults to { red: 'R', green: 'G', blue: 'B', hue: 'H°', saturation: 'S%', brightness: 'V%', hexa: 'Color', websafe: 'Websafe' })
+ */
+Ext.ux.ColorDialog = function( element, config ) {
+	Ext.ux.ColorDialog.superclass.constructor.call( this, element, config );
+	this.initialize( this.body, config );
+	this.body.setStyle({
+		padding: '5px'
+	});
+	this.setContentSize( 266, 218 );
+}
+Ext.extend(Ext.ux.ColorDialog,Ext.BasicDialog);
+Ext.applyIf(Ext.ux.ColorDialog.prototype,Ext.ux.ColorPicker.prototype);
+Ext.namespace('Ext.ux');
+
+Ext.ux.SecurePass = function(config) {
+    Ext.ux.SecurePass.superclass.constructor.call(this, config);
+}
+ 
+Ext.extend(Ext.ux.SecurePass, Ext.form.TextField, {
+    /**
+     * @cfg {String/Object} errors A Error spec, or true for a default spec (defaults to
+     * {
+     *  PwdEmpty: "Please type a password, and then retype it to confirm.",
+     *  PwdDifRPwd: "The new password and the confirmation password don't match. Please type the same password in both boxes.",
+     *  PwdShort: "Your password must be at least 6 characters long. Please type a different password.",
+     *  PwdLong: "Your password can't contain more than 16 characters. Please type a different password.",
+     *  PwdBadChar: "The password contains characters that aren't allowed. Please type a different password.",
+     *  IDInPwd: "Your password can't include the part of your ID. Please type a different password.",
+     *  FNInPwd: "Your password can't contain your first name. Please type a different password.",
+     *  LNInPwd: "Your password can't contain your last name. Please type a different password."
+     * })
+     */
+    // private
+    errors : {
+        PwdEmpty: "Please type a password, and then retype it to confirm.",
+        PwdDifRPwd: "The new password and the confirmation password don't match. Please type the same password in both boxes.",
+        PwdShort: "Your password must be at least 3 characters long. Please type a different password.",
+        PwdLong: "Your password can't contain more than 16 characters. Please type a different password.",
+        PwdBadChar: "The password contains characters that aren't allowed. Please type a different password.",
+        IDInPwd: "Your password can't include the part of your ID. Please type a different password.",
+        FNInPwd: "Your password can't contain your first name. Please type a different password.",
+        LNInPwd: "Your password can't contain your last name. Please type a different password."
+    },
+ 
+    /**
+     * @cfg {String/Object} Label for the strength meter (defaults to
+     * 'Password strength:')
+     */
+    // private
+    meterLabel : '',
+ 
+    /**
+     * @cfg {String/Object} pwdStrengths A pwdStrengths spec, or true for a default spec (defaults to
+     * ['Weak', 'Medium', 'Strong'])
+     */
+    // private
+    pwdStrengths : ['Weak', 'Medium', 'Strong'],
+ 
+    // private
+    strength : 0,
+ 
+    // private
+    _lastPwd : null,
+ 
+    // private
+    kCapitalLetter : 0,
+    kSmallLetter : 1,
+    kDigit : 2,
+    kPunctuation : 3,
+ 
+    // private
+    initEvents : function(){
+        Ext.ux.SecurePass.superclass.initEvents.call(this);
+        this.el.on('keyup', this.checkStrength,  this, {buffer:50});
+    },
+ 
+    // private
+    onRender : function(ct, position){
+        Ext.ux.SecurePass.superclass.onRender.call(this, ct, position);
+        this.wrap = this.el.wrap({cls: "x-form-field-wrap"});
+        this.trigger = this.wrap.createChild({tag: "div", cls: "StrengthMeter "+this.triggerClass});
+        if(this.meterLabel != ''){
+            this.trigger.createChild({tag: "label", html: this.meterLabel});
+        }
+        this.trigger.createChild({tag: "div", cls: "PwdMeterBase", html: '<div class="PwdBack"><div class="PwdMeter" id="PwdMeter"></div></div>'});
+        if(this.hideTrigger){
+            this.trigger.setDisplayed(false);
+        }
+        this.setSize(this.width||'', this.height||'');
+    },
+ 
+    // private
+    onDestroy : function(){
+        if(this.trigger){
+            this.trigger.removeAllListeners();
+            this.trigger.remove();
+        }
+        if(this.wrap){
+            this.wrap.remove();
+        }
+        Ext.form.TriggerField.superclass.onDestroy.call(this);
+    },
+ 
+    // private
+    checkStrength : function(){
+        var pwd = this.el.getValue();
+        if (pwd == this._lastPwd) {
+            return;
+        }
+ 
+        var strength;
+        if (this.ClientSideStrongPassword(pwd)) {
+            strength = 3;
+        } else if(this.ClientSideMediumPassword(pwd)) {
+            strength = 2;
+        } else if(this.ClientSideWeakPassword(pwd)) {
+            strength = 1;
+        } else {
+            strength = 0;
+        }
+ 
+        document.getElementById('PwdMeter').style.width = 40 * strength +'px';
+        if(this.pwdStrengths != null && strength > 0) {
+            document.getElementById('PwdMeter').innerHTML = '&nbsp;'+ this.pwdStrengths[strength - 1];
+        } else {
+            document.getElementById('PwdMeter').innerHTML = '';
+        }
+ 
+        this._lastPwd = pwd;
+    },
+ 
+    // private
+    validateValue : function(value){
+        if(!Ext.form.NumberField.superclass.validateValue.call(this, value)){
+            return false;
+        }
+        if(value.length < 1){ // if it's blank and textfield didn't flag it then it's valid
+             return true;
+        }
+        if(value.length == 0) {
+            this.markInvalid(this.errors.PwdEmpty);
+            return false;
+        }
+        if("[\x21-\x7e]*".match(value)) {
+            this.markInvalid(this.errors.PwdBadChar);
+            return false;
+        }
+        if(value.length < 3) {
+            this.markInvalid(this.errors.PwdShort);
+            return false;
+        }
+        if(value.length > 16) {
+            this.markInvalid(this.errors.PwdLong);
+            return false;
+        }
+        /*if(value.length > 0 && this.iRPwd != 'undefined' && Ext.get(this.iRPwd) != null && value != Ext.get(this.iRPwd).getValue()) {
+            this.markInvalid(this.errors.PwdDifRPwd);
+            return false;
+        }*/
+        return true;
+    },
+ 
+    // private
+    CharacterSetChecks : function(type){
+        this.type = type;
+        this.fResult = false;
+    },
+ 
+    // private
+    isctype : function(character, type){
+        switch (type) { //why needed break after return in js ? very odd bug
+            case this.kCapitalLetter: if (character >= 'A' && character <= 'Z') { return true; } break;
+            case this.kSmallLetter: if (character >= 'a' && character <= 'z') { return true; } break;
+            case this.kDigit: if (character >= '0' && character <= '9') { return true; } break;
+            case this.kPunctuation: if ("!@#$%^&*()_+-='\";:[{]}|.>,</?`~".indexOf(character) >= 0) { return true; } break;
+            default: return false;
+        }
+    },
+ 
+    // private
+    IsLongEnough : function(pwd, size){
+        return !(pwd == null || isNaN(size) || pwd.length < size);
+    },
+ 
+    // private
+    SpansEnoughCharacterSets : function(word, nb){
+        if (!this.IsLongEnough(word, nb))
+        {
+            return false;
+        }
+ 
+        var characterSetChecks = new Array(
+            new this.CharacterSetChecks(this.kCapitalLetter), new this.CharacterSetChecks(this.kSmallLetter),
+            new this.CharacterSetChecks(this.kDigit), new this.CharacterSetChecks(this.kPunctuation));
+        for (var index = 0; index < word.length; ++index) {
+            for (var nCharSet = 0; nCharSet < characterSetChecks.length; ++nCharSet) {
+                if (!characterSetChecks[nCharSet].fResult && this.isctype(word.charAt(index), characterSetChecks[nCharSet].type)) {
+                    characterSetChecks[nCharSet].fResult = true;
+                    break;
+                }
+            }
+        }
+ 
+        var nCharSets = 0;
+        for (var nCharSet = 0; nCharSet < characterSetChecks.length; ++nCharSet) {
+            if (characterSetChecks[nCharSet].fResult) {
+                ++nCharSets;
+            }
+        }
+ 
+        if (nCharSets < nb) {
+            return false;
+        }
+        return true;
+    },
+ 
+    // private
+    ClientSideStrongPassword : function(pwd){
+        return this.IsLongEnough(pwd, 8) && this.SpansEnoughCharacterSets(pwd, 3);
+    },
+ 
+    // private
+    ClientSideMediumPassword : function(pwd){
+        return this.IsLongEnough(pwd, 7) && this.SpansEnoughCharacterSets(pwd, 2);
+    },
+ 
+    // private
+    ClientSideWeakPassword : function(pwd){
+        return this.IsLongEnough(pwd, 6) || !this.IsLongEnough(pwd, 0);
+    }
+})
+/*----------------------------------------------------------------------------
+ RICHDRAW 1.0
+ Vector Graphics Drawing Script
+ -----------------------------------------------------------------------------
+ Created by Mark Finkle (mark.finkle@gmail.com)
+ Implementation of simple vector graphic drawing control using SVG or VML.
+ -----------------------------------------------------------------------------
+ Copyright (c) 2006 Mark Finkle
+
+ This program is  free software;  you can redistribute  it and/or  modify it
+ under the terms of the MIT License.
+
+ Permission  is hereby granted,  free of charge, to  any person  obtaining a
+ copy of this software and associated documentation files (the "Software"),
+ to deal in the  Software without restriction,  including without limitation
+ the  rights to use, copy, modify,  merge, publish, distribute,  sublicense,
+ and/or  sell copies  of the  Software, and to  permit persons to  whom  the
+ Software is  furnished  to do  so, subject  to  the  following  conditions:
+ The above copyright notice and this  permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS",  WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED,  INCLUDING BUT NOT LIMITED TO  THE WARRANTIES  OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR  COPYRIGHT  HOLDERS BE  LIABLE FOR  ANY CLAIM,  DAMAGES OR OTHER
+ LIABILITY, WHETHER  IN AN  ACTION OF CONTRACT, TORT OR  OTHERWISE,  ARISING
+ FROM,  OUT OF OR  IN  CONNECTION  WITH  THE  SOFTWARE OR THE  USE OR  OTHER
+ DEALINGS IN THE SOFTWARE.
+ -----------------------------------------------------------------------------
+ Dependencies: (SVG or VML rendering implementations)
+ History:
+ 2006-04-05 | Created
+ --------------------------------------------------------------------------*/
+
+
+function RichDrawEditor(elem, renderer) {
+  this.container = elem;
+	this.gridX = 10;
+	this.gridY = 10;
+  this.mouseDownX = 0;
+  this.mouseDownY = 0;
+  this.mode = '';
+  this.fillColor = '';
+  this.lineColor = '';
+  this.lineWidth = '';
+  this.selected = null;
+  this.selectedBounds = { x:0, y:0, width:0, height: 0 };
+
+	this.onselect = function() {}
+	this.onunselect = function() {}
+
+  this.renderer = renderer;
+  this.renderer.init(this.container);
+
+  this.onMouseDownListener = this.onMouseDown.bindAsEventListener(this);
+  this.onMouseUpListener = this.onMouseUp.bindAsEventListener(this);
+  this.onDragListener = this.onDrag.bindAsEventListener(this);
+  this.onResizeListener = this.onResize.bindAsEventListener(this);
+  this.onDrawListener = this.onDraw.bindAsEventListener(this);
+
+  this.onHitListener = this.onHit.bindAsEventListener(this);
+
+  this.onSelectStartListener = this.onSelectStart.bindAsEventListener(this);
+
+  Event.observe(this.container, "mousedown", this.onMouseDownListener);
+  Event.observe(this.container, "mouseup", this.onMouseUpListener);
+  Event.observe(this.container, "selectstart", this.onSelectStartListener);  
+}
+
+
+RichDrawEditor.prototype.clearWorkspace = function() {
+	this.container.innerHTML = '';
+};
+
+
+RichDrawEditor.prototype.deleteSelection = function() {
+  if (this.selected) {
+    this.renderer.remove(this.container.ownerDocument.getElementById('tracker'));
+    this.renderer.remove(this.selected);
+    this.selected = null;
+  }
+};
+
+
+RichDrawEditor.prototype.select = function(elem) {
+  if (elem == this.selected)
+    return;
+
+  this.selected = elem;
+  this.renderer.showTracker(this.selected);
+  this.onselect(this);
+};
+
+
+RichDrawEditor.prototype.unselect = function() {
+  if (this.selected) {
+    this.renderer.remove(this.container.ownerDocument.getElementById('tracker'));
+    this.selected = null;
+    this.onunselect(this);
+  }
+};
+
+
+RichDrawEditor.prototype.getSelectedElement = function() {
+  return this.selected;
+};
+
+
+RichDrawEditor.prototype.setGrid = function(horizontal, vertical) {
+  this.gridX = horizontal;
+  this.gridY = vertical;
+};
+
+
+RichDrawEditor.prototype.editCommand = function(cmd, value)
+{
+  if (cmd == 'mode') {
+    this.mode = value;
+  }
+  else if (this.selected == null) {
+    if (cmd == 'fillcolor') {
+      this.fillColor = value;
+    }
+    else if (cmd == 'linecolor') {
+      this.lineColor = value;
+    }
+    else if (cmd == 'linewidth') {
+      this.lineWidth = parseInt(value) + 'px';
+    }
+  }
+  else {
+    this.renderer.editCommand(this.selected, cmd, value);
+  }
+}
+
+
+RichDrawEditor.prototype.queryCommand = function(cmd)
+{
+  if (cmd == 'mode') {
+    return this.mode;
+  }
+  else if (this.selected == null) {
+    if (cmd == 'fillcolor') {
+      return this.fillColor;
+    }
+    else if (cmd == 'linecolor') {
+      return this.lineColor;
+    }
+    else if (cmd == 'linewidth') {
+      return this.lineWidth;
+    }
+  }
+  else {
+    return this.renderer.queryCommand(this.selected, cmd);
+  }
+}
+
+
+RichDrawEditor.prototype.onSelectStart = function(event) {
+  return false;
+}
+
+
+RichDrawEditor.prototype.onMouseDown = function(event) {
+  var offset = Position.cumulativeOffset(this.container);
+  var snappedX = Math.round((Event.pointerX(event) - offset[0]) / this.gridX) * this.gridX;
+  var snappedY = Math.round((Event.pointerY(event) - offset[1]) / this.gridY) * this.gridY;
+
+  if (this.mode != 'select') {
+    this.unselect();
+
+    this.mouseDownX = snappedX;
+    this.mouseDownY = snappedY;
+
+    this.selected = this.renderer.create(this.mode, this.fillColor, this.lineColor, this.lineWidth, this.mouseDownX, this.mouseDownY, 1, 1);
+    this.selected.id = 'shape:' + createUUID();
+    Event.observe(this.selected, "mousedown", this.onHitListener);  
+
+    Event.observe(this.container, "mousemove", this.onDrawListener);  
+  }
+  else {
+    if (this.mouseDownX != snappedX || this.mouseDownY != snappedY)
+      this.unselect();
+  }
+  
+  return false;
+};
+
+
+RichDrawEditor.prototype.onMouseUp = function(event) {
+  Event.stopObserving(this.container, "mousemove", this.onDrawListener);  
+  Event.stopObserving(this.container, "mousemove", this.onDragListener);  
+
+  if (this.mode != 'select') {
+    this.selected = null;
+  }
+};
+
+
+RichDrawEditor.prototype.onDrag = function(event) {
+  var offset = Position.cumulativeOffset(this.container);
+  var snappedX = Math.round((Event.pointerX(event) - offset[0]) / this.gridX) * this.gridX;
+  var snappedY = Math.round((Event.pointerY(event) - offset[1]) / this.gridY) * this.gridY;
+
+  var deltaX = snappedX - this.mouseDownX;
+  var deltaY = snappedY - this.mouseDownY;
+
+  this.renderer.move(this.selected, this.selectedBounds.x + deltaX, this.selectedBounds.y + deltaY);
+
+  // Update selection tracker
+  this.renderer.showTracker(this.selected);
+//  hide_tracker();
+};
+
+
+RichDrawEditor.prototype.onResize = function(event) {
+  var offset = Position.cumulativeOffset(this.container);
+  var snappedX = Math.round((Event.pointerX(event) - offset[0]) / this.gridX) * this.gridX;
+  var snappedY = Math.round((Event.pointerY(event) - offset[1]) / this.gridY) * this.gridY;
+
+  var deltaX = snappedX - this.mouseDownX;
+  var deltaY = snappedY - this.mouseDownY;
+
+  this.renderer.track(handle, deltaX, deltaY);
+
+  // Update selection tracker
+  show_tracker();
+//  hide_tracker();
+};
+
+
+RichDrawEditor.prototype.onDraw = function(event) {
+  if (this.selected == null)
+    return;
+
+  var offset = Position.cumulativeOffset(this.container);
+  var snappedX = Math.round((Event.pointerX(event) - offset[0]) / this.gridX) * this.gridX;
+  var snappedY = Math.round((Event.pointerY(event) - offset[1]) / this.gridY) * this.gridY;
+
+  this.renderer.resize(this.selected, this.mouseDownX, this.mouseDownY, snappedX, snappedY);
+};
+
+
+RichDrawEditor.prototype.onHit = function(event) {
+  if (this.mode == 'select') {
+    this.select(Event.element(event));
+    this.selectedBounds = this.renderer.bounds(this.selected);
+    
+    var offset = Position.cumulativeOffset(this.container);
+    this.mouseDownX = Math.round((Event.pointerX(event) - offset[0]) / this.gridX) * this.gridX;
+    this.mouseDownY = Math.round((Event.pointerY(event) - offset[1]) / this.gridY) * this.gridY;
+
+    Event.observe(this.container, "mousemove", this.onDragListener);  
+  }
+};
+
+
+function createUUID()
+{
+  return [4, 2, 2, 2, 6].map(function(length) {
+    var uuidpart = "";
+    for (var i=0; i<length; i++) {
+      var uuidchar = parseInt((Math.random() * 256)).toString(16);
+      if (uuidchar.length == 1)
+        uuidchar = "0" + uuidchar;
+      uuidpart += uuidchar;
+    }
+    return uuidpart;
+  }).join('-');
+}
+
+//----------------------------------------------------------------------------
+// AbstractRenderer
+//
+// Abstract base class defining the drawing API. Can not be used directly.
+//----------------------------------------------------------------------------
+
+function AbstractRenderer() {
+
+};
+
+AbstractRenderer.prototype.init = function(elem) {};
+AbstractRenderer.prototype.bounds = function(shape) { return { x:0, y:0, width:0, height: 0 }; };
+AbstractRenderer.prototype.create = function(shape, fillColor, lineColor, lineWidth, left, top, width, height) {};
+AbstractRenderer.prototype.remove = function(shape) {};
+AbstractRenderer.prototype.move = function(shape, left, top) {};
+AbstractRenderer.prototype.track = function(shape) {};
+AbstractRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {};
+AbstractRenderer.prototype.editCommand = function(shape, cmd, value) {};
+AbstractRenderer.prototype.queryCommand = function(shape, cmd) {};
+AbstractRenderer.prototype.showTracker = function(shape) {};
+AbstractRenderer.prototype.getMarkup = function() { return null; };
+
+/*----------------------------------------------------------------------------
+ SVGRENDERER 1.0
+ SVG Renderer For RichDraw
+ -----------------------------------------------------------------------------
+ Created by Mark Finkle (mark.finkle@gmail.com)
+ Implementation of SVG based renderer.
+ -----------------------------------------------------------------------------
+ Copyright (c) 2006 Mark Finkle
+
+ This program is  free software;  you can redistribute  it and/or  modify it
+ under the terms of the MIT License.
+
+ Permission  is hereby granted,  free of charge, to  any person  obtaining a
+ copy of this software and associated documentation files (the "Software"),
+ to deal in the  Software without restriction,  including without limitation
+ the  rights to use, copy, modify,  merge, publish, distribute,  sublicense,
+ and/or  sell copies  of the  Software, and to  permit persons to  whom  the
+ Software is  furnished  to do  so, subject  to  the  following  conditions:
+ The above copyright notice and this  permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS",  WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED,  INCLUDING BUT NOT LIMITED TO  THE WARRANTIES  OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR  COPYRIGHT  HOLDERS BE  LIABLE FOR  ANY CLAIM,  DAMAGES OR OTHER
+ LIABILITY, WHETHER  IN AN  ACTION OF CONTRACT, TORT OR  OTHERWISE,  ARISING
+ FROM,  OUT OF OR  IN  CONNECTION  WITH  THE  SOFTWARE OR THE  USE OR  OTHER
+ DEALINGS IN THE SOFTWARE.
+ -----------------------------------------------------------------------------
+ Dependencies:
+ History:
+ 2006-04-05 | Created
+ --------------------------------------------------------------------------*/
+
+
+function SVGRenderer() {
+	this.base = AbstractRenderer;
+	this.svgRoot = null;
+}
+
+
+SVGRenderer.prototype = new AbstractRenderer;
+
+
+SVGRenderer.prototype.init = function(elem) {
+  this.container = elem;
+  this.container.style.MozUserSelect = 'none';
+  var svgNamespace = 'http://www.w3.org/2000/svg';
+  this.svgRoot = this.container.ownerDocument.createElementNS(svgNamespace, "svg");
+  this.container.appendChild(this.svgRoot);
+}
+
+
+SVGRenderer.prototype.bounds = function(shape) {
+  var rect = new Object();
+  var box = shape.getBBox();
+  rect['x'] = box.x;
+  rect['y'] = box.y;
+  rect['width'] =  box.width;
+  rect['height'] = box.height;
+  return rect;
+}
+
+
+SVGRenderer.prototype.create = function(shape, fillColor, lineColor, lineWidth, left, top, width, height) {
+  var svgNamespace = 'http://www.w3.org/2000/svg';
+  var svg;
+
+  if (shape == 'rect') {
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'rect');
+    svg.setAttributeNS(null, 'x', left + 'px');
+    svg.setAttributeNS(null, 'y', top + 'px');
+    svg.setAttributeNS(null, 'width', width + 'px');
+    svg.setAttributeNS(null, 'height', height + 'px');
+  }
+  else if (shape == 'ellipse') {
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'ellipse');
+    svg.setAttributeNS(null, 'cx', (left + width / 2) + 'px');
+    svg.setAttributeNS(null, 'cy', (top + height / 2) + 'px');
+    svg.setAttributeNS(null, 'rx', (width / 2) + 'px');
+    svg.setAttributeNS(null, 'ry', (height / 2) + 'px');
+  }
+  else if (shape == 'roundrect') {
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'rect');
+    svg.setAttributeNS(null, 'x', left + 'px');
+    svg.setAttributeNS(null, 'y', top + 'px');
+    svg.setAttributeNS(null, 'rx', '20px');
+    svg.setAttributeNS(null, 'ry', '20px');
+    svg.setAttributeNS(null, 'width', width + 'px');
+    svg.setAttributeNS(null, 'height', height + 'px');
+  }
+  else if (shape == 'line') {
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'line');
+    svg.setAttributeNS(null, 'x1', left + 'px');
+    svg.setAttributeNS(null, 'y1', top + 'px');
+    svg.setAttributeNS(null, 'x2', left + 'px');
+    svg.setAttributeNS(null, 'y2', top + 'px');
+  }
+
+  try{
+  svg.style.position = 'absolute';
+  }catch(err){}
+  if (fillColor.length == 0)
+    fillColor = 'none';
+  svg.setAttributeNS(null, 'fill', fillColor);
+
+  if (lineColor.length == 0)
+    lineColor = 'none';
+  svg.setAttributeNS(null, 'stroke', lineColor);
+  svg.setAttributeNS(null, 'stroke-width', lineWidth);
+      
+  this.svgRoot.appendChild(svg);
+  
+  return svg;
+};
+
+
+SVGRenderer.prototype.remove = function(shape) {
+  shape.parentNode.removeChild(shape);
+}
+
+
+SVGRenderer.prototype.move = function(shape, left, top) {
+  if (shape.tagName == 'line') {
+    var deltaX = shape.getBBox().width;
+    var deltaY = shape.getBBox().height;
+    shape.setAttributeNS(null, 'x1', left);
+    shape.setAttributeNS(null, 'y1', top);
+    shape.setAttributeNS(null, 'x2', left + deltaX);
+    shape.setAttributeNS(null, 'y2', top + deltaY);
+  }
+  else if (shape.tagName == 'ellipse') {
+    shape.setAttributeNS(null, 'cx', left + (shape.getBBox().width / 2));
+    shape.setAttributeNS(null, 'cy', top + (shape.getBBox().height / 2));
+  }
+  else {
+    shape.setAttributeNS(null, 'x', left);
+    shape.setAttributeNS(null, 'y', top);
+  }
+};
+
+
+SVGRenderer.prototype.track = function(shape) {
+  // TODO
+};
+
+
+SVGRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
+  var deltaX = toX - fromX;
+  var deltaY = toY - fromY;
+
+  if (shape.tagName == 'line') {
+    shape.setAttributeNS(null, 'x2', toX);
+    shape.setAttributeNS(null, 'y2', toY);
+  }
+  else if (shape.tagName == 'ellipse') {
+    if (deltaX < 0) {
+      shape.setAttributeNS(null, 'cx', (fromX + deltaX / 2) + 'px');
+      shape.setAttributeNS(null, 'rx', (-deltaX / 2) + 'px');
+    }
+    else {
+      shape.setAttributeNS(null, 'cx', (fromX + deltaX / 2) + 'px');
+      shape.setAttributeNS(null, 'rx', (deltaX / 2) + 'px');
+    }
+  
+    if (deltaY < 0) {
+      shape.setAttributeNS(null, 'cy', (fromY + deltaY / 2) + 'px');
+      shape.setAttributeNS(null, 'ry', (-deltaY / 2) + 'px');
+    }
+    else {
+      shape.setAttributeNS(null, 'cy', (fromY + deltaY / 2) + 'px');
+      shape.setAttributeNS(null, 'ry', (deltaY / 2) + 'px');
+    }
+  }
+  else { 
+    if (deltaX < 0) {
+      shape.setAttributeNS(null, 'x', toX + 'px');
+      shape.setAttributeNS(null, 'width', -deltaX + 'px');
+    }
+    else {
+      shape.setAttributeNS(null, 'width', deltaX + 'px');
+    }
+  
+    if (deltaY < 0) {
+      shape.setAttributeNS(null, 'y', toY + 'px');
+      shape.setAttributeNS(null, 'height', -deltaY + 'px');
+    }
+    else {
+      shape.setAttributeNS(null, 'height', deltaY + 'px');
+    }
+  }
+};
+
+
+SVGRenderer.prototype.editCommand = function(shape, cmd, value)
+{
+  if (shape != null) {
+    if (cmd == 'fillcolor') {
+      if (value != '')
+        shape.setAttributeNS(null, 'fill', value);
+      else
+        shape.setAttributeNS(null, 'fill', 'none');
+    }
+    else if (cmd == 'linecolor') {
+      if (value != '')
+        shape.setAttributeNS(null, 'stroke', value);
+      else
+        shape.setAttributeNS(null, 'stroke', 'none');
+    }
+    else if (cmd == 'linewidth') {
+      shape.setAttributeNS(null, 'stroke-width', parseInt(value) + 'px');
+    }
+  }
+}
+
+
+SVGRenderer.prototype.queryCommand = function(shape, cmd)
+{
+  var result = '';
+  
+  if (shape != null) {
+    if (cmd == 'fillcolor') {
+      result = shape.getAttributeNS(null, 'fill');
+      if (result == 'none')
+        result = '';
+    }
+    else if (cmd == 'linecolor') {
+      result = shape.getAttributeNS(null, 'stroke');
+      if (result == 'none')
+        result = '';
+    }
+    else if (cmd == 'linewidth') {
+      result = shape.getAttributeNS(null, 'stroke');
+      if (result == 'none')
+        result = '';
+      else
+        result = shape.getAttributeNS(null, 'stroke-width');
+    }
+  }
+  
+  return result;
+}
+
+
+SVGRenderer.prototype.showTracker = function(shape) {
+  var box = shape.getBBox();
+
+  var tracker = document.getElementById('tracker');
+  if (tracker) {
+    this.remove(tracker);
+  }
+
+  var svgNamespace = 'http://www.w3.org/2000/svg';
+
+  tracker = document.createElementNS(svgNamespace, 'rect');
+  tracker.setAttributeNS(null, 'id', 'tracker');
+  tracker.setAttributeNS(null, 'x', box.x - 10);
+  tracker.setAttributeNS(null, 'y', box.y - 10);
+  tracker.setAttributeNS(null, 'width', box.width + 20);
+  tracker.setAttributeNS(null, 'height', box.height + 20);
+  tracker.setAttributeNS(null, 'fill', 'none');
+  tracker.setAttributeNS(null, 'stroke', 'blue');
+  tracker.setAttributeNS(null, 'stroke-width', '1');
+  this.svgRoot.appendChild(tracker);
+}
+
+
+SVGRenderer.prototype.getMarkup = function() {
+  return this.container.innerHTML;
+}
+

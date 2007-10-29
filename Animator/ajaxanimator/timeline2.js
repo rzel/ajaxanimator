@@ -4,6 +4,7 @@ var tweenArray = new Array();
 var currentFrame = 1;
 var currentLayer = 1;
 var totalFrames = 1;
+var layerMaxFrames = 300;
 var layerCount = 0;
 var frameTable;
 /* Helper Functions */
@@ -147,10 +148,9 @@ if(typeof(frame)!=typeof(42)){frame=parseInt(frame)}
 if(typeof(layer)!=typeof(42)){layer=parseInt(layer)}
 if(frame<1){return}
 var cL=frameTable.firstChild.childNodes[currentLayer-1].childNodes.length-1
-if(frame>cL){for(var p=1;p<frame-cL;p++){addFrame();}
+if(frame>cL){for(var p=1;p<1+(frame-cL);p++){addFrame();layerMaxFrames++}
 $("frameContainer").scrollLeft=$("frameContainer").scrollWidth}
 if(frame>totalFrames){totalFrames=frame}
-
 gotoframeCanvas(frame,layer)
 gotoframeUI(frame,layer);
 }
@@ -202,7 +202,7 @@ frameTable.appendChild(document.createElement("tbody"))
 frameContainer.appendChild(frameTable)
 }
 
-function addFrame(frameNumber){
+function addFrame(frameNumber,layerId){
 if(!frameNumber){
 var timeLayer = frameTable.firstChild.childNodes[currentLayer-1]
 i = timeLayer.childNodes.length;
@@ -232,6 +232,7 @@ return nFrame;
 }else{
 timeLayer.appendChild(nFrame)
 }
+
 }
 
 function addLayer(){
@@ -246,7 +247,7 @@ var layerTitle = document.createElement("td")
 layerTitle.innerHTML = "Layer&nbsp;"+layerCount.toString();
 layerTitle.className = "layerTitle"
 nLayer.appendChild(layerTitle)
-for(var i = 1; i < 300; i++){
+for(var i = 1; i < layerMaxFrames; i++){
 nLayer.appendChild(addFrame(i))
 }
 fBody.appendChild(nLayer)
