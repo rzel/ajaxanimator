@@ -8,14 +8,20 @@ var themeURL = "../resources";
 var cssLoaded = false;
 var imgURL = "../images";
 var alternateHost = "http://ajaxanimator.googlecode.com/svn/trunk/Animator/"
+
+if(typeof(alternateStaticHost)==typeof(thisDoesntExist)){
 var alternateStaticHost = false;
-if(window.location.href.indexOf("110mb.com")!=-1){ 
+}
+
+if(window.location.href.indexOf("110mb.com")!=-1){
 if(window.location.search.indexOf("nohotlink")==-1){
 alternateStaticHost = true;
+}
+}
+if(alternateStaticHost == true){
 themeURL = alternateHost+"resources";
 imgURL = alternateHost+"images";
 cssURL = themeURL+"/css/ext-all.css"; 
-}
 }
 
 Ext.BLANK_IMAGE_URL = themeURL+'/images/default/s.gif';
