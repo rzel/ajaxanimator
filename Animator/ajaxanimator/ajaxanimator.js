@@ -212,7 +212,7 @@ setTimeout("finalizeInit()",300)
     '<div class="x-box-ml"><div class="x-box-mr"><div class="x-box-mc"><h3>', title, '</h3>', data, '</div></div></div>',
     '<div class="x-box-bl"><div class="x-box-br"><div class="x-box-bc"></div></div></div>',
     '</div>'].join(''))
-	}, true).slideIn('t').pause(1).ghost("t", {remove:true});
+	}, true).slideIn('t').pause(2).ghost("t", {remove:true});
 }
 
 ajaxanimator.onReady(function(){

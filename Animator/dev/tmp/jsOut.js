@@ -1370,6 +1370,7 @@ Ext.get("canvas-div").on("contextmenu",function(e){
 /*Variables*/
 var keyframeArray = new Array("1,1");
 var tweenArray = new Array();
+var tweenRecalc = new Array();
 var currentFrame = 1;
 var currentLayer = 1;
 var totalFrames = 1;
@@ -1541,12 +1542,16 @@ setCanvasProperties();
 }
 
 function frameCheckEdit(){
+	if(!isTween(currentFrame)){
 	var p = parseInt(keyframeArray[keyframeArray.length-1].split(",")[0]);
 	if(p==currentFrame&&p!=1){
 	p=parseInt(keyframeArray[keyframeArray.length-2].split(",")[0])}
 	var res = parseDiff(getFrameSVG(currentFrame),getFrameSVG(p))
 	if(res=="D2"){
+		//console.log("recalculating")
+		//recalculateTweens()
 		createTween(p,currentFrame)
+		tweenRecalc.push(p+","+currentFrame)
 		for(var q = p+1; q < currentFrame; q++){
 			tweenArray.push(q+","+currentLayer)
 			renderFrame(q,currentLayer,true)
@@ -1558,8 +1563,23 @@ function frameCheckEdit(){
 		toKeyframe(currentFrame,currentLayer)
 		}
 	}
+	}
 	
 }
+
+function recalculateTweens(){
+for(var t = 0; t < tweenRecalc.length; t++){
+createTween(parseInt(tweenRecalc[t].split(",")[0]),parseInt(tweenRecalc[t].split(",")[1]))
+}
+
+}
+
+function rctInterval(){
+recalculateTweens()
+setTimeout("rctInterval()",2000)
+}
+
+ajaxanimator.onReady(rctInterval)
 
 function initTimelineTable(frameContainer){
 frameTable = document.createElement("table");
@@ -3208,7 +3228,7 @@ config. CloseBtn		= false 	// false or true - closebutton in titlebar
 config. CloseBtnColors	= ['#990000', '#FFFFFF', '#DD3333', '#FFFFFF']	  // [Background, text, hovered background, hovered text] - use empty strings '' to inherit title colors
 config. CloseBtnText	= '&nbsp;X&nbsp;'	// Close button text (may also be an image tag)
 config. CopyContent		= true		// When converting a HTML element to a tooltip, copy only the element's content, rather than converting the element by its own
-config. Delay			= 400		// Time span in ms until tooltip shows up
+config. Delay			= 50		// Time span in ms until tooltip shows up
 config. Duration		= 0 		// Time span in ms after which the tooltip disappears; 0 for infinite duration
 config. FadeIn			= 0 		// Fade-in duration in ms, e.g. 400; 0 for no animation
 config. FadeOut 		= 0
