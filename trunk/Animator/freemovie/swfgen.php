@@ -1,4 +1,7 @@
 <?php
+
+header("Access-Control: allow <*>"); //Support Cross Domain
+
 //Settings//
 $enable_logging = false; //enable logging to swfexport.txt
 //Settings//

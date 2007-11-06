@@ -226,26 +226,6 @@ $("UAB").innerHTML = e.responseText
 }
 
 
-function animationList2(unA){
-uAn = unA;
-ajaxpack.postAjaxRequest( listAnimationEvent2, "txt")
-Ext.Ajax.request({
-url: "../php/listAnimations.php", 
-params: "user=" + unA,
-success: function(e){
-var animationList = e.responseText.split(",");
-var animations = "";
-var qt = '"';
-for(var q = 0; q < animationList.length; q++){
-var au = animationList[q].replace(".xml","")
-animations += "<a href="+qt+"javascript:previewAnimationFromURL('"+animationList[q]+"','"+uAn+"')"+qt+">"+au+"</a><br>";
-}
-$("UAB").innerHTML = animations;
-},
-failure: failCon
-})
-}
-
 function LAFC(){
 Ext.Ajax.request({
 url: "../users/" + cPrEuN + "/animations/" + cPrEiD,
@@ -256,15 +236,6 @@ failure: failCon
 
 })
 }
-
-
-
-function previewAnimationFromURL(fLn,uAn){
-cPrEiD = fLn
-cPrEuN = uAn
-ajaxpack.postAjaxRequest("../users/" + uAn + "/animations/" + fLn, "", loadAnimationEvent2, "txt")
-}
-
 
 
 

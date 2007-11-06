@@ -1,6 +1,7 @@
 /*Variables*/
-var keyframeArray = new Array("1,1");
+var keyframeArray = new Array();
 var tweenArray = new Array();
+var tweenRecalc = new Array();
 var currentFrame = 1;
 var currentLayer = 1;
 var totalFrames = 1;
@@ -11,6 +12,19 @@ var frameTable;
 
 function getObjects(frame){
 return DrawCanvas[frame].renderer.svgRoot.childNodes.length
+}
+
+function frameIsEmpty(frame){
+if(typeof(DrawCanvas)!=typeof(undefined)){
+if(DrawCanvas){
+if(DrawCanvas[frame]){
+if(DrawCanvas[frame].renderer.getMarkup().length>20){
+return false
+}
+}
+}
+}
+return true
 }
 
 function getFrameSVG(frame){
@@ -172,12 +186,19 @@ setCanvasProperties();
 }
 
 function frameCheckEdit(){
+
+	if(!isTween(currentFrame)&&currentFrame!=1){
 	var p = parseInt(keyframeArray[keyframeArray.length-1].split(",")[0]);
 	if(p==currentFrame&&p!=1){
-	p=parseInt(keyframeArray[keyframeArray.length-2].split(",")[0])}
+	p=parseInt(keyframeArray[keyframeArray.length-2].split(",")[0])
+	}
+	
 	var res = parseDiff(getFrameSVG(currentFrame),getFrameSVG(p))
 	if(res=="D2"){
+		//console.log("recalculating")
+		//recalculateTweens()
 		createTween(p,currentFrame)
+		tweenRecalc.push(p+","+currentFrame)
 		for(var q = p+1; q < currentFrame; q++){
 			tweenArray.push(q+","+currentLayer)
 			renderFrame(q,currentLayer,true)
@@ -189,8 +210,22 @@ function frameCheckEdit(){
 		toKeyframe(currentFrame,currentLayer)
 		}
 	}
-	
+	}
 }
+
+function recalculateTweens(){
+for(var t = 0; t < tweenRecalc.length; t++){
+createTween(parseInt(tweenRecalc[t].split(",")[0]),parseInt(tweenRecalc[t].split(",")[1]))
+}
+
+}
+
+function rctInterval(){
+recalculateTweens()
+setTimeout("rctInterval()",2000)
+}
+
+ajaxanimator.onReady(rctInterval)
 
 function initTimelineTable(frameContainer){
 frameTable = document.createElement("table");
