@@ -14,7 +14,7 @@ function getObjects(frame){
 return DrawCanvas[frame].renderer.svgRoot.childNodes.length
 }
 
-function frameIsEmpty(frame){
+function frameIsEmpty(frame,layer){
 if(typeof(DrawCanvas)!=typeof(undefined)){
 if(DrawCanvas){
 if(DrawCanvas[frame]){
@@ -186,14 +186,27 @@ setCanvasProperties();
 }
 
 function frameCheckEdit(){
-
-	if(!isTween(currentFrame)&&currentFrame!=1){
-	var p = parseInt(keyframeArray[keyframeArray.length-1].split(",")[0]);
+	if(!isTween(currentFrame)){
+	var p = 1; 
+	if(keyframeArray.length > 1){
+	p = parseInt(keyframeArray[keyframeArray.length-1].split(",")[0]);
+	}
 	if(p==currentFrame&&p!=1){
 	p=parseInt(keyframeArray[keyframeArray.length-2].split(",")[0])
 	}
+		
+	var res;
+	if(keyframeArray.length < 1){
+	if(!frameIsEmpty(1)){
+	res = "D1"
+	}
+	}else{
+	res = parseDiff(getFrameSVG(currentFrame),getFrameSVG(p))
+	}
+
 	
-	var res = parseDiff(getFrameSVG(currentFrame),getFrameSVG(p))
+	
+	
 	if(res=="D2"){
 		//console.log("recalculating")
 		//recalculateTweens()
@@ -205,10 +218,13 @@ function frameCheckEdit(){
 		}
 		toKeyframe(currentFrame,currentLayer)
 	}
+
 	if(res=="D1"){
+		
 		if(!isTween(currentFrame,currentLayer)){
 		toKeyframe(currentFrame,currentLayer)
 		}
+		
 	}
 	}
 }

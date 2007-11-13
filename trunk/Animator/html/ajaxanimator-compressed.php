@@ -123,8 +123,8 @@ google_color_url = "008000";
 	<div id="prop-tb"></div>
 	<table><tr><td>
 	<div id="ResizeObjOpt" style="display: none">
-	Height:<input type="text" style="width: 50px" id="sHeight" onchange="setSP()" onblur="setSP()" value=""> 
-	Width:<input type="text" style="width: 50px" id="sWidth" onchange="setSP()" onblur="setSP()" value="">
+	Height:<input type="text" style="width: 50px" id="sHeight" onchange="setSP();" onblur="setSP();" value=""> 
+	Width:<input type="text" style="width: 50px" id="sWidth" onchange="setSP();" onblur="setSP();" value="">
 	</div>
 	<div id="noSelectRem">No Object Currently Selected</div>  
 	</td><td>

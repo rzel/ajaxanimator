@@ -131,7 +131,11 @@ ajaxanimator.doReady = function(){
 //for(var orf = onreadyfunct.length; orf > 0; orf--){
 for(var orf = 0; orf < onreadyfunct.length; orf++){
 if(onreadyfunct[orf]){
+try{
 onreadyfunct[orf]()
+}catch(err){
+console.log("Init Error: "+err)
+}
 }
 }
 }
