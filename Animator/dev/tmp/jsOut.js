@@ -542,7 +542,11 @@ ajaxanimator.doReady = function(){
 //for(var orf = onreadyfunct.length; orf > 0; orf--){
 for(var orf = 0; orf < onreadyfunct.length; orf++){
 if(onreadyfunct[orf]){
+try{
 onreadyfunct[orf]()
+}catch(err){
+console.log("Init Error: "+err)
+}
 }
 }
 }
@@ -623,7 +627,7 @@ setTimeout("finalizeInit()",300)
     '<div class="x-box-ml"><div class="x-box-mr"><div class="x-box-mc"><h3>', title, '</h3>', data, '</div></div></div>',
     '<div class="x-box-bl"><div class="x-box-br"><div class="x-box-bc"></div></div></div>',
     '</div>'].join(''))
-	}, true).slideIn('t').pause(1).ghost("t", {remove:true});
+	}, true).slideIn('t').pause(2).ghost("t", {remove:true});
 }
 
 ajaxanimator.onReady(function(){
@@ -1368,7 +1372,7 @@ Ext.get("canvas-div").on("contextmenu",function(e){
 });
 
 /*Variables*/
-var keyframeArray = new Array("1,1");
+var keyframeArray = new Array();
 var tweenArray = new Array();
 var tweenRecalc = new Array();
 var currentFrame = 1;
@@ -1381,6 +1385,19 @@ var frameTable;
 
 function getObjects(frame){
 return DrawCanvas[frame].renderer.svgRoot.childNodes.length
+}
+
+function frameIsEmpty(frame,layer){
+if(typeof(DrawCanvas)!=typeof(undefined)){
+if(DrawCanvas){
+if(DrawCanvas[frame]){
+if(DrawCanvas[frame].renderer.getMarkup().length>20){
+return false
+}
+}
+}
+}
+return true
 }
 
 function getFrameSVG(frame){
@@ -1543,10 +1560,26 @@ setCanvasProperties();
 
 function frameCheckEdit(){
 	if(!isTween(currentFrame)){
-	var p = parseInt(keyframeArray[keyframeArray.length-1].split(",")[0]);
+	var p = 1; 
+	if(keyframeArray.length > 1){
+	p = parseInt(keyframeArray[keyframeArray.length-1].split(",")[0]);
+	}
 	if(p==currentFrame&&p!=1){
-	p=parseInt(keyframeArray[keyframeArray.length-2].split(",")[0])}
-	var res = parseDiff(getFrameSVG(currentFrame),getFrameSVG(p))
+	p=parseInt(keyframeArray[keyframeArray.length-2].split(",")[0])
+	}
+		
+	var res;
+	if(keyframeArray.length < 1){
+	if(!frameIsEmpty(1)){
+	res = "D1"
+	}
+	}else{
+	res = parseDiff(getFrameSVG(currentFrame),getFrameSVG(p))
+	}
+
+	
+	
+	
 	if(res=="D2"){
 		//console.log("recalculating")
 		//recalculateTweens()
@@ -1558,13 +1591,15 @@ function frameCheckEdit(){
 		}
 		toKeyframe(currentFrame,currentLayer)
 	}
+
 	if(res=="D1"){
+		
 		if(!isTween(currentFrame,currentLayer)){
 		toKeyframe(currentFrame,currentLayer)
 		}
+		
 	}
 	}
-	
 }
 
 function recalculateTweens(){
@@ -2304,26 +2339,6 @@ $("UAB").innerHTML = e.responseText
 }
 
 
-function animationList2(unA){
-uAn = unA;
-ajaxpack.postAjaxRequest( listAnimationEvent2, "txt")
-Ext.Ajax.request({
-url: "../php/listAnimations.php", 
-params: "user=" + unA,
-success: function(e){
-var animationList = e.responseText.split(",");
-var animations = "";
-var qt = '"';
-for(var q = 0; q < animationList.length; q++){
-var au = animationList[q].replace(".xml","")
-animations += "<a href="+qt+"javascript:previewAnimationFromURL('"+animationList[q]+"','"+uAn+"')"+qt+">"+au+"</a><br>";
-}
-$("UAB").innerHTML = animations;
-},
-failure: failCon
-})
-}
-
 function LAFC(){
 Ext.Ajax.request({
 url: "../users/" + cPrEuN + "/animations/" + cPrEiD,
@@ -2334,15 +2349,6 @@ failure: failCon
 
 })
 }
-
-
-
-function previewAnimationFromURL(fLn,uAn){
-cPrEiD = fLn
-cPrEuN = uAn
-ajaxpack.postAjaxRequest("../users/" + uAn + "/animations/" + fLn, "", loadAnimationEvent2, "txt")
-}
-
 
 
 
