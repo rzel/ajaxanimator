@@ -4,7 +4,7 @@
 <head>
 	<title>Ajax Animator</title>
 
-	<link rel="stylesheet" type="text/css" href="../ajaxanimator/ajaxanimator-all.css.php">
+	<link rel="stylesheet" type="text/css" href="http://ajaxanimator.googlecode.com/svn/trunk/Animator/ajaxanimator/ajaxanimator-all.css">
 	
 	<style type="text/css">#loading-mask{width:100%;height:100%;background:#c3daf9;position:absolute;
 	z-index:20000;left:0;top:0;}#loadingIcon{width:32px;height:32px;margin-right:8px;float:left;
@@ -18,7 +18,7 @@
 	<body style="overflow: hidden">
 
 	<div id="loading"><table border="0px"><tr><td>
-	<img src="../images/loading-large.gif" alt="" class="loadingIcon">
+	<img src="http://ajaxanimator.googlecode.com/svn/trunk/Animator/images/loading-large.gif" alt="" class="loadingIcon">
 	</td><td>&nbsp;</td><td><span style="text-align:center">Ajax Animator</span><br>
 	<span id="loading-msg">Loading JS/CSS...</span></td></tr></table>
 	<div id="loadProgressBorder"><div id="loadProgressBar" style="width: 5px">
@@ -271,7 +271,7 @@ google_ad_channel = "";
     </div>
 	</div>
 	
-	<script type="text/javascript" src="../ajaxanimator/full.js.php"></script>
+	<script type='text/javascript'>var alternateStaticHost = true;</script><script type='text/javascript' src='http://ajaxanimator.googlecode.com/svn/trunk/Animator/ajaxanimator/full.js'></script>
 	
 </body>
 </html>

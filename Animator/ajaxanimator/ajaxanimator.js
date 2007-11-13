@@ -9,7 +9,7 @@ var cssLoaded = false;
 var imgURL = "../images";
 var alternateHost = "http://ajaxanimator.googlecode.com/svn/trunk/Animator/"
 
-if(typeof(alternateStaticHost)==typeof(thisDoesntExist)){
+if(typeof(alternateStaticHost)==typeof(thisDoesntExist2)){
 var alternateStaticHost = false;
 }
 
