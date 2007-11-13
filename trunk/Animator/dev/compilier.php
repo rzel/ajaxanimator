@@ -97,15 +97,15 @@ $newfile = str_replace($cssCode[0],cLink("../ajaxanimator/ajaxanimator-all.css")
 $newfile = str_replace($regs[0],jsInc($gzsrc),$newfile);
 
 
-writeF("ajaxanimator-compressed.htm",$newfile);
+writeF("ajaxanimator-compiled.htm",$newfile);
 
-writeF("../html/ajaxanimator-compressed.htm",str_replace($gzsrc,"../ajaxanimator/full.js",$newfile));
+writeF("../html/ajaxanimator-compiled.htm",str_replace($gzsrc,"../ajaxanimator/full.js",$newfile));
 $newzfile = str_replace($cssCode[0],cLink("../ajaxanimator/ajaxanimator-all.css.php"),$newzfile);
 $newzfile = str_replace($regs[0],jsInc("../ajaxanimator/full.js.php"),$newzfile);
 
 
 
-writeF("../html/ajaxanimator-compressed-adfree.php",gzHTMLStr($newzfile));
+writeF("../html/ajaxanimator-compiled-adfree.php",gzHTMLStr($newzfile));
 
 
 
@@ -119,9 +119,11 @@ $newzfile2 = str_replace("<!-- GoogAd5-->", file_get_contents("GoogAd5.txt"),$ne
 
 
 
-writeF("../html/ajaxanimator-compressed.php", gzHTMLStr($newzfile2));
+writeF("../html/ajaxanimator-compiled.php", gzHTMLStr($newzfile2));
 
 
-
+echo "<hr>Compiling Stage 2; hotlinking google<hr>";
+include "makeStandalone.php";
 
 ?>
+

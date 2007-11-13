@@ -1,0 +1,1 @@
+<?php header("Content-Encoding: gzip"); echo(file_get_contents("gzipped")); ?>
