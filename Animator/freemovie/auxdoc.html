@@ -1,0 +1,769 @@
+<html>
+<head>
+<title>Auxiliary FreeMovie Documentation</title>
+</head>
+<body>
+<a name="top"></a>
+<a href="#c0"></a><br>
+<a href="#c1">GetSWFVersion()</a><br>
+<a href="#c2">SetFrameSize($Xmax, $Ymax)</a><br>
+<a href="#c3">SetFrameSizeIABButton1()</a><br>
+<a href="#c4">SetFrameSizeIABButton2()</a><br>
+<a href="#c5">SetFrameSizeIABFullBanner()</a><br>
+<a href="#c6">SetFrameSizeIABHalfBanner()</a><br>
+<a href="#c7">SetFrameSizeIABLargeRectangle()</a><br>
+<a href="#c8">SetFrameSizeIABMediumRectangle()</a><br>
+<a href="#c9">SetFrameSizeIABMicroBar()</a><br>
+<a href="#c10">SetFrameSizeIABRectangle()</a><br>
+<a href="#c11">SetFrameSizeIABSkyscraper()</a><br>
+<a href="#c12">SetFrameSizeIABSquareButton()</a><br>
+<a href="#c13">SetFrameSizeIABSquarePopUp()</a><br>
+<a href="#c14">SetFrameSizeIABVerticalBanner()</a><br>
+<a href="#c15">SetFrameSizeIABVerticalRectangle()</a><br>
+<a href="#c16">SetFrameSizeIABWideSkyscraper()</a><br>
+<a href="#c17">GetFrameSize()</a><br>
+<a href="#c18">SetFrameRate($framerate)</a><br>
+<a href="#c19">GetFrameRate()</a><br>
+<a href="#c20">SetBackgroundColor($R, $G, $B)</a><br>
+<a href="#c21">GetBackgroundColor()</a><br>
+<a href="#c22">NextLayer()</a><br>
+<a href="#c23">PlaceObject($CharacterID, $CharacterDepth, $MATRIX, $CXFORM)</a><br>
+<a href="#c24">EasyPlaceObject($CharacterID)</a><br>
+<a href="#c25">AdvancedPlaceObject($CharacterID, $CharacterDepth, $MATRIX, $CXFORM, $Ratio, $Name, $ClipActions)</a><br>
+<a href="#c26">AdvancedModifyObject($CharacterDepth, $MATRIX, $CXFORM, $Ratio, $Name, $ClipActions)</a><br>
+<a href="#c27">AdvancedReplaceObject($CharacterID, $CharacterDepth, $MATRIX, $CXFORM, $Ratio, $Name, $ClipActions)</a><br>
+<a href="#c28">RemoveObjectFromLayer($CharacterID, $CharacterDepth)</a><br>
+<a href="#c29">RemoveFromLayer($CharacterDepth)</a><br>
+<a href="#c30">EndFrame()</a><br>
+<a href="#c31">BeginMovie()</a><br>
+<a href="#c32">EndMovie()</a><br>
+<a href="#c33">GetMovie()</a><br>
+<a href="#c34">DefineMATRIX($HasScale, $ScaleX, $ScaleY, $HasRotate, $RotateSkew0, $RotateSkew1, $TranslateX, $TranslateY)  </a><br>
+<a href="#c35">DefineGradient($Ratio, $AlphaFlag, $R, $G, $B, $A)</a><br>
+<a href="#c36">DefineStraightLine($X1, $Y1, $X2, $Y2, $Width, $AlphaFlag, $R, $G, $B, $A)</a><br>
+<a href="#c37">DefineTriangle($X1, $Y1, $X2, $Y2, $X3, $Y3, $Width, $AlphaFlag, $R, $G, $B, $A)</a><br>
+<a href="#c38">DefineRectangle($X1, $Y1, $X2, $Y2, $Width, $AlphaFlag, $R, $G, $B, $A)</a><br>
+<a href="#c39">DefinePolygon($Segments, $X1, $Y1, $Radius, $Width, $AlphaFlag, $R, $G, $B, $A)</a><br>
+<a href="#c40">DefineBezierQuad($Accuracy, $X1, $Y1, $ControlX, $ControlY, $X2, $Y2, $Width, $AlphaFlag, $R, $G, $B, $A)</a><br>
+<a href="#c41">DefineBezierCubic($Accuracy, $X1, $Y1, $ControlX1, $ControlY1, $ControlX2, $ControlY2, $X2, $Y2, $Width, $AlphaFlag, $R, $G, $B, $A)</a><br>
+<a href="#c42">DefineCurvedLine($X1, $Y1, $ControlX, $ControlY, $X2, $Y2, $Width, $AlphaFlag, $R, $G, $B, $A)</a><br>
+<a href="#c43">DefineCircle($Accuracy, $X1, $Y1, $Radius, $Width, $AlphaFlag, $R, $G, $B, $A)</a><br>
+<a href="#c44">DefineArc($Accuracy, $X1, $Y1, $Angle1, $Angle2, $Radius, $Width, $AlphaFlag, $R, $G, $B, $A)</a><br>
+<a href="#c45">DefineArcClosed($Accuracy, $X1, $Y1, $Angle1, $Angle2, $Radius, $Width, $AlphaFlag, $R, $G, $B, $A)</a><br>
+<a href="#c46">DefineTriangleSolid($X1, $Y1, $X2, $Y2, $X3, $Y3, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $FillFlag, $FillR, $FillG, $FillB, $FillA)</a><br>
+<a href="#c47">DefineRectangleSolid($X1, $Y1, $X2, $Y2, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $FillFlag, $FillR, $FillG, $FillB, $FillA)</a><br>
+<a href="#c48">DefinePolygonSolid($Segments, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $FillFlag, $FillR, $FillG, $FillB, $FillA)</a><br>
+<a href="#c49">DefineCircleSolid($Accuracy, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $FillFlag, $FillR, $FillG, $FillB, $FillA)</a><br>
+<a href="#c50">DefineArcClosedSolid($Accuracy, $Angle1, $Angle2, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $FillFlag, $FillR, $FillG, $FillB, $FillA)</a><br>
+<a href="#c51">DefineTriangleGradient($X1, $Y1, $X2, $Y2, $X3, $Y3, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $GradientType, $GradientDefinition, $AutoFitFlag, $GradientMatrix)</a><br>
+<a href="#c52">DefineRectangleGradient($X1, $Y1, $X2, $Y2, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $GradientType, $GradientDefinition, $AutoFitFlag, $GradientMatrix)</a><br>
+<a href="#c53">DefinePolygonGradient($Segments, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $GradientType, $GradientDefinition, $AutoFitFlag, $GradientMatrix)</a><br>
+<a href="#c54">DefineCircleGradient($Accuracy, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $GradientType, $GradientDefinition, $AutoFitFlag, $GradientMatrix)</a><br>
+<a href="#c55">DefineArcClosedGradient($Accuracy, $Angle1, $Angle2, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $GradientType, $GradientDefinition, $AutoFitFlag, $GradientMatrix)</a><br>
+<a href="#c56">DefineBitmapJPEGTables($file)</a><br>
+<a href="#c57">DefineBitmapJPEGImage($file)</a><br>
+<a href="#c58">DefineBitmapJPEG($file)</a><br>
+<a href="#c59">DefineBitmapJPEGAlpha($fileJPEG, $fileAlpha)</a><br>
+<a href="#c60">DefineBitmapTIFF($file)</a><br>
+<a href="#c61">DefineBitmapTIFFAlpha($TIFFFile, $AlphaPalette)</a><br>
+<a href="#c62">DefineTriangleBitmap($X1, $Y1, $X2, $Y2, $X3, $Y3, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $BitmapType, $BitmapID, $AutoFitFlag, $BitmapMatrix)</a><br>
+<a href="#c63">DefineRectangleBitmap($X1, $Y1, $X2, $Y2, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $BitmapType, $BitmapID, $AutoFitFlag, $BitmapMatrix)</a><br>
+<a href="#c64">DefinePolygonBitmap($Segments, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $BitmapType, $BitmapID, $AutoFitFlag, $BitmapMatrix)</a><br>
+<a href="#c65">DefineCircleBitmap($Accuracy, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $BitmapType, $BitmapID, $AutoFitFlag, $BitmapMatrix)</a><br>
+<a href="#c66">DefineArcClosedBitmap($Accuracy, $Angle1, $Angle2, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $BitmapType, $BitmapID, $AutoFitFlag, $BitmapMatrix)</a><br>
+<a href="#c67">BeginShape()</a><br>
+<a href="#c68">DefineSolidLine($Width, $AlphaFlag, $R, $G, $B, $Alpha)</a><br>
+<a href="#c69">DefineSolidFill($AlphaFlag, $R, $G, $B, $Alpha)</a><br>
+<a href="#c70">SelectLineStyle($CharacterID, $Line)</a><br>
+<a href="#c71">SelectFill0Style($CharacterID, $Fill, $FillType, $Matrix)</a><br>
+<a href="#c72">SelectFill1Style($CharacterID, $Fill, $FillType, $Matrix)</a><br>
+<a href="#c73">MoveTo($CharacterID, $X, $Y)</a><br>
+<a href="#c74">LineTo($CharacterID, $X, $Y)</a><br>
+<a href="#c75">CurveTo($CharacterID, $ControlX, $ControlY, $AnchorX, $AnchorY)</a><br>
+<a href="#c76">EndShape($CharacterID)</a><br>
+<a href="#c77">BeginMorphShape($FromCharacterID)</a><br>
+<a href="#c78">EndMorphShape($FromCharacterID, $ToCharacterID)</a><br>
+<a href="#c79">DashedLine($LineLength, $SpaceLength, $X1, $Y1, $X2, $Y2, $Width, $LineStyle, $FillStyle, $FillType, $FillMatrix)</a><br>
+
+<hr>
+<p><a name="c0"></a><a href="#top"></a></p>
+<p></p>
+<hr>
+<p><a name="c1"></a><a href="#top">GetSWFVersion()</a></p>
+<p>--------------------------------------------------<br>
+integer GetSWFVersion()<br>
+returns the SWF file version number set by<br>
+AutoSetSWFVersion() (fmcompiler) and <br>
+SetSWFVersion() (fmcompilertoolbox).  Does not<br>
+change the current SWF file version number.<br></p>
+<hr>
+<p><a name="c2"></a><a href="#top">SetFrameSize($Xmax, $Ymax)</a></p>
+<p>--------------------------------------------------<br>
+array SetFrameSize(integer Xmax, integer Ymax)<br>
+sets the Flash movie frame size and returns the<br>
+array holding the new frame size. <br>
+<br>
+NOTE: must be called before the call to<br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c3"></a><a href="#top">SetFrameSizeIABButton1()</a></p>
+<p>--------------------------------------------------<br>
+array SetFrameSizeIABButton1()<br>
+sets the Flash movie frame size to IAB Button 1<br>
+and returns the array holding the new frame <br>
+size. <br>
+<br>
+NOTE: must be called before the call to<br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c4"></a><a href="#top">SetFrameSizeIABButton2()</a></p>
+<p>--------------------------------------------------<br>
+array SetFrameSizeIABButton2()<br>
+sets the Flash movie frame size to IAB Button 2<br>
+and returns the array holding the new frame <br>
+size. <br>
+<br>
+NOTE: must be called before the call to<br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c5"></a><a href="#top">SetFrameSizeIABFullBanner()</a></p>
+<p>--------------------------------------------------<br>
+array SetFrameSizeIABFullBanner()<br>
+sets the Flash movie frame size to IAB Full<br>
+Banner and returns the array holding the new<br>
+frame size. <br>
+<br>
+NOTE: must be called before the call to<br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c6"></a><a href="#top">SetFrameSizeIABHalfBanner()</a></p>
+<p>--------------------------------------------------<br>
+array SetFrameSizeIABHalfBanner()<br>
+sets the Flash movie frame size to IAB Half<br>
+Banner and returns the array holding the new<br>
+frame size. <br>
+<br>
+NOTE: must be called before the call to<br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c7"></a><a href="#top">SetFrameSizeIABLargeRectangle()</a></p>
+<p>--------------------------------------------------<br>
+array SetFrameSizeIABLargeRectangle()<br>
+sets the Flash movie frame size to IAB Large<br>
+Rectangle and returns the array holding the new<br>
+frame size. <br>
+<br>
+NOTE: must be called before the call to<br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c8"></a><a href="#top">SetFrameSizeIABMediumRectangle()</a></p>
+<p>--------------------------------------------------<br>
+array SetFrameSizeIABMediumRectangle()<br>
+sets the Flash movie frame size to IAB Medium <br>
+Rectangle and returns the array holding the new<br>
+frame size. <br>
+<br>
+NOTE: must be called before the call to<br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c9"></a><a href="#top">SetFrameSizeIABMicroBar()</a></p>
+<p>--------------------------------------------------<br>
+array SetFrameSizeIABMicroBar()<br>
+sets the Flash movie frame size to IAB Micro <br>
+Bar and returns the array holding the new frame<br>
+size. <br>
+<br>
+NOTE: must be called before the call to<br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c10"></a><a href="#top">SetFrameSizeIABRectangle()</a></p>
+<p>--------------------------------------------------<br>
+array SetFrameSizeIABRectangle()<br>
+sets the Flash movie frame size to IAB Rectangle <br>
+and returns the array holding the new frame<br>
+size. <br>
+<br>
+NOTE: must be called before the call to<br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c11"></a><a href="#top">SetFrameSizeIABSkyscraper()</a></p>
+<p>--------------------------------------------------<br>
+array SetFrameSizeIABSkyscraper()<br>
+sets the Flash movie frame size to IAB<br>
+Skyscraper and returns the array holding the new<br>
+frame size. <br>
+<br>
+NOTE: must be called before the call to<br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c12"></a><a href="#top">SetFrameSizeIABSquareButton()</a></p>
+<p>--------------------------------------------------<br>
+array SetFrameSizeIABSquareButton()<br>
+sets the Flash movie frame size to IAB Square<br>
+Button and returns the array holding the new<br>
+frame size. <br>
+<br>
+NOTE: must be called before the call to<br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c13"></a><a href="#top">SetFrameSizeIABSquarePopUp()</a></p>
+<p>--------------------------------------------------<br>
+array SetFrameSizeIABSquarePopUp()<br>
+sets the Flash movie frame size to IAB Square<br>
+Pop-up and returns the array holding the new<br>
+frame size. <br>
+<br>
+NOTE: must be called before the call to<br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c14"></a><a href="#top">SetFrameSizeIABVerticalBanner()</a></p>
+<p>--------------------------------------------------<br>
+array SetFrameSizeIABVerticalBanner()<br>
+sets the Flash movie frame size to IAB Vertical<br>
+Banner and returns the array holding the new<br>
+frame size. <br>
+<br>
+NOTE: must be called before the call to<br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c15"></a><a href="#top">SetFrameSizeIABVerticalRectangle()</a></p>
+<p>--------------------------------------------------<br>
+array SetFrameSizeIABVerticalRectangle()<br>
+sets the Flash movie frame size to IAB Vertical<br>
+Rectangle and returns the array holding the new<br>
+frame size. <br>
+<br>
+NOTE: must be called before the call to<br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c16"></a><a href="#top">SetFrameSizeIABWideSkyscraper()</a></p>
+<p>--------------------------------------------------<br>
+array SetFrameSizeIABWideSkyscraper()<br>
+sets the Flash movie frame size to IAB Wide<br>
+Skyscraper and returns the array holding the new<br>
+frame size. <br>
+<br>
+NOTE: must be called before the call to<br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c17"></a><a href="#top">GetFrameSize()</a></p>
+<p>--------------------------------------------------<br>
+array GetFrameSize()<br>
+returns the array that stores the Flash movie<br>
+frame size, without changing it.<br></p>
+<hr>
+<p><a name="c18"></a><a href="#top">SetFrameRate($framerate)</a></p>
+<p>--------------------------------------------------<br>
+float SetFrameRate(float framerate) <br>
+sets the Flash movie frame rate and returns it.<br>
+<br>
+NOTE: must be called before the call to  <br>
+EndMovie(), even better before <br>
+BeginMovie().<br></p>
+<hr>
+<p><a name="c19"></a><a href="#top">GetFrameRate()</a></p>
+<p>--------------------------------------------------<br>
+float GetFrameRate()<br>
+returns the Flash movie frame rate without <br>
+changing it.<br></p>
+<hr>
+<p><a name="c20"></a><a href="#top">SetBackgroundColor($R, $G, $B)</a></p>
+<p>--------------------------------------------------<br>
+array SetBackgroundColor(integer R, integer G,<br>
+integer B) <br>
+sets the background color of the movie and <br>
+returns the array which stores it.<br>
+<br>
+NOTE: must be called before the call to  <br>
+EndMovie().<br></p>
+<hr>
+<p><a name="c21"></a><a href="#top">GetBackgroundColor()</a></p>
+<p>--------------------------------------------------<br>
+array GetBackgroundColor()<br>
+returns the Flash movie background color without<br>
+changing it.<br></p>
+<hr>
+<p><a name="c22"></a><a href="#top">NextLayer()</a></p>
+<p>--------------------------------------------------<br>
+integer NextLayer()<br>
+returns the number of the next available layer.<br></p>
+<hr>
+<p><a name="c23"></a><a href="#top">PlaceObject($CharacterID, $CharacterDepth, $MATRIX, $CXFORM)</a></p>
+<p>--------------------------------------------------<br>
+integer PlaceObject(integer CharacterID,<br>
+integer CharacterDepth, string MATRIX,<br>
+string CXFORM) <br>
+adds the given character on the specified layer<br>
+and returns the index number of that layer.<br></p>
+<hr>
+<p><a name="c24"></a><a href="#top">EasyPlaceObject($CharacterID)</a></p>
+<p>--------------------------------------------------<br>
+integer EasyPlaceObject(integer CharacterID)<br>
+automatically adds the given character on the<br>
+specified layer and returns the index number of<br>
+that layer.<br></p>
+<hr>
+<p><a name="c25"></a><a href="#top">AdvancedPlaceObject($CharacterID, $CharacterDepth, $MATRIX, $CXFORM, $Ratio, $Name, $ClipActions)</a></p>
+<p>--------------------------------------------------<br>
+integer AdvancedPlaceObject(integer CharacterID,<br>
+integer CharacterDepth, string MATRIX,<br>
+string CXFORM, integer Ratio, string Name,<br>
+string ClipActions)<br>
+adds the given object to the Display List or<br>
+modifies an object on the given layer.<br></p>
+<hr>
+<p><a name="c26"></a><a href="#top">AdvancedModifyObject($CharacterDepth, $MATRIX, $CXFORM, $Ratio, $Name, $ClipActions)</a></p>
+<p>--------------------------------------------------<br>
+integer AdvancedModifyObject(integer CharacterID,<br>
+integer CharacterDepth, string MATRIX,<br>
+string CXFORM, integer Ratio, string Name,<br>
+string ClipActions)<br>
+adds the given object to the Display List or<br>
+modifies an object on the given layer.<br></p>
+<hr>
+<p><a name="c27"></a><a href="#top">AdvancedReplaceObject($CharacterID, $CharacterDepth, $MATRIX, $CXFORM, $Ratio, $Name, $ClipActions)</a></p>
+<p>--------------------------------------------------<br>
+integer AdvancedReplaceObject(integer CharacterID,<br>
+integer CharacterDepth, string MATRIX,<br>
+string CXFORM, integer Ratio, string Name,<br>
+string ClipActions)<br>
+adds the given object to the Display List or<br>
+modifies an object on the given layer.<br></p>
+<hr>
+<p><a name="c28"></a><a href="#top">RemoveObjectFromLayer($CharacterID, $CharacterDepth)</a></p>
+<p>--------------------------------------------------<br>
+integer RemoveObjectFromLayer(integer CharacterID,<br>
+integer CharacterDepth)<br>
+removes the given character from the specified<br>
+layer.<br></p>
+<hr>
+<p><a name="c29"></a><a href="#top">RemoveFromLayer($CharacterDepth)</a></p>
+<p>--------------------------------------------------<br>
+integer RemoveFromLayer(integer CharacterDepth)<br>
+removes a character from the specified<br>
+layer.<br></p>
+<hr>
+<p><a name="c30"></a><a href="#top">EndFrame()</a></p>
+<p>--------------------------------------------------<br>
+integer EndFrame()<br>
+marks the end of a frame in a Flash movie and <br>
+returns that frame's number.<br></p>
+<hr>
+<p><a name="c31"></a><a href="#top">BeginMovie()</a></p>
+<p>--------------------------------------------------<br>
+null BeginMovie()<br>
+begins a Flash movie with the <br>
+SetBackgroundColor tag.<br>
+<br>
+NOTE: This must be done at the very beginning<br>
+of a movie. <br></p>
+<hr>
+<p><a name="c32"></a><a href="#top">EndMovie()</a></p>
+<p>--------------------------------------------------<br>
+null EndMovie()<br>
+marks the end of a Flash movie.<br>
+<br>
+NOTE: No other calls should be made after this<br>
+point, except for GetMovie().<br></p>
+<hr>
+<p><a name="c33"></a><a href="#top">GetMovie()</a></p>
+<p>--------------------------------------------------<br>
+string GetMovie()<br>
+returns a complete Flash movie bytestream, ready<br>
+to be sent to the requesting client.<br>
+<br>
+NOTE: Must be called after EndMovie().<br></p>
+<hr>
+<p><a name="c34"></a><a href="#top">DefineMATRIX($HasScale, $ScaleX, $ScaleY, $HasRotate, $RotateSkew0, $RotateSkew1, $TranslateX, $TranslateY)  </a></p>
+<p>--------------------------------------------------<br>
+string DefineMATRIX(boolean HasScale,<br>
+float ScaleX, float ScaleY, boolean HasRotate,<br>
+float RotateSkew0, float RotateSkew1,<br>
+integer TranslateX, integer TranslateY)<br>
+wrapper for packMATRIX() defined in <br>
+FreeMovieCompiler.<br></p>
+<hr>
+<p><a name="c35"></a><a href="#top">DefineGradient($Ratio, $AlphaFlag, $R, $G, $B, $A)</a></p>
+<p>--------------------------------------------------<br>
+array DefineGradient(integer Ratio, <br>
+boolean AlphaFlag, integer R, integer G,<br>
+integer B, integer A)<br>
+defines a gradient entry used to build a <br>
+gradient definition.<br></p>
+<hr>
+<p><a name="c36"></a><a href="#top">DefineStraightLine($X1, $Y1, $X2, $Y2, $Width, $AlphaFlag, $R, $G, $B, $A)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineStraightLine(integer X1,<br>
+integer Y1, integer X2, integer Y2,<br>
+integer Width, boolean AlphaFlag, integer R,<br>
+integer G, integer B, integer A)<br>
+defines a straight line.<br></p>
+<hr>
+<p><a name="c37"></a><a href="#top">DefineTriangle($X1, $Y1, $X2, $Y2, $X3, $Y3, $Width, $AlphaFlag, $R, $G, $B, $A)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineTriangle(integer X1, integer Y1, <br>
+integer X2, integer Y2, integer X3, <br>
+integer Y3, integer Width, boolean AlphaFlag, <br>
+integer R, integer G, integer B, integer A)<br>
+defines a triangle without fill.<br></p>
+<hr>
+<p><a name="c38"></a><a href="#top">DefineRectangle($X1, $Y1, $X2, $Y2, $Width, $AlphaFlag, $R, $G, $B, $A)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineRectangle(integer X1, integer Y1, <br>
+integer X2, integer Y2, integer Width,<br>
+boolean AlphaFlag, integer R, integer G,<br>
+integer B, integer A)<br>
+defines a rectangle without fill.<br></p>
+<hr>
+<p><a name="c39"></a><a href="#top">DefinePolygon($Segments, $X1, $Y1, $Radius, $Width, $AlphaFlag, $R, $G, $B, $A)</a></p>
+<p>--------------------------------------------------<br>
+integer DefinePolygon(integer Segments,<br>
+integer X1, integer Y1, integer Radius,<br>
+integer Width, boolean AlphaFlag, integer R,<br>
+integer G, integer B, integer A)<br>
+defines a regular polygon without fill.<br></p>
+<hr>
+<p><a name="c40"></a><a href="#top">DefineBezierQuad($Accuracy, $X1, $Y1, $ControlX, $ControlY, $X2, $Y2, $Width, $AlphaFlag, $R, $G, $B, $A)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineBezierQuad(integer Accuracy,<br>
+integer X1, integer Y1, integer ControlX,<br>
+integer ControlY, integer X2, integer Y2,<br>
+integer Width, boolean AlphaFlag, integer R,<br>
+integer G, integer B, integer A)<br>
+defines a 2nd degree Bezier curve using straight<br>
+line segments.<br></p>
+<hr>
+<p><a name="c41"></a><a href="#top">DefineBezierCubic($Accuracy, $X1, $Y1, $ControlX1, $ControlY1, $ControlX2, $ControlY2, $X2, $Y2, $Width, $AlphaFlag, $R, $G, $B, $A)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineBezierCubic(integer Accuracy, <br>
+integer X1, integer Y1, integer ControlX1,<br>
+integer ControlY1, integer ControlX2,<br>
+integer ControlY2, integer X2, integer Y2,<br>
+integer Width, boolean AlphaFlag, integer R,<br>
+integer G, integer B, integer A)<br>
+defines a 3rd degree Bezier curve using <br>
+straight line segments.<br></p>
+<hr>
+<p><a name="c42"></a><a href="#top">DefineCurvedLine($X1, $Y1, $ControlX, $ControlY, $X2, $Y2, $Width, $AlphaFlag, $R, $G, $B, $A)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineCurvedLine(integer X1, <br>
+integer Y1, integer ControlX,<br>
+integer ControlY, integer X2, integer Y2,<br>
+integer Width, boolean AlphaFlag, integer R,<br>
+integer G, integer B, integer A)<br>
+defines a 2nd degree Bezier curve using <br>
+the CURVEDEDGERECORD structure.<br></p>
+<hr>
+<p><a name="c43"></a><a href="#top">DefineCircle($Accuracy, $X1, $Y1, $Radius, $Width, $AlphaFlag, $R, $G, $B, $A)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineCircle(integer Accuracy, <br>
+integer X1, integer Y1, integer Radius,<br>
+integer Accuracy, integer Width,<br>
+boolean AlphaFlag, integer R, integer G,<br>
+integer B, integer A)<br>
+defines a circle without fill.<br></p>
+<hr>
+<p><a name="c44"></a><a href="#top">DefineArc($Accuracy, $X1, $Y1, $Angle1, $Angle2, $Radius, $Width, $AlphaFlag, $R, $G, $B, $A)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineArc(integer Accuracy,<br>
+integer X1, integer Y1, float Angle1,<br>
+float Angle2, integer Radius, integer Width,<br>
+boolean AlphaFlag, integer R, integer G,<br>
+integer B, integer A)<br>
+defines an arc.<br></p>
+<hr>
+<p><a name="c45"></a><a href="#top">DefineArcClosed($Accuracy, $X1, $Y1, $Angle1, $Angle2, $Radius, $Width, $AlphaFlag, $R, $G, $B, $A)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineArcClosed(integer Accuracy,<br>
+integer X1, integer Y1, float Angle1,<br>
+float Angle2, integer Radius, integer Width,<br>
+boolean AlphaFlag, integer R, integer G,<br>
+integer B, integer A)<br>
+defines a closed arc.<br></p>
+<hr>
+<p><a name="c46"></a><a href="#top">DefineTriangleSolid($X1, $Y1, $X2, $Y2, $X3, $Y3, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $FillFlag, $FillR, $FillG, $FillB, $FillA)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineTriangleSolid(integer X1,<br>
+integer Y1, integer X2, integer Y2,<br>
+integer X3, integer Y3, integer Width,<br>
+boolean AlphaFlag, boolean EdgeFlag,<br>
+integer R, integer G, integer B, integer A,<br>
+boolean FillFlag, integer FillR,<br>
+integer FillG, integer FillB, integer FillA)<br>
+defines a triangle with the solid fill.<br></p>
+<hr>
+<p><a name="c47"></a><a href="#top">DefineRectangleSolid($X1, $Y1, $X2, $Y2, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $FillFlag, $FillR, $FillG, $FillB, $FillA)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineRectangleSolid(integer X1,<br>
+integer Y1, integer X2, integer Y2,<br>
+integer Width, boolean AlphaFlag,<br>
+boolean EdgeFlag, integer R, integer G,<br>
+integer B, integer A, boolean FillFlag, <br>
+integer FillR, integer FillG, integer FillB,<br>
+integer FillA)<br>
+defines a rectangle with the solid fill.<br></p>
+<hr>
+<p><a name="c48"></a><a href="#top">DefinePolygonSolid($Segments, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $FillFlag, $FillR, $FillG, $FillB, $FillA)</a></p>
+<p>--------------------------------------------------<br>
+integer DefinePolygonSolid(integer Segments,<br>
+integer X1, integer Y1, integer Radius,<br>
+integer Width, boolean AlphaFlag,<br>
+boolean EdgeFlag, integer R, integer G,<br>
+integer B, integer A, boolean FillFlag,<br>
+integer FillR, integer FillG, integer FillB,<br>
+integer FillA)<br>
+draws a polygon with the solid fill.<br></p>
+<hr>
+<p><a name="c49"></a><a href="#top">DefineCircleSolid($Accuracy, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $FillFlag, $FillR, $FillG, $FillB, $FillA)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineCircleSolid(integer Accuracy,<br>
+integer X1, integer Y1, integer Radius,<br>
+integer Width, boolean AlphaFlag,<br>
+boolean EdgeFlag, integer R, integer G,<br>
+integer B, integer A, boolean FillFlag,<br>
+integer FillR, integer FillG, integer FillB,<br>
+integer FillA)<br>
+defines a circle with the solid fill.<br></p>
+<hr>
+<p><a name="c50"></a><a href="#top">DefineArcClosedSolid($Accuracy, $Angle1, $Angle2, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $FillFlag, $FillR, $FillG, $FillB, $FillA)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineArcClosedSolid(integer Accuracy,<br>
+float Angle1, float Angle2, integer X1,<br>
+integer Y1, integer Radius, integer Width,<br>
+boolean AlphaFlag, boolean EdgeFlag,<br>
+integer R, integer G, integer B, integer A,<br>
+boolean FillFlag, integer FillR,<br>
+integer FillG, integer FillB, integer FillA)<br>
+draws a closed arc with the solid fill.<br></p>
+<hr>
+<p><a name="c51"></a><a href="#top">DefineTriangleGradient($X1, $Y1, $X2, $Y2, $X3, $Y3, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $GradientType, $GradientDefinition, $AutoFitFlag, $GradientMatrix)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineTriangleGradient(integer X1,<br>
+integer Y1, integer X2, integer Y2,<br>
+integer X3, integer Y3, integer Width,<br>
+boolean AlphaFlag, boolean EdgeFlag,<br>
+integer R, integer G, integer B, integer A,<br>
+string GradientType,<br>
+array GradientDefinition, boolean AutoFit,<br>
+string GradientMatrix)<br>
+defines a triangle with the gradient fill.<br></p>
+<hr>
+<p><a name="c52"></a><a href="#top">DefineRectangleGradient($X1, $Y1, $X2, $Y2, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $GradientType, $GradientDefinition, $AutoFitFlag, $GradientMatrix)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineRectangleGradient(integer X1,<br>
+integer Y1, integer X2, integer Y2,<br>
+integer Width, boolean AlphaFlag,<br>
+boolean EdgeFlag, integer R, integer G,<br>
+integer B, integer A, string GradientType,<br>
+array GradientDefinition, boolean AutoFitFlag,<br>
+string GradientMatrix)<br>
+defines a rectangle with the gradient fill.<br></p>
+<hr>
+<p><a name="c53"></a><a href="#top">DefinePolygonGradient($Segments, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $GradientType, $GradientDefinition, $AutoFitFlag, $GradientMatrix)</a></p>
+<p>--------------------------------------------------<br>
+integer DefinePolygonGradient(integer Segments,<br>
+integer X1, integer Y1, integer Radius,<br>
+integer Width, boolean AlphaFlag,<br>
+boolean EdgeFlag, integer R, integer G,<br>
+integer B, integer A, string GradientType,<br>
+array GradientDefinition, boolean AutoFitFlag,<br>
+string GradientMatrix)<br>
+defines a regular polygon with the gradient fill.<br></p>
+<hr>
+<p><a name="c54"></a><a href="#top">DefineCircleGradient($Accuracy, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $GradientType, $GradientDefinition, $AutoFitFlag, $GradientMatrix)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineCircleGradient(integer Accuracy,<br>
+integer X1, integer Y1, integer Radius,<br>
+integer Width, boolean AlphaFlag,<br>
+boolean EdgeFlag, integer R, integer G,<br>
+integer B, integer A, string GradientType,<br>
+array GradientDefinition, boolean AutoFitFlag,<br>
+string GradientMatrix)<br>
+defines a circle with the gradient fill.<br></p>
+<hr>
+<p><a name="c55"></a><a href="#top">DefineArcClosedGradient($Accuracy, $Angle1, $Angle2, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $GradientType, $GradientDefinition, $AutoFitFlag, $GradientMatrix)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineArcCloseGradient(<br>
+integer Accuracy, float Angle1, float Angle2,<br>
+integer X1, integer Y1, integer Radius,<br>
+integer Width, boolean AlphaFlag,<br>
+boolean EdgeFlag, integer R, integer G,<br>
+integer B, integer A, string GradientType,<br>
+array GradientDefinition, boolean AutoFitFlag,<br>
+string GradientMatrix)<br>
+defines a closed arc with the gradient fill.<br></p>
+<hr>
+<p><a name="c56"></a><a href="#top">DefineBitmapJPEGTables($file)</a></p>
+<p>--------------------------------------------------<br>
+null DefineBitmapJPEGTables(string file)<br>
+defines the JPEGTables tag.<br></p>
+<hr>
+<p><a name="c57"></a><a href="#top">DefineBitmapJPEGImage($file)</a></p>
+<p>--------------------------------------------------<br>
+null DefineBitmapJPEGImage(string file)<br>
+defines the DefineBits tag.<br></p>
+<hr>
+<p><a name="c58"></a><a href="#top">DefineBitmapJPEG($file)</a></p>
+<p>--------------------------------------------------<br>
+null DefineBitmapJPEG(string file)<br>
+defines the DefineBitsJPEG2 tag.<br></p>
+<hr>
+<p><a name="c59"></a><a href="#top">DefineBitmapJPEGAlpha($fileJPEG, $fileAlpha)</a></p>
+<p>--------------------------------------------------<br>
+null DefineBitmapJPEGAlpha(string file, <br>
+string fileAlpha)<br>
+defines the DefineBitsJPEG3 tag.<br></p>
+<hr>
+<p><a name="c60"></a><a href="#top">DefineBitmapTIFF($file)</a></p>
+<p>--------------------------------------------------<br>
+null DefineBitmapTIFF(string file)<br>
+defines the DefineBitsLossless tag and returns<br>
+its ID.<br></p>
+<hr>
+<p><a name="c61"></a><a href="#top">DefineBitmapTIFFAlpha($TIFFFile, $AlphaPalette)</a></p>
+<p>--------------------------------------------------<br>
+null DefineBitmapTIFFAlpha(string TIFFfile, <br>
+array AlphaPalette)<br>
+defines the DefineBitsLossless2 tag and returns<br>
+its ID.<br></p>
+<hr>
+<p><a name="c62"></a><a href="#top">DefineTriangleBitmap($X1, $Y1, $X2, $Y2, $X3, $Y3, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $BitmapType, $BitmapID, $AutoFitFlag, $BitmapMatrix)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineTriangleBitmap(integer X1,<br>
+integer Y1, integer X2, integer Y2,<br>
+integer X3, integer Y3, integer Width,<br>
+boolean AlphaFlag, boolean EdgeFlag,<br>
+integer R, integer G, integer B, integer A,<br>
+string BitmapType, integer BitmapID,<br>
+boolean AutoFitFlag, string BitmapMatrix)<br>
+defines a triangle with the bitmap fill.<br></p>
+<hr>
+<p><a name="c63"></a><a href="#top">DefineRectangleBitmap($X1, $Y1, $X2, $Y2, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $BitmapType, $BitmapID, $AutoFitFlag, $BitmapMatrix)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineRectangleBitmap(integer X1,<br>
+integer Y1, integer X2, integer Y2,<br>
+integer Width, boolean AlphaFlag,<br>
+boolean EdgeFlag, integer R, integer G,<br>
+integer B, integer A, string BitmapType,<br>
+integer BitmapID, boolean AutoFitFlag, <br>
+string BitmapMatrix)<br>
+defines a rectangle with the bitmap fill.<br></p>
+<hr>
+<p><a name="c64"></a><a href="#top">DefinePolygonBitmap($Segments, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $BitmapType, $BitmapID, $AutoFitFlag, $BitmapMatrix)</a></p>
+<p>--------------------------------------------------<br>
+integer DefinePolygonBitmap(integer Segments,<br>
+integer X1, integer Y1, integer Radius,<br>
+integer Width, boolean AlphaFlag,<br>
+boolean EdgeFlag, integer R, integer G,<br>
+integer B, integer A, string BitmapType,<br>
+integer BitmapID, boolean AutoFitFlag,<br>
+string BitmapMatrix)<br>
+integer FillG, integer FillB, integer FillA)<br>
+defines a regular polygon with the bitmap fill.<br></p>
+<hr>
+<p><a name="c65"></a><a href="#top">DefineCircleBitmap($Accuracy, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $BitmapType, $BitmapID, $AutoFitFlag, $BitmapMatrix)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineCircleBitmap(integer Accuracy,<br>
+integer X1, integer Y1, integer Radius,<br>
+integer Width, boolean AlphaFlag,<br>
+boolean EdgeFlag, integer R, integer G,<br>
+integer B, integer A, string BitmapType,<br>
+integer BitmapID, boolean AutoFitFlag,<br>
+string BitmapMatrix)<br>
+defines a circle with the bitmap fill.<br></p>
+<hr>
+<p><a name="c66"></a><a href="#top">DefineArcClosedBitmap($Accuracy, $Angle1, $Angle2, $X1, $Y1, $Radius, $Width, $AlphaFlag, $EdgeFlag, $R, $G, $B, $A, $BitmapType, $BitmapID, $AutoFitFlag, $BitmapMatrix)</a></p>
+<p>--------------------------------------------------<br>
+integer DefineArcClosedBitmap(integer Accuracy,<br>
+integer X1, integer Y1, integer Radius,<br>
+integer Width, boolean AlphaFlag,<br>
+boolean EdgeFlag, integer R, integer G,<br>
+integer B, integer A, string BitmapType,<br>
+integer BitmapID, boolean AutoFitFlag,<br>
+string BitmapMatrix)<br>
+defines a closed arc with the bitmap fill.<br></p>
+<hr>
+<p><a name="c67"></a><a href="#top">BeginShape()</a></p>
+<p>--------------------------------------------------<br>
+integer BeginShape()<br>
+returns a Character ID for the new shape.<br></p>
+<hr>
+<p><a name="c68"></a><a href="#top">DefineSolidLine($Width, $AlphaFlag, $R, $G, $B, $Alpha)</a></p>
+<p>--------------------------------------------------<br>
+array DefineSolidLine(integer Width, <br>
+boolean AlphaFlag, integer R, integer G,<br>
+integer B, integer Alpha)<br>
+creates a solid line style definition and <br>
+returns it.<br></p>
+<hr>
+<p><a name="c69"></a><a href="#top">DefineSolidFill($AlphaFlag, $R, $G, $B, $Alpha)</a></p>
+<p>--------------------------------------------------<br>
+array DefineSolidFill(boolean AlphaFlag, <br>
+integer R, integer G, integer B, integer Alpha)<br>
+creates a solid fill style definition and <br>
+returns it.<br></p>
+<hr>
+<p><a name="c70"></a><a href="#top">SelectLineStyle($CharacterID, $Line)</a></p>
+<p>--------------------------------------------------<br>
+null SelectLineStyle(integer CharacterID,<br>
+array Line) <br>
+selects a line style.<br></p>
+<hr>
+<p><a name="c71"></a><a href="#top">SelectFill0Style($CharacterID, $Fill, $FillType, $Matrix)</a></p>
+<p>--------------------------------------------------<br>
+null SelectFill0Style(integer CharacterID,<br>
+array Fill, string FillType, string Matrix)<br>
+selects a Fill0 style.<br></p>
+<hr>
+<p><a name="c72"></a><a href="#top">SelectFill1Style($CharacterID, $Fill, $FillType, $Matrix)</a></p>
+<p>--------------------------------------------------<br>
+null SelectFill1Style(integer CharacterID,<br>
+array Fill, string FillType, string Matrix)<br>
+selects a Fill1 style.<br></p>
+<hr>
+<p><a name="c73"></a><a href="#top">MoveTo($CharacterID, $X, $Y)</a></p>
+<p>--------------------------------------------------<br>
+null MoveTo(integer CharacterID, integer X<br>
+integer Y)<br>
+moves pen to a new location.<br></p>
+<hr>
+<p><a name="c74"></a><a href="#top">LineTo($CharacterID, $X, $Y)</a></p>
+<p>--------------------------------------------------<br>
+null LineTo(integer CharacterID, integer X<br>
+integer Y)<br>
+draws a straight line to X, Y.<br></p>
+<hr>
+<p><a name="c75"></a><a href="#top">CurveTo($CharacterID, $ControlX, $ControlY, $AnchorX, $AnchorY)</a></p>
+<p>--------------------------------------------------<br>
+null CurveTo(integer CharacterID,<br>
+integer ControlX, integer ControlY, <br>
+integer AnchorX, integer AnchorY)<br>
+draws a 2nd degree Bezier curve.<br></p>
+<hr>
+<p><a name="c76"></a><a href="#top">EndShape($CharacterID)</a></p>
+<p>--------------------------------------------------<br>
+null EndShape(integer CharacterID)<br>
+packs shape and creates appropriate shape tag.<br></p>
+<hr>
+<p><a name="c77"></a><a href="#top">BeginMorphShape($FromCharacterID)</a></p>
+<p>--------------------------------------------------<br>
+string BeginMorphShape(integer FromCharacterID)<br>
+returns a Character ID for the new morph shape.<br></p>
+<hr>
+<p><a name="c78"></a><a href="#top">EndMorphShape($FromCharacterID, $ToCharacterID)</a></p>
+<p>--------------------------------------------------<br>
+null EndMorphShape(integer FromCharacterID,<br>
+string ToCharacterID)<br>
+packs shape and creates appropriate shape tag.<br></p>
+<hr>
+<p><a name="c79"></a><a href="#top">DashedLine($LineLength, $SpaceLength, $X1, $Y1, $X2, $Y2, $Width, $LineStyle, $FillStyle, $FillType, $FillMatrix)</a></p>
+<p>--------------------------------------------------<br>
+integer DashedLine(integer LineLength, <br>
+integer SpaceLength, integer X1, integer Y1,<br>
+integer X2, integer Y2, integer Width, <br>
+array LineStyle, array FillStyle, <br>
+string FillType, string FillMatrix)<br>
+cretes a dashed line with flat ends.<br></p>
+
+</body>
+</html>

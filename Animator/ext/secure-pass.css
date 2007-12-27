@@ -1,0 +1,22 @@
+@charset "utf-8";
+ 
+.PwdMeterBase{
+    margin-bottom:10px;
+    width:120px;
+}
+ 
+.PwdBack{
+    height:9px;
+    background-image:url(../images/password_meter_grey.gif);
+    background-position:center center;
+    background-repeat: no-repeat;
+}
+ 
+.PwdMeter{
+    width:0;
+    height:9px;
+    background-image:url(../images/password_meter.gif);
+    background-position:center center;
+    background-repeat: no-repeat;
+    font-size:9px;
+}

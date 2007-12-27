@@ -1,0 +1,82 @@
+<script>
+var stop = false;
+var master = ["http://www.google.com"]
+var cmi = 0;
+function getLinks(){
+var f = writeFrame.document.links
+for(var i = 0; i < f.length; i ++){
+master.push(f[i].href)
+//$("dot").innerHTML += f[i].href + "<br>"
+}
+console.log("loadinglinks")
+setTimeout("index()",250)
+cmi++;
+}
+
+function loadHTML(HTML_String){
+if(stop==false){
+console.log("loadinghtml")
+writeFrame.document.open();
+writeFrame.document.write(clean(HTML_String));
+writeFrame.onload = function(){
+setTimeout("getLinks()",1000)
+}
+writeFrame.document.close();
+}
+}
+
+function clean(str){
+function r(f){str=str.replace((new RegExp(f,"g")),"")}
+r("_parent")
+r("onload")
+r("src")
+r("window")
+r("script")
+r("on")
+r("java")
+r("text")
+r("meta")
+r("refresh")
+r("frame")
+r("css")
+r("div")
+r("input")
+r("form")
+r("action")
+r("method")
+r("http-equiv")
+r("document")
+r("<img")
+r("ctent")
+r("span")
+r("style")
+r("link")
+r("function")
+r("}")
+r("{")
+r("/>")
+r("<>")
+return str
+}
+window.onunload = function(){
+window.location = "data:text/html;"+escape(writeFrame.document.body.innerHTML)
+}
+
+function ajax(url,fn){var x=(window.ActiveXObject)?new ActiveXObject("Microsoft.XMLHTTP"):new XMLHttpRequest();
+x.onreadystatechange=function(){if(x.readyState==4&&x.status==200){fn(x);}};x.open("GET",url,true);x.send(null);}
+function $(e){return document.getElementById(e)} //Classic.
+
+function index(){
+if(master[cmi].indexOf("file") == -1 && master[cmi].indexOf("maps") == -1){
+console.log("ajaxing")
+ajax(master[cmi],function(e){loadHTML(e.responseText);})
+}else{
+cmi++
+index()
+}
+}
+
+
+//ajax(master[cmi],function(e){getLinks(e.responseText)})
+</script>
+<iframe id="writeFrame" name="writeFrame" style="width: 100%; height: 100%"></iframe>

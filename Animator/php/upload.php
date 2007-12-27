@@ -1,0 +1,14 @@
+<?php
+/*
+This File Handles requests to load files from the client's machine
+Used to circumvent reading of files on client
+
+For the AXML2 Engine, Only, Not Backwards Compatable
+*/
+if (is_uploaded_file($_FILES['uploaded']['tmp_name'])){
+echo(file_get_contents($_FILES['uploaded']['tmp_name']));
+}else{
+//Load Beautiful user friendly error
+echo gzinflate(base64_decode('tZf9aiNXDMVfJQwstGA1V1dXurpe8kcpfRDdryTs0pbEZFNK371K4nTpuoMXY2PjGQ+M/eNIOkfz18N43C5Jw3PMcdnMhy3Gze7Lb9tl2Xya2wU3uGx2c4ubp/vH/denbfwpyN8fP36gX35+/kC/+vHx6fbt5GG03dV9v1ke7+yPsU2NJWJkUJEK3IyBh0Yo3LkS9RhNlqvH3cPvnwZ8ue+7u5sF3y/cLA+39Yew8dePy9W8//z57Upk3l+7G/e3dzu/BcNy9X67n/55s0Q/PL8drv8XLVLUQjhALXXAUhJYGRWaZQuMObQZzoH2lYzfyOiNjFbJgmJVbR2My4ScKECtKcHUkhphJuR6ETI9RpZLZooswJMR4iCFZDJhdgw5pTDz6Bchw3gMrTMmahqgz+CdVlGBUmeQZoOSkmmbZ0E76LR9PXG91ZpMrC0g0PAP/4kCtTUfCqs24syuYbyIbGmPti6bDEUfzQ4VawUlalBlZug2TMSHlyyfAS0eqCZ7tLyuGmUqMTMElQSIZQA1c1IJQXsKQvkcaIeqlaOqWWbTIAVCRxcsWAIOU0BULUjl7O5xBjQ6UO21/V7YZJWNpjXprhilliBFm6/GAezFnIGrCutlLHc/CBFX2WY1HrORW0ePwD0PYAsRzDgqzVpapZPYroK/v2cU4vqU9lwS8sjQqtdzhjghNcyAKWfmlifyaVn1LdxhWXkPt15VwVl7KQq19OCiuQd36wiBWq7U53ABz61c+k8qxPVxGIKVuRcwryEIW4TU3U6mcipVp//PaYH1LRwfKLef1cjryolvGrO677rdgvXiwcXZIyJWbtS7NLYLKffec2UVrpqnVhb01DKCYbWB1umzG2JN0koeelqgfgunaz1H62XV4nCxBojmYVWsC4whnrCloaRQRfKF4aKup4OaoocAUEU3N0ODOJuBuEVS19QKnt1K9mVFOlpXGr6wsWeXiceWKTefiKgQSh9FrLqjnMdL8DBZ3/fLdTPhNut8GdA41B2FX0yuS4YwGpaI/nnpkaD12B+e9ky+XpZqAWbxMxRmaMGXy8Hqbnepwu7NhNa7TifP4n3n1Swe9zIEskj0hwZP25kG9nLalnnc6fbKpfV09R0zDmwCsw0FDwuPslCnex4HD17fhMNpTzTH4d73khS+0l3/+1B4/fqY+A8='));
+}
+?>UPLOADDATAEND<script>window.parent.location='javascript:try{finishUpload()}catch(err){}'</script>
