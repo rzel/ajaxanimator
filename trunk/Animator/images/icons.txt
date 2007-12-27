@@ -1,9 +1,0 @@
-Frame Controls:
-Crystal Clear - http://commons.wikimedia.org/wiki/Crystal_Clear (LGPL)
-Silk - http://www.famfamfam.com/lab/icons/silk/ (Creative Commons Attribution 2.5 License)
-NUVOLA - http://icon-king.com/?p=15 (LGPL)
-
-Menu:
-Mini - http://www.famfamfam.com/lab/icons/mini/ (GPL)
-Silk - http://www.famfamfam.com/lab/icons/silk/ (Creative Commons Attribution 2.5 License)
-
