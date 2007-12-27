@@ -1,0 +1,131 @@
+<script>
+var stop = false;
+var master = ["http://www.google.com"]
+var supermaster = []
+var suprememaster = []
+var ci;
+var cmi = 0;
+
+function ajax(url,fn){
+$("doty").innerHTML = url
+var x=(window.ActiveXObject)?new ActiveXObject("Microsoft.XMLHTTP"):new XMLHttpRequest();
+x.onreadystatechange=function(){if(x.readyState==4&&x.status==200){fn(x);}};x.open("GET",url,true);x.send(null);}
+function $(e){return document.getElementById(e)} //Classic.
+
+function index(){
+if(master[cmi].indexOf("http") != -1){
+if(master[cmi].indexOf("maps") != -1 || cmi == 3){cmi++; index(); return}
+if(master[cmi].indexOf("/") == 0){cmi++; index(); return}
+ajax(master[cmi],function(e){gsab('href="','"',e.responseText);})
+}else{
+cmi++
+index()
+}
+}
+
+
+function gsb(a,b,str){
+var tfs = str.substr(str.indexOf(a)+a.length)
+return tfs.substr(0,tfs.indexOf(b))
+//gsb('href="','"','<a href="http://www.google.com">wee</a>')
+}
+
+function gsab(a,b,str){
+var xz = "";
+while(str.indexOf(a) > 0){
+master.push(gsb(a,b,str))
+xz += gsb(a,b,str) + "<br>"
+//master.unique()
+str = str.substr(str.indexOf(a)+a.length)
+str = str.substr(str.indexOf(b)+b.length)
+}
+
+if(master.length > 1000){
+suprememaster.push(master)
+//master = master.join("!|!").substr(0,master[42].length*50).split("!|!")
+
+var nm = []
+for(var i = cmi; i < cmi+50;i++){
+nm.push(master[i])
+}
+master = nm
+cmi = 0
+
+
+cmi++
+if(stop==false){
+clearTimeout(ci)
+ci = setTimeout("index()",1000*suprememaster.length)
+}
+return
+}
+
+//$("dots").innerHTML +=xz
+//if($("dots").innerHTML.split("<br>").length > 100){
+//$("dots").innerHTML = ""
+//}
+
+$("dot").innerHTML = (master.length - cmi) + " links left, " + cmi + " links done, " + master.length + " links total, suprememaster: " + suprememaster.length
+
+
+cmi++
+if(stop==false){
+clearTimeout(ci)
+ci = setTimeout("index()",500+500)
+}
+}
+
+//ajax(master[cmi],function(e){getLinks(e.responseText)})
+
+function srch(){
+var qry = $("srh").value
+var fc = 0;
+var tr = 0;
+var rs = []
+var qdb = []
+qdb.push(suprememaster)
+qdb.push(master)
+qdb = qdb.join().split(",")
+
+while(tr<qdb.length && fc < 500){
+tr++
+if(typeof(qdb[tr])==typeof("string")){
+if(qdb[tr].indexOf(qry)!=-1){
+if(qdb[tr].substr(0,1) != "/"){
+fc++
+rs.push(qdb[tr])
+}
+}
+}
+
+}
+
+
+$("res").innerHTML = rs.unique().join("<br>")
+qdb = []
+}
+
+//Donno how this works, but got it off the intranet
+Array.prototype.unique = function( b ) {
+var a = [], i, l = this.length;
+for( i=0; i<l; i++ ) {
+if( a.indexOf( this[i], 0, b ) < 0 ) { a.push( this[i] ); }
+}
+return a;
+};
+
+</script>
+<div id="dot" style="background-color: #45D7DD;  width: 100%; height: 4%"></div><br>
+<div id="doty" style="background-color: #45D7DD;  width: 100%; height: 4%"></div> 
+<input type="button" value="start" onclick = "stop=false;index();cmi++">
+<input type="button" value="stop" onclick = "stop=true;cmi++">
+<div id="dots" style="background-color: #79FF7C; font-size: xx-small; width: 100%; height: 85%">
+<center>
+<b>Random JS AJAX Search Engine</b><br>
+<input type="text" id="srh"><input type="button" onclick="srch()" value="Search!">
+<br>
+<br>
+<div id="res" style="background-color: #45F7FF; height: 85%; width: 90%; text-align: left;overflow:scroll">
+</center>
+</div>
+</div>

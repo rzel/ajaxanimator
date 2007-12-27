@@ -1,0 +1,134 @@
+<?php ob_start ("ob_gzhandler");header("Content-type: text/html; charset: UTF-8"); ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<title>Ajax Animator</title>
+
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.css">
+	<link rel="stylesheet" type="text/css" href="../ajaxanimator/ajaxanimator-all.css.php">
+	
+	<style type="text/css">#loading-mask{width:100%;height:100%;background:#c3daf9;position:absolute;
+	z-index:20000;left:0;top:0;}#loadingIcon{width:32px;height:32px;margin-right:8px;float:left;
+	vertical-align:top;}#loadProgressBar{height:3px;margin:1px;padding:0;background:#3974AF;}#loading{
+	position:absolute;left:45%;top:40%;z-index:20001;border:1px solid #ccc;width:150px;background:white;
+        color:#444;font:bold 13px tahoma,arial,helvetica;padding:10px;margin:0;height:auto;}
+	#loadProgressBorder{height:5px;background:#fff;border:1px solid silver;margin:0;padding:0;}#loading-msg{
+        font:normal 10px arial,tahoma,sans-serif;margin-bottom:8px;margin-top:3px;display:block;}</style>
+	
+	</head>
+	<body style="overflow: hidden">
+
+	<div id="loading"><table border="0px"><tr><td>
+	<img src="../images/loading-large.gif" alt="" class="loadingIcon">
+	</td><td>&nbsp;</td><td><span style="text-align:center">Ajax Animator</span><br>
+	<span id="loading-msg">Loading JS/HTML...</span></td></tr></table>
+	<div id="loadProgressBorder"><div id="loadProgressBar" style="width: 10px">
+	</div></div></div><div id="loading-mask">&#160;</div>
+
+	<!-- GoogAd1-->
+
+	<iframe id="saveIframe" name="saveIframe" class="invisible" style="display:none"></iframe>
+	<iframe id="uploadIframe" name="uploadIframe" class="invisible" style="display:none"></iframe>
+	<div id="miscDiv" class="invisible"></div>
+
+
+	<div id="color-dialog">
+	<div class="x-dlg-hd">Color</div>
+	<div class="x-dlg-bd">
+	<div id="colorPicker" class="x-layout-inactive-content">
+	</div>
+	<div id="colorPalette" class="x-layout-inactive-content">
+	</div>
+	</div>
+	</div>
+
+
+
+	<map name="ControlMap" id="ControlMap">
+	<area shape="poly" id="TpreFrame" coords="31,28,31,2,19,9,19,4,1,15,19,27,19,20" alt="&lt;--">
+	<area shape="poly" id="TplayAnim" coords="36,31,36,0,65,16" alt="Play">
+	<area shape="rect" id="TstopAnim" coords="67,2,95,30" alt="Stop">
+	<area shape="poly" id="TnxtFrame" coords="96,3,96,27,107,21,107,27,127,15,107,2,107,8" alt="--&gt">
+	</map>
+
+	
+	<div id="north-div">
+	<div id="north-tb"></div>
+	<div id="frameContainer" style="overflow: auto"></div>
+	</div>
+	
+	
+	<div id="properties-div">
+	<div id="prop-tb"></div>
+	<table><tr><td>
+	<div id="ResizeObjOpt" style="display: none">
+	Height:<input type="text" style="width: 50px" id="sHeight" onchange="setSP();" onblur="setSP();" value=""> 
+	Width:<input type="text" style="width: 50px" id="sWidth" onchange="setSP();" onblur="setSP();" value="">
+	</div>
+	<div id="noSelectRem">No Object Currently Selected</div>  
+	</td><td>
+	<!-- GoogAd2-->
+	</td></tr></table>
+	</div>
+	
+	
+	<div id="history-div">
+	<div id="history-tb"></div>
+	<div id="HistoryLayout">
+	<div id="HistoryContainer" style="width: 100%">
+	</div>
+	</div>
+	</div>
+	
+	
+	<div id="user-div">
+	<div id="user-tb"></div>
+	
+	
+        <div id="userLogin"></div>
+	<div id="userProfile" style="display:none"></div>
+	<div id="userFiles" style="display:none">
+	<div id="userFileList" style="display:none"></div>
+	</div>
+
+	</div>
+	
+	<div id="toolbar-div">
+	<div id="tbIcon"></div>
+	<div id="fillcolor" class="drawColor" onclick="FillColorChange()">FF0000</div>
+	<div id="linecolor" class="drawColor" onclick="LineColorChange()">000000</div>
+	<input type="text" id="linewidth" size="1">
+	</div>
+	<div id="canvas-div">
+	<div id="center-tb"></div>
+
+
+	<!-- GoogAd3-->
+
+	<div id="CanvasContainer"></div>
+	<center>
+	<div id="canvasControlBar"></div>
+	<br>
+	<div style="font-size:x-small" id="status"></div>
+	</center>
+
+	<!-- GoogAd4-->
+	</div>
+	<div id="preview-div">
+	<div id="preview-tb"></div>
+    <div id="FlashPreview">
+    <center>
+    <div style="border: 1px black solid;" id="zFlashPreviewDiv"></div>
+	<div id="previewControlBar"></div>
+	<br>
+    <div id="previewStatus" style="font-size:x-small"></div>
+    </center>
+    </div>
+	</div>
+	
+	<script type="text/javascript" src="../ajaxanimator/full.js.php"></script>
+	
+</body>
+</html>
+<?php ob_end_flush(); ?>

@@ -1,0 +1,96 @@
+
+<form id="headers">
+Start Message Title:<input type="text" style="width:100%" name="title" ><br>
+Start Message:<input type="text" style="width:100%"  name="msg"><br>
+Finish Message Title:<input type="text" style="width:100%"  name="finishTitle" ><br>
+Finish Message:<input type="text" style="width:100%" name="finishMsg" ><hr>
+</form>
+<div>
+<a href="javascript:add()">Add New Step</a><br><br>
+
+<div id="clonehome">
+<form id="cloneme">
+<label for='anim'>Notifier Animation</label>
+<select name="anim">
+<option>highlight</option>
+<option>fade</option>
+</select><br>
+Help Message:<input type="text" name="msg" width: "200px"><br>
+Pointer Element:<input type="text" name="el"><br>
+</form>
+</div>
+</div>
+
+<input type="button" onclick="expt()" value="Generate!">
+<br>
+<textarea id="output" style="width: 100%; height: 100px">
+Tutorial source Comes Out Goes Here
+</textarea>
+<script>
+if(!this.JSON){JSON=function(){function f(n){return n<10?"0"+n:n}Date.prototype.toJSON=function(){return this.getUTCFullYear()+"-"+f(this.getUTCMonth()+1)+"-"+f(this.getUTCDate())+"T"+f(this.getUTCHours())+":"+f(this.getUTCMinutes())+":"+f(this.getUTCSeconds())+"Z"};var m={"\b":"\\b","\t":"\\t","\n":"\\n","\f":"\\f","\r":"\\r","\"":"\\\"","\\":"\\\\"};function stringify(value,whitelist){var a,i,k,l,r=/["\\\x00-\x1f\x7f-\x9f]/g,v;switch(typeof value){case"string":return r.test(value)?"\""+value.replace(r,function(a){var c=m[a];if(c){return c}c=a.charCodeAt();return"\\u00"+Math.floor(c/16).toString(16)+(c%16).toString(16)})+"\"":"\""+value+"\"";case"number":return isFinite(value)?String(value):"null";case"boolean":case"null":return String(value);case"object":if(!value){return"null"}if(typeof value.toJSON==="function"){return stringify(value.toJSON())}a=[];if(typeof value.length==="number"&&!(value.propertyIsEnumerable("length"))){l=value.length;for(i=0;i<l;i+=1){a.push(stringify(value[i],whitelist)||"null")}return"["+a.join(",")+"]"}if(whitelist){l=whitelist.length;for(i=0;i<l;i+=1){k=whitelist[i];if(typeof k==="string"){v=stringify(value[k],whitelist);if(v){a.push(stringify(k)+":"+v)}}}}else{for(k in value){if(typeof k==="string"){v=stringify(value[k],whitelist);if(v){a.push(stringify(k)+":"+v)}}}}return"{"+a.join(",")+"}"}}return{stringify:stringify,parse:function(text,filter){var j;function walk(k,v){var i,n;if(v&&typeof v==="object"){for(i in v){if(Object.prototype.hasOwnProperty.apply(v,[i])){n=walk(i,v[i]);if(n!==undefined){v[i]=n}}}}return filter(k,v)}if(/^[\],:{}\s]*$/.test(text.replace(/\\./g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(:?[eE][+\-]?\d+)?/g,"]").replace(/(?:^|:|,)(?:\s*\[)+/g,""))){j=eval("("+text+")");return typeof filter==="function"?walk("",j):j}throw new SyntaxError("parseJSON")}}}()}
+
+window.onload = function(){
+//Reset defaults
+
+$("headers").title.value="Interactive Tutorial"
+$("headers").msg.value = "Welcome To the Ajax Animator Basic Tutorial V0.3 Alpha<br>Press 'Ok' to continue" 
+$("headers").finishTitle.value= "Finished Tutorial"
+$("headers").finishMsg.value="Congratulations, You have sucessfully completed the ajax animator beginner interactive tutorial version 0.3 Alpha"
+$("cloneme").msg.value = "Click Here!"
+$("cloneme").el.value = ""
+$("cloneme").anim.selectedIndex = 0
+}
+function $(e){return document.getElementById(e)}
+function add(){
+var cne = $("cloneme").cloneNode(true)
+$("clonehome").appendChild(cne)
+cne.msg.value = "Click Here!"
+cne.el.value = ""
+cne.anim.selectedIndex = 0
+}
+
+function gencontent(){
+var content = [];
+var ct = "content: ["
+for(var i = 1; i < document.forms.length; i++){
+var z = {
+el: document.forms[i].el.value,
+msg: document.forms[i].msg.value,
+anim: document.forms[i].anim.options[document.forms[i].anim.selectedIndex].value
+}
+ct+=JSONAC(z,JSON.stringify(z))+","
+}
+return ct.substr(0,ct.length-1)+"]"
+}
+
+
+function genheader(){
+var header = {
+title: $("headers").title.value,
+msg: $("headers").msg.value,
+finishTitle: $("headers").finishTitle.value,
+finishMsg: $("headers").finishMsg.value
+}
+return JSONAC(header,JSON.stringify(header))
+//return header
+}
+
+function glue(){
+var hdr = genheader()
+var hrd = hdr.substr(0,hdr.length-1)+",";
+var ctn = gencontent()
+return hrd+ctn+"}"
+}
+
+function expt(){
+$("output").value = glue()
+}
+
+function JSONAC(jsonObj,jsonStr){
+for(x in jsonObj){
+jsonStr=jsonStr.replace('"'+x.toString()+'"',x.toString())
+}
+return jsonStr
+}
+
+</script>

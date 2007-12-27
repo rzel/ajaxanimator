@@ -1,0 +1,78 @@
+/*Random Stuff*/	
+.invisible {
+display:none;
+visibility: hidden;
+height: 1px;
+width: 1px;	
+opacity: 0;
+
+}
+
+
+/*Drawing Toolbar Code To Center Images vertically and horizontally*/
+	
+
+	IMG.toolbarItem {
+	display: block;
+	margin-left: auto;
+        margin-right: auto;
+	vertical-align: middle
+	}
+	DIV.toolbarItem {
+	background-repeat: no-repeat;
+	width: 22px;
+	height: 22px;
+	}
+	DIV.centerVertical {
+	min-height: 10em;
+        display: table-cell;
+        vertical-align: middle
+	}
+	
+	/* Some Color Picker Code (the buttons) */
+	
+    DIV.drawColor {
+    font-size:small;
+    text-align: right;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    }
+
+
+    /* Some Animation Preview/Richdraw Editor CSS Code */
+
+
+    #CanvasContainer {
+    border:1px solid black;
+    background-color:white;
+    -moz-user-select:none;
+    margin-left: auto;
+    margin-right: auto;
+    width: 480px;
+    height: 272px;
+    overflow:hidden
+    }
+
+
+    DIV.svgDisplay {
+    border: 1px solid black;
+    position: relative;
+    width:480px;
+	margin-left: auto;
+	margin-right: auto;
+    overflow:hidden;
+    height: 272px;
+    background-color: white;
+    -moz-user-select: none;
+    }
+	
+	.msg .x-box-mc {
+    font-size:14px;
+	}
+	#msg-div {
+    position:absolute;
+    left:35%;
+    top:10px;
+    width:250px;
+    z-index:20000;
+	}

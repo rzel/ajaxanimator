@@ -1,0 +1,174 @@
+NOTE: This document has been drafted, edited, abandoned, revived, edited again, abandoned, partially revived, fully revived and then abandoned agin, finished, and converted into a diary
+
+-Interactive Tutorial Framework, takes and parses specifically formatted JSON statements (see docmentation)
+
+-New Interactive Tutorial! Under help section; select "Interactive Tutorial" or something like that.
+
+-Saves with server-side code (for save axml to computer) no longer uses dataurls (which are hard to set file names)
+
+-Redesigned Open/Save Menus
+
+-Redesigned Open from computer dialog
+
+-Redesigned Register dialog (actually it's not a dialog anymore!)
+
+-Less Abtrusive Copy/Paste Error Mesages
+
+-Server-side, friendly error message when upload fails (yay!) (it returns an error animation, that can be easily formatted and animated)
+
+-Scripted option to disable tweening (speed up stuff), GUI, maybe
+
+-Faster Frame Calculation
+
+-CSS Relocation
+
+-Replaced Wz_tooltips with native Ext Quicktips
+
+-Hacked into EXT to fix the keymap bug
+
+-Improved User Management
+
+-Fixed bug which makes the linewidth combobox display incorrectly on more standards-compliant web browsers such as Firefox 3, Opera, Safari 3+ (just about every supported browser other tha FF2 had this bug, but it's fixed)
+
+-New Registration System (just like login)
+
+-Removied Registration Password Security Script
+
+-Removed Unneeded Scripts
+
+-Added Anti-microsoft comment somewhere
+
+-My Windows Died!
+
+-Opera is now a supported browser!!!!!!!!!
+
+-re-enabled super evil google ad popups
+
+-alot of non-critical global variables/functions removed
+
+-New File Format, all functions complete, partially implemented
+
+if you find what i just said to be cryptic, it means there is a new more lightweight, portable, efficient, and it completely restores the state, including current frames, tweens, version, keyframes, total frames, height, width, framerate, and maybe more.
+
+from animationxml.js:
+
+//New fuller, better file format for ajax animator
+
+/* My new proprietary format!
+
+The format divides into 2 parts seperated by ";;". the first is json metadata, and then the actual svg sources
+the svg sources essentially only contain keyframes, as tweens can be dynamcially generated, guided by metadata
+
+
+Example of json section
+{
+"height":272, //Height of canvas
+"width":480, //Width of canvas
+"framerate":12, //framerate
+"tweens":"1,30", //array of tweens, eg. 1,30 would mean frames 2-29 are tweens
+"keyframes":"1,1:30,1", //list of keyframes, a flattened version of keyframeArray
+"fTotal":30, //total frames in animation
+"active":"12,1", //currently selected frame/layer
+"version":2.05 //version for backwards compatibility in future versions
+}
+Example of compressed SVG section:
+<AnimationXML>
+-esg0000
+<svg>
+<rect x="180" y="100" width="130px" height="120px" style="position: absolute;" fill="rgb(153,204,255)" stroke="rgb(0, 0, 0)" stroke-width="1px" id="shape:5a722cac-eef0-124c-d36a-804f761e2a12"></rect>
+</svg>
+-esg0028
+<svg>
+<rect x="320" y="20" width="130px" height="120px" style="position: absolute;" fill="rgb(153,204,255)" stroke="rgb(0, 0, 0)" stroke-width="1px" id="shape:5a722cac-eef0-124c-d36a-804f761e2a12"></rect>
+</svg>
+</AnimationXML>
+
+-esg0028 is a shortened way of doing <svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg><svg></svg>
+
+and it stands for EmptySvG
+
+*/
+
+I also developed this entirely on ubuntu linux 7.04 (gutsy gibbon) instead of microsuck xpee, my standard development environment, and i am much more productive on ubuntu. though it's harder to use svn. if you know a gnome equivalent to tortoise svn, please do tell...
+
+
+and i just discovered my format isn't proprietary since i just posted my specification (: and i have no copyright. i got confused between open and standard
+
+
+IA TUTORIAL V2 FORMAT:
+
+The format of the ajax animator tutorial system is much much simpler now.
+
+
+Basically (it's json) you just start out with 4 nodes, self explanatory, and be careful with the commas (necessary) but jslint.com can help
+
+title: "Interactive Tutorial",
+msg: "Welcome To the Ajax Animator Basic Tutorial V0.3 Alpha<br>Press 'Ok' to continue",
+
+finishTitle: "Finished Tutorial",
+finishMsg: "Congratulations, You have sucessfully completed the ajax animator beginner interactive tutorial version 0.3 Alpha",
+
+
+then there is the content node with stuff inside:
+
+content: [
+{el: "frame1layer1"},
+{el: "CanvasContainer"},
+{el: "fillcolor"}
+]
+
+The sub-objects are, in detail:
+
+{
+el: "frame1layer1", //Element
+anim: "fade" //Type of identification, either fade or (default) highlight, optional.
+msg: "The Stuff In Here Shows Up Next to an arrow pointing at the element"
+}
+
+
+So a basic example is...
+
+var markup = {
+title: "Interactive Tutorial",
+msg: "Welcome To the Ajax Animator Basic Tutorial V0.3 Alpha<br>Press 'Ok' to continue",
+
+finishTitle: "Finished Tutorial",
+finishMsg: "Congratulations, You have sucessfully completed the ajax animator beginner interactive tutorial version 0.3 Alpha",
+
+content: [
+{el: "fillcolor",
+msg: "Press The Fill Color Icon to select object background color"
+},
+{
+el: function(){return Ext.select(".color-99CCFF").elements[0]},
+msg: "Select Color",
+anim: "fade",
+},
+{
+el: function(){return Ext.select(".x-dlg-close").elements[0]},
+msg: "Close Dialog",
+anim: "fade",
+},
+{
+el: "CanvasContainer",
+msg: "Draw Object"
+},
+{
+el: "frame30layer1",
+msg: "Go To Frame 30"
+},
+{
+el: "select",
+msg: "Use 'select' tool"
+},
+{
+el: "CanvasContainer",
+msg: "Move Object"
+},
+{
+el: function(){return mainLayout.getRegion('center').tabs.items[1].textEl.id},
+msg: "Preview Animation",
+anim: "fade"
+}
+]
+}

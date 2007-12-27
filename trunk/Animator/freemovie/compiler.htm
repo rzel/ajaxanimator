@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>
+Standalone AnimationXML Compiler
+</title>
+</head>
+<body>
+<center>
+<b>Standalone AnimationXML Compiler</b>
+</center>
+<hr>
+<script>
+function x(){
+document.getElementById('flashout2').src = "http://localhost/Animator/freemovie/" + flashout.document.body.innerHTML.replace("<pre>","").replace("</pre>","")
+}
+</script>
+<form action="http://localhost/Animator/freemovie/swfgen.php" target="flashout" method="POST">
+<textarea style="width: 80%; height: 200px" name="svg"></textarea>
+<br>
+Width:<input type="text" name="width" value="480">
+Height:<input type="text" name="height" value="272">
+Framerate:<input type="text" name="framerate" value="12">
+<input type="submit" value="compile" onclick="setTimeout('x()',1000)">
+</form>
+<iframe name="flashout" id="flashout" style="width: 80%; height: 30px"></iframe>
+<br>
+<br>
+<iframe name="flashout2" id="flashout2" style="width: 480; height: 272"></iframe>
+<hr>
+(C) Antimatter15 2007
+</body>
+</html>
