@@ -19,6 +19,17 @@ return '<?php ob_start ("ob_gzhandler");header("Content-type: text/html; charset
 function gzCSSStr($ungzipStr){
 return '<?php ob_start ("ob_gzhandler");header("Content-type: text/css; charset: UTF-8"); ?>' . $ungzipStr . '<?php ob_end_flush(); ?>';
 }
+function inlJS($injs){ //insert inline javascript
+return '<script type="text/javascript">'.$injs.'</script>';
+}
+function makeStandalone($a,$b){
+$axH = file_get_contents($a);
+$axH = str_replace("<!--CompilierConfig-->",inlJS("var altStatic = true;"),$axH);
+$axH = str_replace('../','http://ajaxanimator.googlecode.com/svn/trunk/Animator/stable/',$axH);
+echo strlen($axH);
+echo "<br>DoneA";
+writeF($b,$axH);
+}
 
 
 $fh = fopen("../html/ajaxanimator.htm", 'r');
@@ -81,31 +92,32 @@ echo "$outln<br>";
 $jssrc = file_get_contents($output);
 
 
-$gzsrc = "$output-gzip.php";
-writeF($gzsrc, gzJSStr($jssrc));
+//$gzsrc = "$output-gzip.php";
+//writeF($gzsrc, gzJSStr($jssrc));
 
-copy($gzsrc,"../ajaxanimator/full.js.php");
+//copy($gzsrc,"../ajaxanimator/full.js.php");
+
 copy($output,"../ajaxanimator/full.js");
 
 
 $newzfile = $mainHTML;
-$newfile = $mainHTML;
-echo $compiledCSS;
+//$newfile = $mainHTML;
+//echo $compiledCSS;
 
-$newfile = str_replace($cssCode[0],cLink("../ajaxanimator/ajaxanimator-all.css"),$newfile);
+//$newfile = str_replace($cssCode[0],cLink("../ajaxanimator/ajaxanimator-all.css"),$newfile);
 
-$newfile = str_replace($regs[0],jsInc($gzsrc),$newfile);
-
-
-writeF("ajaxanimator-compressed.htm",$newfile);
-
-writeF("../html/ajaxanimator-compressed.htm",str_replace($gzsrc,"../ajaxanimator/full.js",$newfile));
-$newzfile = str_replace($cssCode[0],cLink("../ajaxanimator/ajaxanimator-all.css.php"),$newzfile);
-$newzfile = str_replace($regs[0],jsInc("../ajaxanimator/full.js.php"),$newzfile);
+//$newfile = str_replace($regs[0],jsInc($gzsrc),$newfile);
 
 
+//writeF("ajaxanimator-compressed.htm",$newfile);
 
-writeF("../html/ajaxanimator-compressed-adfree.php",gzHTMLStr($newzfile));
+
+$newzfile = str_replace($cssCode[0],cLink("../ajaxanimator/ajaxanimator-all.css"),$newzfile);
+$newzfile = str_replace($regs[0],jsInc("../ajaxanimator/full.js"),$newzfile);
+
+writeF("../html/ajaxanimator-compiled-adfree.htm",$newzfile);
+
+//writeF("../html/ajaxanimator-compressed-adfree.php",gzHTMLStr($newzfile));
 
 
 
@@ -119,12 +131,16 @@ $newzfile2 = str_replace("<!-- GoogAd4-->", file_get_contents("GoogAd4.txt"),$ne
 
 
 
-writeF("../html/ajaxanimator-compressed.php", gzHTMLStr($newzfile2));
+writeF("../html/ajaxanimator-compiled.htm", $newzfile2);
 
 
-require_once("makeStandalone.php");
+//require_once("makeStandalone.php");
 
-makeStandalone("../html/ajaxanimator-compressed.htm","../html/ajaxanimator-standalone.htm");
-makeStandalone("../html/ajaxanimator-compressed.php","../html/ajaxanimator-standalone.php");
+//makeStandalone("../html/ajaxanimator-compressed.htm","../html/ajaxanimator-standalone.htm");
+//makeStandalone("../html/ajaxanimator-compressed.php","../html/ajaxanimator-standalone.php");
 
+
+makeStandalone("../html/ajaxanimator-compiled.htm","../html/ajaxanimator-compressed.htm");
+
+makeStandalone("../html/ajaxanimator-compiled-adfree.htm","../html/ajaxanimator-compressed-adfree.htm");
 ?>
