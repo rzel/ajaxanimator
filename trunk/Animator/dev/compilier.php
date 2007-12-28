@@ -72,9 +72,9 @@ writeF($cssIn,$mergeCSS);
 $cssOut = "$cssIn-min.css";
 $cssCmd = "java -jar yuicompressor-2.2.5.jar -o $cssOut $cssIn";
 exec($cssCmd,$cssO,$cssE);
-$cssgzsrc = "$cssOut-gzip.php";
-writeF("$cssOut-gzip.php", gzCSSStr(file_get_contents($cssOut)));
-copy($cssgzsrc,"../ajaxanimator/ajaxanimator-all.css.php");
+//$cssgzsrc = "$cssOut-gzip.php";
+//writeF("$cssOut-gzip.php", gzCSSStr(file_get_contents($cssOut)));
+//copy($cssgzsrc,"../ajaxanimator/ajaxanimator-all.css.php");
 copy($cssOut,"../ajaxanimator/ajaxanimator-all.css");
 
 $saveJS="tmp/jsOut.js";
