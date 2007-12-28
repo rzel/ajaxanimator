@@ -11,13 +11,14 @@ string hotlink - use external server, can be either "false", "_local", "_google"
 
 */
 
-var urlParams = Ext.urlDecode(window.location.search.substr(1))
+var urlParams = Ext.urlDecode(window.location.search.substr(1)); //url parameters.. duh.
+
 var staticServerList = { 
 _local: "../", 
 _google: "http://ajaxanimator.googlecode.com/svn/trunk/Animator/stable/",
 _110mb: "http://antimatter15.110mb.com/Animator/" 
 }
-
+ 
 
 var currentServer;
 
