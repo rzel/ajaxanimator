@@ -2,6 +2,10 @@
 
 
 /*
+
+To Hotlink Off google: declare altStatic before parsing of this document
+
+
 URL Config Options:
 string hotlink - use external server, can be either "false", "_local", "_google", or "_110mb"
 
@@ -10,7 +14,7 @@ string hotlink - use external server, can be either "false", "_local", "_google"
 var urlParams = Ext.urlDecode(window.location.search.substr(1))
 var staticServerList = { 
 _local: "../", 
-_google: "http://ajaxanimator.googlecode.com/svn/trunk/Animator/stable",
+_google: "http://ajaxanimator.googlecode.com/svn/trunk/Animator/stable/",
 _110mb: "http://antimatter15.110mb.com/Animator/" 
 }
 
