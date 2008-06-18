@@ -17,6 +17,7 @@ Ax.setDrawXY = function(x,y){
     }
 }
 
+
 Ax.CanvasStatusbar = ({
     defaultText: 'Ready',
     defaultIconCls: '',
