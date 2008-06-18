@@ -23,17 +23,23 @@ echo "Compressing Javascript...";
 
 $js = js_compile("../../../html/ajaxanimator.htm");
 file_put_contents("../../../build/ajaxanimator-all.js",$js);
+exec("dos2unix ../../../build/ajaxanimator-all.js");
 
 echo "Compressing CSS...";
 
 $css = css_compile("../../../html/ajaxanimator.htm");
 file_put_contents("../../../build/ajaxanimator-all.css",$css);
+exec("dos2unix ../../../build/ajaxanimator-all.css");
 
 
 echo "Archiving Release...";
 
 file_put_contents("../../../build/archive/ajaxanimator-all-$v.js",$js);
+exec("dos2unix ../../../build/archive/ajaxanimator-all-$v.js");
+
 file_put_contents("../../../build/archive/ajaxanimator-all-$v.css",$css);
+exec("dos2unix ../../../build/archive/ajaxanimator-all-$v.js");
+
 
 file_put_contents("../../../build/archive/ajaxanimator-$v.htm", //crap! i had a typo here!!!
 str_replace("ajaxanimator-all.css","ajaxanimator-all-$v.css",
