@@ -3,7 +3,18 @@
 var xy = new Ext.Toolbar.TextItem('0, 0');
 
 Ax.setDrawXY = function(x,y){
-Ext.fly(xy.getEl()).update([x,y].join(", "));
+    //a little easter egg, sorta like that SMF one....
+    //.... just.... this'll probably kill performance....
+    //hmm... i wonder if x.toString()+y.toString() is faster than [x,y].join("")
+    //lemme see......
+    //if([x,y].join("") == "1337"){
+    if(x.toString()+y.toString() == "1337"){
+    //ooh.... x.toString()+y.toString() is 3x faster taking roughly 3 seconds
+    //to hapen one million times, versus [x,y].join("") taking 9 seconds
+        Ext.fly(xy.getEl()).update("leet");
+    }else{
+        Ext.fly(xy.getEl()).update([x,y].join(", "));
+    }
 }
 
 Ax.CanvasStatusbar = ({
