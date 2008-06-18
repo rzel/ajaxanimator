@@ -1,0 +1,89 @@
+	/*General Button Styling*/
+	
+	DIV.toolboxButton { /*The icon thingy*/
+	display: block;
+	margin-left: auto;
+  margin-right: auto;
+  margin-top: 3px;
+	top: 3px;
+  background-repeat: no-repeat; /*no repeat*/
+	left: 3px;
+	height: 16px; /*icon size (of the icon)*/
+	width: 16px; /*can you tell that i'm commenting this only because of the ohloh page saying i'm one of the lowest 10%?*/
+	}
+  /*end div.toolboxbutton*/
+  
+	DIV.toolboxItem { /*the element surrounding the icon*/
+	background-repeat: no-repeat;
+	width: 22px;
+	height: 22px;
+	overflow: hidden; 
+	background-image: url(../img/icon/buttonSprite.png); /*the magical sprite*/
+	background-repeat: no-repeat;
+	background-position: 44px 0px; /*by default, set to idle (aka, blank)*/
+	} /*can you tell that i'm commenting this only because of the ohloh page saying i'm one of the lowest 10%?*/
+
+  /*Button States*/
+  DIV.tbx_sel {
+	background-position: 0px 0px; /*alter css sprite to first position*/
+	}
+	DIV.tbx_ovr {
+	background-position: 0px -22px; /*alter css sprite to second position*/
+	}
+	DIV.tbx_idl {
+	background-position: 0px -44px; /*push the css sprite soo far back that it shows nothing*/
+	}
+
+  /*Button Icons*/
+	div.tx_select {
+		background-image: url(../img/icon/select.gif)
+	}
+	
+	div.tx_rectangle {
+		background-image: url(../img/icon/rectangle.gif)
+	}
+	
+	div.tx_roundrect {
+		background-image: url(../img/icon/roundrect.gif)
+	}
+	
+	div.tx_circle {
+		background-image: url(../img/icon/circle.gif)
+	}
+	
+	div.tx_line {
+		background-image: url(../img/icon/line.gif)
+	}
+	
+	div.tx_path {
+		background-image: url(../img/icon/path.gif)
+	}
+	
+	div.tx_polygon {
+		background-image: url(../img/icon/polygon.gif)
+	}
+	
+	div.tx_text {
+		background-image: url(../img/icon/text.gif)
+	}
+	
+	div.tx_image {
+		background-image: url(../img/icon/image.gif)
+	}
+	
+	div.tx_shape {
+		background-image: url(../img/icon/shape.gif)
+	}
+	
+	div.tx_reset {
+		background-image: url(../img/icon/reset.gif)
+	}
+	
+	div.tx_delete {
+		background-image: url(../img/icon/delete.gif)
+	}
+
+/*start all those random comments*/
+
+/*can you tell that i'm commenting this only because of the ohloh page saying i'm one of the lowest 10%?*/
+/*can you tell that i'm commenting this only because of the ohloh page saying i'm one of the lowest 10%?*/

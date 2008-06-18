@@ -1,0 +1,42 @@
+/*Terrific Timeline Turd (awesome alliteration)*/
+
+td.frame {
+  text-align: center;
+  height: 19px;
+  width: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  border-right: 1px solid #D0D0D0;
+  border-bottom: 1px solid #D0D0D0;
+  font-size: small;
+  vertical-align: middle;
+}
+
+div.frame {
+  height: 19px;
+  width: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.fselect_mask {
+  background-color: silver;
+  opacity: .35;
+  filter: alpha(opacity=35);
+  -moz-opacity: 0.35;
+  height: 21px;
+  width: 20px;
+  position: absolute;
+}
+
+td.keyframe {
+  background-color: #a3bae9;
+}
+
+td.tween {
+  background-color: #DFE8F6;
+}
+
+#timeline_core {
+  cursor: default;
+}

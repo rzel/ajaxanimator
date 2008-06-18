@@ -1,0 +1,99 @@
+
+	
+	/*ToastWindow*/	
+	
+	.error {background-image:url(../img/silk/exclamation.png);}
+	.information {background-image:url(../img/silk/information.png) ! important;}
+	
+  a:link, a:visited, a:active {
+    color: #0464BB;
+    text-decoration:none;
+  }
+  a:hover {
+    color: #1C417C;
+    text-decoration: underline;
+  }
+
+	/*Loading Indicator, from extjs 2.1 docs*/
+	
+	body {
+    font: normal 12px verdana, arial, tahoma;
+	}
+	
+	html, body {
+    margin:0;
+    padding:0;
+    border:0 none;
+    overflow:hidden;
+    height:100%;
+    width:100%;
+	}
+
+  #loading-msg {
+    font: normal 10px arial,tahoma,sans-serif;
+  }
+	
+	#loading-mask{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    z-index:20000;
+    background-color:white;
+	}
+	
+	#loading{
+    position:absolute;
+    left:45%;
+    top:40%;
+    padding:2px;
+    z-index:20001;
+    height:auto;
+	}
+	
+	#loading img {
+    margin-bottom:5px;
+	}
+	
+	#loading .loading-indicator{
+	background:white;
+	color:#555;
+	font:bold 13px tahoma,arial,helvetica;
+	padding:10px;
+	margin:0;
+    text-align:center;
+    height:auto;
+	}
+	
+	/*Those cool gray boxes that fall from the sky*/
+	.msg .x-box-mc {
+    font-size:14px;
+	}
+	#msg-div {
+    position:absolute;
+    left:35%;
+    top:10px;
+    width:250px;
+    z-index:20000;
+	}
+
+	
+  div.canvas_container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding-top: 3%;
+  }
+  
+  div.canvas {
+    width: 250px;
+    height: 100px;
+    background-color: #FFFFFF;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+	/*Ext bug fix that causes tabPosition:bottom oriented tab icons to fail*/
+	/*from http://extjs.com/forum/showthread.php?p=146135#post146135*/
+	.x-tab-panel-footer .x-tab-strip .x-tab-with-icon .x-tab-right{padding-left:0px;}
