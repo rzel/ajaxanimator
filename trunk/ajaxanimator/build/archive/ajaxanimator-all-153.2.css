@@ -1,0 +1,480 @@
+
+  /* CSS File: ../css/Ext.ux.grid.CellActions.css */  
+ /** vim: ts=4:sw=4:nu:fdc=4:nospell 
+ *
+ * Ext.ux.grid.CellActions.css 
+ *
+ * Style sheets for Grid CellActions Plugin
+ *
+ * @author   Ing. Jozef Sakáloš
+ * @date     27. March 2008
+ * @version  $Id: Ext.ux.grid.CellActions.css 105 2008-03-27 19:57:00Z jozo $
+ *
+ * @license Ext.ux.grid.CellActions.css is licensed under the terms of
+ * the Open Source LGPL 3.0 license.  Commercial use is permitted to the extent
+ * that the code/component(s) do NOT become part of another Open Source or Commercially
+ * licensed development library or toolkit without explicit permission.
+ * 
+ * License details: http://www.gnu.org/licenses/lgpl.html
+ */
+
+.ux-cell-value {
+	position:relative;
+	zoom:1;
+}
+.ux-cell-actions {
+	position:absolute;
+	right:0;
+	top:-2px;
+}
+.ux-cell-actions-left {
+	left:0;
+	top:-2px;
+}
+.ux-cell-action {
+	width:16px;
+	height:16px;
+	float:left;
+	cursor:pointer;
+	margin: 0 0 0 4px;
+}
+.ux-cell-actions-left .ux-cell-action {
+	margin: 0 4px 0 0;
+}
+
+/* eof */
+
+  /* CSS File: ../css/Ext.ux.ColorField.css */  
+ .x-form-field-wrap .x-form-color-trigger {
+	background:transparent url(../img/icon/color-trigger.gif) no-repeat 0 0;
+    cursor:pointer; 
+}
+  /* CSS File: ../css/ajaxanimator.css */  
+ 		/*Toolbox*/
+	
+	IMG.toolboxItem {
+	display: block;
+	margin-left: auto;
+  margin-right: auto;
+  padding-top: 3px;
+	top: 3px;
+	left: 3px;
+	}
+	DIV.toolboxItem {
+	background-repeat: no-repeat;
+	width: 22px;
+	height: 22px;
+	overflow: hidden;
+	background-image: url(../img/icon/buttonSprite.png);
+	background-repeat: no-repeat;
+	background-position: 44px 0px; 
+	}
+
+
+	DIV.tbx_sel {
+	background-position: 0px 0px; 
+	}
+	DIV.tbx_ovr {
+	background-position: 0px -22px; 
+	}
+	DIV.tbx_idl {
+	background-position: 0px -44px; 
+	}
+
+	
+	/*ToastWindow*/	
+	
+	.error {background-image:url(../img/silk/exclamation.png);}
+	.information {background-image:url(../img/silk/information.png) ! important;}
+	
+  a:link, a:visited, a:active {
+    color: #0464BB;
+    text-decoration:none;
+  }
+  a:hover {
+    color: #1C417C;
+    text-decoration: underline;
+  }
+
+	/*Loading Indicator, from extjs 2.1 docs*/
+	
+	body {
+    font: normal 12px verdana, arial, tahoma;
+	}
+	
+	html, body {
+    margin:0;
+    padding:0;
+    border:0 none;
+    overflow:hidden;
+    height:100%;
+    width:100%;
+	}
+
+  #loading-msg {
+    font: normal 10px arial,tahoma,sans-serif;
+  }
+	
+	#loading-mask{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    z-index:20000;
+    background-color:white;
+	}
+	
+	#loading{
+    position:absolute;
+    left:45%;
+    top:40%;
+    padding:2px;
+    z-index:20001;
+    height:auto;
+	}
+	
+	#loading img {
+    margin-bottom:5px;
+	}
+	
+	#loading .loading-indicator{
+	background:white;
+	color:#555;
+	font:bold 13px tahoma,arial,helvetica;
+	padding:10px;
+	margin:0;
+    text-align:center;
+    height:auto;
+	}
+	
+	/*Those cool gray boxes that fall from the sky*/
+	.msg .x-box-mc {
+    font-size:14px;
+	}
+	#msg-div {
+    position:absolute;
+    left:35%;
+    top:10px;
+    width:250px;
+    z-index:20000;
+	}
+
+	
+  div.canvas_container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding-top: 3%;
+  }
+  
+  div.canvas {
+    width: 250px;
+    height: 100px;
+    background-color: #FFFFFF;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+	/*Ext bug fix that causes tabPosition:bottom oriented tab icons to fail*/
+	/*from http://extjs.com/forum/showthread.php?p=146135#post146135*/
+	.x-tab-panel-footer .x-tab-strip .x-tab-with-icon .x-tab-right{padding-left:0px;}
+
+  /* CSS File: ../css/icons.css */  
+ /*Icons for the Accordian*/
+.misc_panel_icon {
+background-image: url(../img/silk/application_form.png)
+}
+.history_icon {
+background-image: url(../img/silk/clock.png)
+}
+.clipboard_icon {
+background-image: url(../img/silk/paste_plain.png)
+}
+.library_icon {
+background-image: url(../img/silk/book.png)
+}
+.misc_icon {
+background-image: url(../img/silk/tux.png)
+}
+.user_icon {
+background-image: url(../img/silk/user.png)
+}
+/*Icons for the center panel titles*/
+.canvas_icon {
+background-image: url(../img/silk/paintbrush.png)
+}
+.preview_icon {
+background-image: url(../img/silk/zoom.png)
+}
+.animations_icon {
+background-image: url(../img/silk/control_play.png)
+}
+/*icons for center panel top toolbar*/
+button.hide_timeline {
+background-image: url(../img/silk2/film_eject.png)
+}
+
+/* Icons for the animation browser */
+
+.player_icon {
+background-image: url(../img/silk/control_play.png)
+}
+.browse_icon {
+background-image: url(../img/silk/folder_go.png)
+}
+
+.play_icon {
+background-image: url(../img/silk/control_play_blue.png)
+}
+.ff_icon {
+background-image: url(../img/silk/control_fastforward_blue.png)
+}
+.fr_icon {
+background-image: url(../img/silk/control_rewind_blue.png)
+}
+.stop_icon {
+background-image: url(../img/silk/control_stop_blue.png)
+}
+
+
+/*icons for random panels */
+
+.app_settings {
+background-image: url(../img/silk/application_form_edit.png)
+}
+
+  /* CSS File: ../css/timeline.css */  
+ /*Terrific Timeline Turd (awesome alliteration)*/
+
+td.frame {
+  text-align: center;
+  height: 19px;
+  width: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  border-right: 1px solid #D0D0D0;
+  border-bottom: 1px solid #D0D0D0;
+  font-size: small;
+  vertical-align: middle;
+}
+
+div.frame {
+  height: 19px;
+  width: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.fselect_mask {
+  background-color: silver;
+  opacity: .35;
+  filter: alpha(opacity=35);
+  -moz-opacity: 0.35;
+  height: 21px;
+  width: 20px;
+  position: absolute;
+}
+
+td.keyframe {
+  background-color: #a3bae9;
+}
+
+td.tween {
+  background-color: #DFE8F6;
+}
+
+#timeline_core {
+  cursor: default;
+}
+
+  /* CSS File: ../css/toolbar.css */  
+ /*
+Likely a very very very huge file.
+
+All the icons in the toolbar (basically the majority of them)
+*/
+
+
+/*---------------File Menu---------------*/
+.tb_new {
+background-image: url(../img/silk/page_add.png)
+}
+.tb_open {
+background-image: url(../img/silk/folder_go.png)
+}
+.tb_save {
+/*background-image: url(../img/silk/drive_go.png)*/
+background-image: url(../img/silk/disk.png)
+}
+.tb_publish {
+background-image: url(../img/silk/page_white_flash.png)
+}
+
+.tb_comp {
+background-image: url(../img/silk/computer_go.png)
+}
+.tb_server {
+background-image: url(../img/silk/drive_web.png)
+}
+.tb_url {
+background-image: url(../img/silk/world_link.png)
+}
+.tb_text {
+background-image: url(../img/silk/textfield.png)
+}
+
+/*---------------Edit Menu---------------*/
+.tb_undo {
+background-image: url(../img/silk/arrow_undo.png)
+}
+.tb_redo {
+background-image: url(../img/silk/arrow_redo.png)
+}
+.tb_cut {
+background-image: url(../img/silk/cut_red.png)
+}
+.tb_copy {
+background-image: url(../img/silk/page_copy.png)
+}
+.tb_paste {
+background-image: url(../img/silk/page_paste.png)
+}
+.tb_delete {
+background-image: url(../img/silk/delete.png)
+}
+/*---------------View Menu---------------*/
+.tb_animation {
+background-image: url(../img/silk/page_white_flash.png)
+}
+.tb_theme {
+background-image: url(../img/silk2/theme.png)
+}
+/*---------------Tools Menu---------------*/
+.tb_color {
+background-image: url(../img/silk/color_wheel.png)
+}
+.tb_tools {
+background-image: url(../img/silk/paintbrush.png)
+}
+.tb_debug {
+background-image: url(../img/silk/bug_go.png)
+}
+.tb_script {
+background-image: url(../img/silk/script_code_red.png)
+}
+.tb_plugin_conf {
+background-image: url(../img/silk/plugin_edit.png)
+}
+.tb_benchmark {
+background-image: url(../img/silk/report.png)
+}
+.tb_reload {
+background-image: url(../img/silk/arrow_refresh.png)
+}
+.tb_preload {
+background-image: url(../img/silk/hourglass.png)
+}
+
+/*---------------Timeline Menu---------------*/
+
+
+.tb_clearframe {
+background-image: url(../img/silk/page_delete.png)
+}
+.tb_newlayer {
+background-image: url(../img/silk/add.png)
+}
+/*
+.tb_reload {
+See Tools Menu
+}
+*/
+.tb_addkeyframe {
+background-image: url(../img/silk/key_add.png)
+}
+.tb_insertframe {
+background-image: url(../img/silk/page_add.png)
+}
+.tb_setlast {
+background-image: url(../img/silk/resultset_last.png)
+}
+.tb_purge_empty {
+background-image: url(../img/silk/bin.png)
+}
+/*---------------Animation Menu---------------*/
+.tb_play {
+background-image: url(../img/silk/control_play.png)
+}
+.tb_pause {
+background-image: url(../img/silk/control_pause.png)
+}
+.tb_nf { /*next frame */
+background-image: url(../img/silk/control_fastforward.png)
+}
+.tb_pf { /*previeous frame */
+background-image: url(../img/silk/control_rewind.png)
+}
+.tb_last {
+background-image: url(../img/silk/control_end.png)
+}
+.tb_first {
+background-image: url(../img/silk/control_start.png)
+}
+.tb_recalculate {
+background-image: url(../img/silk/database_refresh.png)
+}
+/*---------------Plugin Menu---------------*/
+
+.tb_plugin {
+background-image: url(../img/silk/plugin.png)
+}
+
+.tb_plugin_add {
+background-image: url(../img/silk/package_add.png) /*Uses package versus plugin because it is more destinct*/
+}
+
+/*---------------User Menu---------------*/
+.tb_login {
+background-image: url(../img/silk/key_go.png)
+}
+.tb_register {
+background-image: url(../img/silk/user_add.png)
+}
+.tb_logout {
+background-image: url(../img/silk/door_out.png)
+}
+.tb_browse {
+background-image: url(../img/silk/folder_explore.png)
+}
+.tb_profile {
+background-image: url(../img/silk/vcard.png)
+}
+/*---------------Help Menu---------------*/
+.tb_keyboard {
+background-image: url(../img/silk/keyboard.png)
+}
+.tb_about {
+background-image: url(../img/silk/information.png)
+}
+.tb_comment {
+background-image: url(../img/silk/comments.png)
+}
+.tb_bug {
+background-image: url(../img/silk/bug.png)
+}
+.tb_docs {
+background-image: url(../img/silk/book.png)
+}
+.tb_info {
+background-image: url(../img/silk/bricks.png)
+}
+.tb_tutorial {
+background-image: url(../img/silk/lightbulb.png)
+}
+.tb_donate {
+background-image: url(../img/silk/money.png)
+}
+
+
+
