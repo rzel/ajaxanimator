@@ -208,6 +208,8 @@ Ax.toKeyframe = function(frame,layer){
   if(Ax.layers[layer].keyframes.indexOf(frame) == -1){
     Ax.layers[layer].keyframes.push(frame);
   }
+  
+  Ax.tween(Ax.largest_nonempty(frame,layer),frame,layer)
   return Ax.toKeyframe_core(frame,layer)
 }
 
@@ -220,8 +222,17 @@ Ax.toKeyframe_core = function(frame,layer){
 }
 
 //there is no non-core Ax.toTween as it is supposedly automatic
+//scratch that.... idk
 Ax.toTween_core = function(frame,layer){
   Ax.frameClass(frame,layer,"tween");
+}
+
+Ax.toTween = function(frame,layer){
+  if(Ax.layers[layer].tweens.indexOf(frame) == -1){
+    Ax.layers[layer].tweens.push(frame);
+  }
+  
+  return Ax.toTween_core(frame,layer)
 }
 
 Ax.toBlank_core = function(frame,layer){

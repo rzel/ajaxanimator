@@ -25,6 +25,7 @@ Ax.loadframe = function(frame,layer){
     Ax.loadShapes(Ax.canvas_storage[layer][frame])
     Ax.autodiff();
   }else{
+    Ax.canvas.unselect();
     //Ax.canvas.renderer.removeAll();
     return false;
   }
