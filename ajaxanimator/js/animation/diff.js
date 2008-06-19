@@ -7,10 +7,13 @@ Ax.autodiff = function(){
   if(Ax.tcurrent.layer && Ax.tcurrent.frame){ //..only if the current frame *exists*
     Ax.dumpframe(); //dump current canvas to current layer
     //check for diff
-    if(Ax.diff(Ax.tcurrent.frame-1,Ax.tcurrent.frame,Ax.tcurrent.layer) != true){
-      Ax.toKeyframe(Ax.tcurrent.frame,Ax.tcurrent.layer)
+    if(Ax.diff(Ax.largest_nonempty(Ax.tcurrent.frame,Ax.tcurrent.layer),Ax.tcurrent.frame,Ax.tcurrent.layer) != true){
+      if(Ax.layers[Ax.tcurrent.layer].tweens.indexOf(Ax.tcurrent.frame) == -1){
+        Ax.toKeyframe(Ax.tcurrent.frame,Ax.tcurrent.layer)
+      }
     }else{
-      Ax.toBlank_core(Ax.tcurrent.frame,Ax.tcurrent.layer)
+      //Ax.toBlank_core(Ax.tcurrent.frame,Ax.tcurrent.layer)
+      delete Ax.canvas_storage[Ax.tcurrent.layer][Ax.tcurrent.frame];
     }
   }
 }
@@ -18,8 +21,23 @@ Ax.autodiff = function(){
 Ax.diff = function(frame1,frame2,layer){
   //takes two frame identifier numbers and a layer as arguments
   //returns true or false, true being identical, false being different
+  
+
   return Ax.diff_core(Ax.canvas_storage[layer][frame1],Ax.canvas_storage[layer][frame2])
 }
+
+Ax.largest_nonempty = function(frame,layer){
+  //searches for largest non-empty frame that is less than the frame
+  var nonempty = [];
+    for(var i in Ax.canvas_storage[layer]){
+      if(parseInt(i) < frame && Ax.layers[layer].tweens.indexOf(frame) == -1){
+        nonempty.push(parseInt(i))
+      }
+  }
+  return nonempty.sort(function(a,b){return b - a})[0]
+}
+
+
 
 Ax.diff_core = function(shapedump1,shapedump2){
   //It takes two arguments, one with the shape dump of the first frame
