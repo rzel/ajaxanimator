@@ -34,7 +34,7 @@ Ax.largest_nonempty = function(frame,layer){
         nonempty.push(parseInt(i))
       }
   }
-  return nonempty.sort(function(a,b){return b - a})[0]
+  return nonempty.sort(function(a,b){return b - a})[0];//sort descending and pull the first result (largest)
 }
 
 
