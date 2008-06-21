@@ -175,6 +175,7 @@ Ax.insertFrame = function(frame,layer,count){
   for(var i = frame; i < Ax.tstat.frames; i++){
     Ax.renderFrame(i,layer)
   }
+  Ax.addFrame()
 }
 
 Ax.renderFrame = function(frame,layer){
