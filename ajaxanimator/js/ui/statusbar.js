@@ -9,6 +9,7 @@ Ax.setDrawXY = function(x,y){
     //lemme see......
     //if([x,y].join("") == "1337"){
     if(x.toString()+y.toString() == "1337"){
+    //too bad you'll never be able to know if it's [1,337],[13,37], or [133,7]
     //ooh.... x.toString()+y.toString() is 3x faster taking roughly 3 seconds
     //to hapen one million times, versus [x,y].join("") taking 9 seconds
         Ext.fly(xy.getEl()).update("leet");
