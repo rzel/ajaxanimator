@@ -161,7 +161,9 @@ Ax.insertFrame = function(frame,layer,count){
   if(!frame){frame = Ax.tcurrent.frame}
   if(!layer){layer = Ax.tcurrent.layer}
   if(!count){count = 1}
-
+  
+  Ax.addFrame()
+  
   for(var i = 0; i < Ax.layers[layer].keyframes.length; i++){
     if(Ax.layers[layer].keyframes[i] > frame){
       Ax.layers[layer].keyframes[i]+=count
@@ -175,7 +177,7 @@ Ax.insertFrame = function(frame,layer,count){
   for(var i = frame; i < Ax.tstat.frames; i++){
     Ax.renderFrame(i,layer)
   }
-  Ax.addFrame()
+
 }
 
 Ax.renderFrame = function(frame,layer){
