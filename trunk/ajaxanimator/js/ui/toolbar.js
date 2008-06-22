@@ -43,6 +43,7 @@ Ax.MainToolbar = [
   {text: "Plugin Settings", iconCls: "tb_plugin_conf"},
   {text: "Reload Application", iconCls: "tb_reload"},
   {text: "Preload Icons", iconCls: "tb_preload", handler: function(){Ax.preload()}},
+  {text: "Empty Tween Cache", iconCls: "tb_purge_empty", handler: function(){Ax.empty_tween_cache()}},
   {text: "Benchmark", iconCls: "tb_benchmark"}
 ]},
 {text:"Timeline", menu: [
@@ -83,7 +84,7 @@ Ax.MainToolbar = [
   {text: "Key Shortcuts", iconCls: "tb_keyboard", handler: function(){Ax.keyGuide()}},
   {text: "Manual", iconCls: "tb_docs", handler: function(){Ax.loadManual()}},
   {text: "FAQ", iconCls: "tb_docs", handler: function(){Ax.loadFAQ()}},
-  {text: "Bug Reports", iconCls: "tb_bug", handler: function(){throaw("Bug Report")}},
+  {text: "Bug Reports", iconCls: "tb_bug", handler: function(){Ax.BugReport()}},
   {text: "Comments", iconCls: "tb_comment"},
   {text: "Donate", iconCls: "tb_donate"},
   {text: "Interactive Tutorials", iconCls: "tb_tutorial", menu: [
