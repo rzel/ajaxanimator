@@ -195,10 +195,10 @@ Ax.renderFrame = function(frame,layer){
 }
 
 Ax.frameType = function(frame,layer){
-  if(Ax.layers[layer].keyframes.indexOf(frame) != -1){
+  if(Ax.isKeyframe(frame,layer) == true){
     return "keyframe"
   }
-  if(Ax.layers[layer].tweens.indexOf(frame) != -1){
+  if(Ax.isTween(frame,layer) == true){
     return "tween"
   }
   return "blank"
@@ -207,17 +207,36 @@ Ax.frameType = function(frame,layer){
 Ax.toKeyframe = function(frame,layer){
   if(!frame){frame = Ax.tcurrent.frame}
   if(!layer){layer = Ax.tcurrent.layer}
+
   
-  if(Ax.layers[layer].keyframes.indexOf(frame) == -1){
+  if(!Ax.isKeyframe(frame,layer)){
     Ax.layers[layer].keyframes.push(frame);
   }
   
-  Ax.tween(Ax.largest_nonempty(frame,layer),frame,layer)
+  Ax.tween(Ax.largest_nonempty(frame,layer),frame,layer); //tween from previous keyframe to now
+  
+  if(Ax.isTween(frame,layer)){
+    Ax.layers[layer].tweens.splice(Ax.layers[layer].tweens.indexOf(frame),1)
+    Ax.tween(Ax.smallest_nonempty(frame,layer),frame,layer); //tween from now to next
+  }
+  
   return Ax.toKeyframe_core(frame,layer)
 }
 
 Ax.frameClass = function(frame,layer,frameclass){
   Ax.getFrame(frame,layer).dom.className = "frame "+frameclass;
+}
+
+Ax.isTween = function(frame,layer){
+  if(!frame){frame = Ax.tcurrent.frame}
+  if(!layer){layer = Ax.tcurrent.layer}
+  return (Ax.layers[layer].tweens.indexOf(frame) != -1)
+}
+
+Ax.isKeyframe = function(frame,layer){
+  if(!frame){frame = Ax.tcurrent.frame}
+  if(!layer){layer = Ax.tcurrent.layer}
+  return (Ax.layers[layer].keyframes.indexOf(frame)!= -1)
 }
 
 Ax.toKeyframe_core = function(frame,layer){
