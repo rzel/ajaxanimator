@@ -4,6 +4,8 @@ Ax.canvas_storage = {"Layer 1":{"1":
 
 }}; //Initial data.
 
+
+
 Ax.tween_cache = {}; //the place where tweens are stored, raher than the canvases. this is merely a cache as
 //no information here is really important and can be generated again from the canvas storage. simply,
 //to reduce memory usage, you can clear this
