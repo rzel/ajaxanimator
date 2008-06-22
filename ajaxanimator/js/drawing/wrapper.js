@@ -118,12 +118,12 @@ Ax.setTool = function(tool){
   
 }
 
-Ax.loadShapes = function(shapes){
+Ax.loadShapes = function(shapes,noattachlistener){
   if(typeof shapes == typeof "antimatter15isawesome"){
       shapes = Ext.util.JSON.decode(shapes);
   }
   for(var i = 0; i < shapes.length; i++){
-    Ax.loadShape(shapes[i]);
+    Ax.loadShape(shapes[i],noattachlistener);
   }
 }
 
