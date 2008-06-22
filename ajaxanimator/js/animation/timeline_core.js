@@ -161,6 +161,7 @@ Ax.insertFrame = function(frame,layer,count){
   if(!frame){frame = Ax.tcurrent.frame}
   if(!layer){layer = Ax.tcurrent.layer}
   if(!count){count = 1}
+
   
   Ax.addFrame()
   
@@ -177,7 +178,10 @@ Ax.insertFrame = function(frame,layer,count){
   for(var i = frame; i < Ax.tstat.frames; i++){
     Ax.renderFrame(i,layer)
   }
-
+  
+  if(Ax.isTween(frame,layer)){
+    Ax.tween(Ax.largest_nonempty(frame,layer),Ax.smallest_nonempty(frame,layer),layer); //tween from previous keyframe to now
+  }
 }
 
 Ax.renderFrame = function(frame,layer){
@@ -217,8 +221,10 @@ Ax.toKeyframe = function(frame,layer){
   
   if(Ax.isTween(frame,layer)){
     Ax.layers[layer].tweens.splice(Ax.layers[layer].tweens.indexOf(frame),1)
+    delete Ax.tween_cache[layer][frame]; //save memory.
     Ax.tween(Ax.smallest_nonempty(frame,layer),frame,layer); //tween from now to next
   }
+  
   
   return Ax.toKeyframe_core(frame,layer)
 }

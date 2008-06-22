@@ -29,7 +29,7 @@ Ax.loadframe = function(frame,layer){
   }else{
     if(Ax.isTween(frame,layer)){
       if(!Ax.tween_cache[layer][frame]){
-        Ax.tween_cache[layer][frame] = Ax.getSFTween(Ax.largest_nonempty(frame,layer),Ax.smallest_nonempty(frame,layer),layer)
+        Ax.tween_cache[layer][frame] = Ax.getSFTween(frame,Ax.largest_nonempty(frame,layer),Ax.smallest_nonempty(frame,layer),layer)
       }
       Ax.loadShapes(Ax.tween_cache[layer][frame])
       
