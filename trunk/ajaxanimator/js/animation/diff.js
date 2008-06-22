@@ -30,7 +30,7 @@ Ax.largest_nonempty = function(frame,layer){
   //searches for largest non-empty frame that is less than the frame
   var nonempty = [];
     for(var i in Ax.canvas_storage[layer]){
-      if(parseInt(i) < frame && Ax.layers[layer].tweens.indexOf(frame) == -1){
+      if(parseInt(i) < frame ){
         nonempty.push(parseInt(i))
       }
   }
@@ -43,7 +43,7 @@ Ax.smallest_nonempty = function(frame,layer){
     //searches for largest non-empty frame that is less than the frame
   var nonempty = [];
     for(var i in Ax.canvas_storage[layer]){
-      if(parseInt(i) > frame && Ax.layers[layer].tweens.indexOf(frame) == -1){
+      if(parseInt(i) > frame){
         nonempty.push(parseInt(i))
       }
   }

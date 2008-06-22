@@ -28,11 +28,13 @@ Ax.loadframe = function(frame,layer){
     Ax.autodiff();
   }else{
     if(Ax.isTween(frame,layer)){
+      if(!Ax.tween_cache[layer]){Ax.tween_cache[layer] = {}}; //make sure the cache exists
       if(!Ax.tween_cache[layer][frame]){
         Ax.tween_cache[layer][frame] = Ax.getSFTween(frame,Ax.largest_nonempty(frame,layer),Ax.smallest_nonempty(frame,layer),layer)
       }
+      Ax.canvas.unselect();
+      Ax.canvas.renderer.removeAll();
       Ax.loadShapes(Ax.tween_cache[layer][frame])
-      
     }
     Ax.canvas.unselect();
     //Ax.canvas.renderer.removeAll();
