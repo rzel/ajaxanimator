@@ -11,8 +11,10 @@ Ax.dumpframe = function(frame,layer){
   //Ax.canvas.unselect();
   var shapedump =  Ax.dumpshapes();
   if(shapedump.length > 0){
-    Ax.canvas_storage[layer][frame] = shapedump;
-    return Ax.canvas_storage[layer][frame];
+    if(!Ax.isTween(frame,layer)){
+      Ax.canvas_storage[layer][frame] = shapedump;
+    }
+    return shapedump;
   }
   return false;
 
@@ -25,6 +27,13 @@ Ax.loadframe = function(frame,layer){
     Ax.loadShapes(Ax.canvas_storage[layer][frame])
     Ax.autodiff();
   }else{
+    if(Ax.isTween(frame,layer)){
+      if(!Ax.tween_cache[layer][frame]){
+        Ax.tween_cache[layer][frame] = Ax.getSFTween(Ax.largest_nonempty(frame,layer),Ax.smallest_nonempty(frame,layer),layer)
+      }
+      Ax.loadShapes(Ax.tween_cache[layer][frame])
+      
+    }
     Ax.canvas.unselect();
     //Ax.canvas.renderer.removeAll();
     return false;

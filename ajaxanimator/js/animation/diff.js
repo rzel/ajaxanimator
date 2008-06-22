@@ -37,7 +37,18 @@ Ax.largest_nonempty = function(frame,layer){
   return nonempty.sort(function(a,b){return b - a})[0];//sort descending and pull the first result (largest)
 }
 
-
+Ax.smallest_nonempty = function(frame,layer){
+  //i'm just gonna copy from largest_nonempty and be too lazy to change the comments
+  //so... yeah.... crappy documentation...
+    //searches for largest non-empty frame that is less than the frame
+  var nonempty = [];
+    for(var i in Ax.canvas_storage[layer]){
+      if(parseInt(i) > frame && Ax.layers[layer].tweens.indexOf(frame) == -1){
+        nonempty.push(parseInt(i))
+      }
+  }
+  return nonempty.sort(function(a,b){return b - a})[0];//sort descending and pull the first result (largest)
+}
 
 Ax.diff_core = function(shapedump1,shapedump2){
   //It takes two arguments, one with the shape dump of the first frame
