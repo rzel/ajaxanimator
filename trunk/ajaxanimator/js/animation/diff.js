@@ -8,10 +8,9 @@ Ax.autodiff = function(){
   if(Ax.tcurrent.layer && Ax.tcurrent.frame){ //..only if the current frame *exists*
     Ax.dumpframe(); //dump current canvas to current layer
     //check for diff
-    if(Ax.diff(Ax.largest_nonempty(Ax.tcurrent.frame,Ax.tcurrent.layer),Ax.tcurrent.frame,Ax.tcurrent.layer) != true){
-      if(Ax.layers[Ax.tcurrent.layer].tweens.indexOf(Ax.tcurrent.frame) == -1){
+    if(Ax.diff(Ax.largest_nonempty(Ax.tcurrent.frame,Ax.tcurrent.layer),Ax.tcurrent.frame,Ax.tcurrent.layer) != true &&
+      Ax.layers[Ax.tcurrent.layer].tweens.indexOf(Ax.tcurrent.frame) == -1){
         Ax.toKeyframe(Ax.tcurrent.frame,Ax.tcurrent.layer)
-      }
     }else{
       //Ax.toBlank_core(Ax.tcurrent.frame,Ax.tcurrent.layer)
       delete Ax.canvas_storage[Ax.tcurrent.layer][Ax.tcurrent.frame];
