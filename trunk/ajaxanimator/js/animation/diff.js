@@ -1,6 +1,7 @@
 //This is a file that is virtually the core of the tweening engine
 //not really. it just detects what frames are keyframes. automatically.
 
+Ax.diff_exclude = ["id"]
 
 Ax.autodiff = function(){
   //save canvas state
@@ -66,7 +67,7 @@ Ax.diff_core = function(shapedump1,shapedump2){
     for(var i = 0; i < shapedump1.length; i++){
       for(var x in shapedump2[i]){
         //console.log(i,shapedump1[i].type,x,shapedump2[i][x],shapedump1[i][x])
-        if(shapedump2[i][x] != shapedump1[i][x]){
+        if(Ax.diff_exclude.indexOf(x) == -1 && shapedump2[i][x] != shapedump1[i][x]){
           return false
         }
       }
