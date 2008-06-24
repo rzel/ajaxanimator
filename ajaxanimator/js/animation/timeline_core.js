@@ -133,6 +133,8 @@ Ax.getFrame = function(frame,layer){
 }
 
 Ax.selectFrame = function(frame,layer){
+  if(frame < 1){return false;}; //OMG!! PONIES!
+  
   Ax.autodiff(); //save current state, etc.
     
   //Set cursor

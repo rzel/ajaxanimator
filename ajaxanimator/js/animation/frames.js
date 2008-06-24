@@ -26,19 +26,22 @@ Ax.loadframe = function(frame,layer){
     Ax.canvas.renderer.removeAll();
     Ax.loadShapes(Ax.canvas_storage[layer][frame])
     Ax.autodiff();
-  }else{
-    if(Ax.isTween(frame,layer)){
-      if(!Ax.tween_cache[layer]){Ax.tween_cache[layer] = {}}; //make sure the cache exists
-      if(!Ax.tween_cache[layer][frame]){
-        Ax.tween_cache[layer][frame] = Ax.getSFTween(frame,Ax.largest_nonempty(frame,layer),Ax.smallest_nonempty(frame,layer),layer)
-      }
-      Ax.canvas.unselect();
-      Ax.canvas.renderer.removeAll();
-      Ax.loadShapes(Ax.tween_cache[layer][frame])
-    }
-    Ax.canvas.unselect();
-    //Ax.canvas.renderer.removeAll();
-    return false;
+    return true;
+  }else if(Ax.isTween(frame,layer)){
+    if(!Ax.tween_cache[layer]){Ax.tween_cache[layer] = {}}; //make sure the cache exists
+    if(!Ax.tween_cache[layer][frame]){//if no tween exists in the cache
+      Ax.tween_cache[layer][frame] = Ax.getSFTween(frame,Ax.largest_nonempty(frame,layer),Ax.smallest_nonempty(frame,layer),layer)
+    }//set the tween onto the cache
+    Ax.canvas.unselect();//unselect
+    Ax.canvas.renderer.removeAll();//remove all objects
+    Ax.loadShapes(Ax.tween_cache[layer][frame]);//load tween
+    return true;//finish
   }
+  Ax.canvas.renderer.removeAll();//remove all objects
+  Ax.loadShapes(Ax.canvas_storage[layer][Ax.largest_nonempty(frame,layer)]);//load last keyframe
+  //note to self: rename function to make more sense.....
+  Ax.canvas.unselect();
+  //Ax.canvas.renderer.removeAll();
+  return false;
 }
 
