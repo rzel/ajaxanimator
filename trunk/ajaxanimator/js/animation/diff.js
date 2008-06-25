@@ -9,7 +9,7 @@ Ax.autodiff = function(){
     Ax.dumpframe(); //dump current canvas to current layer
     //check for diff
     if(Ax.isTween() == true && Ax.diff_core(Ax.canvas_storage[Ax.tcurrent.layer][Ax.tcurrent.frame],Ax.getSFTween()) != true){
-      Ax.msg("Sorry!","For some reason, this feature isn't working at all. So, no editing tweens yet. Pity.")
+      //Ax.msg("Sorry!","For some reason, this feature isn't working at all. So, no editing tweens yet. Pity.")
       //console.log("specialtotweenness")
       //setTimeout(function(){Ax.toKeyframe(Ax.tcurrent.frame,Ax.tcurrent.layer)},100);
     }else if(Ax.diff(Ax.largest_nonempty(Ax.tcurrent.frame,Ax.tcurrent.layer),Ax.tcurrent.frame,Ax.tcurrent.layer) != true &&
