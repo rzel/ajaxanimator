@@ -1,7 +1,7 @@
 /*tweening functionality*/
 
 Ax.tween = function(frame1,frame2,layer){
-  console.log(frame1,frame2,layer)
+  //console.log(frame1,frame2,layer)
   if(frame1 && frame2){
     //*ZOMG! CONZONLE DAWT LOOG!!!*/console.log(frame1,frame2,layer);
     for(var i = frame1 + 1; i < frame2; i++){//loop through frames from frame1 to frame2
