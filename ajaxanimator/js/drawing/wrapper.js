@@ -39,19 +39,7 @@ Ax.preinit = function(){
   fx.hide()
 }
 
-Ax.drawinit = function(){
-  $("drawcanvas").innerHTML = "";
-  $("drawcanvas").style.height = Ax.canvasHeight+"px";
-  $("drawcanvas").style.width = Ax.canvasWidth+"px"
-
-  if(Ext.isIE==true){ //yes. i know. browser sniffing is bad
-    $("drawcanvas").style.position = "absolute";
-    $("drawcanvas").style.left = "5%";
-  }
-
-
-  //Ax.msg("W00t!","you enabled the drawing component: OnlyPaths!!!! NOw you can start drawing and doing stuff that actually matters");
-
+Ax.drawinit_core = function(){
   Ax.renderer = null;
   if(Ext.isIE == true){
     Ax.renderer = new VMLRenderer();
@@ -69,6 +57,21 @@ Ax.drawinit = function(){
   })
   Ax.Color.update = Ax.updatecolors;
   Ax.updatecolors();
+}
+
+Ax.drawinit = function(){
+  $("drawcanvas").innerHTML = "";
+  $("drawcanvas").style.height = Ax.canvasHeight+"px";
+  $("drawcanvas").style.width = Ax.canvasWidth+"px"
+
+  if(Ext.isIE==true){ //yes. i know. browser sniffing is bad
+    $("drawcanvas").style.position = "absolute";
+    $("drawcanvas").style.left = "5%";
+  }
+
+  //Ax.msg("W00t!","you enabled the drawing component: OnlyPaths!!!! NOw you can start drawing and doing stuff that actually matters");
+
+  Ax.drawinit_core()
 
   Ax.setTool('rect');
 }
@@ -86,6 +89,18 @@ Ax.updatecolors = function(){
   Ax.canvas.editCommand('linecolor', '#'+Ax.Color.line);
   Ax.canvas.editCommand('linewidth', Ax.Color.width.toString()+'px');   
   Ax.canvas.setGrid(Ax.Color.grid, Ax.Color.grid);
+}
+
+Ax.reloadCanvas = function(){
+  var init = (new Date()).getTime()
+  var backup = Ax.dumpshapes()
+  Ax.canvas.renderer.removeAll()
+  Ax.canvas.container.innerHTML = null
+  Ax.canvas = null
+  Ax.drawinit_core();
+  Ax.loadShapes(backup)
+  var time = (new Date()).getTime()-init
+  Ax.msg("Canvas Reloaded","This should have resolved most canvas-related issues. Canvas reinitialized in "+time+"ms");
 }
 
 
