@@ -35,6 +35,7 @@ Ax.loadframe = function(frame,layer){
     Ax.canvas.unselect();//unselect
     Ax.canvas.renderer.removeAll();//remove all objects
     Ax.loadShapes(Ax.tween_cache[layer][frame]);//load tween
+    
     return true;//finish
   }
   Ax.canvas.renderer.removeAll();//remove all objects
