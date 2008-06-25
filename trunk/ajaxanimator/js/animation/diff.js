@@ -8,9 +8,13 @@ Ax.autodiff = function(){
   if(Ax.tcurrent.layer && Ax.tcurrent.frame){ //..only if the current frame *exists*
     Ax.dumpframe(); //dump current canvas to current layer
     //check for diff
-    if(Ax.diff(Ax.largest_nonempty(Ax.tcurrent.frame,Ax.tcurrent.layer),Ax.tcurrent.frame,Ax.tcurrent.layer) != true &&
-      Ax.layers[Ax.tcurrent.layer].tweens.indexOf(Ax.tcurrent.frame) == -1){
-        Ax.toKeyframe(Ax.tcurrent.frame,Ax.tcurrent.layer)
+    if(Ax.isTween() == true && Ax.diff_core(Ax.canvas_storage[Ax.tcurrent.layer][Ax.tcurrent.frame],Ax.getSFTween()) != true){
+      Ax.msg("Sorry!","For some reason, this feature isn't working at all. So, no editing tweens yet. Pity.")
+      //console.log("specialtotweenness")
+      //setTimeout(function(){Ax.toKeyframe(Ax.tcurrent.frame,Ax.tcurrent.layer)},100);
+    }else if(Ax.diff(Ax.largest_nonempty(Ax.tcurrent.frame,Ax.tcurrent.layer),Ax.tcurrent.frame,Ax.tcurrent.layer) != true &&
+             Ax.layers[Ax.tcurrent.layer].tweens.indexOf(Ax.tcurrent.frame) == -1){
+      Ax.toKeyframe(Ax.tcurrent.frame,Ax.tcurrent.layer)
     }else{
       //Ax.toBlank_core(Ax.tcurrent.frame,Ax.tcurrent.layer)
       delete Ax.canvas_storage[Ax.tcurrent.layer][Ax.tcurrent.frame];
@@ -21,8 +25,6 @@ Ax.autodiff = function(){
 Ax.diff = function(frame1,frame2,layer){
   //takes two frame identifier numbers and a layer as arguments
   //returns true or false, true being identical, false being different
-  
-
   return Ax.diff_core(Ax.canvas_storage[layer][frame1],Ax.canvas_storage[layer][frame2])
 }
 

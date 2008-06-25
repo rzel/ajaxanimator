@@ -1,6 +1,7 @@
 /*tweening functionality*/
 
 Ax.tween = function(frame1,frame2,layer){
+  console.log(frame1,frame2,layer)
   if(frame1 && frame2){
     //*ZOMG! CONZONLE DAWT LOOG!!!*/console.log(frame1,frame2,layer);
     for(var i = frame1 + 1; i < frame2; i++){//loop through frames from frame1 to frame2
@@ -9,11 +10,11 @@ Ax.tween = function(frame1,frame2,layer){
   }
 }
 
-Ax.getSFTween = function (frame, frame1, frame2,layer){
+Ax.getSFTween = function (frame, frame1, frame2, layer){
   if(!frame){frame = Ax.tcurrent.frame}
   if(!layer){layer = Ax.tcurrent.layer}
-  if(!frame1){Ax.largest_nonempty(frame,layer)}
-  if(!frame2){Ax.smallest_nonempty(frame,layer)}
+  if(!frame1){frame1 = Ax.largest_nonempty(frame,layer)}
+  if(!frame2){frame2 = Ax.smallest_nonempty(frame,layer)}
   
   //console.log(frame, frame1,frame2,layer)
   //tween a single frame and get a single frame (framedump) in return
