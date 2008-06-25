@@ -94,11 +94,14 @@ Ax.updatecolors = function(){
 Ax.reloadCanvas = function(){
   var init = (new Date()).getTime()
   var backup = Ax.dumpshapes()
+  var mode = Ax.canvas.queryCommand("mode");
   Ax.canvas.renderer.removeAll()
   Ax.canvas.container.innerHTML = null
   Ax.canvas = null
   Ax.drawinit_core();
+  Ax.setTool(mode)
   Ax.loadShapes(backup)
+  
   var time = (new Date()).getTime()-init
   Ax.msg("Canvas Reloaded","This should have resolved most canvas-related issues. Canvas reinitialized in "+time+"ms");
 }
