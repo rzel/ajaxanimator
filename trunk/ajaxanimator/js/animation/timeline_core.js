@@ -214,6 +214,10 @@ Ax.toKeyframe = function(frame,layer){
   if(!frame){frame = Ax.tcurrent.frame}
   if(!layer){layer = Ax.tcurrent.layer}
 
+  if(Ax.isTween(frame,layer)){
+    Ax.msg("Sorry!","For some reason, this feature isn't working at all. So, no editing tweens yet. Pity.")
+    return;
+  }
   
   if(!Ax.isKeyframe(frame,layer)){
     Ax.layers[layer].keyframes.push(frame);
@@ -221,7 +225,8 @@ Ax.toKeyframe = function(frame,layer){
   
   Ax.tween(Ax.largest_nonempty(frame,layer),frame,layer); //tween from previous keyframe to now
   
-  if(Ax.isTween(frame,layer)){
+  if(Ax.isTween(frame,layer)){//this never sees light, because the thing above keeps it from ever executing
+    //but its still here as a useless brick in case pigs can fly (don't you love cliches?)
     Ax.layers[layer].tweens.splice(Ax.layers[layer].tweens.indexOf(frame),1)
     delete Ax.tween_cache[layer][frame]; //save memory.
     Ax.tween(frame,Ax.smallest_nonempty(frame,layer),layer); //tween from now to next
