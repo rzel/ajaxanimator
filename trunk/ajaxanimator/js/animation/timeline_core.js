@@ -228,7 +228,6 @@ Ax.toKeyframe = function(frame,layer){
   if(Ax.isTween(frame,layer)){//this never sees light, because the thing above keeps it from ever executing
     //but its still here as a useless brick in case pigs can fly (don't you love cliches?)
     Ax.layers[layer].tweens.splice(Ax.layers[layer].tweens.indexOf(frame),1)
-    delete Ax.tween_cache[layer][frame]; //save memory.
     Ax.tween(frame,Ax.smallest_nonempty(frame,layer),layer); //tween from now to next
   }
   
