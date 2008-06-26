@@ -28,13 +28,12 @@ Ax.loadframe = function(frame,layer){
     Ax.autodiff();
     return true;
   }else if(Ax.isTween(frame,layer)){
-    if(!Ax.tween_cache[layer]){Ax.tween_cache[layer] = {}}; //make sure the cache exists
-    if(!Ax.tween_cache[layer][frame]){//if no tween exists in the cache
-      Ax.tween_cache[layer][frame] = Ax.getSFTween(frame,Ax.largest_nonempty(frame,layer),Ax.smallest_nonempty(frame,layer),layer)
-    }//set the tween onto the cache
+    
+    var tween_frame = Ax.getSFTween(frame,Ax.largest_nonempty(frame,layer),Ax.smallest_nonempty(frame,layer),layer)
+
     Ax.canvas.unselect();//unselect
     Ax.canvas.renderer.removeAll();//remove all objects
-    Ax.loadShapes(Ax.tween_cache[layer][frame]);//load tween
+    Ax.loadShapes(tween_frame);//load tween
     
     return true;//finish
   }
