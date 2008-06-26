@@ -35,51 +35,51 @@
 	}
 
   /*Button Icons*/
-	div.tx_select {
+	.tx_select {
 		background-image: url(../img/icon/select.gif)
 	}
 	
-	div.tx_rectangle {
+	.tx_rectangle {
 		background-image: url(../img/icon/rectangle.gif)
 	}
 	
-	div.tx_roundrect {
+	.tx_roundrect {
 		background-image: url(../img/icon/roundrect.gif)
 	}
 	
-	div.tx_circle {
+	.tx_circle {
 		background-image: url(../img/icon/circle.gif)
 	}
 	
-	div.tx_line {
+	.tx_line {
 		background-image: url(../img/icon/line.gif)
 	}
 	
-	div.tx_path {
+	.tx_path {
 		background-image: url(../img/icon/path.gif)
 	}
 	
-	div.tx_polygon {
+	.tx_polygon {
 		background-image: url(../img/icon/polygon.gif)
 	}
 	
-	div.tx_text {
+	.tx_text {
 		background-image: url(../img/icon/text.gif)
 	}
 	
-	div.tx_image {
+	.tx_image {
 		background-image: url(../img/icon/image.gif)
 	}
 	
-	div.tx_shape {
+	.tx_shape {
 		background-image: url(../img/icon/shape.gif)
 	}
 	
-	div.tx_reset {
+	.tx_reset {
 		background-image: url(../img/icon/reset.gif)
 	}
 	
-	div.tx_delete {
+	.tx_delete {
 		background-image: url(../img/icon/delete.gif)
 	}
 
