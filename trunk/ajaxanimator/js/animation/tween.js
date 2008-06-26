@@ -25,16 +25,18 @@ Ax.getSFTween = function (frame, frame1, frame2, layer){
   for(var o = 0; o < frame1_dump.length; o++){//loop through shapes
     if(frame2_dump[o]){ //continue only if the second frame has it too
       for(var a in frame1_dump[o]){
-        if(typeof frame1_dump[o][a] == typeof frame2_dump[o][a] && frame1_dump &&
-           typeof frame1_dump[o][a] == "number"){ //currently only numbers are tweenable
-          tween_frame[o][a] = Ax.tweenNumber(frame1,frame2,frame1_dump[o][a],frame2_dump[o][a], frame)
-        }
+        tween_frame[o][a] = Ax.tweenAttribute(frame1,frame2,frame1_dump[o][a],frame2_dump[o][a], frame)
       }
     }
   }
   return tween_frame;
 }
 
+Ax.tweenAttribute = function(frame1, frame2, value1, value2, index){
+  if(typeof value1 == "number"){ //currently only numbers are tweenable
+    tween_frame[o][a] = Ax.tweenNumber(frame1,frame2,value1,value2, frame)
+  }
+}
 
 Ax.tweenNumber = function(frame1, frame2, value1, value2, index){//frame1, frame2, first number, second number, index (from first)
   //no type checking yet, cause i dont feel like it
