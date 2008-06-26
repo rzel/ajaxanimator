@@ -13,7 +13,8 @@ Ax.MainToolbar = [
     {text: "To Text", iconCls: "tb_text"}
   ]},
   "-",
-  {text: "Publish", iconCls: "tb_publish"}
+  {text: "Publish", iconCls: "tb_publish"},
+  {text: "Offline"}
 ]},
 {text:"Edit", menu: [
   {text: "Undo", iconCls: "tb_undo"},
