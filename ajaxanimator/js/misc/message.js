@@ -17,3 +17,11 @@ Ax.msg = function(title, format){
     var m = Ext.DomHelper.append(Ax.msgCt, {html:Ax.createBox(title, s)}, true);
     m.slideIn('t').pause(10).ghost("t", {remove:true});
 }
+
+Ax.toastMsg = function(title, content, icon){
+      new Ext.ux.ToastWindow({
+        title: title,
+        html: content,
+        iconCls: (icon)?icon:'error'
+      }).show(document);  
+}
