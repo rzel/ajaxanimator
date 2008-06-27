@@ -45,6 +45,9 @@ Ax.tweenAttribute = function(name, frame1, frame2, value1, value2, index){
   if(typeof value2 == "number"){ //currently only numbers are tweenable
     return Math.round(Ax.tweenNumber(frame1,frame2,value1,value2, index)*1000)/1000; //round to 3 decimal places
   }
+  if(name == "transform"){
+    return Ax.tweenTransform(frame1,frame2,value1,value2, index); //round to 3 decimal places
+  }
 /*
 Now:
 Width,Height, Line Width, x, y
@@ -77,6 +80,24 @@ third magical edit:
   return value1+((index-frame1)/(frame2-frame1))*(value2-value1); //just hope this works!
   
 */
+
+Ax.tweenTransform = function(frame1, frame2, value1, value2, index){//same as tweenNumber
+  value1 = Ax.parseTransform(value1); //parse stuff
+  value2 = Ax.parseTransform(value2);
+  return "rotate("+[Ax.tweenNumber(frame1,frame2,value1[0],value2[0],index),
+                    Ax.tweenNumber(frame1,frame2,value1[1],value2[1],index),
+                    Ax.tweenNumber(frame1,frame2,value1[2],value2[1],index)].join(", ")+")"
+}
+
+Ax.parseTransform = function(transform){
+  if(!transform){
+    return [0, 0, 0];
+  }
+  transform = transform.replace(")","").replace("rotate(","").split(",");
+  return [Math.round(parseFloat(transform[0])*1000)/1000,
+          Math.round(parseFloat(transform[1])*1000)/1000,
+          Math.round(parseFloat(transform[2])*1000)/1000]
+}
 
 Ax.tweenNumber = function(frame1, frame2, value1, value2, index){//frame1, frame2, first number, second number, index (from first)
   //no type checking yet, cause i dont feel like it
