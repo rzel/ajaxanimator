@@ -40,13 +40,13 @@ Ax.preinit = function(){
 }
 
 Ax.drawinit_core = function(){
-  Ax.renderer = null;
+  var renderer = null;
   if(Ext.isIE == true){
-    Ax.renderer = new VMLRenderer();
+    renderer = new VMLRenderer();
   }else{
-    Ax.renderer = new SVGRenderer();
+    renderer = new SVGRenderer();
   }
-  Ax.canvas = new RichDrawEditor($("drawcanvas"), Ax.renderer);
+  Ax.canvas = new RichDrawEditor($("drawcanvas"), renderer);
   Ax.canvas.onInputXY = Ax.setDrawXY;
   Ax.canvas.actualStyle = function(){}; //this is a hack so it doesn't replace some stuff that i'm about to set now
   Ax.canvas.textMessaje = "Ajax Animator+OnlyPaths"
@@ -136,19 +136,19 @@ Ax.setTool = function(tool){
   
 }
 
-Ax.loadShapes = function(shapes,noattachlistener){
+Ax.loadShapes = function(shapes,noattachlistener, instance){ //instance; probably need a better name for this. but its the richdraw/onlypaths/viewer/etc reference. 
   if(typeof shapes == typeof "antimatter15isawesome"){
       shapes = Ext.util.JSON.decode(shapes);
   }
   for(var i = 0; i < shapes.length; i++){
-    Ax.loadShape(shapes[i],noattachlistener);
+    Ax.loadShape(shapes[i],noattachlistener, instance);
   }
 }
 
-Ax.loadShape = function(shape,noattachlistener){
+Ax.loadShape = function(shape,noattachlistener,instance){
 
 
-    var newshape  = Ax.canvas.renderer.create(shape.type, //Shape
+    var newshape  = ((instance)?instance:Ax.canvas).renderer.create(shape.type, //Shape
   (shape.fillColor)?shape.fillColor:"red", //fillColor
   (shape.lineColor)?shape.lineColor:"black", //lineColor
   (shape.fillOpac)?shape.fillOpac:1, //changed  

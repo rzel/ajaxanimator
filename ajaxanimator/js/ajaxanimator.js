@@ -12,6 +12,8 @@
  */
  
 /*global Ext, Application */
+
+document.getElementById("loading-msg").innerHTML = "Loading Content...";
  
 Ext.BLANK_IMAGE_URL = '../theme/images/default/s.gif';
 Ext.ns('Ax'); //i got tired of typing ajaxanimator.xxx so i shortened it
@@ -43,7 +45,6 @@ Ax.set_version = function(version_object){
   }
   
   document.title = Ax.title;
-
 } 
  
 // eof

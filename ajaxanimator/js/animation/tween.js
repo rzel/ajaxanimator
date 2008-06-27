@@ -14,7 +14,7 @@ Ax.tween = function(frame1,frame2,layer){//this function loops through frames in
   }//end if tingy
 }//end functioney
 
-Ax.getSFTween = function (frame, frame1, frame2, layer){//get single frame tween
+Ax.getSFTween = function (frame, frame1, frame2, layer, store){//get single frame tween
   if(!frame){frame = Ax.tcurrent.frame}//pull defaults if none
   if(!layer){layer = Ax.tcurrent.layer}//same as above,but i'll repeat it so i get a higher comment-ratio: pull defaults if none
   if(!frame1){frame1 = Ax.largest_nonempty(frame,layer)};//pull the last keyframe if none
@@ -23,10 +23,12 @@ Ax.getSFTween = function (frame, frame1, frame2, layer){//get single frame tween
   
   //console.log(frame, frame1,frame2,layer)
   //tween a single frame and get a single frame (framedump) in return
-  var frame1_dump = Ax.canvas_storage[layer][frame1], //load dumps
-      frame2_dump = Ax.canvas_storage[layer][frame2], //load dumps
+  store = (store)?store:Ax.canvas_storage[layer];
+  
+  var frame1_dump = store[frame1], //load dumps
+      frame2_dump = store[frame2], //load dumps
       tween_frame = Ext.ux.clone(frame2_dump); //clone frame2
-        
+  if(!frame1_dump || !frame2_dump){Ax.toastMsg("Sorry","Ajax Animator has encountered an error.");return []}
   for(var o = 0; o < frame1_dump.length; o++){//loop through shapes
     if(frame2_dump[o]){ //continue only if the second frame has it too
       for(var a in frame1_dump[o]){//loop attributes

@@ -3,8 +3,9 @@ Documentation (FAQ, Manual, Etc.)
 */
 
 Ax.loadTab = function(object){
-Ax.viewport.findById("maintabpanel").add(object)
+Ax.viewport.findById("maintabpanel").add(object).show()
 }
+
 Ax.loadFAQ = function(){
 Ax.loadTab({xtype: "faq"})
 Ax.gs(2);

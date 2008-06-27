@@ -69,13 +69,18 @@ Ext.apply(this,{
 			iconCls: "preview_icon",			
             layout:"fit",
 						 html:"<div class=\"x-border-layout-ct canvas_container\">"+
-       "<div class=\"canvas\">Um... an animations should be playing here...</div>"+
+       "<div class=\"canvas\" id=\"previewcanvas\">Um... an animations should be playing here...</div>"+
        "</div>"
 			
 			}],
 			listeners: {
 				'activate' : function(){
-					Ax.gs(7)
+					Ax.gs(7);
+					Ax.init_preview();
+					Ax.controls.play();
+				},
+				'deactivate' : function(){
+					Ax.controls.pause()
 				}
 			},
             layout:"fit",

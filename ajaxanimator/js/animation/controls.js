@@ -1,9 +1,11 @@
 Ax.controls = {
   play: function(){
-    Ax.msg("No worky","this doesn't work yet.")
+    Ax.viewport.findById("maintabpanel").activate(1)
+    Ax.preview_increment();
   },
   pause: function(){
-    Ax.msg("No worky","this doesn't work yet.")
+    Ax.viewport.findById("maintabpanel").activate(1)
+	clearTimeout(Ax.preview_timeout)
   },
   next: function(){
     Ax.selectFrame(Ax.tcurrent.frame+1,Ax.tcurrent.layer)
