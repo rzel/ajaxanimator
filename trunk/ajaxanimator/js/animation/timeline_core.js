@@ -157,23 +157,24 @@ Ax.selectFrame_core = function(frame,layer){
   Ax.timeline.mask.style.left = (Ax.getFrame(frame,layer).getX()-Ext.get(Ax.timeline.el).getX()).toString()+"px"
 }
 
-Ax.insertFrame = function(frame,layer,count){
+Ax.insertFrame = function(frame,layer){
   if(frame < 1){return false;}; //OMG!! PONIES!
   if(!frame){frame = Ax.tcurrent.frame}
   if(!layer){layer = Ax.tcurrent.layer}
-  if(!count){count = 1}
 
-  
   Ax.addFrame()
   
   for(var i = 0; i < Ax.layers[layer].keyframes.length; i++){
     if(Ax.layers[layer].keyframes[i] > frame){
-      Ax.layers[layer].keyframes[i]+=count
+      var keyframe_id = Ax.layers[layer].keyframes[i];
+      Ax.layers[layer].keyframes[i] += 1;
+      Ax.canvas_storage[layer][(keyframe_id+1).toString()] = Ax.canvas_storage[layer][keyframe_id.toString()]
+      delete Ax.canvas_storage[layer][keyframe_id.toString()]
     }
   }
   for(var i = 0; i < Ax.layers[layer].tweens.length; i++){
     if(Ax.layers[layer].tweens[i] > frame){
-      Ax.layers[layer].tweens[i]+=count
+      Ax.layers[layer].tweens[i]+=1
     }
   }
   for(var i = frame; i < Ax.tstat.frames; i++){
@@ -183,6 +184,7 @@ Ax.insertFrame = function(frame,layer,count){
   if(Ax.isTween(frame,layer)){
     Ax.tween(Ax.largest_nonempty(frame,layer),Ax.smallest_nonempty(frame,layer),layer); //tween from previous keyframe to now
   }
+  
 }
 
 Ax.renderFrame = function(frame,layer){
