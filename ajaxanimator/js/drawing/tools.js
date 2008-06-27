@@ -44,13 +44,15 @@
     break;
     }
     }else{
-    switch(event.type){
-    case "mousedown":
-		this.onUnselect(this);
-    this.el.dom.className = "toolboxItem";
-    this.selected = false;
+	//you shouldn't be able to not select any tool.
+	
+    //switch(event.type){
+    //case "mousedown":
+	//this.onUnselect(this);
+    //this.el.dom.className = "toolboxItem";
+    //this.selected = false;
 
-    }
+    //}
     //If it is already selected
      }
   },

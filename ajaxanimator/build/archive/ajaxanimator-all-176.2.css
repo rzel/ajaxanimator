@@ -50,7 +50,9 @@
     cursor:pointer; 
 }
   /* CSS File: ../css/ajaxanimator.css */  
- 	/*ToastWindow*/	
+ 
+	
+	/*ToastWindow*/	
 	
 	.error {background-image:url(../img/silk/exclamation.png);}
 	.information {background-image:url(../img/silk/information.png) ! important;}
@@ -120,7 +122,6 @@
 	.msg .x-box-mc {
     font-size:14px;
 	}
-	
 	#msg-div {
     position:absolute;
     left:35%;
@@ -187,51 +188,51 @@
 	}
 
   /*Button Icons*/
-	.tx_select {
+	div.tx_select {
 		background-image: url(../img/icon/select.gif)
 	}
 	
-	.tx_rectangle {
+	div.tx_rectangle {
 		background-image: url(../img/icon/rectangle.gif)
 	}
 	
-	.tx_roundrect {
+	div.tx_roundrect {
 		background-image: url(../img/icon/roundrect.gif)
 	}
 	
-	.tx_circle {
+	div.tx_circle {
 		background-image: url(../img/icon/circle.gif)
 	}
 	
-	.tx_line {
+	div.tx_line {
 		background-image: url(../img/icon/line.gif)
 	}
 	
-	.tx_path {
+	div.tx_path {
 		background-image: url(../img/icon/path.gif)
 	}
 	
-	.tx_polygon {
+	div.tx_polygon {
 		background-image: url(../img/icon/polygon.gif)
 	}
 	
-	.tx_text {
+	div.tx_text {
 		background-image: url(../img/icon/text.gif)
 	}
 	
-	.tx_image {
+	div.tx_image {
 		background-image: url(../img/icon/image.gif)
 	}
 	
-	.tx_shape {
+	div.tx_shape {
 		background-image: url(../img/icon/shape.gif)
 	}
 	
-	.tx_reset {
+	div.tx_reset {
 		background-image: url(../img/icon/reset.gif)
 	}
 	
-	.tx_delete {
+	div.tx_delete {
 		background-image: url(../img/icon/delete.gif)
 	}
 
@@ -314,7 +315,7 @@ td.frame {
   margin-right: auto;
   border-right: 1px solid #D0D0D0;
   border-bottom: 1px solid #D0D0D0;
-  font-size: 13px; /*also font-size: small, but using absoute possitioning liek this is better*/
+  font-size: small;
   vertical-align: middle;
 }
 
@@ -368,9 +369,6 @@ background-image: url(../img/silk/disk.png)
 }
 .tb_publish {
 background-image: url(../img/silk/page_white_flash.png)
-}
-.tb_offline {
-background-image: url(../img/silk/disconnect.png)
 }
 
 .tb_comp {

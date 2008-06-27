@@ -48,7 +48,7 @@ Ax.Timeline = Ext.extend(Ext.Panel,{
           {header: "Comment",dataIndex: "comment", editor:new Ext.form.TextField(), cellActions: [
             {
               iconCls: "tb_delete",
-              qtip: "Delete this frame"
+              qtip: "Delete this layer."
             }
           ]}
           ]
