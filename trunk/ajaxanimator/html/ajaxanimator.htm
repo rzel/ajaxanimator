@@ -5,14 +5,14 @@
   <meta name="description" content="web based multimedia authoring platform" />
   <meta name="keywords" content="Ajax, Web, HTML, Animation, Flash" />
   <!--COMPILIER INFO-->
-  <!--Remove Start-->
+    <!--Remove Start-->
   <link rel="stylesheet" type="text/css" href="../theme/css/ext-all.css" />
   <!--Remove Stop-->
   <!--Start Compile Include>
   <link rel="stylesheet" type="text/css" href="http://www.cachefile.net/scripts/ext/2.1/resources/css/ext-all.css" />
    <End Compile Include-->
    
-   <!--Remove Start-->
+      <!--Remove Start-->
    <!--CSS Compile Start-->
   <link rel="stylesheet" type="text/css" href="../css/Ext.ux.grid.CellActions.css" />
   <link rel="stylesheet" type="text/css" href="../css/Ext.ux.ColorField.css" />
@@ -31,14 +31,16 @@
   <!--Remove Start-->
   <link rel="stylesheet" type="text/css" href="../css/dev.css" />
   <!--Remove Stop-->
-  <title>Ajax Animator</title>
+  
+  <title>Loading...</title>
 </head>
 <body>
-  <div id="loading-mask" style=""></div>
-<div id="loading">
-    <div class="loading-indicator">
-    <img src="../img/icon/loading.gif" style="margin-right: 8px; float: left; vertical-align: top;" alt="" width="32" height="32" />
-    <span>Ajax Animator</span><br /><span id="loading-msg">Loading Data...</span></div>
+  <div id="loading-mask" style="position:absolute;left:0;top:0;width:100%;height:100%;z-index:20000;background-color:white;"></div>
+<div id="loading" style="position:absolute;left:45%;top:40%;padding:2px;z-index:20001;height:auto;">
+    <div class="loading-indicator" style="background:white;color:#555;font:bold 13px tahoma,arial,helvetica;padding:10px;margin:0;text-align:center;height:auto;">
+		<img src="../img/icon/loading.gif" style="margin-bottom:5px;margin-right:8px;float:left;vertical-align:top;" alt="" width="32" height="32" />
+		<span>Ajax Animator</span><br /><span id="loading-msg" style="font:normal 10px arial,tahoma,sans-serif;">Loading Data...</span>
+	</div>
 </div>
 
   <!--Remove Start-->
@@ -51,7 +53,7 @@
    <End Compile Include-->
   <!--Remove Start-->
   <script type="text/javascript">
-    developer = true; //you are a developer!
+    developer = true; //you are a developer! if you're not..... then you're in a whole lot of trouble young man!!!
   </script>
   <!--Remove Stop-->
   <!--Remove Start-->
@@ -83,9 +85,11 @@
   <script type="text/javascript" src="../js/drawing/toolbox.js"></script>
   <script type="text/javascript" src="../js/drawing/colorpanel.js"></script>
   <script type="text/javascript" src="../js/drawing/onlypaths.js"></script>
+  <script type="text/javascript" src="../js/drawing/op_view.js"></script>
   <script type="text/javascript" src="../js/drawing/svgrenderer.js"></script>
   <script type="text/javascript" src="../js/drawing/vmlrenderer.js"></script>
   <script type="text/javascript" src="../js/drawing/wrapper.js"></script>
+  <script type="text/javascript" src="../js/drawing/view_wrapper.js"></script>
     <!--User-Interface files-->
   <script type="text/javascript" src="../js/ui/statusbar.js"></script>
   <script type="text/javascript" src="../js/ui/history.js"></script>

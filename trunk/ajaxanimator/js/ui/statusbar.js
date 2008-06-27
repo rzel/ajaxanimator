@@ -14,8 +14,13 @@ Ax.setDrawXY = function(x,y){
     //to hapen one million times, versus [x,y].join("") taking 9 seconds
         Ext.fly(xy.getEl()).update("leet");
     }else{
-        Ext.fly(xy.getEl()).update([x,y].join(", "));
+        Ext.fly(xy.getEl()).update(x.toString()+", "+y.toString());
     }
+}
+
+var previewstatus = new Ext.Toolbar.TextItem('No Information');
+Ax.setPreviewStatus = function(text){
+	Ext.fly(previewstatus.getEl()).update(text);
 }
 
 
@@ -54,7 +59,7 @@ Ax.CanvasStatusbar = ({
 Ax.PreviewStatusbar = ({
     defaultText: 'Uh... Something',
     defaultIconCls: '',
-    items: [{
+    items: [previewstatus,{
         text: 'A&nbsp;Buttozn'
     }, '-', 'Revisions'," "]
 })

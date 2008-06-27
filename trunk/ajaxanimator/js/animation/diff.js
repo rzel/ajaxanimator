@@ -28,26 +28,30 @@ Ax.diff = function(frame1,frame2,layer){
   return Ax.diff_core(Ax.canvas_storage[layer][frame1],Ax.canvas_storage[layer][frame2])
 }
 
-Ax.largest_nonempty = function(frame,layer){
+Ax.largest_nonempty = function(frame,layer,object){
   //searches for largest non-empty frame that is less than the frame
   var nonempty = [];
-    for(var i in Ax.canvas_storage[layer]){
-      if(parseInt(i) < frame ){
-        nonempty.push(parseInt(i))
-      }
+  object = (object)?object:Ax.layers;
+
+  for(var i = 0; i < object[layer].keyframes.length; i++){
+    if(parseInt(object[layer].keyframes[i]) < frame){
+        nonempty.push(parseInt(object[layer].keyframes[i]))
+    }
   }
   return nonempty.sort(function(a,b){return b - a})[0];//sort descending and pull the first result (largest)
 }
 
-Ax.smallest_nonempty = function(frame,layer){
+Ax.smallest_nonempty = function(frame,layer,object){
   //i'm just gonna copy from largest_nonempty and be too lazy to change the comments
   //so... yeah.... crappy documentation...
     //searches for largest non-empty frame that is less than the frame
   var nonempty = [];
-    for(var i in Ax.canvas_storage[layer]){
-      if(parseInt(i) > frame){
-        nonempty.push(parseInt(i))
-      }
+  object = (object)?object:Ax.layers;
+
+  for(var i = 0; i < object[layer].keyframes.length; i++){
+    if(parseInt(object[layer].keyframes[i]) > frame){
+        nonempty.push(parseInt(object[layer].keyframes[i]))
+    }
   }
   return nonempty.sort(function(a,b){return a - b})[0];//sort descending and pull the first result (largest)
 }
