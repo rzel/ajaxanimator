@@ -1,7 +1,7 @@
 //This is a file that is virtually the core of the tweening engine
 //not really. it just detects what frames are keyframes. automatically.
 
-Ax.diff_exclude = ["id"]
+Ax.diff_exclude = ["id","transform"]
 
 Ax.autodiff = function(){
   //save canvas state
