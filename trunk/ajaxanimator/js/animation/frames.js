@@ -29,12 +29,10 @@ Ax.loadframe = function(frame,layer){
     return true;
   }else if(Ax.isTween(frame,layer)){
     
-    var tween_frame = Ax.getSFTween(frame,Ax.largest_nonempty(frame,layer),Ax.smallest_nonempty(frame,layer),layer)
-
     Ax.canvas.unselect();//unselect
     Ax.canvas.renderer.removeAll();//remove all objects
-    Ax.loadShapes(tween_frame);//load tween
-    
+    Ax.loadShapes(Ax.getSFTween(frame,Ax.largest_nonempty(frame,layer),Ax.smallest_nonempty(frame,layer),layer));//load tween
+
     return true;//finish
   }
   Ax.canvas.renderer.removeAll();//remove all objects

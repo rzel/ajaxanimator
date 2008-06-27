@@ -19,6 +19,9 @@ background-image: url(../img/silk/disk.png)
 .tb_publish {
 background-image: url(../img/silk/page_white_flash.png)
 }
+.tb_offline {
+background-image: url(../img/silk/disconnect.png)
+}
 
 .tb_comp {
 background-image: url(../img/silk/computer_go.png)

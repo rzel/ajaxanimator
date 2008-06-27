@@ -50,7 +50,9 @@
     cursor:pointer; 
 }
   /* CSS File: ../css/ajaxanimator.css */  
- 	/*ToastWindow*/	
+ 
+	
+	/*ToastWindow*/	
 	
 	.error {background-image:url(../img/silk/exclamation.png);}
 	.information {background-image:url(../img/silk/information.png) ! important;}
@@ -120,7 +122,6 @@
 	.msg .x-box-mc {
     font-size:14px;
 	}
-	
 	#msg-div {
     position:absolute;
     left:35%;
@@ -368,9 +369,6 @@ background-image: url(../img/silk/disk.png)
 }
 .tb_publish {
 background-image: url(../img/silk/page_white_flash.png)
-}
-.tb_offline {
-background-image: url(../img/silk/disconnect.png)
 }
 
 .tb_comp {

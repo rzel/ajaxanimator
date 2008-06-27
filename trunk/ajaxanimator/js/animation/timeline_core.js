@@ -150,7 +150,6 @@ Ax.selectFrame = function(frame,layer){
   //change the canvas to new one if possible
   Ax.loadframe(frame,layer)
   
-  
 }
 
 Ax.selectFrame_core = function(frame,layer){
@@ -214,21 +213,18 @@ Ax.toKeyframe = function(frame,layer){
   if(!frame){frame = Ax.tcurrent.frame}
   if(!layer){layer = Ax.tcurrent.layer}
 
-  if(Ax.isTween(frame,layer)){
-    Ax.msg("Sorry!","For some reason, this feature isn't working at all. So, no editing tweens yet. Pity.")
-    return;
-  }
   
   if(!Ax.isKeyframe(frame,layer)){
     Ax.layers[layer].keyframes.push(frame);
   }
   
-  Ax.tween(Ax.largest_nonempty(frame,layer),frame,layer); //tween from previous keyframe to now
   
   if(Ax.isTween(frame,layer)){//this never sees light, because the thing above keeps it from ever executing
     //but its still here as a useless brick in case pigs can fly (don't you love cliches?)
     Ax.layers[layer].tweens.splice(Ax.layers[layer].tweens.indexOf(frame),1)
-    Ax.tween(frame,Ax.smallest_nonempty(frame,layer),layer); //tween from now to next
+    //Ax.tween(frame,Ax.smallest_nonempty(frame,layer),layer); //tween from now to next
+  }else{
+    Ax.tween(Ax.largest_nonempty(frame,layer),frame,layer); //tween from previous keyframe to now
   }
   
   

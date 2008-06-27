@@ -1,5 +1,3 @@
-
-	
 	/*ToastWindow*/	
 	
 	.error {background-image:url(../img/silk/exclamation.png);}
@@ -70,6 +68,7 @@
 	.msg .x-box-mc {
     font-size:14px;
 	}
+	
 	#msg-div {
     position:absolute;
     left:35%;

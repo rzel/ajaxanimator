@@ -8,12 +8,12 @@ Ax.autodiff = function(){
   if(Ax.tcurrent.layer && Ax.tcurrent.frame){ //..only if the current frame *exists*
     Ax.dumpframe(); //dump current canvas to current layer
     //check for diff
-    if(Ax.isTween() == true && Ax.diff_core(Ax.canvas_storage[Ax.tcurrent.layer][Ax.tcurrent.frame],Ax.getSFTween()) != true){
+    if(Ax.isTween() == true && Ax.diff_core(Ax.dumpshapes(),Ax.getSFTween()) != true){
       //Ax.msg("Sorry!","For some reason, this feature isn't working at all. So, no editing tweens yet. Pity.")
       //console.log("specialtotweenness")
-      //setTimeout(function(){Ax.toKeyframe(Ax.tcurrent.frame,Ax.tcurrent.layer)},100);
+      Ax.toKeyframe(Ax.tcurrent.frame,Ax.tcurrent.layer)
     }else if(Ax.diff(Ax.largest_nonempty(Ax.tcurrent.frame,Ax.tcurrent.layer),Ax.tcurrent.frame,Ax.tcurrent.layer) != true &&
-             Ax.layers[Ax.tcurrent.layer].tweens.indexOf(Ax.tcurrent.frame) == -1){
+      Ax.layers[Ax.tcurrent.layer].tweens.indexOf(Ax.tcurrent.frame) == -1){
       Ax.toKeyframe(Ax.tcurrent.frame,Ax.tcurrent.layer)
     }else{
       //Ax.toBlank_core(Ax.tcurrent.frame,Ax.tcurrent.layer)
@@ -49,7 +49,7 @@ Ax.smallest_nonempty = function(frame,layer){
         nonempty.push(parseInt(i))
       }
   }
-  return nonempty.sort(function(a,b){return b - a})[0];//sort descending and pull the first result (largest)
+  return nonempty.sort(function(a,b){return a - b})[0];//sort descending and pull the first result (largest)
 }
 
 Ax.diff_core = function(shapedump1,shapedump2){
@@ -68,8 +68,15 @@ Ax.diff_core = function(shapedump1,shapedump2){
     for(var i = 0; i < shapedump1.length; i++){
       for(var x in shapedump2[i]){
         //console.log(i,shapedump1[i].type,x,shapedump2[i][x],shapedump1[i][x])
-        if(Ax.diff_exclude.indexOf(x) == -1 && shapedump2[i][x] != shapedump1[i][x]){
-          return false
+        if(Ax.diff_exclude.indexOf(x) == -1){
+          if(typeof shapedump2[i][x] == "number"){
+		  shapedump2[i][x] = Math.round(shapedump2[i][x]*100)/100
+		  shapedump1[i][x] = Math.round(shapedump1[i][x]*100)/100
+		  }
+		  if(shapedump2[i][x] != shapedump1[i][x]){//for everything else, there's mastercrap
+		    return false;//not same
+		  }
+		  
         }
       }
     }
