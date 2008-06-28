@@ -61,9 +61,31 @@ Ax.PreviewStatusbar = ({
     defaultIconCls: '',
     items: [previewstatus,
 	'-',
-	{text: 'Play'},
-	{text: 'Pause'},
-	'-', 'Revisions'," "]
+{
+		iconCls: "x-tbar-page-first",
+		tooltip: "Go to first frame",
+    handler: function(){Ax.controls.first()}
+	},{
+        iconCls: "x-tbar-page-prev",
+		tooltip: "Go to previous frame",
+    handler: function(){Ax.controls.previous()}
+    },
+	"-",
+	"Frame <input type=\"text\" style=\"width: 30px\" value=\"0\"> of 1",
+	"-",
+	{
+		iconCls: "x-tbar-page-next",
+		tooltip: "Go to next frame",
+    handler: function(){Ax.controls.next()}
+	},{
+		iconCls: "x-tbar-page-last",
+		tooltip: "Go to last frame",
+    handler: function(){Ax.controls.last()}
+	},
+	'-', {
+	text: "More",
+	menu: [{text : "sum stuff"}]
+	}," "]
 })
 
 })
