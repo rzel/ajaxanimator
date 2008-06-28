@@ -15,7 +15,7 @@ Ax.autodiff = function(){
     }else if(Ax.diff(Ax.largest_nonempty(Ax.tcurrent.frame,Ax.tcurrent.layer),Ax.tcurrent.frame,Ax.tcurrent.layer) != true &&
       Ax.layers[Ax.tcurrent.layer].tweens.indexOf(Ax.tcurrent.frame) == -1){
       Ax.toKeyframe(Ax.tcurrent.frame,Ax.tcurrent.layer)
-    }else{
+    }else if(Ax.isKeyframe() == false){
       //Ax.toBlank_core(Ax.tcurrent.frame,Ax.tcurrent.layer)
       delete Ax.canvas_storage[Ax.tcurrent.layer][Ax.tcurrent.frame];
     }
