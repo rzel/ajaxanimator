@@ -18,7 +18,7 @@ Ax.setDrawXY = function(x,y){
     }
 }
 
-var previewstatus = new Ext.Toolbar.TextItem('No Information');
+var previewstatus = new Ext.Toolbar.TextItem('0');
 Ax.setPreviewStatus = function(text){
 	Ext.fly(previewstatus.getEl()).update(text);
 }
@@ -59,7 +59,15 @@ Ax.CanvasStatusbar = ({
 Ax.PreviewStatusbar = ({
     defaultText: 'Ready',
     defaultIconCls: '',
-    items: [previewstatus,
+    items: [{text: "Performance: ", tooltip: "The amount of time it takes to render a frame",
+            handler: function(){
+              Ext.MessageBox.alert("About Performance","Lower the better, It largely depends"+
+                                   " on the framerate, speed on your computer, the number of t"+
+                                   "imes the animation was played, browser and the number and "+
+                                   "types of shapes.")
+            }
+            },
+            previewstatus,
 	'-',
 {
 		iconCls: "x-tbar-page-first",
@@ -71,7 +79,7 @@ Ax.PreviewStatusbar = ({
     handler: function(){Ax.controls.previous()}
     },
 	"-",
-	"Frame <input type=\"text\" style=\"width: 30px\" value=\"0\"> of 1",
+	"Frame <input type=\"text\" id=\"pbframe\" style=\"width: 30px\" value=\"0\"> of 1",
 	"-",
 	{
 		iconCls: "x-tbar-page-next",
