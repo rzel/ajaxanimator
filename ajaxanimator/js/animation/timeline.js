@@ -42,6 +42,7 @@ Ax.Timeline = Ext.extend(Ext.Panel,{
               Ax.renameLayer(object.originalValue,object.value)
             }
           },
+          sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
           //clicksToEdit:1,
           ds:/*BEGIN*/new Ext.data.Store()/*END*/,
           columns: [

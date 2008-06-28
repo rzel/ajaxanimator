@@ -30,12 +30,15 @@ Ax.deleteLayer = function(name){
 
 Ax.addLayer = function(layername){
   layername = (layername)?layername:"Layer "+((Ax.tstat.layers+1).toString());
-  if(Ax.viewport){
-    Ax.viewport.findById("layers").getStore().add(new Ext.data.Record({comment:layername}))
-  }
+
   var f_layer = document.createElement("tr"); 
-  Ax.layers[layername] = {el:f_layer, keyframes: [1], tweens: []}
-  
+  Ax.layers[layername] = {
+    el:f_layer,
+    keyframes: [1],
+    tweens: [],
+    record: new Ext.data.Record({comment:layername})
+    }
+  Ax.viewport.findById("layers").getStore().add(Ax.layers[layername].record)
   if(!Ax.canvas_storage[layername]){
     Ax.canvas_storage[layername] = {"1":[]};//create a canvas storage slot with first frame set to blank
   }
@@ -139,6 +142,9 @@ Ax.getFrame = function(frame,layer){
 
 Ax.selectFrame = function(frame,layer){
   if(frame < 1){return false;}; //OMG!! PONIES!
+  
+  Ax.viewport.findById("layers").getSelectionModel().selectRecords([Ax.layers[layer].record], false)
+  //select the layer
   
   Ax.autodiff(); //save current state, etc.
     
