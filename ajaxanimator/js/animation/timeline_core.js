@@ -148,8 +148,8 @@ Ax.selectFrame = function(frame,layer){
   //Change Styles
   Ax.selectFrame_core(frame,layer);
   //Add frames if necessary
-  if(frame > Ax.tstat.frames - 5){
-    Ax.addFrames(10 - (Ax.tstat.frames - frame))
+  if(frame > Ax.tstat.frames - 30){
+    Ax.addFrames(50 - (Ax.tstat.frames - frame))
   }
 
   //change the canvas to new one if possible
