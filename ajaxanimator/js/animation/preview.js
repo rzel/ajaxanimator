@@ -22,6 +22,6 @@ Ax.init_preview = function(){
   Ext.get("previewcanvas").on("mousedown",function(){
     Ax.msg("Preview","Preview is for viewing! Head over to the Canvas tab to edit.")
   })
-  Ax.preview_markup = Ax.export_animation();
+  Ax.preview_markup = Ax.export_animation_core();
   Ax.preview_frame = null;
 }
