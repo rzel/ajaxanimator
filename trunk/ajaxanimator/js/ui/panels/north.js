@@ -8,6 +8,7 @@ Ext.apply(this,{
     collapseMode: "mini",
     split:true,
 	border: false,
+  id: "timeline",
     height:70,
 //    border:true,
 	items: {xtype: "timeline", border: false}
