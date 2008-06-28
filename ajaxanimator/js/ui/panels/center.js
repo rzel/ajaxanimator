@@ -45,7 +45,7 @@ Ext.apply(this,{
         })}],
 
 			 html:"<div class=\"x-border-layout-ct canvas_container\">"+
-       "<div id=\"drawcanvas\" class=\"canvas\"><button style='width: 100%; height: 100%' onclick='Ax.preinit();Ax.drawinit();'>Click Here to turn on OnlyPaths!</a></div>"+
+       "<div id=\"drawcanvas\" class=\"canvas\">Loading...</div>"+
        "</div>",
 			 border: false
 			}]
@@ -69,7 +69,7 @@ Ext.apply(this,{
 			iconCls: "preview_icon",			
             layout:"fit",
 						 html:"<div class=\"x-border-layout-ct canvas_container\">"+
-       "<div class=\"canvas\" id=\"previewcanvas\">Um... an animations should be playing here...</div>"+
+       "<div class=\"canvas\" id=\"previewcanvas\">Loading...</div>"+
        "</div>"
 			
 			}],
