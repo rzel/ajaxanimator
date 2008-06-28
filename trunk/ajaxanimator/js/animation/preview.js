@@ -6,15 +6,22 @@ Ax.preview_increment = function(){
   Ax.preview_markup, //the la magickal poop!
   Ax.preview //the canvas
   ) + 1;
+
   if(Ax.preview_frame % 4 == 0){
-    Ax.setPreviewStatus("Delay: "+Math.round((new Date()).getTime() - start))
+        Ext.get("pbframe").dom.value = Ax.preview_frame
+    Ax.setPreviewStatus(Math.round((new Date()).getTime() - start))
   }
+
   Ax.preview_timeout = setTimeout(function(){Ax.preview_increment()}, 1000/Ax.framerate);
 }
 
 
 Ax.init_preview = function(){
+  $("previewcanvas").innerHTML = "";
   Ax.preview = Ax.init_view_core($("previewcanvas"));
+  Ext.get("previewcanvas").on("mousedown",function(){
+    Ax.msg("Preview","Preview is for viewing! Head over to the Canvas tab to edit.")
+  })
   Ax.preview_markup = Ax.export_animation();
   Ax.preview_frame = null;
 }
