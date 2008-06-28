@@ -30,10 +30,6 @@ Ax.viewer_load_frame = function(frame, markup, canvas){
   canvas.renderer.removeAll();
   var layers = markup.layers
   for(var layer in layers){
-    if(layers[layer].keyframes.sort(function(a,b){return b - a})[0] == frame){
-		return 0;
-	}
-
 		if(layers[layer].keyframes.indexOf(frame) != -1){
 			Ax.loadShapes(layers[layer].src[frame],  true, canvas);
 		}else{
@@ -42,7 +38,9 @@ Ax.viewer_load_frame = function(frame, markup, canvas){
 											Ax.smallest_nonempty(frame,layer,layers),
 											layer,layers[layer].src),  true, canvas);
 		}
-    
+    if(layers[layer].keyframes.sort(function(a,b){return b - a})[0] == frame){
+  		return 0;
+		}
   }
   return frame
 }
