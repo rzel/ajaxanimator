@@ -6,34 +6,41 @@ Ext.apply(this,
 id: "Animations",
 xtype:"panel",
 title:"Animations",
+border: false,
 layout:"fit",
 //html:"<img src='../img/mockup/animationbrowser.png' style='width: 500px; height: 400px'>"
 items: {
 layout:"border",
-
-items:[{
 border: false,
+items:[{
+    
+//border: false,
 region:"center",
-html: "oaki",
+
 title:"Player",
 id: "Player",
-autoScroll: true,
-tools: [{id: "gear"},{id: "help",
-qtip: "View and share animations with other users. Use the left panel to browse for animations,"+
-" and click them to view them. Feel free to press the \"import\" button and make improvements."}],
-iconCls: "player_icon",
-tbar: [{text: "By:&nbsp;Hardcoded&nbsp;Name"},{xtype: "tbfill"},
-"Rating&nbsp;System"],
-bbar: [{text: "Play",handler: function(){
+layout: "border",
+items: [
+       {region: "north",border: false, tbar: [{text: "By:&nbsp;Hardcoded&nbsp;Name"},{xtype: "tbfill"},"Rating&nbsp;System"], height: 27},
+       {region: "south",border: false, bbar: [{text: "Play",handler: function(){
 this.setText((this.getText()=="Play")?"Pause":"Play")} //just a really really condensed script :P
 },
 {text: "Forward"},
 {text: "Rewind"},
 {xtype: "tbfill"},
 "0/1337 0FPS"
-]
-},{
-border: false,
+], height: 27},
+  {region: "center",	border: false,		 html:"<div class=\"x-border-layout-ct canvas_container\">"+
+       "<div id=\"drawcanvas\" class=\"canvas\"></div>"}      
+        ],
+autoScroll: true,
+tools: [{id: "gear"},{id: "help",
+qtip: "View and share animations with other users. Use the left panel to browse for animations,"+
+" and click them to view them. Feel free to press the \"import\" button and make improvements."}],
+iconCls: "player_icon"
+}
+,{
+//border: false,
 region:"west",
 id: "treebrowse",
 title:"Browse",
@@ -51,7 +58,7 @@ layout: "fit",
 titleCollapse:true,
 
 //items: [{
-		border: false,
+		//border: false,
         xtype:"treepanel",
         useArrows:true,
         autoScroll:true,
@@ -92,10 +99,7 @@ Ax.viewport.findById("treebrowse").collapseAll()
 //}]
 
 }
-],
-
-
-border: false
+]
 }
 }
 
