@@ -33,8 +33,7 @@ Ax.MainToolbar = [
   {text: "Timeline", xtype: "checkitem", checked: true},
   {text: "Tools", xtype: "checkitem", checked: true},
   {text: "Misc", xtype: "checkitem", checked: true},
-  {text: "Properties", xtype: "checkitem", checked: true},
-  {text: "Actionscript", xtype: "checkitem", checked: true}
+  {text: "Properties", xtype: "checkitem", checked: true}
 ]},
 {text:"Tools", menu: [
   //{text: "Color Picker", iconCls: "tb_color"},
