@@ -41,6 +41,7 @@ Ax.preview_timeout = setTimeout(Ax.preview_increment, 1000/Ax.framerate);
 Ax.preview_load_frame = function(frame){
   //note: this function is not multi-layer friendly yet.
   //un-note: this function should be multi-layer friendly, but layers aren't even really supported so i donno
+  if(!Ax.preview){return;}
   Ax.preview.renderer.removeAll();
   var layers = Ax.export_animation().layers
   for(var layer in layers){
