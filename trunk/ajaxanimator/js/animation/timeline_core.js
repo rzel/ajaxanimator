@@ -34,7 +34,12 @@ Ax.addLayer = function(layername){
     Ax.viewport.findById("layers").getStore().add(new Ext.data.Record({comment:layername}))
   }
   var f_layer = document.createElement("tr"); 
-  Ax.layers[layername] = {el:f_layer, keyframes: [], tweens: []}
+  Ax.layers[layername] = {el:f_layer, keyframes: [1], tweens: []}
+  
+  if(!Ax.canvas_storage[layername]){
+    Ax.canvas_storage[layername] = {"1":[]};//create a canvas storage slot with first frame set to blank
+  }
+  
   //Ext.log(f_layer.innerHTML)
   //Ax.current.layer = layer
   Ax.tstat.layers++
