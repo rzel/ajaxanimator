@@ -21,18 +21,16 @@ Ax.dumpframe = function(frame,layer){
 }
 
 Ax.loadframe = function(frame,layer){
-  if(Ax.canvas_storage[layer] && Ax.canvas_storage[layer][frame]){
+  if(Ax.canvas_storage[layer][frame]){
     Ax.canvas.unselect();
     Ax.canvas.renderer.removeAll();
     Ax.loadShapes(Ax.canvas_storage[layer][frame])
     Ax.autodiff();
     return true;
   }else if(Ax.isTween(frame,layer)){
-    
     Ax.canvas.unselect();//unselect
     Ax.canvas.renderer.removeAll();//remove all objects
     Ax.loadShapes(Ax.getSFTween(frame,Ax.largest_nonempty(frame,layer),Ax.smallest_nonempty(frame,layer),layer));//load tween
-
     return true;//finish
   }
   Ax.canvas.renderer.removeAll();//remove all objects
