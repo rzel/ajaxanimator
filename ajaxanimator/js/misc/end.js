@@ -7,22 +7,13 @@ setTimeout(function(){
     Ax.initTimeline()
     Ax.addLayer()
     Ax.addFrames(99)
-    if(Ax.urlprefs.draw == "false"){
-    
-    }else if(Ax.urlprefs.draw == "defer"){
-      setTimeout(function(){
-      Ax.preinit();
-      Ax.drawinit();
-      },1000)
-    }else{
+    if(Ax.urlprefs.draw != "false"){
       Ax.preinit();
       Ax.drawinit();
     }
     //Main Timeline initialization stuff, create, add alyer, add frames, select first one..
 
     Ax.selectFrame(1,"Layer 1")
-    
-
     
     setTimeout(function(){
       if(Ax.v.dev && !Ax.developer){
