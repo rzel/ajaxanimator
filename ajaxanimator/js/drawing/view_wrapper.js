@@ -9,6 +9,7 @@
 
 
 Ax.framerate = 12;
+//*
 
 Ax.init_view_core = function(element){
   element.innerHTML = "";
@@ -23,41 +24,29 @@ Ax.init_view_core = function(element){
   return new RichDrawViewer(element, renderer);
 }
 
-Ax.init_preview = function(){
-  Ax.preview = Ax.init_view_core($("previewcanvas"));
-  Ax.preview_frame = null;
-  
-}
-
-Ax.preview_increment = function(){
-var start = (new Date()).getTime();
-Ax.preview_frame = Ax.preview_load_frame(((Ax.preview_frame)?Ax.preview_frame:Ax.tcurrent.frame)) + 1;
-if(Ax.preview_frame % 4 == 0){
-Ax.setPreviewStatus("Delay: "+Math.round((new Date()).getTime() - start))
-}
-Ax.preview_timeout = setTimeout(Ax.preview_increment, 1000/Ax.framerate);
-}
-
-Ax.preview_load_frame = function(frame){
+Ax.viewer_load_frame = function(frame, markup, canvas){
   //note: this function is not multi-layer friendly yet.
   //un-note: this function should be multi-layer friendly, but layers aren't even really supported so i donno
-  if(!Ax.preview){return;}
-  Ax.preview.renderer.removeAll();
-  var layers = Ax.export_animation().layers
+  canvas.renderer.removeAll();
+  var layers = markup.layers
   for(var layer in layers){
     if(layers[layer].keyframes.sort(function(a,b){return b - a})[0] == frame){
 		return 0;
 	}
 
 		if(layers[layer].keyframes.indexOf(frame) != -1){
-			Ax.loadShapes(layers[layer].src[frame],  true, Ax.preview);
+			Ax.loadShapes(layers[layer].src[frame],  true, canvas);
 		}else{
 		  Ax.loadShapes(Ax.getSFTween(frame, 
 											Ax.largest_nonempty(frame,layer,layers), 
 											Ax.smallest_nonempty(frame,layer,layers),
-											layer,layers[layer].src),  true, Ax.preview);
+											layer,layers[layer].src),  true, canvas);
 		}
     
   }
   return frame
 }
+
+
+
+//*/
