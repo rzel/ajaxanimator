@@ -57,11 +57,13 @@ Ax.CanvasStatusbar = ({
 
 
 Ax.PreviewStatusbar = ({
-    defaultText: 'Uh... Something',
+    defaultText: 'Ready',
     defaultIconCls: '',
-    items: [previewstatus,{
-        text: 'A&nbsp;Buttozn'
-    }, '-', 'Revisions'," "]
+    items: [previewstatus,
+	'-',
+	{text: 'Play'},
+	{text: 'Pause'},
+	'-', 'Revisions'," "]
 })
 
 })()
