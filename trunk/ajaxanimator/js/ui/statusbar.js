@@ -1,4 +1,4 @@
-(function(){
+Ext.onReady(function(){
 
 var xy = new Ext.Toolbar.TextItem('0, 0');
 
@@ -66,7 +66,7 @@ Ax.PreviewStatusbar = ({
 	'-', 'Revisions'," "]
 })
 
-})()
+})
 
 //Simple Status Function
 
