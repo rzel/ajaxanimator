@@ -57,7 +57,7 @@ Ax.emptyAnimation = {
 }
 
 Ax.new_animation = function(){
-  Ax.import_animation(Ax.emptyAnimation)
+  Ax.import_animation(Ext.ux.clone(Ax.emptyAnimation))
 }
 
 Ax.export_animation_core = function(input,format){
