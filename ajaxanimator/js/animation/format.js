@@ -45,6 +45,21 @@ Ax.format = {
 }
 
 
+Ax.emptyAnimation = {
+  layers: {
+    "Layer 1": {
+      keyframes: [1],
+      src: {
+        "1":[]
+      }
+    }
+  }
+}
+
+Ax.new_animation = function(){
+  Ax.import_animation(Ax.emptyAnimation)
+}
+
 Ax.export_animation_core = function(input,format){
   var layers = {};
   for(var layer in Ax.layers){
@@ -97,11 +112,13 @@ Ax.import_animation = function(markup){
     markup = Ext.util.JSON.decode(markup)
   }
   Ax.animation.name = (markup.name)?markup.name:"Untitled Production";
+  Ax.animation.markup = markup;
   Ax.viewport.findById("canvas").getTopToolbar().items.item(1).getEl().value = (markup.name)?markup.name:"Untitled Production";
   //set the name for the animation in that little box in the toolbar. overly hackish, I know. Seriously, acessing dom?
   
   Ax.import_animation_core(markup.layers);
   Ax.selectFrame((markup.tcframe)?markup.tcframe:1,(markup.tclayer)?markup.tclayer:"Layer 1");
+  
 }
 
 Ax.test_animation_markup = function(markup){
