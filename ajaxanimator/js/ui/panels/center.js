@@ -4,10 +4,9 @@ Ext.apply(this,{
 
     region:"center",
     //title:"Canvas",
-	
     layout:"fit",
 	//tbar: Ax.MainToolbar,
-    border:true,
+    border:false,
     items:[{
         xtype:"tabpanel",
 		id: "maintabpanel",
@@ -55,7 +54,7 @@ Ext.apply(this,{
 			 html:"<div class=\"x-border-layout-ct canvas_container\">"+
        "<div id=\"drawcanvas\" class=\"canvas\">Loading...</div>"+
        "</div>",
-			 border: false
+			 border: true
 			}]
           },{
             xtype:"panel",
@@ -92,7 +91,7 @@ Ext.apply(this,{
 				}
 			},
             layout:"fit",
-			border: false
+			border: true
           },{
 		  iconCls: "animations_icon",
 		  xtype: "animationbrowser", 
