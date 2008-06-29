@@ -5,12 +5,12 @@ Ax.MainToolbar = [
     {text: "From Computer", iconCls: "tb_comp"},
     {text: "From Webserver", iconCls: "tb_server"},
     {text: "From URL", iconCls: "tb_url"},
-    {text: "From Text", iconCls: "tb_text"}
+    {text: "From Text", iconCls: "tb_text", handler: function(){Ax.open.text()}}
   ]},
   {text: "Save", iconCls: "tb_save",menu: [
     {text: "To Computer", iconCls: "tb_comp"},
     {text: "To Webserver", iconCls: "tb_server"},
-    {text: "To Text", iconCls: "tb_text"}
+    {text: "To Text", iconCls: "tb_text", handler: function(){Ax.save.text()}}
   ]},
   "-",
   {text: "Publish", iconCls: "tb_publish"},

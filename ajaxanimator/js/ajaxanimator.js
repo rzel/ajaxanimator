@@ -17,7 +17,11 @@ document.getElementById("loading-msg").innerHTML = "Loading Content...";
  
 Ext.BLANK_IMAGE_URL = '../theme/images/default/s.gif';
 Ext.ns('Ax'); //i got tired of typing ajaxanimator.xxx so i shortened it
- 
+
+Ax.animation = {
+  name: "Untitled Production",
+  markup: {}
+}
 // application main entry point
 Ext.onReady(function() {
   
