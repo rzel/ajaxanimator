@@ -73,3 +73,20 @@ Ax.autoimport = function(markup){
     }
   }
 }
+
+
+Ax.animationinfo = function(){
+  //graphically displays metadata in animation, also some statistics, etc.
+
+  
+      (new Ext.Window({
+      title: "Animation Info - "+Ax.animation.name,
+      width: 300,
+      height: 200,
+      html: "<b>"+Ax.animation.name+":</b><br />Generator: "+
+      "<br />Creation Date: "+
+      "<br />Last Modified Date: "+
+      "<br />Contributors: "
+      
+      })).show(document.body)
+}
