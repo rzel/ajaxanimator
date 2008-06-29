@@ -10,13 +10,11 @@ Ax.dumpframe = function(frame,layer){
   }
   //Ax.canvas.unselect();
   var shapedump =  Ax.dumpshapes();
-  if(shapedump.length > 0){
-    if(!Ax.isTween(frame,layer)){
-      Ax.canvas_storage[layer][frame] = shapedump;
-    }
-    return shapedump;
+
+  if(!Ax.isTween(frame,layer)){
+    Ax.canvas_storage[layer][frame] = shapedump;
   }
-  return false;
+  return shapedump;
 
 }
 
