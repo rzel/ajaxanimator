@@ -115,3 +115,6 @@ Ax.viewport.findById("treebrowse").collapseAll()
 
 Ext.reg("animationbrowser",Ax.AnimationBrowser)
 
+Ax.showanimationbrowser = function(){
+       Ax.viewport.findById("maintabpanel").activate(2)
+}
