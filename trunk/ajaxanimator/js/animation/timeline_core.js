@@ -286,6 +286,8 @@ Ax.toBlank_core = function(frame,layer){
 
 
 Ax.initTimeline = function(){
+  Ax.layers = {};
+  
   Ext.get("timeline_core").dom.innerHTML = ""
   var frameTable = document.createElement("table");
   frameTable.setAttribute("cellspacing","0")
