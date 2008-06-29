@@ -34,6 +34,17 @@ ALEON/Axff/Xff
 }
 */
 
+
+//format information
+Ax.format = {
+  support: {//format support. minimum version, maximum version
+    min: 1,
+    max: 4
+  },
+  export: 4 //the version the app exports
+}
+
+
 Ax.export_animation_core = function(input,format){
   var layers = {};
   for(var layer in Ax.layers){
@@ -47,26 +58,31 @@ Ax.export_animation_core = function(input,format){
 }
 
 Ax.export_animation = function(input, format){
-
+  if(!input){
+    input = {};
+  }
   if(!input.generator){
     input.generator = Ax.v;
   }
   if(!input.creation){
     input.creation = (new Date()).getTime()
   }
-  input.meta.modified = (new Date()).getTime();
+  
   if(typeof input.contrib != typeof ['antimatter15','is','awesome']){
     input.contrib = []; //an array
   }
-  if(input.contrib.indexOf(Ax.userid) == -1){
-    input.contrib.push(Ax.userid); //add user to list of contributors if not there already
+  if(input.contrib.indexOf((Ax.userid)?Ax.userid:"anonymous") == -1){
+    input.contrib.push((Ax.userid)?Ax.userid:"anonymous"); //add user to list of contributors if not there already
   }
+  
+  input.modified = (new Date()).getTime();
   
   input.tcframe = Ax.tcurrent.frame;
   input.tclayer = Ax.tcurrent.layer;
   
   input.layers = Ax.export_animation_core(); //the most important part: the data
   
+  input.name = Ax.animation.name
   
   if(format == "json"){
     return Ext.util.JSON.encode(input);
@@ -76,11 +92,32 @@ Ax.export_animation = function(input, format){
 }
 
 Ax.import_animation = function(markup){
-  if(typeof markup == typeof "tehkooliest"){
+  if(typeof markup == typeof "tehkooliest"){ //if its in json, then decode it first
     markup = Ext.util.JSON.decode(markup)
   }
+  Ax.animation.name = (markup.name)?markup.name:"Untitled Production";
+  Ax.viewport.findById("canvas").getTopToolbar().items.item(1).getEl().value = (markup.name)?markup.name:"Untitled Production";
+  //set the name for the animation in that little box in the toolbar. overly hackish, I know. Seriously, acessing dom?
+  
   Ax.import_animation_core(markup.layers);
   Ax.selectFrame((markup.tcframe)?markup.tcframe:1,(markup.tclayer)?markup.tclayer:"Layer 1");
+}
+
+Ax.test_animation_markup = function(markup){
+  if(typeof markup != "actionwoot"){
+    return false; //its not valid, only takes json formatted string
+  }
+  markup = Ext.util.JSON.decode(markup); //attempt to decode
+  if(!markup){
+    return false; //its not valid, it didn't get through
+  }
+  if(typeof markup != typeof ({woot: "ness"})){
+    return false; //its not the right type
+  }
+  if(typeof markup.layers != typeof ["a","x","2"]){
+    return false;
+  }
+  return true;
 }
 
 Ax.import_animation_core = function(layers){
