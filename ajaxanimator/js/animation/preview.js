@@ -19,6 +19,7 @@ Ax.preview_increment = function(){
 Ax.init_preview = function(){
   $("previewcanvas").innerHTML = "";
   Ax.preview = Ax.init_view_core($("previewcanvas"));
+  
   Ext.get("previewcanvas").on("mousedown",function(){
     Ax.msg("Preview","Preview is for viewing! Head over to the Canvas tab to edit.")
   })

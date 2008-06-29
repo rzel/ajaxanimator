@@ -1,14 +1,6 @@
 Ax.Timeline = Ext.extend(Ext.Panel,{
   initComponent: function(){
-    this.cellActions = new Ext.ux.grid.CellActions({
-      callbacks: {
-        "tb_delete":function(grid,record,action,value){
-          Ext.MessageBox.confirm("Delete "+value+" OMG!!!!",
-          "Are you positively super duper sure you want to do this action that your life depends on?!?!?!")
-          Ax.msg('Callback: delete layer', 'You have clicked: <b>{0}</b>, action: <b>{1}</b>', value, action);
-        }
-      }
-    });
+
     Ext.apply(this,{
       layout:"border",
       items:[{
@@ -21,6 +13,7 @@ Ax.Timeline = Ext.extend(Ext.Panel,{
         width: 100,
         border: false,
         split:true,
+
         collapsible:true,
         collapseMode:"mini",
         autoScroll: true,
@@ -31,7 +24,15 @@ Ax.Timeline = Ext.extend(Ext.Panel,{
           xtype:"editorgrid",
           border:false,
           hideHeaders: true,
-          plugins: [this.cellActions],
+          plugins: [new Ext.ux.grid.CellActions({
+      callbacks: {
+        "tb_delete":function(grid,record,action,value){
+          Ext.MessageBox.confirm("Delete "+value+" OMG!!!!",
+          "Are you positively super duper sure you want to do this action that your life depends on?!?!?!")
+          Ax.msg('Callback: delete layer', 'You have clicked: <b>{0}</b>, action: <b>{1}</b>', value, action);
+        }
+      }
+    })],
           viewConfig:{
             autoFill: true,
             forceFit:true
@@ -43,6 +44,7 @@ Ax.Timeline = Ext.extend(Ext.Panel,{
             }
           },
           sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
+
           //clicksToEdit:1,
           ds:/*BEGIN*/new Ext.data.Store()/*END*/,
           columns: [
@@ -61,3 +63,4 @@ Ax.Timeline = Ext.extend(Ext.Panel,{
 })
 
 Ext.reg("timeline",Ax.Timeline)
+
