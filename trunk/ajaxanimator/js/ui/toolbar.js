@@ -1,6 +1,6 @@
 Ax.MainToolbar = [
   {text:"File", menu: [
-  {text: "New", iconCls: "tb_new"},
+  {text: "New", iconCls: "tb_new", handler: function(){Ax.new_animation()}},
   {text: "Open", iconCls: "tb_open", menu: [
     {text: "From Computer", iconCls: "tb_comp"},
     {text: "From Webserver", iconCls: "tb_server"},
