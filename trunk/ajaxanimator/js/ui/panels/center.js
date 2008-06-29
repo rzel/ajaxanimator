@@ -38,9 +38,7 @@ Ext.apply(this,{
             layout:"fit",
             
 			tbar: [
-      {cls: "x-btn-text-icon",iconCls: "hide_timeline", iconCls: "hide_timeline",
-      handler: function(){Ax.viewport.findById("timeline").toggleCollapse()},text: "Hide Timeline"}
-      ,{xtype: "tbfill"},{text:"Zoom"},
+     " Name: ",{xtype: "textfield", value: "Untitled Production"}   ,{xtype: "tbfill"},{text:"Zoom"},
       {xtype: "slider", width: 120, maxValue: 300, value: 100, increment: 5,plugins: new Ext.ux.SliderTip({
       getText: function(slider){return String.format('Canvas Zoom: {0}%', slider.getValue())}
         })}],
