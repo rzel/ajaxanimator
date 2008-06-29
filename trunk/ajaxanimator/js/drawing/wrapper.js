@@ -134,6 +134,7 @@ Ax.setTool = function(tool){
     break;
   }
   
+  setTimeout(function(){Ax.autodiff();return true},10); //do some magickal saving.
 }
 
 Ax.loadShapes = function(shapes,noattachlistener, instance){ //instance; probably need a better name for this. but its the richdraw/onlypaths/viewer/etc reference. 
