@@ -39,9 +39,9 @@ ALEON/Axff/Xff
 Ax.format = {
   support: {//format support. minimum version, maximum version
     min: 1,
-    max: 4
+    max: 5
   },
-  export: 4 //the version the app exports
+  revision: 5 //the version the app exports
 }
 
 
@@ -61,9 +61,7 @@ Ax.export_animation = function(input, format){
   if(!input){
     input = {};
   }
-  if(!input.generator){
-    input.generator = Ax.v;
-  }
+  
   if(!input.creation){
     input.creation = (new Date()).getTime()
   }
@@ -76,6 +74,9 @@ Ax.export_animation = function(input, format){
   }
   
   input.modified = (new Date()).getTime();
+  input.generator = Ax.v;
+    
+  input.revision = Ax.format.revision;
   
   input.tcframe = Ax.tcurrent.frame;
   input.tclayer = Ax.tcurrent.layer;
@@ -104,19 +105,24 @@ Ax.import_animation = function(markup){
 }
 
 Ax.test_animation_markup = function(markup){
-  if(typeof markup != "actionwoot"){
+  if(typeof markup != typeof "actionwoot"){
     return false; //its not valid, only takes json formatted string
   }
-  markup = Ext.util.JSON.decode(markup); //attempt to decode
+  try{
+    markup = Ext.util.JSON.decode(markup); //attempt to decode
+  }catch(err){
+    return false;
+  }
   if(!markup){
     return false; //its not valid, it didn't get through
   }
   if(typeof markup != typeof ({woot: "ness"})){
     return false; //its not the right type
   }
-  if(typeof markup.layers != typeof ["a","x","2"]){
+  if(typeof markup.layers != typeof ({ello: "world"})){
     return false;
   }
+  
   return true;
 }
 
@@ -136,3 +142,4 @@ Ax.import_animation_core = function(layers){
   }
 
 }
+

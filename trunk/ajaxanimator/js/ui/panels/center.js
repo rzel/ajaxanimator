@@ -38,7 +38,16 @@ Ext.apply(this,{
             layout:"fit",
             
 			tbar: [
-     " Name: ",{xtype: "textfield", value: "Untitled Production"}   ,{xtype: "tbfill"},{text:"Zoom"},
+     " Name: ",{xtype: "textfield", id: "namefield",
+       value: Ax.animation.name,
+       listeners: {
+        "change": function(field){
+            if(field.getValue().replace(/ /g,"") == ""){
+                field.setValue("Untitled Production")
+            }
+            Ax.animation.name = field.getValue()
+        }
+        }, width: 200}   ,{xtype: "tbfill"},{text:"Zoom"},
       {xtype: "slider", width: 120, maxValue: 300, value: 100, increment: 5,plugins: new Ext.ux.SliderTip({
       getText: function(slider){return String.format('Canvas Zoom: {0}%', slider.getValue())}
         })}],
