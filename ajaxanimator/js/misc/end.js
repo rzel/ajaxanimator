@@ -8,7 +8,7 @@ setTimeout(function(){
     Ax.addLayer()
     Ax.addFrames(99)
     if(Ax.urlprefs.draw != "false"){
-      Ax.preinit();
+      //Ax.preinit();
       Ax.drawinit();
     }
     //Main Timeline initialization stuff, create, add alyer, add frames, select first one..

@@ -33,11 +33,7 @@ var centerZoomy=Math.round(Ax.canvasHeight/2); //some OnlyPaths stuffs
 var selectmode=''; //I have a feeling these comments aren't helping anyone
 var data_path_close = true;
   
-Ax.preinit = function(){
-  var fx = (new Ext.Window({title: "hacks to get onlypaths happy", html: "Please wait, i'll disappear soon!<br />"+Ax.hackcode}))
-  fx.show(document.body)
-  fx.hide()
-}
+
 
 Ax.drawinit_core = function(){
   var renderer = null;
@@ -208,5 +204,3 @@ Ax.dumpshapes = function(format){
   
 }
 
-
-Ax.hackcode = "";
