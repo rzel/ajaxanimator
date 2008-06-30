@@ -1,4 +1,4 @@
-Ax.toolConfig= {
+Ax.toolConfig={
 	"select":      ["tx_select","Select Shapes"],
 	"rect":        ["tx_rectangle","Draw Rectangle"],
 	"roundrect":   ["tx_roundrect","Draw Rounded Rectangle"],
@@ -17,30 +17,20 @@ Ax.toolConfig= {
 Ax.ToolsPanel = Ext.extend(Ext.Panel,{
 
 changeTool: function(tool){
-
-
-
-
 Ax.setTool(tool.tool);
-
-
-
-//this.toolConfig[this.tool][2]()
-
-
 },
 
 initComponent: function(){
 var ia = []
-for(var tool in this.toolConfig){
+for(var tool in Ax.toolConfig){
 
 
 ia.push(new Ax.ToolItem({
 tool:tool,
 id: "tool_"+ tool,
-toolConfig: this.toolConfig,
-qtip: this.toolConfig[tool][1],
-imgclass:this.toolConfig[tool][0], //ooh! gets the toolbox icons dir, and adds it to the stuff
+toolConfig: Ax.toolConfig,
+qtip: Ax.toolConfig[tool][1],
+imgclass:Ax.toolConfig[tool][0], //ooh! gets the toolbox icons dir, and adds it to the stuff
 onSelect: this.changeTool
 }))
 	
