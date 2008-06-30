@@ -39,9 +39,9 @@ ALEON/Axff/Xff
 Ax.format = {
   support: {//format support. minimum version, maximum version
     min: 1,
-    max: 5
+    max: 6
   },
-  revision: 5 //the version the app exports
+  revision: 6 //the version the app exports
 }
 
 
@@ -140,7 +140,7 @@ Ax.test_animation_markup = function(markup){
     return false;
   }
   
-  return true;
+  return markup;
 }
 
 Ax.import_animation_core = function(layers){
