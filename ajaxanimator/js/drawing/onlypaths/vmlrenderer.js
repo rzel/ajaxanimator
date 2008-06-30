@@ -997,66 +997,7 @@ VMLRenderer.prototype.queryCommand = function(shape, cmd)
 
 VMLRenderer.prototype.getProperties = function(shape)
 {
-  var result = '';
-  
-  if (shape != null) 
-   {
-      result = shape.fillcolor;
-      if (shape.filled=='false')
-       {
-         mefillColor.visible = 'hidden';
-         mefillColor.hex = '#000000'; 
-         filldraw=true;
-         setbe(1,'img_okfill');
-       }
-        else
-       {   
-         //alert(mefillColor.hex+' '+result);
-         mefillColor.visible = 'visible';
-         mefillColor.hex = result; 
-         var rgb=hex2rgb(result)
-         mefillColor.r=rgb[0];
-         mefillColor.g=rgb[1];
-         mefillColor.b=rgb[2];
-         filldraw=false;
-         setbe(1,'img_okfill');
 
-       }
-
-      result = shape.strokecolor;
-      if (shape.stroked=='false')
-       {    
-         mestrokeColor.visible = 'hidden'; 
-         mestrokeColor.hex = '#000000';
-         mestrokeColor.width = 0;
-         strokedraw=true;
-         setbe(2,'img_okstroke');
-
-       }
-        else
-       { 
-         mestrokeColor.visible = 'visible'; 
-         mestrokeColor.hex = result; 
-         var rgb=hex2rgb(result)
-         mestrokeColor.r=rgb[0];
-         mestrokeColor.g=rgb[1];
-         mestrokeColor.b=rgb[2];
-         strokedraw=false;
-         setbe(2,'img_okstroke');
-
-       }
-
-      result = shape.strokeweight;
-      mestrokeColor.width = result;
- 
-      result = shape.fillopacity; 
-      mefillColor.opacity = result;
-
-      result = shape.strokeopacity;
-      mestrokeColor.opacity = result;
-      
-      setProperties();
-   }
 }
 
 VMLRenderer.prototype.showMultiSelect = function(iniX,iniY) { 

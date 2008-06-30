@@ -51,8 +51,9 @@ SVGRenderer.prototype.init = function(elem) {
   
   this.svgRoot = this.container.ownerDocument.createElementNS(svgNamespace, "svg");
   this.svgRoot.setAttributeNS(null,'viewBox', zoominit);
-
+  this.svgRoot.setAttributeNS(null,'preserveAspectRatio','none');
   this.container.appendChild(this.svgRoot);
+  this.control_codebase = '';
 }
 
 
@@ -65,11 +66,256 @@ SVGRenderer.prototype.bounds = function(shape) {
   rect['height'] = box.height-18;
   return rect;
 }
-
-
-SVGRenderer.prototype.create = function(shape, fillColor, lineColor, fillOpac, lineOpac, lineWidth, left, top, width, height) {
+SVGRenderer.prototype.create = function(shape, fillColor, lineColor, fillOpac, lineOpac, lineWidth, left, top, width, height, textMessaje, textSize, textFamily, imageHref, points, transform, parent) {
   var svgNamespace = 'http://www.w3.org/2000/svg'; 
   var xlinkNS="http://www.w3.org/1999/xlink"; 
+ 
+  var svg;  
+  
+  if (shape == 'rect') {
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'rect');
+    svg.setAttributeNS(null, 'x', left + 'px');
+    svg.setAttributeNS(null, 'y', top + 'px');
+    svg.setAttributeNS(null, 'width', width + 'px');
+    svg.setAttributeNS(null, 'height', height + 'px');  
+    //svg.setAttributeNS(null,'transform', "translate(0,0)");
+    //svg.setAttributeNS(null,'transform', "translate('+left+','+top+')");   
+    svg.style.position = 'absolute';
+  }
+  else if (shape == 'ellipse' || shape == 'circle') {
+    
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'ellipse');
+    svg.setAttributeNS(null, 'cx', (left + width / 2) + 'px');
+    svg.setAttributeNS(null, 'cy', (top + height / 2) + 'px');
+    if(shape == 'circle'){
+     svg.setAttributeNS(null, 'rx', (width / 2) + 'px');
+     svg.setAttributeNS(null, 'ry', (width / 2) + 'px');   
+    }else{
+     svg.setAttributeNS(null, 'rx', (width / 2) + 'px');
+     svg.setAttributeNS(null, 'ry', (height / 2) + 'px');   
+    
+    }
+   //svg.setAttributeNS(null,'transform', "translate('+left+','+top+')");  
+    svg.style.position = 'absolute';
+  }
+  else if (shape == 'roundrect') {
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'rect');
+    svg.setAttributeNS(null, 'x', left + 'px');
+    svg.setAttributeNS(null, 'y', top + 'px');
+    svg.setAttributeNS(null, 'rx', '20px');
+    svg.setAttributeNS(null, 'ry', '20px');
+    svg.setAttributeNS(null, 'width', width + 'px');
+    svg.setAttributeNS(null, 'height', height + 'px');   
+   //svg.setAttributeNS(null,'transform', "translate('+left+','+top+')");  
+    svg.style.position = 'absolute';
+  }
+  else if (shape == 'line') {
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'line');
+    svg.setAttributeNS(null, 'x1', left + 'px');
+    svg.setAttributeNS(null, 'y1', top + 'px');
+    svg.setAttributeNS(null, 'x2', left + width + 'px');
+    svg.setAttributeNS(null, 'y2', top + height + 'px');  
+    //svg.setAttributeNS(null,'transform', "translate('+left+','+top+')");  
+    svg.style.position = 'absolute';
+  } 
+  else if (shape == 'polyline') {
+    var xcenterpoly=xpArray;
+    var ycenterpoly=ypArray;
+    var thispath=''+xpArray[1]+','+ypArray[1];
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'polyline');  
+    svg.setAttributeNS(null, 'points', points);
+    svg.style.position = 'absolute';
+  }
+  else if (shape == 'path')
+    {
+    var k = (Math.sqrt(2)-1)*4/3;
+    var circle="M 0,1 L 0.552,1 1,0.552  1,0  1,-0.552  0.552,-1 0,-1 -0.552,-1 -1,-0.552 -1,0  -1,0.552  -0.552,1  0,1z"  // 4th
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'path');   
+    //svg.setAttributeNS(null, 'd', 'M '+thispath+' C'+thispath);
+    svg.setAttributeNS(null, 'd', points);  	
+    //svg.setAttributeNS(null,'transform', "translate(-80,-80)"); 
+    svg.style.position = 'absolute';  
+    } 
+     else if (shape == 'controlpath')
+    {
+    var point='M '+left+','+top+' L '+(left+1)+','+(top+1)+'z'  // 4th
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'path');   
+    //svg.setAttributeNS(null, 'd', 'M '+thispath+' C'+thispath);
+    svg.setAttributeNS(null, 'd', point);  	
+    svg.setAttributeNS(null,'transform', "translate(0,0)"); 
+    svg.style.position = 'absolute';  
+    } 
+ else if (shape == 'text') {
+    var data = this.container.ownerDocument.createTextNode(textMessaje);
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'text');
+    svg.setAttributeNS(null, 'x', parseFloat(left) + 'px');
+    svg.setAttributeNS(null, 'y', parseFloat(top) + 'px');
+    svg.setAttributeNS(null, 'font-family', textFamily );
+    svg.setAttributeNS(null, 'font-size', parseFloat(textSize)); 
+    svg.style.position = 'absolute';  
+    svg.appendChild(data);   
+ } 
+  else if (shape == 'clipPath') {
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'clipPath');
+     
+
+ }  
+ else if (shape == 'linearGradient') {
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'linearGradient');
+    svg.setAttributeNS(null, 'x1', parseFloat(left));
+    svg.setAttributeNS(null, 'y1', parseFloat(top ));
+    svg.setAttributeNS(null, 'x2', parseFloat(width));
+    svg.setAttributeNS(null, 'y2', parseFloat(height));  
+
+ }  
+ else if (shape == 'stop') {
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'stop');
+    svg.setAttributeNS(null, 'stop-color', fillColor);
+    svg.setAttributeNS(null, 'stop-opacity', parseFloat(fillOpac));
+    svg.setAttributeNS(null, 'offset', parseFloat(lineOpac));  
+
+ } 
+  else if (shape == 'group') {
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'g');
+    svg.setAttributeNS(null, 'x', left + 'px');
+    svg.setAttributeNS(null, 'y', top + 'px');
+    svg.setAttributeNS(null, 'width', width + 'px');
+    svg.setAttributeNS(null, 'height', height + 'px');  
+    svg.setAttributeNS(null, 'fill-opacity', parseFloat(fillOpac));  
+    svg.setAttributeNS(null, 'fill', fillColor);
+ //} 
+
+  //else if (shape == 'linearGradient') {
+    //return false
+ } 
+ else if (shape == 'image') { 
+   /* svg = this.container.ownerDocument.createElementNS(svgNamespace, 'g');
+    svg.setAttributeNS(null, 'x', left + 'px');
+    svg.setAttributeNS(null, 'y', top + 'px');
+    svg.setAttributeNS(null, 'width', width + 'px');
+    svg.setAttributeNS(null, 'height', height + 'px');  
+    */
+    var svg = this.container.ownerDocument.createElementNS(svgNamespace, 'image');
+    svg.setAttributeNS(xlinkNS,'href', imageHref);
+    svg.setAttributeNS(null, 'x', left  + 'px');
+    svg.setAttributeNS(null, 'y', top + 'px');
+    svg.setAttributeNS(null, 'width', width + 'px');
+    svg.setAttributeNS(null, 'height', height + 'px');  
+    svg.setAttributeNS(null, 'opacity', parseFloat(fillOpac));
+    svg.setAttributeNS(null, 'preserveAspectRatio','none');//xMinYMin slice  
+    //svg.setAttributeNS(null, 'viewbox', left+' '+top+' '+width+' '+height); 
+    //Ext.get(this.container).removeAllListeners(isvg)   
+    //svg.appendChild(isvg);
+    /* 
+    var rsvg = this.container.ownerDocument.createElementNS(svgNamespace, 'rect');
+    rsvg.setAttributeNS(null, 'x', left + 'px');
+    rsvg.setAttributeNS(null, 'y', top + 'px');
+    rsvg.setAttributeNS(null, 'width', width + 'px');
+    rsvg.setAttributeNS(null, 'height', height + 'px');  
+    rsvg.style.fill = fillColor;  
+    rsvg.style.stroke = lineColor;  
+    rsvg.style.strokeWidth = lineWidth; 
+    rsvg.setAttributeNS(null, 'opacity', '0.1');
+    rsvg.style.strokOpacity = lineOpac;
+    // Ext.get(this.container).removeAllListeners(rsvg)
+     svg.appendChild(rsvg);   
+
+     */
+    //svg.setAttributeNS(null, 'color-rendering', fillColor);   
+    //svg.setAttributeNS(null, 'display', 'inherit'); 
+    
+      //alert(fillOpac+'lkjlkj'); 
+    //svg.setAttributeNS(null, 'fill-opacity', parseFloat(fillOpac));
+
+    /* if (fillColor.length == 0){fillColor = 'none';}
+    if (lineColor.length == 0){lineColor = 'none';}
+    svg.style.fill = fillColor;  
+    svg.style.stroke = lineColor;  
+    svg.style.strokeWidth = lineWidth; 
+    svg.style.fillOpacity = fillOpac;
+    svg.style.strokOpacity = lineOpac;
+     svg.style.setAttributeNS(null, 'fill', fillColor);
+          svg.style.setAttributeNS(null, 'stroke', lineColor);
+          svg.style.setAttributeNS(null, 'stroke-width', lineWidth);
+          svg.style.setAttributeNS(null, 'fill-opacity', fillOpac);  
+          svg.style.setAttributeNS(null, 'stroke-opacity',lineOpac);
+    
+   */
+ } 
+ 
+ if(shape == 'zoom') 
+  {
+        
+  }else
+  {                                          
+       if(transform!='')
+        {
+         svg.setAttributeNS(null, 'transform', transform);      
+        }
+        /*
+             var render=true;
+        if(shape.indexOf('image')>=0){render=false;}
+        if(shape.indexOf('group')>=0){render=false;}
+        if(shape.indexOf('linearGradient')>=0){render=false;}
+        if(shape.indexOf('stop')<=0){render=false;}
+        if(render==true) 
+        */
+       if(shape != 'image' || shape != 'group' || shape != 'stop' )
+
+        { 
+                                                               
+           //var set = this.container.ownerDocument.createElementNS(svgNamespace, "style");
+            
+           if (lineColor.length == 0){lineColor = 'none';} 
+           if (fillColor.length == 0){fillColor = 'none';} 
+          // set.setAttributeNS(null, 'stroke', lineColor);
+          //set.setAttributeNS(null, 'stroke-width', lineWidth);
+          //set.setAttributeNS(null, 'fill-opacity', fillOpac);  
+          //set.setAttributeNS(null, 'stroke-opacity',lineOpac);
+            //svg.appendChild(set);
+           //svg.setAttributeNS(null, "style","fill:"+ fillColor+";stroke:"+lineColor+";strokeWidth:"+lineWidth+";fill-opacity:"+fillOpac+";stroke-opacity:"+lineOpac);  
+           // 
+          svg.setAttributeNS(null, 'fill', fillColor);
+          svg.setAttributeNS(null, 'stroke', lineColor);
+          svg.setAttributeNS(null, 'stroke-width', parseFloat(lineWidth));
+          svg.setAttributeNS(null, 'fill-opacity', parseFloat(fillOpac));  
+          svg.setAttributeNS(null, 'stroke-opacity',parseFloat(lineOpac));
+          svg.setAttributeNS(null, 'stroke-linejoin','round')         
+      
+          /*     
+          <a xlink:href="http://www.w3.org">
+                <ellipse cx="2.5" cy="1.5" rx="2" ry="1"  fill="red" />
+          </a>
+          svg.style.stroke = lineColor;  
+           svg.style.strokeWidth = lineWidth; 
+           svg.style.fillOpacity = fillOpac;
+           svg.style.strokOpacity = lineOpac;   
+          if (fillColor.length == 0){fillColor = 'none';}
+          
+          if (lineColor.length == 0){lineColor = 'none';}
+          */
+         }   
+         
+         
+     if(parent==''){
+       this.svgRoot.appendChild(svg);
+     }else{  
+       if(document.getElementById(parent)){   
+         var parentShape = document.getElementById(parent);
+         parentShape.appendChild(svg);
+        } 
+     }   
+
+          return svg;   
+             
+   }        
+  
+};   
+
+SVGRenderer.prototype.create01 = function(shape, fillColor, lineColor, fillOpac, lineOpac, lineWidth, left, top, width, height, textMessaje, textSize, textFamily, imageHref, transform) {
+  var svgNamespace = 'http://www.w3.org/2000/svg'; 
+  var xlinkNS="http://www.w3.org/1999/xlink"; 
+  
   var svg;  
   if (shape == 'rect') {
     svg = this.container.ownerDocument.createElementNS(svgNamespace, 'rect');
@@ -138,33 +384,73 @@ SVGRenderer.prototype.create = function(shape, fillColor, lineColor, fillOpac, l
     svg.style.position = 'absolute';  
     } 
  else if (shape == 'text') {
-    var data = this.container.ownerDocument.createTextNode(data_text_messaje);
+    var data = this.container.ownerDocument.createTextNode(textMessaje);
     svg = this.container.ownerDocument.createElementNS(svgNamespace, 'text');
     svg.setAttributeNS(null, 'x', parseFloat(left) + 'px');
     svg.setAttributeNS(null, 'y', parseFloat(top) + 'px');
-    svg.setAttributeNS(null, 'font-family', data_text_family );
-    svg.setAttributeNS(null, 'font-size', parseFloat(data_text_size)); 
+    svg.setAttributeNS(null, 'font-family', textFamily );
+    svg.setAttributeNS(null, 'font-size', parseFloat(textSize)); 
     svg.style.position = 'absolute';  
     svg.appendChild(data);   
  } 
+  else if (shape == 'clipPath') {
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'clipPath');
+     
+
+ }  
+
+  else if (shape == 'group') {
+    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'g');
+    svg.setAttributeNS(null, 'x', left + 'px');
+    svg.setAttributeNS(null, 'y', top + 'px');
+    svg.setAttributeNS(null, 'width', width + 'px');
+    svg.setAttributeNS(null, 'height', height + 'px');  
+
+ //} 
+
+  //else if (shape == 'linearGradient') {
+    //return false
+ } 
  else if (shape == 'image') { 
-    //svg = this.container.ownerDocument.createElementNS(svgNamespace, 'g');    
-    svg = this.container.ownerDocument.createElementNS(svgNamespace, 'image');
-    svg.setAttributeNS(xlinkNS,'href', data_image_href);
-    svg.setAttributeNS(null, 'x', parseFloat(left) + 'px');
-    svg.setAttributeNS(null, 'y', parseFloat(top) + 'px');
-    svg.setAttributeNS(null, 'width', parseFloat(width) + 'px');
-    svg.setAttributeNS(null, 'height', parseFloat(height) + 'px');  
-   
+   /* svg = this.container.ownerDocument.createElementNS(svgNamespace, 'g');
+    svg.setAttributeNS(null, 'x', left + 'px');
+    svg.setAttributeNS(null, 'y', top + 'px');
+    svg.setAttributeNS(null, 'width', width + 'px');
+    svg.setAttributeNS(null, 'height', height + 'px');  
+    */
+    var svg = this.container.ownerDocument.createElementNS(svgNamespace, 'image');
+    svg.setAttributeNS(xlinkNS,'href', imageHref);
+    svg.setAttributeNS(null, 'x', left  + 'px');
+    svg.setAttributeNS(null, 'y', top + 'px');
+    svg.setAttributeNS(null, 'width', width + 'px');
+    svg.setAttributeNS(null, 'height', height + 'px');  
     svg.setAttributeNS(null, 'opacity', parseFloat(fillOpac));
-    //svg.style.fill = fillColor;  
-    //svg.style.stroke = lineColor;  
-    //svg.style.strokeWidth = lineWidth; 
-    //svg.style.fillOpacity = fillOpac;
-    //svg.style.strokOpacity = lineOpac;
-         
-    //svg.appendChild(img);   
-   /* if (fillColor.length == 0){fillColor = 'none';}
+    svg.setAttributeNS(null, 'preserveAspectRatio','none');//xMinYMin slice  
+    //svg.setAttributeNS(null, 'viewbox', left+' '+top+' '+width+' '+height); 
+    //Ext.get(this.container).removeAllListeners(isvg)   
+    //svg.appendChild(isvg);
+    /* 
+    var rsvg = this.container.ownerDocument.createElementNS(svgNamespace, 'rect');
+    rsvg.setAttributeNS(null, 'x', left + 'px');
+    rsvg.setAttributeNS(null, 'y', top + 'px');
+    rsvg.setAttributeNS(null, 'width', width + 'px');
+    rsvg.setAttributeNS(null, 'height', height + 'px');  
+    rsvg.style.fill = fillColor;  
+    rsvg.style.stroke = lineColor;  
+    rsvg.style.strokeWidth = lineWidth; 
+    rsvg.setAttributeNS(null, 'opacity', '0.1');
+    rsvg.style.strokOpacity = lineOpac;
+    // Ext.get(this.container).removeAllListeners(rsvg)
+     svg.appendChild(rsvg);   
+
+     */
+    //svg.setAttributeNS(null, 'color-rendering', fillColor);   
+    //svg.setAttributeNS(null, 'display', 'inherit'); 
+    
+      //alert(fillOpac+'lkjlkj'); 
+    //svg.setAttributeNS(null, 'fill-opacity', parseFloat(fillOpac));
+
+    /* if (fillColor.length == 0){fillColor = 'none';}
     if (lineColor.length == 0){lineColor = 'none';}
     svg.style.fill = fillColor;  
     svg.style.stroke = lineColor;  
@@ -184,7 +470,12 @@ SVGRenderer.prototype.create = function(shape, fillColor, lineColor, fillOpac, l
   {
         
   }else
-  {  
+  {                                          
+       if(transform!='')
+        {
+         svg.setAttributeNS(null, 'transform', transform);      
+        }
+  
         if(shape != 'image')
          { 
                                                                
@@ -204,7 +495,7 @@ SVGRenderer.prototype.create = function(shape, fillColor, lineColor, fillOpac, l
           svg.setAttributeNS(null, 'stroke-width', parseFloat(lineWidth));
           svg.setAttributeNS(null, 'fill-opacity', parseFloat(fillOpac));  
           svg.setAttributeNS(null, 'stroke-opacity',parseFloat(lineOpac));
-                  
+          svg.setAttributeNS(null, 'stroke-linejoin','round')         
       
           /*     
           <a xlink:href="http://www.w3.org">
@@ -345,10 +636,12 @@ var viewBox = this.rootNode.getAttribute('viewBox');
 
   this.svgRoot.setAttributeNS(null,'viewBox', (corner1x)+' '+(corner1y)+' '+corner2x+' '+corner2y+'');
   var viewBox = this.svgRoot.getAttributeNS(null,'viewBox'); 
-  $('status').innerHTML=' '+viewBox; 
+  //$('status').innerHTML=' '+viewBox; 
   //alert(direction+'__'+prevZoomCenterx+' '+prevZoomCentery+' '+centerZoomx+' '+centerZoomy);
-}
-SVGRenderer.prototype.datacreate = function(fillColor, lineColor, fillOpac, lineOpac, lineWidth, left, top, width, height,data) {
+}  
+
+//this.mode, this.fillColor, this.lineColor, this.fillOpac, this.lineOpac, this.lineWidth, this.mouseDownX, this.mouseDownY, 1, 1,'',''
+SVGRenderer.prototype.datacreate = function(fillColor, lineColor, fillOpac, lineOpac, lineWidth, left, top, width, height, textMessaje, textSize, textFamily, imageHref, transform) {
   var svgNamespace = 'http://www.w3.org/2000/svg';
   var svg;
   svg = this.container.ownerDocument.createElementNS(svgNamespace, 'path');   
@@ -506,31 +799,109 @@ SVGRenderer.prototype.moveToBottom( svgNode )
 
 */
 
+
+
+
      
 var xshe=0; //bad
 var yshe=0;  
 
 SVGRenderer.prototype.move = function(shape, left, top,fromX,fromY) {  
- typeTransform='Translate';
- var box = shape.getBBox();
-        contmove++;
+ //typeTransform='Translate';   
+ 
+ var box = shape.getBBox(); 
+ var angle=0;
+ var dist=0;  
+ var rotated=false;
 
-  if (shape.tagName == 'rect'){
-    shape.setAttributeNS(null, 'x', left);
-    shape.setAttributeNS(null, 'y', top); 
+  if (shape.hasAttributeNS(null,'transform')) { 
+    var tran=shape.getAttributeNS(null, 'transform'); 
+    //var h=shape.getAttributeNS(null, SVG_TRANSFORM_ROTATE ); 
+    var rot= GetString(tran, 'rotate(', ',');
+   
+   var xy= GetString(tran, ',', ')');
+     xy +=')';
+   var x= GetString(xy, ' ', ', '); 
+   var y= GetString(xy, x+', ', ')');      
+   x= parseFloat(x); 
+    y= parseFloat(y);  
+    angle=parseFloat(rot);
+    var centerx=box.x+(box.width/2);
+    var centery=box.y+(box.height/2);  
+    shape.setAttributeNS(null,'transform', 'rotate('+(angle)+', '+centerx+', '+centery+')'); 
+   
+    var angleRad=angle*Math.PI/180; 
+   
+   
+      
+   //dist=dist2p(x,y,left, top) ;
+   dist=dist2p(x,y,left, top) ;
+   rotated=true;
+   
+ }
+ 
+    contmove++;
+
+  if (shape.tagName == 'rect'){ 
+  /* var dudy= shape.parentNode;  
+   if(dudy.tagName=='g'){
+      document.forms[0].code.value= 'this g ============ '; 
+           shape.setAttributeNS(null, 'x', left);
+           shape.setAttributeNS(null, 'y', top); 
+ 
+           dudy.setAttributeNS(null, 'x', left);
+           dudy.setAttributeNS(null, 'y', top); 
+           dudy.childNodes[0].setAttributeNS(null, 'x', left);
+           dudy.childNodes[0].setAttributeNS(null, 'y', top);
+           
+    }else{
+     //document.forms[0].code.value= box.x+' '+box.y+' formX  Y'+ fromX+'_'+fromY+'  left '+left+'_'+top+'==============';     
+     //document.forms[0].code.value+= tran+' rot '+ angle+'_'+x+'_'+y+' dist '+dist;   
+     if(rotated){
+          //shape.setAttributeNS(null, 'x', box.x*Math.cos(angleRad)) ;
+         //shape.setAttributeNS(null, 'y', box.y*Math.sin(angleRad)) ;  
+           shape.setAttributeNS(null, 'x', left);
+           shape.setAttributeNS(null, 'y', top); 
+  
+
+     }else{ 
+     */
+      shape.setAttributeNS(null, 'x', left);
+      shape.setAttributeNS(null, 'y', top); 
+     //}
     //$('option_rect_trx').value= left;  
-    //$('option_rect_try').value= top;
+    //$('option_rect_try').value= top;    
+       // var h=shape.getAttributeNS(null, 'height');   
+       //var w=shape.getAttributeNS(null, 'width'); 
+       //document.forms[0].code.value= h+' '+w;
+   //}    
   } 
-  if (shape.tagName == 'image'){
+  if (shape.tagName == 'g')
+   { 
+   this.editor.log(shape.tagName+' ==============');  
+   
     shape.setAttributeNS(null, 'x', left);
     shape.setAttributeNS(null, 'y', top);
+    shape.childNodes[0].setAttributeNS(null, 'x', left + 'px');
+    shape.childNodes[0].setAttributeNS(null, 'y', top + 'px');
+    shape.childNodes[1].setAttributeNS(null, 'x', left + 'px');
+    shape.childNodes[1].setAttributeNS(null, 'y', top + 'px');
+    
+   }
+  if (shape.tagName == 'image'){
+    shape.setAttributeNS(null, 'x', left + 'px');
+    shape.setAttributeNS(null, 'y', top + 'px');
     //$('option_img_trx').value= left;  
     //$('option_img_try').value= top;
-
+     var h=shape.getAttributeNS(null, 'height');   
+     var w=shape.getAttributeNS(null, 'width'); 
+     this.editor.log( h+' '+w);
   }
-  if (shape.tagName == 'text'){
-    shape.setAttributeNS(null, 'x', left);
-    shape.setAttributeNS(null, 'y', top);
+  if (shape.tagName == 'text'){  
+   var size=parseFloat(shape.getAttributeNS(null, 'font-size')); 
+   $('code').value=size;
+    shape.setAttributeNS(null, 'x', left + 'px');
+    shape.setAttributeNS(null, 'y', parseFloat(top+size) + 'px');
     //$('option_text_trx').value= left;  
     //$('option_text_try').value= top;
 
@@ -538,11 +909,11 @@ SVGRenderer.prototype.move = function(shape, left, top,fromX,fromY) {
   if (shape.tagName == 'line'){ 
     var deltaX = shape.getBBox().width;
     var deltaY = shape.getBBox().height;
-    shape.setAttributeNS(null, 'x1', left);
-    shape.setAttributeNS(null, 'y1', top);
+    shape.setAttributeNS(null, 'x1', left + 'px');
+    shape.setAttributeNS(null, 'y1', top + 'px');
 
-    shape.setAttributeNS(null, 'x2', left + deltaX);
-    shape.setAttributeNS(null, 'y2', top + deltaY);   
+    shape.setAttributeNS(null, 'x2', left + deltaX + 'px');
+    shape.setAttributeNS(null, 'y2', top + deltaY + 'px');   
     //$('option_line_trx').value= left;  
     //$('option_line_try').value= top;
 
@@ -550,8 +921,8 @@ SVGRenderer.prototype.move = function(shape, left, top,fromX,fromY) {
   if (shape.tagName == 'ellipse'){  
     var putx=left + (shape.getBBox().width / 2)    
     var puty= top + (shape.getBBox().height / 2)
-    shape.setAttributeNS(null, 'cx', putx);
-    shape.setAttributeNS(null, 'cy', puty);
+    shape.setAttributeNS(null, 'cx', putx + 'px');
+    shape.setAttributeNS(null, 'cy', puty + 'px');
     //$('option_ellipse_trx').value= putx;  
     //$('option_ellipse_try').value= puty;
 
@@ -641,7 +1012,10 @@ var yinc=top-yshe;
   
 //$('status').innerHTML=typeTransform+': '+left+' '+top;
 //$('option_select_trx').value= left;  
-//$('option_select_try').value= top;
+//$('option_select_try').value= top;  
+
+
+
 };
 
 
@@ -656,19 +1030,17 @@ SVGRenderer.prototype.clic = function(shape) {
 	if(data_path_close==true){end='z';}
         var maxcont=setPoints.length;
         var thispath='M'+setPoints[0]+' ';  
-        $('someinfo').value=maxcont;
+        //$('someinfo').value=maxcont;
       
         for(var conta=1;conta< maxcont;conta++){        
           thispath+='L'+setPoints[conta]+' ';
-          
-	
         }
               //var pointshape=shape.getAttributeNS(null,"d");
          	//shape.setAttributeNS(null,'d',thispath+end);
          	var path=thispath+end;
        
          	shape.setAttributeNS(null,'d',path);
-                $('control_codebase').value=path;
+                this.control_codebase=path;
  
 }
 
@@ -685,8 +1057,10 @@ SVGRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
            shape.style.fillOpacity = fillOpac;
            shape.style.strokOpacity = lineOpac;        
       */     
-    if (shape.tagName == 'rect' ) 
-    {   
+  if (shape.tagName == 'rect' ) 
+   { 
+    
+ 
       if (deltaX < 0) {
          shape.setAttributeNS(null, 'x', toX + 'px');
          shape.setAttributeNS(null, 'width', -deltaX + 'px');
@@ -711,15 +1085,17 @@ SVGRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
       shape.style.fillOpacity = fillOpac;
       shape.style.strokOpacity = lineOpac;         
       */
+      
     }
     
-    if ( shape.tagName == 'image' ) 
+  /*  if ( shape.tagName == 'simage' ) 
     {   
-        //var img=shape.firstChild;//nodeName;//nodeValue;//nodes.item(0);
+        var img=shape.firstChild;//nodeName;//nodparseFloatue;//nodes.item(0);
         //alert(img);
       if (deltaX < 0) {
          shape.setAttributeNS(null, 'x', parseFloat(toX) + 'px');
          shape.setAttributeNS(null, 'width', parseFloat(-deltaX) + 'px');
+         
        }
         else
        {
@@ -734,9 +1110,42 @@ SVGRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
         else 
        {
         shape.setAttributeNS(null, 'height', parseFloat(deltaY) + 'px');
-       }
-    }
+       }  
+       var h=shape.getAttributeNS(null, 'height');   
+       var w=shape.getAttributeNS(null, 'width'); 
+       document.forms[0].code.value= h+' '+w;    
+       
+       
+       
+    }*/ 
+   if (shape.tagName == 'g' || shape.tagName == 'image') 
+    {
+          
+
+       if (deltaX < 0) 
+        {  
+          shape.setAttributeNS(null, 'x', parseFloat(toX) + 'px' );
+          shape.setAttributeNS(null, 'width', parseFloat(-deltaX)  + 'px');
+
+
+        }
+         else
+        {
+          shape.setAttributeNS(null, 'width', parseFloat(deltaX)  + 'px');
+         }
   
+       if (deltaY < 0) 
+        {
+         shape.setAttributeNS(null, 'y', parseFloat(toY)  + 'px');
+         shape.setAttributeNS(null, 'height', parseFloat(-deltaY) + 'px' );
+        }
+         else 
+        {
+         shape.setAttributeNS(null, 'height', parseFloat(deltaY) + 'px');
+ 
+        }
+     
+   } 
   if (shape.tagName == 'ellipse') {
             if (deltaX < 0) {
               shape.setAttributeNS(null, 'cx', (fromX + deltaX / 2) + 'px');
@@ -757,7 +1166,7 @@ SVGRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
             }
   }
   if (shape.tagName == 'line') {
-             shape.setAttributeNS(null, 'x2', toX);
+          shape.setAttributeNS(null, 'x2', toX);
           shape.setAttributeNS(null, 'y2', toY);
   } 
   if (shape.tagName == 'polyline') {    
@@ -799,7 +1208,7 @@ SVGRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
         var path=thispath+'L'+toX+','+toY+end;
           //var pointshape=shape.getAttributeNS(null,"d");
          	shape.setAttributeNS(null,'d',path);
-               //document.forms[0].control_codebase.value=path;
+               document.forms[0].control_codebase.value=path;
      }
       else
      { 
@@ -884,7 +1293,7 @@ SVGRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
 }; 
 SVGRenderer.prototype.tocurve = function()  
 {
-  var points=$('control_codebase').value.split('L');
+  var points=this.control_codebase.split('L');
      var chain='';
      chain+=points[0]+'C';
      var numpoints=points.length-1;
@@ -918,17 +1327,204 @@ SVGRenderer.prototype.tocurve = function()
         chain+=points[numpoints]+'';
       } 
 
-      $('someinfo').value=numpoints+ ' '+ numpoints%3;
-      $('control_codebase').value=chain; 
+      //$('someinfo').value=numpoints+ ' '+ numpoints%3;
+      this.control_codebase=chain; 
       setShape(); 
- };     
+ }; 
 SVGRenderer.prototype.info = function(shape)
+{   
+ var shInfo = {};
+if(shape.id != "tracker"){
+ //shInfo.id = shape.id.substr(6); 
+ shInfo.id =shape.getAttribute('id');
+ shInfo.type = shape.tagName;
+ if (shape.hasAttributeNS(null,'transform')) { 
+     shInfo.transform = shape.getAttribute('transform');
+  }else{
+     shInfo.transform ='';
+  }   
+ 
+  if(shape.tagName == "text"){   
+ 
+   shInfo.textFamily = shape.getAttribute('font-family')
+   shInfo.textSize = parseInt(shape.getAttribute('font-size'))
+   shInfo.top = parseFloat(shape.getAttribute('y'))
+   shInfo.left = parseFloat(shape.getAttribute('x'))
+   shInfo.text = shape.textContent 
+   shInfo.lineWidth = parseFloat(shape.getAttribute('stroke-width'))
+
+   //shInfo.text = shape.nodparseFloatue;
+   }
+      
+ 
+ if(shape.tagName !='image' || shape.tagName !='g' || shape.tagName !='stop')
+  {
+    shInfo.fillColor = shape.getAttribute('fill')
+    shInfo.lineColor = shape.getAttribute('stroke')  
+    shInfo.fillOpac = parseFloat(shape.getAttribute('fill-opacity'))
+    shInfo.lineOpac = parseFloat(shape.getAttribute('stroke-opacity'))
+    shInfo.lineWidth = parseFloat(shape.getAttribute('stroke-width'))
+    
+    var mystyle= shape.getAttribute('style'); 
+    
+    if(mystyle!= null && mystyle.indexOf('<![CDATA[')>=0)
+     {
+      
+     }
+      else
+     {
+      // shInfo.style=shape.getAttribute('style');
+     
+    if(mystyle!= null){
+      //var estilo=shape.getAttribute('style');
+      var data;  
+   
+      var estilo=generateJSON(mystyle);
+      eval("data="+estilo);
+      //var data=eval('"'+estilo+'"'); 
+      //var data=estilo.evalJSON(); 
+    
+      (data["font-size"])?shInfo.textSize=data["font-size"]:shInfo.textSize; 
+      (data["font-family"])?shInfo.textFamily=data["font-family"]:shInfo.textFamily; 
+      
+      (data.fill)?shInfo.fillColor=data.fill:shInfo.fillColor; 
+      (data.stroke)?shInfo.lineColor=data.stroke:shInfo.lineColor;
+      (data.transform)?shInfo.transform=data.transform:shInfo.transform;
+      (data["fill-opacity"])?shInfo.fillOpac=data["fill-opacity"]:shInfo.fillOpac; 
+       //shInfo.fillColor=data.fill;
+      //document.getElementById("someinfo").value +=data.fill+' ';//estilo ;//data['fill']+' ';//
+    }
+   }
+  }  
+ 
+ 
+ if (shape.tagName == 'rect') 
+   {
+   if(shape.getAttribute('rx') || shape.getAttribute('ry')){
+   shInfo.type = "roundrect";
+   shInfo.rx = parseFloat(shape.getAttribute('rx'))
+   shInfo.ry = parseFloat(shape.getAttribute('rx'))
+   }
+    shInfo.left = parseFloat(shape.getAttribute( 'x'));
+    shInfo.top = parseFloat(shape.getAttribute( 'y'));
+    shInfo.width = parseFloat(shape.getAttribute('width'));
+    shInfo.height = parseFloat(shape.getAttribute('height'));  
+   }
+  else if (shape.tagName == 'ellipse' || shape.tagName == 'circle') 
+   {     
+    if(shape.tagName == 'circle'){
+      shInfo.width = parseFloat(shape.getAttribute('r'))*2; 
+      shInfo.height = parseFloat(shape.getAttribute('r'))*2; 
+     }else{
+      shInfo.width = parseFloat(shape.getAttribute('rx'))*2;
+      shInfo.height = parseFloat(shape.getAttribute('ry'))*2;   
+     }
+    
+    shInfo.left =    parseFloat(shape.getAttribute('cx')) - (shInfo.width/2);
+    shInfo.top =  parseFloat(shape.getAttribute('cy')) - (shInfo.height/2)  ;
+   }
+   else if(shape.tagName == 'linearGradient') {   
+    shInfo.left = (shape.getAttribute( 'x1'));
+    shInfo.top = parseFloat(shape.getAttribute( 'y1'));
+    shInfo.width = parseFloat(shape.getAttribute('x2'));
+    shInfo.height = parseFloat(shape.getAttribute('y2'));  
+
+   }
+   else if(shape.tagName == 'stop') {
+    shInfo.fillColor = shape.getAttribute('stop-color');
+    shInfo.fillOpac = shape.getAttribute('stop-opacity');
+    shInfo.lineOpac = shape.getAttribute('offset');
+    var mystyle= shape.getAttribute('style');
+    if(mystyle!= null && mystyle.indexOf('<![CDATA[')>=0)
+     {
+      
+     }
+      else
+     {
+    if(mystyle!= null){
+      var data;  
+      var estilo=generateJSON(mystyle);
+      eval("data="+estilo);
+      (data["stop-color"])?shInfo.fillColor=data["stop-color"]:shInfo.fillColor;
+      (data["stop-opacity"])?shInfo.fillOpac=data["stop-opacity"]:shInfo.fillOpac;
+      document.getElementById("someinfo").value +=data["stop-color"]+' '; 
+     } 
+     
+    }
+   }
+  else if (shape.tagName == 'line') 
+   {
+    shInfo.left = parseFloat(shape.getAttribute('x1'));
+    shInfo.top = parseFloat(shape.getAttribute('y1'));
+    shInfo.width = parseFloat(shape.getAttribute('x2')) -shInfo.left;
+    shInfo.height = parseFloat(shape.getAttribute('y2')) -shInfo.top;
+   } 
+  else if (shape.tagName == 'polyline') 
+   {
+    shInfo.points = shape.getAttribute('points');
+   } 
+  else if (shape.tagName == 'g') 
+   { 
+    shInfo.type = "group";
+    shInfo.left = parseFloat(shape.getAttribute( 'x'));
+    shInfo.top = parseFloat(shape.getAttribute( 'y'));
+    shInfo.width = parseFloat(shape.getAttribute('width'));
+    shInfo.height = parseFloat(shape.getAttribute('height'));  
+    shInfo.fillColor = shape.getAttribute('fill')
+
+   }   
+  else if (shape.tagName == 'path')
+   {
+    shInfo.points = shape.getAttribute('d');     
+    //shInfo.transform = shape.getAttribute('transform'); 
+ 
+    //alert(shInfo.transform);
+    //document.forms[0].codebase.value=shape.getAttribute('d'); 
+   
+   }
+  else 
+  
+ 
+  if (shape.tagName == 'image')
+   {                                     
+    
+    shInfo.left = parseFloat(shape.getAttribute( 'x'));
+    shInfo.top = parseFloat(shape.getAttribute( 'y'));
+    shInfo.width = parseFloat(shape.getAttribute('width'));
+    shInfo.height = parseFloat(shape.getAttribute('height'));   
+    shInfo.fillOpac = parseFloat(shape.getAttribute('opacity'));   
+    shInfo.href = shape.getAttribute('href');  
+     
+  } 
+  if(shape.parentNode.tagName != 'svg'){
+    //shInfo.width = parseFloat(shape.getAttribute('width'));
+    //shInfo.height = parseFloat(shape.getAttribute('height'));   
+    //shInfo.viewBox = parseFloat(shape.getAttribute('viewBox'));   
+    shInfo.parent=shape.parentNode.getAttribute('id');
+
+  }
+    return shInfo;  
+  }else{
+   //do nothing if its the tracker
+   }
+  
+   	
+   	
+};     
+SVGRenderer.prototype.info01 = function(shape)
 {   
 
 var shInfo = {};
 if(shape.id != "tracker"){
 shInfo.id = shape.id.substr(6);
  shInfo.type = shape.tagName;
+ if (shape.hasAttributeNS(null,'transform')) { 
+     shInfo.transform = shape.getAttribute('transform');
+  }else{
+     shInfo.transform ='';
+  }   
+     
+ 
  if(shape.tagName !='image')
   {
     shInfo.fillColor = shape.getAttribute('fill')
@@ -975,7 +1571,7 @@ shInfo.id = shape.id.substr(6);
   if (shape.tagName == 'path')
    {
     shInfo.d = shape.getAttribute('d');     
-    shInfo.transform = shape.getAttribute('transform'); 
+    //shInfo.transform = shape.getAttribute('transform'); 
  
     //alert(shInfo.transform);
     //document.forms[0].codebase.value=shape.getAttribute('d'); 
@@ -983,15 +1579,16 @@ shInfo.id = shape.id.substr(6);
    }
   else 
   
-  if(shape.tagName == "text"){
-   shInfo['font-family'] = shape.getAttribute('font-family')
-   shInfo['font-size'] = parseInt(shape.getAttribute('font-size'))
+  if(shape.tagName == "text"){   
+ 
+   shInfo.textFamily = shape.getAttribute('font-family')
+   shInfo.textSize = parseInt(shape.getAttribute('font-size'))
    shInfo.top = parseFloat(shape.getAttribute('y'))
    shInfo.left = parseFloat(shape.getAttribute('x'))
    shInfo.text = shape.textContent 
    shInfo.lineWidth = parseFloat(shape.getAttribute('stroke-width'))
- 
-   //shInfo.text = shape.nodeValue;
+
+   //shInfo.text = shape.nodparseFloatue;
    }
   else
  
@@ -1005,12 +1602,13 @@ shInfo.id = shape.id.substr(6);
     shInfo.fillOpac = parseFloat(shape.getAttribute('opacity'));   
     shInfo.href = shape.getAttribute('href');  
      
-  } 
+  }
+  
+    return shInfo;  
   }else{
    //do nothing if its the tracker
    }
-   return shInfo;  
-   	
+
    	
 }
 
@@ -1038,7 +1636,7 @@ SVGRenderer.prototype.transformShape = function(shape,data,transform)
     var centery=parseFloat(sdata[1])+parseFloat(box.height/2);    
     shape.setAttributeNS(null, 'transform','rotate('+parseFloat(sdata[4])+','+centerx+','+centery+')');
     
-   //shape.nodeValue=data;
+   //shape.nodparseFloatue=data;
   }
    else 
  if(shape.tagName == 'text')
@@ -1054,7 +1652,7 @@ SVGRenderer.prototype.transformShape = function(shape,data,transform)
        shape.setAttributeNS(null,'font-size',parseFloat(sdata[1])); 
         shape.setAttributeNS(null,'font-family',sdata[2]);
      }
-   //shape.nodeValue=data;
+   //shape.nodparseFloatue=data;
   }
    else
  if (shape.tagName == 'polyline') 
@@ -1208,6 +1806,11 @@ SVGRenderer.prototype.queryCommand = function(shape, cmd)
   return result;
 }
 
+SVGRenderer.prototype.getProperties = function(shape)
+{
+}
+
+
 SVGRenderer.prototype.showMultiSelect = function(iniX,iniY) { 
   var tracker = document.getElementById('trackerMultiSelect');
   if (tracker) {
@@ -1253,7 +1856,7 @@ function nodeUp(node)
 
 function nodeMove(node)
 {                                           
-   var mypath=$('control_codebase').value; 
+   var mypath=this.control_codebase; 
    var  x= $('option_path_x').value;
    var y= $('option_path_y').value; 
    var precoord=x+','+y; 
@@ -1273,9 +1876,9 @@ function nodeMove(node)
       var result=mypath.replace(cad1, coord);
       
      
-      $('control_codebase').value=result; 
+      this.control_codebase=result; 
       
-      $('someinfo').value=precoord;
+      //$('someinfo').value=precoord;
       setShape();
 
     
@@ -1286,7 +1889,7 @@ var memoNode=null;
 var memoPrevControl=new Array();
 var memoNextControl=new Array();
 SVGRenderer.prototype.nodeMove = function(newx,newy) { 
-    var mypath=$('control_codebase').value; 
+  var mypath=this.control_codebase; 
    var  x= $('option_path_x').value;
    var y= $('option_path_y').value; 
    var precoord=x+','+y; 
@@ -1304,9 +1907,9 @@ SVGRenderer.prototype.nodeMove = function(newx,newy) {
       var result=mypath.replace(cad1, coord);
       
      
-      $('control_codebase').value=result; 
+      this.control_codebase=result; 
       
-      $('someinfo').value=precoord;
+      //$('someinfo').value=precoord;
       setShape();
 
 }
@@ -1448,8 +2051,8 @@ SVGRenderer.prototype.showNodesCurve = function(path,controlNodeNum){
          if(controlNodeNum==0){info='prev Control'}  
          if(controlNodeNum==1){info='next Control'}  
          if(controlNodeNum==2){info='points node'}   
-        // $('someinfo').value=numpoints+ ' '+info+':'+ chain;
-        $('someinfo').value='Crtl+Arrow to move';
+        // //$('someinfo').value=numpoints+ ' '+info+':'+ chain;
+        //$('someinfo').value='Crtl+Arrow to move';
     //return chain;                                          
     
 
@@ -1476,21 +2079,24 @@ SVGRenderer.prototype.showTracker = function(shape,pathsEdit) {
     //if (currentTransform != null) alert(currentTransform.t);
  
   if (shape.tagName == 'rect') { 
-     
+     /*
      $('option_rect_rot').value= T.b* (Math.PI * 2 / 360); 
      $('option_rect_trx').value= box.x;  
      $('option_rect_try').value= box.y;
      $('option_rect_sclx').value= box.width;  
      $('option_rect_scly').value= box.height;
+		 */
 
   }  
 
   if (shape.tagName == 'image'){
+		/*
     $('option_img_trx').value= box.x; 
     $('option_img_try').value= box.y;
     $('option_img_sclx').value= box.width;  
     $('option_img_scly').value= box.height;
     $('option_img_rot').value= T.b* (Math.PI * 2 / 360);
+		*/
   }
   if (shape.tagName == 'text'){
    /* f$('option_text_trx').value= box.x; 
@@ -1542,7 +2148,7 @@ SVGRenderer.prototype.showTracker = function(shape,pathsEdit) {
      $('option_path_rot').value= T.b* (Math.PI * 2 / 360);
      */                                        
      var path=shape.getAttributeNS(null, 'd');
-      $('control_codebase').value=path;  
+      this.control_codebase=path;  
       
        controlPoints=this.showNodesCurve(path,2); 
    
@@ -1776,16 +2382,16 @@ SVGRenderer.prototype.showTracker = function(shape,pathsEdit) {
      rect4.addEventListener("mouseout", function(event) {rect4.setAttributeNS(null, 'cursor', 'default');  rect4.setAttributeNS(null, 'fill', colorout ); typeTransform='Scale'; }, false);
                                                     
      rectmid12.addEventListener("mouseover", function(event) {rectmid12.setAttributeNS(null, 'cursor', 'n-resize');  rectmid12.setAttributeNS(null, 'fill', colorin ); typeTransform='Scale'; scaleType='n';}, false);  
-     rectmid12.addEventListener("mouseout", function(event) {rectmid12.setAttributeNS(null, 'cursor', 'default');  rectmid12.setAttributeNS(null, 'fill', colorout ); typeTransform=''; }, false); 
+     rectmid12.addEventListener("mouseout", function(event) {rectmid12.setAttributeNS(null, 'cursor', 'default');  rectmid12.setAttributeNS(null, 'fill', colorout ); typeTransform='Scale'; }, false); 
 
      rectmid23.addEventListener("mouseover", function(event) {rectmid23.setAttributeNS(null, 'cursor', 'e-resize');  rectmid23.setAttributeNS(null, 'fill', colorin ); typeTransform='Scale'; scaleType='e';}, false);  
-     rectmid23.addEventListener("mouseout", function(event) {rectmid23.setAttributeNS(null, 'cursor', 'default');  rectmid23.setAttributeNS(null, 'fill', colorout ); typeTransform=''; }, false); 
+     rectmid23.addEventListener("mouseout", function(event) {rectmid23.setAttributeNS(null, 'cursor', 'default');  rectmid23.setAttributeNS(null, 'fill', colorout ); typeTransform='Scale'; }, false); 
      
      rectmid34.addEventListener("mouseover", function(event) {rectmid34.setAttributeNS(null, 'cursor', 's-resize');  rectmid34.setAttributeNS(null, 'fill', colorin ); typeTransform='Scale'; scaleType='s';}, false);  
-     rectmid34.addEventListener("mouseout", function(event) {rectmid34.setAttributeNS(null, 'cursor', 'default');  rectmid34.setAttributeNS(null, 'fill', colorout ); typeTransform=''; }, false); 
+     rectmid34.addEventListener("mouseout", function(event) {rectmid34.setAttributeNS(null, 'cursor', 'default');  rectmid34.setAttributeNS(null, 'fill', colorout ); typeTransform='Scale'; }, false); 
 
      rectmid41.addEventListener("mouseover", function(event) {rectmid41.setAttributeNS(null, 'cursor', 'w-resize');  rectmid41.setAttributeNS(null, 'fill', colorin ); typeTransform='Scale'; scaleType='w'; }, false);  
-     rectmid41.addEventListener("mouseout", function(event) {rectmid41.setAttributeNS(null, 'cursor', 'default');  rectmid41.setAttributeNS(null, 'fill', colorout ); typeTransform=''; }, false); 
+     rectmid41.addEventListener("mouseout", function(event) {rectmid41.setAttributeNS(null, 'cursor', 'default');  rectmid41.setAttributeNS(null, 'fill', colorout ); typeTransform='Scale'; }, false); 
      
      //////////
      svg.setAttributeNS(null, 'transform',trshape); 
@@ -1942,7 +2548,7 @@ SVGRenderer.prototype.scaleShape = function(shape,previus, toX, toY) {
                         var dy= toY+10*Math.sin(angle_diagonal+(Math.PI/2));  
                         
                         var section_a=ntrsccn2rb(ax,ay,bx,by,cx,cy,dx,dy);   
-                 //document.forms[0].code.value=angle_diagonal* 180 / Math.PI;       
+                 this.editor.log(angle_diagonal* 180 / Math.PI);       
                     
                 var tx= section_a[1];
                 var ty= section_a[2];
@@ -2097,7 +2703,7 @@ SVGRenderer.prototype.scaleShape = function(shape,previus, toX, toY) {
                         var dy= toY+10*Math.sin(angle_diagonal+(Math.PI/2)); 
 
 
-                      //document.forms[0].code.value=angle_diagonal;
+                      this.editor.log(angle_diagonal);
 
       
                 var section_a=ntrsccn2rb(ax,ay,bx,by,cx,cy,dx,dy);   
@@ -2186,7 +2792,7 @@ SVGRenderer.prototype.scaleShape = function(shape,previus, toX, toY) {
                         var dy= toY+10*Math.sin(angle_diagonal+(Math.PI/2)); 
 
 
-                      //document.forms[0].code.value=angle_diagonal;
+                      this.editor.log(angle_diagonal);
 
       
                 var section_a=ntrsccn2rb(ax,ay,bx,by,cx,cy,dx,dy);   
@@ -2255,7 +2861,7 @@ SVGRenderer.prototype.scaleShape = function(shape,previus, toX, toY) {
     shape.setAttributeNS(null, 'width', tw);     
     shape.setAttributeNS(null, 'height', th); 
     
-   //shape.nodeValue=data;
+   //shape.nodparseFloatue=data;
   }
    else 
  if(shape.tagName == 'text')
@@ -2402,8 +3008,6 @@ SVGRenderer.prototype.scaleShape = function(shape,previus, toX, toY) {
 };
 
 
-
-
 SVGRenderer.prototype.rotateShape = function(shape, previus, toX, toY) {
  
     //document.getElementById('richdraw').style.cursor='e-resize';
@@ -2439,7 +3043,7 @@ SVGRenderer.prototype.rotateShape = function(shape, previus, toX, toY) {
           var rotini=T.a*(180 / Math.PI);
                    var angle=rotini*180/Math.PI;
           var rot_angle=actual_angle*180/Math.PI;  
-          //document.forms[0].code.value=centerx+' '+centery+' '+coord[0]+' '+coord[1]+'____ '+rot_angle+' '+actual_angle*180/Math.PI;
+          this.editor.log(centerx+' '+centery+' '+coord[0]+' '+coord[1]+'____ '+rot_angle+' '+actual_angle*180/Math.PI);
           
           
          // matrix( a, b, c, d, e, f )
@@ -2522,4 +3126,33 @@ SVGRenderer.prototype.rotateShape = function(shape, previus, toX, toY) {
 
 SVGRenderer.prototype.getshapes = function(){
 return this.svgRoot.childNodes;
-}
+} 
+
+
+function generateJSON(cssEnv)
+{    
+ //string=string.replace(/;/g,'",') ;
+ //string=string.replace(/:/g,':"') ; 
+ //style="fill:#7e0000;fill-opacity:1" 
+ 
+ var css=cssEnv.split(';')
+
+  var strJSON = '{';
+  ch = ',';
+  for (i = 0 ; i < css.length; i++)
+  { 
+   var data=css[i].split(':'); 
+   if(data[0]!=''){ 
+     //if(i == (css.length-2)){   ch = ''; }   
+     strJSON += "'"+data[0].trim()+"':'"+data[1].trim()+"'"+",";
+   } 
+      
+   
+  } 
+  var num=  strJSON.length;
+  strJSON=strJSON.substr(0, num-1);
+
+  strJSON += '}';
+
+  return strJSON;
+} 
