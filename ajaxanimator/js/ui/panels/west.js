@@ -10,7 +10,7 @@ Ext.apply(this,{
     //html: "<img src='../img/mockup/tools.png'>",
     width:50,
     border:true,
-    items: [{xtype:"toolbox"},{xtype: "drawpanel"}]
+    items: [{xtype:"toolbox", id: "toolboxpanel"},{xtype: "drawpanel"}]
   })
    this.initialConfig.collapsible = true; //bugfix from http://outroot.com/extjs/bug1/ 
    Ax.LayoutWestPanel.superclass.initComponent.apply(this, arguments);
