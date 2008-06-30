@@ -63,7 +63,16 @@ Ax.save = {
 
 
 Ax.autoimport = function(markup){
-  if(Ax.test_animation_markup(markup) == true){
+  var jsonmarkup = Ax.test_animation_markup(markup);
+  if(jsonmarkup != false){
+    if(jsonmarkup.revision){
+      if(Math.round(jsonmarkup.revision) > Ax.format.support.max){
+        Ax.msg("Warning! Proof of time travel","It seems that the animation you are attempting to load was created with a future version of the ajax animator. It may contain data that can not be loaded properly in this version, or may load perfectly fine.")
+      }
+      if(Math.round(jsonmarkup.revision) < Ax.format.support.min){
+        Ax.msg("Warning!","The animation you are attempting to load seems to be created by an older, unsupported version. It is more than likely some information here will not load properly.")
+      }
+    }
     Ax.import_animation(markup);
   }else{
     if(markup.indexOf(";;") != -1){
