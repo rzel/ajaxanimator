@@ -109,7 +109,19 @@ Ax.reloadCanvas = function(){
 
 
 Ax.setTool = function(tool){
-  
+for(var tool_id in Ax.toolConfig){
+Ax.viewport.findById("tool_"+tool_id).unselect()
+}
+
+//report usage statistics
+//* take out that first "/" to disable
+Ax.gs(({select:10,rect:11,roundrect:12,
+ellipse:13,line:14,path:15,
+controlpath:16,text:17,image:18,
+shape:19,reset:20,"delete":21})[tool])
+/**///*//for my text editor (notepad2, though i normally use notepad++ which doesn't face this issue)
+
+
   switch(tool){
   case "delete":
     Ax.canvas.deleteSelection();
@@ -133,6 +145,7 @@ Ax.setTool = function(tool){
     Ax.canvas.editCommand('mode', tool);
     break;
   }
+  
   
   setTimeout(function(){Ax.autodiff();return true},10); //do some magickal saving.
 }
