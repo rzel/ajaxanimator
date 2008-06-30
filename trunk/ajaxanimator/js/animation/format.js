@@ -117,7 +117,7 @@ Ax.import_animation = function(markup){
   //set the name for the animation in that little box in the toolbar. overly hackish, I know. Seriously, acessing dom?
   
   Ax.import_animation_core(markup.layers);
-  Ax.selectFrame((markup.tcframe)?markup.tcframe:1,(markup.tclayer)?markup.tclayer:"Layer 1");
+  //Ax.selectFrame((markup.tcframe)?markup.tcframe:1,(markup.tclayer)?markup.tclayer:"Layer 1");
   
 }
 
@@ -147,14 +147,16 @@ Ax.import_animation_core = function(layers){
   Ax.viewport.findById("layers").getStore().removeAll(); //remove all entries from layers panel
   Ax.initTimeline(); //reset timeline
   Ax.canvas_storage = {}; //empty canvas storage
+  Ax.canvas.unselect();
   Ax.canvas.renderer.removeAll(); //clear canvas
-  
+  Ax.layers = {};//reset layers object
   for(var layer in layers){ //loop through layers
     Ax.addLayer(layer); //add layer
     Ax.layers[layer].keyframes = layers[layer].keyframes; //set keyframes
     Ax.canvas_storage[layer] = layers[layer].src; //load canvas src
-    for(var i = 1; i < layers[layer].keyframes.sort(function(a,b){return b-a})[0] + 1; i++){
-      Ax.selectFrame(i,layer); //render frame to timeline, (renderFrame may be better)
+    Ax.loadframe(1, layer); //note: this is a hack!
+    for(var i = 0; i < layers[layer].keyframes.sort(function(a,b){return b-a})[0]; i++){
+      Ax.selectFrame(i + 1,layer); //render frame to timeline, (renderFrame may be better)
     }
   }
 

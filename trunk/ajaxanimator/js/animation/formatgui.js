@@ -40,7 +40,7 @@ Ax.save = {
       title: "Save Animation As Text",
       width: 300,
       height: 300,
-      buttons: [{text: "Update Data",handler: function(){this.ownerCt.findById("loadtext").setValue(Ax.export_animation(Ax.animation.markup,"json"))}},
+      buttons: [{text: "Update Data",handler: function(){this.ownerCt.findById("outtext").setValue(Ax.export_animation(Ax.animation.markup,"json"))}},
                 {text: "Close", handler: function(){this.ownerCt.close()}}],
       layout: "border",
       items: [{
