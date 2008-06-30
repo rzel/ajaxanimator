@@ -1,11 +1,15 @@
 /*----------------------------------------------------------------------------
+ ONLYPATHS 0.1 
+ from
  RICHDRAW 1.0
  Vector Graphics Drawing Script
  -----------------------------------------------------------------------------
  Created by Mark Finkle (mark.finkle@gmail.com)
  Implementation of simple vector graphic drawing control using SVG or VML.
  -----------------------------------------------------------------------------
- Copyright (c) 2006 Mark Finkle
+ Copyright (c) 2006 Mark Finkle  
+               2008 Antimatter15  
+               2008 Josep_ssv
 
  This program is  free software;  you can redistribute  it and/or  modify it
  under the terms of the MIT License.
@@ -29,8 +33,11 @@
  -----------------------------------------------------------------------------
  Dependencies: (SVG or VML rendering implementations)
  History:
- 2006-04-05 | Created
- --------------------------------------------------------------------------*/
+ 2006-04-05 | Created richdraw.js  
+ 2008       | Update content and added framework ExtJS    
+ 2008-06-08 | Rename onlypaths.js   
+ --------------------------------------------------------------------------*/  
+ 
 var xpArray=new Array();
 var ypArray=new Array(); 
 var setPoints=new Array(); 
@@ -44,241 +51,191 @@ var zoomy=0;
 var zoomscale=1;
 var zoommode='frame'; //more minus frame
 
+//
 
-
-//////////////
-
- //++
- var data_path_close=true;
- var data_text_family='';
- var data_text_size=19
- var data_text_messaje='';
- var data_image_href='';   
- 
- var numClics=0;  
+var numClics=0;  
 
 ////////////
 
 function RichDrawEditor(elem, renderer) {
-  this.container = elem;
-	this.gridX = 10;
-	this.gridY = 10;
-  this.mouseDownX = 0;  
-  this.mouseDownY = 0;    
-  this.clicX = 0;  
-  this.clicY = 0;
-  
-  this.inputxy = [];
-  
-  this.nowDraw=false;
-  this.onInputXY = function(){};
-  this.gridWidth = 20;
-  
-  
-  this.mode = '';
-
-  this.fillColor = '';  
+ this.container = elem;
+ this.gridX = 10;
+ this.gridY = 10;
+ this.mouseDownX = 0;  
+ this.mouseDownY = 0;    
+ this.clicX = 0;  
+ this.clicY = 0;
+ this.nowDraw=false;
+ this.mode = '';
+ this.fillColor = '';  
+ this.lineColor = '';
+ this.lineWidth = '';
+ this.selected = null;   
+ this.focusin = null;  
+ this.lineOpac = 1;
+ this.fillOpac = 1;
+ this.gridWidth = 1;
+ this.opac = 1;          
+ //++ ;
+ this.text_messaje="";
+ this.text_size=19;
+ this.text_family="Arial";
  
-  this.lineColor = '';
-  this.lineWidth = '';
-  this.selected = null;   
-  this.focusin = null;  
-  this.lineOpac = 1;
-  this.fillOpac = 1;
-  this.opac = 1;
+ this.pathsEdit = false;
+ this.previusBox=null; 
+ this.initialPath='';
+ this.clipboard=null;
+ this.moveNow=true;
+ 
+ this.selectedBounds = { x:0, y:0, width:0, height: 0 };
+ this.onselect = function() {}
+ this.onunselect = function() {}
+ 
+ this.logtext = "";
+ 
+ this.renderer = renderer;
+ this.renderer.init(this.container);
+ this.renderer.editor = this;
+ this.inputxy = [];
+ this.onInputXY = function(){};
   
-  this.pathsEdit = false;
+ Ext.get(this.container).on( "mousedown", this.onMouseDown,this);
+ Ext.get(this.container).on( "mouseup", this.onMouseUp,this);  
+ //Ext.get(this.container).on( "mouseout", this.outShape,this);   
+ //Ext.get(this.container).on( "mouseover", this.overShape,this);
+ Ext.get(this.container).on( "mousemove", this.onTranslate,this); 
+ Ext.get(this.container).on( "dblclick", this.onEndLine,this);
+ Ext.get(this.container).on( "selectstart", this.onSelectStart,this);  
+ //Event.observe(document, "keypress", this.onKeyPress,this);  
   
-  this.previusBox=null; 
-  this.initialPath='';
-  this.clipboard=null;
-  this.selectedBounds = { x:0, y:0, width:0, height: 0 };
+}
 
-	this.onselect = function() {}
-	this.onunselect = function() {}
-
-  this.renderer = renderer;
-  
-  this.renderer.init(this.container);
-  
-  this.renderer.editor = this;
-  
-  /*
-  this.onMouseDownListener = this.onMouseDown.bindAsEventListener(this);
-  this.onMouseUpListener = this.onMouseUp.bindAsEventListener(this);
-  this.onDragListener = this.onDrag.bindAsEventListener(this);
-  this.onResizeListener = this.onResize.bindAsEventListener(this);
-  this.onDrawListener = this.onDraw.bindAsEventListener(this);
-  this.onRotateListener = this.onRotate.bindAsEventListener(this);
-  this.onScaleListener = this.onScale.bindAsEventListener(this);
-  this.onTransformListener = this.onTransform.bindAsEventListener(this);
-  this.onTranslateListener = this.onTranslate.bindAsEventListener(this);
-  this.onKeyPressListener=this.onKeyPress.bindAsEventListener(this);
-  this.onHitListener = this.onHit.bindAsEventListener(this); 
-  //++
-  this.onClicListener = this.onClic.bindAsEventListener(this); 
-  //++
-  this.onEndLineListener = this.onEndLine.bindAsEventListener(this);
-  
-  this.onSelectStartListener = this.onSelectStart.bindAsEventListener(this);
-  */
-  //Ext.get(this.container).on( "mouseout", this.onRotate,this); 
-  //Ext.get(this.container).on( "mouseout", this.onTransform,this);                                                         
-  //Ext.get(this.container).on( "mouseover", this.onTranslate,this);
-  Ext.get(this.container).on( "mousedown", this.onMouseDown,this);
-  Ext.get(this.container).on( "mouseup", this.onMouseUp,this);   
-  
-  Ext.get(this.container).on( "mousemove", this.onTranslate,this); 
-  //++
-  //++
-  Ext.get(this.container).on( "dblclick", this.onEndLine, this);
-  
-  Ext.get(this.container).on( "selectstart", this.onSelectStart,this)
-  ;  
-  //Event.observe(document, "keypress", this.onKeyPress,this);  
-  
+RichDrawEditor.prototype.log = function(logtext){
+  //this.logtext = logtext
+  if(document.forms[0].code){
+    document.forms[0].code.value = logtext
+  }
 }
 
 
 RichDrawEditor.prototype.getshapes = function(){
-  return this.renderer.getshapes();
+ return this.renderer.getshapes();
 }
 
 RichDrawEditor.prototype.info = function(shape){
-  return this.renderer.info(shape)
+ return this.renderer.info(shape)
 }
 
+
 RichDrawEditor.prototype.clearWorkspace = function() {
-	this.container.innerHTML = '';
+  this.container.innerHTML = '';
 };
-
-
 
 RichDrawEditor.prototype.deleteSelection = function() {
-  if (this.selected) {
-    this.renderer.remove(this.container.ownerDocument.getElementById('tracker'));
-    this.renderer.remove(this.selected);
-    this.selected = null;
-  }
+ if (this.selected) {
+   this.renderer.remove(this.container.ownerDocument.getElementById('tracker'));
+   this.renderer.remove(this.selected);
+   this.selected = null;
+ }
 };
+
 RichDrawEditor.prototype.toFront = function(order) {
-  if (this.selected) { 
-     //var copy= this.selected;
-     //this.onunselect(this);
-      //this.selected =
-      this.renderer.index(this.selected, order);
-      //this.selected =this.renderer.index(this.selected);   
-      //this.selected.id = 'shape:' + createUUID();
-      //Ext.get(this.selected).on( "mousedown", this.onHit,this);   
-      //this.unselect();
-     
-  }
+ if (this.selected) { 
+   this.renderer.index(this.selected, order);
+ }
 };
+
 RichDrawEditor.prototype.deleteAll = function() {   
-  if (this.selected) {  
-    // this.renderer.remove(this.container.ownerDocument.getElementById('tracker'));
-  
-  this.renderer.removeAll();
-  }
+ this.renderer.removeAll();
 };
+
 
 RichDrawEditor.prototype.select = function(elem) {
-  if (elem == this.selected)
-    return;
-
-  this.selected = elem;
-  this.renderer.showTracker(this.selected,this.pathsEdit);
-  this.onselect(this);
-  
+ if (elem == this.selected){  return;  }
+ this.selected = elem;
+ this.renderer.showTracker(this.selected,this.pathsEdit);
+ this.onselect(this);
 };
 
 
 RichDrawEditor.prototype.unselect = function() {
-  if (this.selected) {
-    this.renderer.remove(this.container.ownerDocument.getElementById('tracker'));
-    this.selected = null;
-    this.onunselect(this);
+ if (this.selected) {
+   this.renderer.remove(this.container.ownerDocument.getElementById('tracker'));
+   this.selected = null;
+   this.onunselect(this);
   }
 };
 
-
 RichDrawEditor.prototype.getSelectedElement = function() {
-  return this.selected;
+ return this.selected;
 };
 
 RichDrawEditor.prototype.toCurve = function() {  
-   this.renderer.tocurve();
+ this.renderer.tocurve();
 }
-RichDrawEditor.prototype.submitShape = function(data) {  
-      
-    if (this.mode != 'select') {   
-        //setMode('path', 'Path');  
-        //this.unselect();  
-                /*
-                this.lineColor = frames['mondrianstyle'].strokehex;
-                this.fillColor = frames['mondrianstyle'].fillhex;
-                this.lineWidth = frames['mondrianstyle'].fillWidth; 
-                this.lineOpac = frames['mondrianstyle'].strokeOpac;
-                this.fillOpac = frames['mondrianstyle'].fillOpac;
-                this.opac = frames['mondrianstyle'].fillOpac;  
-                */  
-         this.selected = this.renderer.datacreate(this.fillColor, this.lineColor, this.fillOpac, this.lineOpac, this.lineWidth, this.mouseDownX, this.mouseDownY, 1, 1,data);
-         //if(!this.selected.id)
-          //{
-                 this.selected.id = 'shape:' + createUUID();
-                 Ext.get(this.selected).on("mousedown", this.onHit,this);   
-                 
-                  //setMode('select', 'Select'); 
-                 // this.unselect();
-                  //this.mode = 'select';
-                  //this.selected= '';    
-          //}
-        
-        //Ext.get(this.container).on( "mousemove", this.onDraw,this); 
-         //setMode('path', 'Path');  
 
-   }else{
-                 
-                 this.renderer.transformShape(this.selected,data,null); 
-                this.renderer.remove(this.container.ownerDocument.getElementById('tracker')); 
-                 this.renderer.showTracker(this.selected,this.pathsEdit);
-                 
-   }
- 
+RichDrawEditor.prototype.submitShape = function(data) {  
+ if (this.mode != 'select') {   
+   setMode('path', 'Path');  
+   this.actualStyle();
+   //onColorChange();   
+   //shape, fillColor, lineColor, fillOpac, lineOpac, lineWidth, left, top, width, height, textMessaje, textSize, textFamily, imageHref, points, transform, parent
+   //this.selected = this.renderer.datacreate(this.fillColor, this.lineColor, this.fillOpac, this.lineOpac, this.lineWidth, this.mouseDownX, this.mouseDownY, 1, 1,data);
+   this.selected = this.renderer.create(this.mode, this.fillColor, this.lineColor, this.fillOpac, this.lineOpac, this.lineWidth, this.mouseDownX, this.mouseDownY, 1, 1,this.textMessaje,this.textSize,this.textFamily,this.imageHref, data, '', '');
+
+   this.selected.id = 'shape:' + createUUID();
+   Ext.get(this.selected).on("mousedown", this.onHit,this);   
+   setMode('select', 'Select'); 
+ } else {
+   this.renderer.transformShape(this.selected,data,null); 
+   this.renderer.remove(this.container.ownerDocument.getElementById('tracker')); 
+   this.renderer.showTracker(this.selected,this.pathsEdit);
+ }
 };
 
 RichDrawEditor.prototype.setGrid = function(horizontal, vertical) {
-  this.gridX = horizontal;
-  this.gridY = vertical;
-  this.gridWidth = (vertical+horizontal)/2; //average. ideally, it should be the same
+ this.gridX = horizontal;
+ this.gridY = vertical;
+ this.gridWidth = (vertical+horizontal)/2; //average. ideally, it should be the same
+};
+
+
+// ++
+RichDrawEditor.prototype.actualStyle = function()
+{
+ return;
 };
 
 
 RichDrawEditor.prototype.editCommand = function(cmd, value)
 {
-  if (cmd == 'mode') {
-    this.mode = value;
+ if (cmd == 'mode') 
+  {
+   this.mode = value;
   }
-  else if (this.selected == null) {  
-        
-    if (cmd == 'fillcolor') {
-      this.fillColor = value;
+ else if (this.selected == null) 
+  {  
+   if (cmd == 'fillcolor') 
+    {
+     this.fillColor = value;
     }
-    else if (cmd == 'linecolor') {
-      this.lineColor = value;
+   else if (cmd == 'linecolor') 
+    {
+     this.lineColor = value;
     }
-    else if (cmd == 'linewidth') {
-      this.lineWidth = parseInt(value) + 'px';
+   else if (cmd == 'linewidth') 
+    {
+     this.lineWidth = parseInt(value) + 'px';
     } 
-    else if (cmd == 'fillopacity') {
-       
-      this.fillOpac = parseInt(value);
+   else if (cmd == 'fillopacity') {
+     this.fillOpac = parseInt(value);
     } 
-    else if (cmd == 'lineopacity') {
-      this.lineOpac = parseInt(value);
+   else if (cmd == 'lineopacity') {
+     this.lineOpac = parseInt(value);
     }
   }
-  else {
+ else 
+  {
     this.renderer.editCommand(this.selected, cmd, value);
   }
 }
@@ -286,37 +243,48 @@ RichDrawEditor.prototype.editCommand = function(cmd, value)
 
 RichDrawEditor.prototype.queryCommand = function(cmd)
 {
-  if (cmd == 'mode') {
-    return this.mode;
+ if (cmd == 'mode') 
+  {
+   return this.mode;
   }
-  else if (this.selected == null) {
-    if (cmd == 'fillcolor') {
-      return this.fillColor;
+ else if (this.selected == null) 
+  {
+   if (cmd == 'fillcolor') 
+    {
+     return this.fillColor;
     }
-    else if (cmd == 'linecolor') {
-      return this.lineColor;
+   else if (cmd == 'linecolor') 
+    {
+     return this.lineColor;
     }
-    else if (cmd == 'linewidth') {
-      return this.lineWidth;
+   else if (cmd == 'linewidth') 
+    {
+     return this.lineWidth;
     }
-    else if (cmd == 'fillopacity') {
+   else if (cmd == 'fillopacity') 
+    {
      return  this.fillOpac;
     }
-    else if (cmd == 'lineopacity') {
+   else if (cmd == 'lineopacity') 
+    {
      return  this.fillOpac;
     }
-
   }
-  else {
-    return this.renderer.queryCommand(this.selected, cmd);
+ else 
+  {
+   return this.renderer.queryCommand(this.selected, cmd);
   }
 }
+
+
 
 
 RichDrawEditor.prototype.onSelectStart = function(event) {
   return false
 }
 
+
+/////////////////////////////
 
 RichDrawEditor.prototype.onKeyPress =  function(event){
  //alert('Character was ')
@@ -453,271 +421,239 @@ alert('Character was ' + character);
 });
 */
 
-
-
-
-
-
-
-
+////////////////////////
+/*RichDrawEditor.prototype.outShape = function(event) {  
+  if(typeTransform=='Translate')
+   {
+    typeTransform='';
+   } 
+} 
+RichDrawEditor.prototype.overShape = function(event) {  
+   typeTransform='Translate';
+  
+} 
+*/
 RichDrawEditor.prototype.onMouseDown = function(event) {  
  
-  //++ ???
-  clockdata();
-  
-  ////////////
-      
-  
+ clockdata();
+ 
+ //MODE NO SELECT
  if (this.mode != 'select') 
   {      
-            
-      var modeUsed=0;     
-   if(this.mode == 'zoom') 
-     {     
-         var offset = Ext.get(this.container).getXY();
-          var snappedX = Math.round((event.getXY()[0] - offset[0]) / this.gridX) * this.gridX;
-          var snappedY = Math.round((event.getXY()[1] - offset[1]) / this.gridY) * this.gridY;
-          var width =this.gridWidth;
-          contmove=0;
-          this.setGrid(width, width);  
- 
-           this.unselect(); 
-            xpArray=new Array();
-            ypArray=new Array();
-        
-            this.mouseDownX = snappedX;
-            this.mouseDownY = snappedY;   
-            
-             xpArray.push(this.mouseDownX);
-             ypArray.push(this.mouseDownY);
-         
-        this.renderer.zoom(this.mouseDownX, this.mouseDownY);  
-         modeUsed=1; 
-     } //end zoom     
+   var modeUsed=0;     
+   if (this.mode == 'zoom') 
+    {     
+     var offset = Ext.get(this.container).getXY();
+     var snappedX = Math.round((event.getXY()[0] - offset[0]) / this.gridX) * this.gridX;
+     var snappedY = Math.round((event.getXY()[1] - offset[1]) / this.gridY) * this.gridY;
+     var width=this.gridWidth;
+     contmove=0;
+     this.setGrid(width, width);  
+     this.unselect(); 
+     xpArray=new Array();
+     ypArray=new Array();
+     this.mouseDownX = snappedX;
+     this.mouseDownY = snappedY;   
+     xpArray.push(this.mouseDownX);
+     ypArray.push(this.mouseDownY);
+     this.renderer.zoom(this.mouseDownX, this.mouseDownY);  
+     modeUsed=1; 
+    } //end zoom     
+   if (this.mode == 'controlpath') 
+    {
+     this.actualStyle(); 
+     ////onColorChange();         
+     if(numClics<=0)
+      {     
+       this.nowDraw=true;
+       setPoints=new Array();    
+       var offset = Ext.get(this.container).getXY();
+       var snappedX = Math.round((event.getXY()[0] - offset[0]) / this.gridX) * this.gridX;
+       var snappedY = Math.round((event.getXY()[1] - offset[1]) / this.gridY) * this.gridY;
+       var width=this.gridWidth;  
+       contmove=0;
+       this.setGrid(width, width);  
+       this.unselect(); 
+       xpArray=new Array();
+       ypArray=new Array();
+       this.mouseDownX = snappedX;
+       this.mouseDownY = snappedY;   
+       xpArray.push(this.mouseDownX);
+       ypArray.push(this.mouseDownY);
+       setPoints.push(this.mouseDownX+','+this.mouseDownY); 
+       // ++ ;
+        //onColorChange();
+        this.actualStyle();                                                                                                                                                  
+       // ++ ;                       
+       //shape, fillColor, lineColor, fillOpac, lineOpac, lineWidth, left, top, width, height, textMessaje, textSize, textFamily, imageHref, points, transform, parent
+       //this.selected = this.renderer.create(this.mode, this.fillColor, this.lineColor, this.fillOpac, this.lineOpac, this.lineWidth, this.mouseDownX, this.mouseDownY, 1, 1,this.textMessaje,this.textSize,this.textFamily,this.imageHref, '');
 
-
-   if(this.mode == 'controlpath') 
-     {            
-     /*
-                this.lineColor = frames['mondrianstyle'].strokehex;
-                this.fillColor = frames['mondrianstyle'].fillhex;
-                this.lineWidth = frames['mondrianstyle'].fillWidth; 
-                this.lineOpac = frames['mondrianstyle'].strokeOpac;
-                this.fillOpac = frames['mondrianstyle'].fillOpac;
-       */   
-          if(numClics<=0){     
-                
-              //if(this.nowDraw==true){ alert('Double click, please');this.onEndLineListener(event);  return true;}     
-                  this.nowDraw=true;
-                   setPoints=new Array();    
-                   var offset = Ext.get(this.container).getXY();
-                  var snappedX = Math.round((event.getXY()[0] - offset[0]) / this.gridX) * this.gridX;
-                  var snappedY = Math.round((event.getXY()[1] - offset[1]) / this.gridY) * this.gridY;
-                  var width = this.gridWidth; 
-                  contmove=0;
-                  this.setGrid(width, width);  
-                 
-                   this.unselect(); 
-                    xpArray=new Array();
-                    ypArray=new Array();
-                
-                    this.mouseDownX = snappedX;
-                    this.mouseDownY = snappedY;   
-                    
-                     xpArray.push(this.mouseDownX);
-                     ypArray.push(this.mouseDownY);
-                      setPoints.push(this.mouseDownX+','+this.mouseDownY); 
-                     
-                    this.selected = this.renderer.create(this.mode, this.fillColor, this.lineColor, this.fillOpac, this.lineOpac, this.lineWidth, this.mouseDownX, this.mouseDownY, 1, 1);
-                     //document.forms[0].code.value=numClics;    
-                     this.selected.id = 'shape:' + createUUID(); 
-                     Ext.get(this.selected).on( "mousedown", this.onHit,this);  
-                     
-                    //document.forms[0].code.value=this.selected.id+' ';   
-                    //-- this.selected.id = this.mode+':' + createUUID();
-                    
-                   Ext.get(this.selected).on( "dblclick", this.onEndLine,this);  
-                   // Ext.get(this.container).on( "mouseout", this.onMouseUp,this);  
-                     Ext.get(this.container).on( "mousemove", this.onDraw,this); 
-                     numClics++;
-           }else{  
-                var coord=this.inputxy;
-	        var X=parseFloat(coord[0]);
-	        var Y=parseFloat(coord[1]); 
-               // document.forms[0].code.value=''+X+','+Y;  
-                setPoints.push(X+','+Y);
-              //document.forms[0].code.value=numClics;   
-             this.renderer.clic(this.selected);
-              numClics++;
-             }
-         
-        modeUsed=1; 
-     } //end  
-     
-    if(modeUsed == 0) 
-     {   
-           
-         var offset = Ext.get(this.container).getXY();
-          var snappedX = Math.round((event.getXY()[0] - offset[0]) / this.gridX) * this.gridX;
-          var snappedY = Math.round((event.getXY()[1] - offset[1]) / this.gridY) * this.gridY;
-          var width = this.gridWidth;
-          contmove=0;
-          this.setGrid(width, width);  
- 
-           this.unselect(); 
-            xpArray=new Array();
-            ypArray=new Array();
-        
-            this.mouseDownX = snappedX;
-            this.mouseDownY = snappedY;   
-            
-             xpArray.push(this.mouseDownX);
-             ypArray.push(this.mouseDownY);
- 
-        
-          this.unselect();   
-          /*
-                this.lineColor = frames['mondrianstyle'].strokehex;
-                this.fillColor = frames['mondrianstyle'].fillhex;
-                this.lineWidth = frames['mondrianstyle'].fillWidth; 
-                this.lineOpac = frames['mondrianstyle'].strokeOpac;
-                this.fillOpac = frames['mondrianstyle'].fillOpac;
-*/
-            this.selected = this.renderer.create(this.mode, this.fillColor, this.lineColor, this.fillOpac, this.lineOpac, this.lineWidth, this.mouseDownX, this.mouseDownY, 1, 1);
-            
-             this.selected.id = 'shape:' + createUUID();   
-            
-            //-- this.selected.id = this.mode+':' + createUUID();
-           Ext.get(this.selected).on( "mousedown", this.onHit,this);  
-            Ext.get(this.container).on( "mousemove", this.onDraw,this);  
-            //Ext.get(this.container).on( "mouseover", this.onTranslate,this);  
-            //Ext.get(this.container).on( "mouseout", this.onRotate,this); 
-           
-     }     
-           
-  }
-    else   // Mode is select
-  {  
-        
-           
-        // if(this.nowDraw==true){ alert('Double click, please'); this.onEndLineListener(event); return true;}
-       //Ext.get(this.container).on( "mouseout", this.onRotate,this);  
-             this.previusBox=this.selected;  
-            
-       
-	
-        
-       if (this.mouseDownX != snappedX || this.mouseDownY != snappedY)
-       {  
-          if(typeTransform=='Translate')
-           {  
-             
-	     inout='move';//true;   
-	     //Event.observe(this.selected, "mousedown", this.onHit,this);  
-             //Ext.get(this.container).on( "mousemove", this.onDrag,this);  
-
-           }
-          if(typeTransform=='Scale'  || typeTransform=='Rotate') {
+       this.selected = this.renderer.create(this.mode, this.fillColor, this.lineColor, this.fillOpac, this.lineOpac, this.lineWidth, this.mouseDownX, this.mouseDownY, 1, 1,this.textMessaje,this.textSize,this.textFamily,this.imageHref, 'M0,0 1,1', '', '');
               
-             inout='rotate_escale';//false          
-            Ext.get(this.selected).on( "mousedown", this.onHit,this);  
-             Ext.get(this.container).on( "mousemove", this.onDrag,this);  
-             //Ext.get(this.container).on( "mouseover", this.onTranslate,this);  
-             //Ext.get(this.container).on( "mouseout", this.onRotate,this); 
-              //this.unselect();   
-           }  
-         
-         if(typeTransform==''){
-             this.unselect();        
-         }  
-       } 
-        else
-       { 
-           //alert(',,');
-           this.renderer.info(this.selected);  
-          
-                 
-           
-       } // end mousedown    
+       this.selected.id = 'shape:' + createUUID(); 
+       Ext.get(this.selected).on( "mousedown", this.onHit,this);  
+       this.log(this.selected.id);   
        
-   } //end mode select
-                  
-  return false;
-};
-
-
-
-
-
-
-
-
-
-
-
-
-RichDrawEditor.prototype.onMouseUp = function(event) {
- 
- //Ext.get(this.selected).un("mousemove",this.onDrag)
- 
-	
-  if (this.mode != 'select') 
-   {  
-       //this.renderer.restruct(this.selected);
-       
-    if(this.mode == 'controlpath') 
-     {
-         //Event.observe(this.selected, "mousemove", this.onClic,this);  
-         
-
-         //this.renderer.info(this.selected);
-         
-         
+       Ext.get(this.selected).on( "dblclick", this.onEndLine,this);  
+       Ext.get(this.container).on( "mousemove", this.onDraw,this); 
+       numClics++;
      }
       else
      {  
-          Ext.get(this.container).un("mousemove", this.onDraw);  
- 
-           this.selected = null;   
+       var coord=this.inputxy;
+       var X=parseFloat(coord[0]);
+       var Y=parseFloat(coord[1]); 
+       setPoints.push(X+','+Y);
+       this.renderer.clic(this.selected);
+       numClics++;
      }
-        
-   } else
-   {      
-      
-Ext.get(this.container).un("mousemove", this.onDraw);  
-  
-     // if(inout=='move' || inout=='rotate_scale' ){
-     if(typeTransform=="Rotate" || typeTransform=="Scale" ) 
-      {         
-         //inout='move';//true;
-         Ext.get(this.container).un("mousemove", this.onDrag);  
-        //this.renderer.restruct(this.selected);
-        contmove=0; 
-      } 
-      if(typeTransform=="Translate" ) 
-      {  
-         Ext.get(this.container).un("mousemove", this.onDrag);  
-        //this.renderer.restruct(this.selected);
-        contmove=0; 
-
-      }
-      if(inout=='multiSelect'){
-            //this.unselect(); 
-             //inout='move';//true;      
-        } 
-      typeTransform==''; 
-   }  
+     modeUsed=1; 
+    } //end mode controlpath
+   if (modeUsed == 0) 
+    {   
+     var offset = Ext.get(this.container).getXY();
+     var snappedX = Math.round((event.getXY()[0] - offset[0]) / this.gridX) * this.gridX;
+     var snappedY = Math.round((event.getXY()[1] - offset[1]) / this.gridY) * this.gridY;
+     var width=this.gridWidth;
+     contmove=0; 
+     this.setGrid(width, width);  
+     this.unselect(); 
+     xpArray=new Array();
+     ypArray=new Array();
+     this.mouseDownX = snappedX;
+     this.mouseDownY = snappedY;   
+     xpArray.push(this.mouseDownX);
+     ypArray.push(this.mouseDownY);
+     this.unselect();   
+      //onColorChange();
+      this.actualStyle(); 
+     //this.selected = this.renderer.create(this.mode, this.fillColor, this.lineColor, this.fillOpac, this.lineOpac, this.lineWidth, this.mouseDownX, this.mouseDownY, 1, 1,this.textMessaje,this.textSize,this.textFamily,this.imageHref,'');
+     
+     this.selected = this.renderer.create(this.mode, this.fillColor, this.lineColor, this.fillOpac, this.lineOpac, this.lineWidth, this.mouseDownX, this.mouseDownY, 1, 1,this.textMessaje,this.textSize,this.textFamily,this.imageHref,'M0,0 1,1', '', '');
+     
+     this.selected.id = 'shape:' + createUUID();   
+     //-- this.selected.id = this.mode+':' + createUUID();
+     Ext.get(this.selected).on( "mousedown", this.onHit,this);  
+     Ext.get(this.container).on( "mousemove", this.onDraw,this);
+     //Ext.get(this.container).on( "mouseover", this.overShape,this);   
+     //Ext.get(this.container).on( "mouseout", this.outShape,this); 
+    }     
+  }
+   else   //----- MODE SELECT
+  {                                            
    
+   var offset = Ext.get(this.container).getXY();
+   var snappedX = Math.round((event.getXY()[0] - offset[0]) / this.gridX) * this.gridX;
+   var snappedY = Math.round((event.getXY()[1] - offset[1]) / this.gridY) * this.gridY;
+   // if ((this.mouseDownX != snappedX && this.mouseDownY != snappedY) || typeTransform=='')
+   if (this.mouseDownX != snappedX || this.mouseDownY != snappedY)
+    { 
+      if(this.selected!=null && typeTransform=='Translate' )
+       {
+        
+        Ext.get(this.container).un("mousemove", this.onDrag); 
+        this.unselect();
+       }
+      //typeTransform='';
+    }     
+    
+  // if (typeTransform=='' && (this.mouseDownX != snappedX || this.mouseDownY != snappedY) )    
+     // { 
+      //if(typeTransform=='Rotate' || typeTransform=='Translate'){  }else{  
+        
+         //this.unselect();           
+      // }
+   // } 
+     //else
+    //{   
+     // if(this.nowDraw==true){ alert('Double click, please'); this.onEndLineListener(event); return true;}
+     //Ext.get(this.container).on( "mouseout", this.onRotate,this);  
+          
+         
+     // if (this.mouseDownX != snappedX || this.mouseDownY != snappedY)
+     //{  
+     if(typeTransform=='Translate')
+      {  
+       inout='move';//true;   
+       //Event.observe(this.selected, "mousedown", this.onHit,this);  
+       //Ext.get(this.container).on( "mousemove", this.onDrag,this);  
+      }
+     if(typeTransform=='Scale'  || typeTransform=='Rotate') 
+      {
+       inout='rotate_escale';//false  
+       Ext.get(this.container).on( "mousemove", this.onDrag,this);         
+       Ext.get(this.selected).on( "mousedown", this.onHit,this);  
+       
+       //Ext.get(this.container).on( "mouseover", this.onTranslate,this);  
+       //Ext.get(this.container).on( "mouseout", this.onRotate,this); 
+       //this.unselect();   
+      }  
+    //} //end typeTransform==''
+  } //end mode select
+ return false;
+};
+
+
+RichDrawEditor.prototype.onMouseUp = function(event) 
+{
+ //Ext.get(this.selected).un("mousemove",this.onDrag)
+ 
+   //MODE NO SELECT
+ if (this.mode != 'select') 
+  {  
+   //this.renderer.restruct(this.selected);
+   if(this.mode == 'controlpath') 
+    {
+     //Event.observe(this.selected, "mousemove", this.onClic,this);  
+     //this.renderer.info(this.selected);
+    }
+     else
+    {  
+     Ext.get(this.container).un("mousemove", this.onDraw);  
+     this.selected = null;   
+    }
+  } 
+   else //MODE SELECT
+  { 
+   Ext.get(this.container).un("mousemove", this.onDraw);  //or drag
+   //Ext.get(this.container).un("mousemove", this.onDrag);  
+   Ext.get(this.container).un("mousemove", this.onDrag);  
+   
+    
+   moveNow=false;   
+   contmove=0; 
+   // if(inout=='move' || inout=='rotate_scale' ){
+   if(typeTransform=="Rotate" || typeTransform=="Scale" ) 
+    {         
+     //inout='move';//true; 
+     //this.renderer.restruct(this.selected);
+     typeTransform=='';
+    } 
+   if(typeTransform=="Translate" ) 
+    {  
+     //Ext.get(this.container).un("mousemove", this.renderer.move);    
+     //Ext.get(this.container).un("mousemove", this.onDrag);  
+     typeTransform=='';   
+     //this.renderer.restruct(this.selected); 
+     //this.unselect();
+     contmove=0; 
+     
+    }
+   if(inout=='multiSelect')
+    {
+      
+     //inout='move';//true;      
+    } 
+    
+   typeTransform==''; 
+  }  
    //Event.stopObserving(this.container, "mousemove", this.onDraw,this);  
 };
 
 
-
-
-
 RichDrawEditor.prototype.onDrag = function(event) {  
 
-  
+  moveNow=true; 
   var offset = Ext.get(this.container).getXY();
   var snappedX = Math.round((event.getXY()[0] - offset[0]) / this.gridX) * this.gridX;
   var snappedY = Math.round((event.getXY()[1] - offset[1]) / this.gridY) * this.gridY;
@@ -745,18 +681,19 @@ RichDrawEditor.prototype.onDrag = function(event) {
        
        
            if(typeTransform=="Translate")
-            {      
-                 var coord=this.inputxy;
-	   var moveX=parseFloat(coord[0]);
-	   var moveY=parseFloat(coord[1]); 
+            {  
+            Ext.get(this.container).getXY();  
+              
  
+           //var coord=this.inputxy;
+	   //var moveX=parseFloat(coord[0]);
+	   //var moveY=parseFloat(coord[1]); 
+               this.log(this.mouseDownX+' '+event.getXY()[0]+' '+ this.selectedBounds.x +'contmove'+contmove); 
                this.renderer.move(this.selected, this.selectedBounds.x + deltaX, this.selectedBounds.y +deltaY,this.clicX,this.clicY);
-               //this.renderer.move(this.selected,  this.mouseDownX,  this.mouseDownY,this.clicX,this.clicY);
-              //  this.renderer.move(this.selected, moveX, moveY,this.clicX,this.clicY);
-               this.renderer.showTracker(this.selected,this.pathsEdit); 
-               
+                this.renderer.showTracker(this.selected,this.pathsEdit); 
+                 
             }  
-           //if(inout=='rotate_scale'){ 
+          
                       
                if(typeTransform=="Rotate") 
                  { 
@@ -869,16 +806,29 @@ RichDrawEditor.prototype.onTranslate = function(event) {
         var y = Math.round(event.getXY()[1] - offset[1]);
 
    //var x= parseFloat(event.getXY()[0]); 
-   //var y= parseFloat(event.getXY()[1]);
+   //var y= parseFloat(event.getXY()[1]); 
+   
+
    this.inputxy = [x,y]
-   this.onInputXY(x,y);
+   this.onInputXY(x,y); 
+   
+   //Ext.get(this.container).getXY(); ;//
 };                                       
 
 
 RichDrawEditor.prototype.onHit = function(event) {
 //console.log("AAH HIT!!!!")
  if(this.mode == 'select') 
-  { 
+  {   
+    ;
+    //event.cancelBubble =false;
+    // We've handled this event.  Don't let anybody else see it.  
+   if (event.stopPropagation) event.stopPropagation(); // DOM Level 2
+   else event.cancelBubble = true; // IE
+   // Now prevent any default action.
+   if (event.preventDefault) event.preventDefault(); // DOM Level 2
+   else event.returnValue = false; // IE      
+   
    if(inout=='multiSelect')
     {   
       //Ext.get(this.container).on( "mousemove", this.onDrag,this);   
@@ -887,8 +837,11 @@ RichDrawEditor.prototype.onHit = function(event) {
     }
      else
     { 
-     typeTransform="Translate"   
     
+      Ext.get(this.container).un("mousemove", this.onDrag); 
+      //this.unselect();    
+     typeTransform="Translate";
+     
     /* //this.previusBox=this.selected;      
      this.select(Event.element(event));
      this.selectedBounds = this.renderer.bounds(this.selected);
@@ -908,21 +861,27 @@ RichDrawEditor.prototype.onHit = function(event) {
        
      contmove=0;
      //this.setGrid(this.lineWidth, width);  
-    var width = this.gridWidth;
-    
-    this.setGrid(width, width);  
+     var width=this.gridWidth;
+         
+     this.setGrid(width, width);  
      
-    this.select(event.getTarget());
+    this.select(event.getTarget()); 
+    this.previusBox=this.selected;     
+    
+    //++
+    this.renderer.getProperties(this.selected);
+    
     this.selectedBounds = this.renderer.bounds(this.selected);
     //document.forms[0].code.value=shape(c,this.selected);
     var offset = Ext.get(this.container).getXY(); 
     
     this.mouseDownX = Math.round((event.getXY()[0] - offset[0]) / this.gridX) * this.gridX;
     this.mouseDownY = Math.round((event.getXY()[1] - offset[1]) / this.gridY) * this.gridY;
+    this.log(this.gridX);
     this.renderer.info(this.selected);
     Ext.get(this.container).on( "mousemove", this.onDrag,this);   
 
-     //Ext.get(this.container).on( "mouseout", this.onDrag,this); 
+    
     }
   }
    else
@@ -981,26 +940,6 @@ function noselect(){
 
 function createUUID()
 {
-var uuid = [4, 2, 2, 2, 6];
-
-for(var m = 0; m < uuid.length; m++){
-
-uuid[m]=(function(length) {
-    var uuidpart = "";
-    for (var i=0; i<length; i++) {
-      var uuidchar = parseInt((Math.random() * 256)).toString(16);
-      if (uuidchar.length == 1)
-        uuidchar = "0" + uuidchar;
-      uuidpart += uuidchar;
-    }
-    return uuidpart;
-})(uuid[m])
-  
-}
-
-return uuid.join("-")
-
-  /*
   return [4, 2, 2, 2, 6].map(function(length) {
     var uuidpart = "";
     for (var i=0; i<length; i++) {
@@ -1011,8 +950,8 @@ return uuid.join("-")
     }
     return uuidpart;
   }).join('-');
-  */
 }
+
 
 //----------------------------------------------------------------------------
 // AbstractRenderer
@@ -1026,7 +965,7 @@ function AbstractRenderer() {
 
 AbstractRenderer.prototype.init = function(elem) {};
 AbstractRenderer.prototype.bounds = function(shape) { return { x:0, y:0, width:0, height: 0 }; };
-AbstractRenderer.prototype.create = function(shape, fillColor, lineColor, lineWidth, left, top, width, height) {};
+AbstractRenderer.prototype.create = function(shape, fillColor, lineColor, lineWidth, left, top, width, height, textMessaje, textSize, textFamily, imageHref, transform) {};
 AbstractRenderer.prototype.datacreate = function(fillColor, lineColor, lineWidth, fillOpac, strokeOpac, left, top, width, height,data) {};
 AbstractRenderer.prototype.index = function(shape, order) {};
 AbstractRenderer.prototype.remove = function(shape) {}; 
@@ -1175,3 +1114,8 @@ function ccnmplct(a,b,c,d) {
   solution= [eia,eib,eic];
   return solution
 }
+function GetString(source, start, end){
+var st = source.indexOf(start) + start.length;
+var en = source.indexOf(end, start);
+ return source.substring(st, en);//trimAll(source.substring(st, en));
+} 
