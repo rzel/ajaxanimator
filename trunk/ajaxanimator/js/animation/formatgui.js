@@ -40,7 +40,7 @@ Ax.save = {
       title: "Save Animation As Text",
       width: 300,
       height: 300,
-      buttons: [{text: "Copy To Clipboard",handler: function(){Ax.msg("Sorry!","Feature Not Availiable")}},
+      buttons: [{text: "Update Data",handler: function(){this.ownerCt.findById("loadtext").setValue(Ax.export_animation(Ax.animation.markup,"json"))}},
                 {text: "Close", handler: function(){this.ownerCt.close()}}],
       layout: "border",
       items: [{
@@ -52,6 +52,7 @@ Ax.save = {
           layout: "fit",
           border: false,
           items: {
+            id: "outtext",
             xtype: "textarea",
             style: "font-size: 9px",
             value: Ax.export_animation(Ax.animation.markup,"json")
