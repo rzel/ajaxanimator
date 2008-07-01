@@ -1208,7 +1208,7 @@ SVGRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
         var path=thispath+'L'+toX+','+toY+end;
           //var pointshape=shape.getAttributeNS(null,"d");
          	shape.setAttributeNS(null,'d',path);
-               document.forms[0].control_codebase.value=path;
+//               document.forms[0].control_codebase.value=path;
      }
       else
      { 

@@ -435,6 +435,8 @@ RichDrawEditor.prototype.overShape = function(event) {
 */
 RichDrawEditor.prototype.onMouseDown = function(event) {  
  
+ if(event.button != 0){return}; //ignore if it's not a left-click
+ 
  clockdata();
  
  //MODE NO SELECT
@@ -818,6 +820,7 @@ RichDrawEditor.prototype.onTranslate = function(event) {
 
 RichDrawEditor.prototype.onHit = function(event) {
 //console.log("AAH HIT!!!!")
+
  if(this.mode == 'select') 
   {   
     ;
