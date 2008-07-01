@@ -28,7 +28,7 @@ Ax.MainToolbar = [
 {text:"View", menu: [
   //Add some check item stuff for visible panels
 
-  {text: "Animation", iconCls: "tb_animation", handler: function(){Ax.controls.player()}},
+  {text: "Animation", iconCls: "tb_animation", handler: function(){Ax.controls.play()}},
   {text: "Information", iconCls: "tb_about", handler: function(){Ax.animationinfo()}},
   {text: "Theme", iconCls: "tb_theme", menu: new Ext.ux.ThemeMenu},
   "-",
