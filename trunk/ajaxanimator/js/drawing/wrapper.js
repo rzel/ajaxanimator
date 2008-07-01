@@ -31,7 +31,7 @@ var zoominit='0 0 '+Ax.canvasWidth+' '+Ax.canvasHeight; //some OnlyPaths stuffs
 var centerZoomx=Math.round(Ax.canvasWidth/2); //some OnlyPaths stuffs
 var centerZoomy=Math.round(Ax.canvasHeight/2); //some OnlyPaths stuffs
 var selectmode=''; //I have a feeling these comments aren't helping anyone
-var data_path_close = true;
+var data_path_close = false;
   
 
 
@@ -45,8 +45,15 @@ Ax.drawinit_core = function(){
   Ax.canvas = new RichDrawEditor($("drawcanvas"), renderer);
   Ax.canvas.onInputXY = Ax.setDrawXY;
   Ax.canvas.actualStyle = function(){}; //this is a hack so it doesn't replace some stuff that i'm about to set now
+  
+  
   Ax.canvas.textMessaje = "Ajax Animator+OnlyPaths"
-  Ax.canvas.imageHref = "http://antimatter15.110mb.com/phpfusion/images/logo4.png"
+  Ax.canvas.textSize = 19;
+  Ax.canvas.fontFamily = "Arial";
+  Ax.canvas.imageHref = "http://tavmjong.free.fr/INKSCAPE/MANUAL/images/QUICKSTART/SOUPCAN/SoupCan_SoupedUp.png"
+  
+  
+  
   Ax.canvas.onselect  = Ax.loadcolors;
   Ext.get(Ax.canvas.container.parentNode).on("mouseup",function(){
     setTimeout(function(){Ax.autodiff();return true},10);
@@ -118,6 +125,7 @@ controlpath:16,text:17,image:18,
 shape:19,reset:20,"delete":21})[tool])
 /**///*//for my text editor (notepad2, though i normally use notepad++ which doesn't face this issue)
 
+selectmode = tool;
 
   switch(tool){
   case "delete":
