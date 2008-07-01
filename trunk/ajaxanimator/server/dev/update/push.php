@@ -4,8 +4,7 @@ Pushes new updated to servers
 */
 
 $servers = array(
-"antimatter15.110mb.com/animator/Animator2 default"//,
-//"ajaxanimator.sourceforge.net/Animator2 default"
+"antimatter15.110mb.com/ajaxanimator default"
 );
 
  function send($file,$type,$ssi_fo){
