@@ -899,7 +899,7 @@ SVGRenderer.prototype.move = function(shape, left, top,fromX,fromY) {
   }
   if (shape.tagName == 'text'){  
    var size=parseFloat(shape.getAttributeNS(null, 'font-size')); 
-   $('code').value=size;
+   this.editor.log(size);
     shape.setAttributeNS(null, 'x', left + 'px');
     shape.setAttributeNS(null, 'y', parseFloat(top+size) + 'px');
     //$('option_text_trx').value= left;  
