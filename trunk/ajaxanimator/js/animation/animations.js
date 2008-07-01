@@ -82,6 +82,7 @@ Ax.viewport.findById("treebrowse").getLoader().load(Ax.viewport.findById("treebr
 		Ext.Ajax.request({
 		url: Ax.files.animations+node.id,
 		success: function(e){
+      Ax.player_pause()
       Ax.init_player(e.responseText);
       Ax.player_play()
 		}
