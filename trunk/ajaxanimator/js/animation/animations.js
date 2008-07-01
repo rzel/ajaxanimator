@@ -1,3 +1,6 @@
+//this file is soooooo fubared
+//omg.....
+
 Ax.AnimationBrowser = Ext.extend(Ext.Panel,{
 initComponent: function(){
 Ext.apply(this,
@@ -8,7 +11,6 @@ xtype:"panel",
 title:"Animations",
 border: false,
 layout:"fit",
-//html:"<img src='../img/mockup/animationbrowser.png' style='width: 500px; height: 400px'>"
 items: {
 layout:"border",
 border: false,
@@ -22,16 +24,13 @@ id: "Player",
 layout: "border",
 items: [
        {region: "north",border: false, tbar: [{text: "By:&nbsp;Hardcoded&nbsp;Name"},{xtype: "tbfill"},"Rating&nbsp;System"], height: 27},
-       {region: "south",border: false, bbar: [{text: "Play",handler: function(){
-this.setText((this.getText()=="Play")?"Pause":"Play")} //just a really really condensed script :P
-},
-{text: "Forward"},
-{text: "Rewind"},
+       {region: "south",border: false, bbar: [{text: "Play", iconCls: "play_icon",handler: function(){Ax.player_play()}},{text: "Pause", iconCls: "stop_icon", handler: function(){Ax.player_pause()}},
+{text: "Import to Editor", iconCls: "import_icon", handler: function(){Ax.player_import()}},
 {xtype: "tbfill"},
 "0/1337 0FPS"
 ], height: 27},
   {region: "center",	border: false,		 html:"<div class=\"x-border-layout-ct canvas_container\">"+
-       "<div id=\"drawcanvas\" class=\"canvas\"></div>"}      
+       "<div id=\"playercanvas\" class=\"canvas\"></div>"}      
         ],
 autoScroll: true,
 tools: [{id: "gear"},{id: "help",
@@ -47,9 +46,9 @@ title:"Browse",
 collapseFirst: false,
 tools: [
 {id: "plus",qtip: "Expand All", handler: function(){
-Ax.viewport.findById("treebrowse").expandAll()}}, //crap! i'm sure this is crappy coding style
+Ax.viewport.findById("treebrowse").expandAll()}},
 {id: "minus", qtip: "Collapse All", handler: function(){
-Ax.viewport.findById("treebrowse").collapseAll()}}], //crap! i'm sure this is crappy coding style.
+Ax.viewport.findById("treebrowse").collapseAll()}}],
 iconCls: "browse_icon",
 width:200,
 split:true,
@@ -65,14 +64,11 @@ titleCollapse:true,
         animate:true,
         enableDD:false,
         containerScroll: true, 
-		bbar: [{text: "Reload", qtip: "Reload Thingy"},
-{text: "Expand", qtip: "Expand All Nodes", handler: function(){
-Ax.viewport.findById("treebrowse").expandAll()}},
-{text: "Collapse",qtip: "Collapse All Nodes", handler: function(){
-Ax.viewport.findById("treebrowse").collapseAll()
-}}],
+		bbar: [
+{text: "Reload", qtip: "Reload Tree Data", iconCls: "reload_icon",handler: function(){
+Ax.viewport.findById("treebrowse").getLoader().load(Ax.viewport.findById("treebrowse").getRootNode())}}],
 		root: new Ext.tree.AsyncTreeNode({
-        text: 'Users',
+        text: 'Animations',
 		expanded: true,
         draggable:false,
         id:'.'
@@ -84,10 +80,10 @@ Ax.viewport.findById("treebrowse").collapseAll()
 		"click":function(node){
 		if(node.childrenRendered==false){
 		Ext.Ajax.request({
-		url: "../"+node.id,
+		url: Ax.files.animations+node.id,
 		success: function(e){
-		Ax.viewport.findById("Player").body.dom.innerHTML = Ax.util.htmlentities(e.responseText); //bad code!!!!!
-
+      Ax.init_player(e.responseText);
+      Ax.player_play()
 		}
 		})
 		}
