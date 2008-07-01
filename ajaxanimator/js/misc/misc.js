@@ -8,10 +8,11 @@ A whole lot of random scripts
 Ax.macroExec = function(){
   (new Ext.Window({
     title: "Execute Macros/Scripts",
+    iconCls: "tb_script",
     width: 300,
     height: 300,
-    buttons: [{text: "Execute" ,handler: function(){eval(this.ownerCt.findById("loadtext").getValue())}},
-              {text: "Close", handler: function(){this.ownerCt.close()}}],
+    buttons: [{text: "Execute" , iconCls: "execute",handler: function(){eval(this.ownerCt.findById("loadtext").getValue())}},
+              {text: "Close", iconCls: "close", handler: function(){this.ownerCt.close()}}],
     layout: "border",
     items: [{
       region: "north",

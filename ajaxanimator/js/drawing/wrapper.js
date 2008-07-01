@@ -94,19 +94,47 @@ Ax.updatecolors = function(){
   Ax.canvas.setGrid(Ax.Color.grid, Ax.Color.grid);
 }
 
-Ax.reloadCanvas = function(){
-  var init = (new Date()).getTime()
-  var backup = Ax.dumpshapes()
-  var mode = (Ax.canvas.queryCommand("mode"))?Ax.canvas.queryCommand("mode"):"select";
+
+
+Ax.reloadCanvas = function(){//now a very very robust function, should be able to recover from most errors, even most really random ones
+  var init = (new Date()).getTime(),
+  log = [],
+  backup = [],
+  mode = "select";
+  try{
+    mode = Ax.canvas.queryCommand("mode")
+  }catch(err){log.push("FO1: "+err)}
+  try{
+  backup = Ax.dumpshapes()
+  }catch(err){log.push("FO2: "+err);
+  Ax.msg("Sorry","OnlyPaths has encountered a critical error. The canvas data may be unrecoverable.")}
+  try{
   Ax.canvas.renderer.removeAll()
+  }catch(err){log.push("FO3: "+err)}
+  try{
   Ax.canvas.container.innerHTML = null
+  }catch(err){log.push("FO4: "+err)}
+  try{
   Ax.canvas = null
+  }catch(err){log.push("FO5: "+err)}
+  try{
   Ax.drawinit_core();
+  }catch(err){log.push("FO6: "+err)}
+  try{
   Ax.setTool(mode)
+  }catch(err){log.push("FO7: "+err);Ax.msg("Sorry","Recovery might have failed. You may have to restart the application.")}
+  try{
   Ax.loadShapes(backup)
+  }catch(err){log.push("FO8: "+err);Ax.msg("Sorry","Recovery might have failed. You may have to restart the application.")}
   
   var time = (new Date()).getTime()-init
-  Ax.msg("Canvas Reloaded","This should have resolved most canvas-related issues. Canvas reinitialized in "+time+"ms");
+
+  if(log.length > 0){
+    Ax.msg("Problems while restarting:", log.join("<br>"));
+    Ax.msg("Attempt information","Canvas reinitialization time was "+time+"ms");
+  }else{
+    Ax.msg("Canvas Reloaded","This should have resolved most canvas-related issues. Canvas reinitialized in "+time+"ms");
+  }
 }
 
 
@@ -125,8 +153,12 @@ controlpath:16,text:17,image:18,
 shape:19,reset:20,"delete":21})[tool])
 /**///*//for my text editor (notepad2, though i normally use notepad++ which doesn't face this issue)
 
-selectmode = tool;
-
+if(tool == "controlpath"){
+selectmode = "controlpath"
+}
+if(tool == "path"){
+selectmode = "path"
+}
   switch(tool){
   case "delete":
     Ax.canvas.deleteSelection();

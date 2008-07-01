@@ -111,9 +111,7 @@ Ax.import_animation = function(markup){
   if(typeof markup == typeof "tehkooliest"){ //if its in json, then decode it first
     markup = Ext.util.JSON.decode(markup)
   }
-  Ax.animation.name = (markup.name)?markup.name:"Untitled Production";
-  Ax.animation.markup = markup;
-  Ax.viewport.findById("canvas").getTopToolbar().items.item(1).getEl().value = (markup.name)?markup.name:"Untitled Production";
+Ax.setAnimationName(markup.name)
   //set the name for the animation in that little box in the toolbar. overly hackish, I know. Seriously, acessing dom?
   
   Ax.import_animation_core(markup.layers);

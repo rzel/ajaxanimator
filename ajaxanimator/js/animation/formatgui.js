@@ -11,10 +11,11 @@ Ax.open = {
   text: function(){
     (new Ext.Window({
       title: "Load Animation From Text",
+      iconCls: "tb_open",
       width: 300,
       height: 300,
-      buttons: [{text: "Load" ,handler: function(){Ax.autoimport(this.ownerCt.findById("loadtext").getValue())}},
-                {text: "Close", handler: function(){this.ownerCt.close()}}],
+      buttons: [{text: "Load" ,iconCls: "load",handler: function(){Ax.autoimport(this.ownerCt.findById("loadtext").getValue())}},
+                {text: "Close", iconCls: "close",handler: function(){this.ownerCt.close()}}],
       layout: "border",
       items: [{
         region: "north",
@@ -38,10 +39,11 @@ Ax.save = {
   text: function(){
     (new Ext.Window({
       title: "Save Animation As Text",
+      iconCls: "tb_save",
       width: 300,
       height: 300,
-      buttons: [{text: "Update Data",handler: function(){this.ownerCt.findById("outtext").setValue(Ax.export_animation(Ax.animation.markup,"json"))}},
-                {text: "Close", handler: function(){this.ownerCt.close()}}],
+      buttons: [{text: "Update", iconCls: "reload_icon",handler: function(){this.ownerCt.findById("outtext").setValue(Ax.export_animation(Ax.animation.markup,"json"))}},
+                {text: "Close", iconCls: "close", handler: function(){this.ownerCt.close()}}],
       layout: "border",
       items: [{
         region: "north",
@@ -91,6 +93,7 @@ Ax.animationinfo = function(){
   
       (new Ext.Window({
       title: "Animation Info - "+Ax.animation.name,
+      iconCls: "tb_about",
       width: 300,
       height: 200,
       html: "<b>"+Ax.animation.name+":</b><br />Generator: "+
