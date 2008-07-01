@@ -91,6 +91,7 @@ Ax.MainToolbar = [
 {text:"Help", menu: [
   {text: "About", iconCls: "tb_about", handler: function(){Ax.About()}},
   {text: "Key Shortcuts", iconCls: "tb_keyboard", handler: function(){Ax.keyGuide()}},
+  {text: "Tip of the Day", iconCls: "tb_tip", handler: function(){Ax.showTips()}},
   {text: "Manual", iconCls: "tb_docs", handler: function(){Ax.loadManual()}},
   {text: "FAQ", iconCls: "tb_docs", handler: function(){Ax.loadFAQ()}},
   {text: "Bug Reports", iconCls: "tb_bug", handler: function(){Ax.BugReport()}},

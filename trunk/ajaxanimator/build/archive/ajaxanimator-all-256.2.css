@@ -109,10 +109,8 @@
     margin-left: auto;
     margin-right: auto;
   }
+
   
-  h1.tiptitle {
-    font-size: x-large;
-  }
 	/*Ext bug fix that causes tabPosition:bottom oriented tab icons to fail*/
 	/*from http://extjs.com/forum/showthread.php?p=146135#post146135*/
 	.x-tab-panel-footer .x-tab-strip .x-tab-with-icon .x-tab-right{padding-left:0px;}
@@ -273,22 +271,6 @@ background-image: url(../img/silk/application_form_edit.png)
 /*Icon for the magickal animation browser thingsy*/
 
 
-button.arrow_next {
-background-image: url(../img/silk/arrow_right.png)
-}
-
-button.arrow_prev {
-background-image: url(../img/silk/arrow_left.png)
-}
-button.close {
-background-image: url(../img/silk/cross.png)
-}
-button.execute {
-background-image: url(../img/silk/script_go.png)
-}
-button.load {
-background-image: url(../img/silk/page_go.png)
-}
   /* CSS File: ../css/timeline.css */  
  /*Terrific Timeline Turd (awesome alliteration)*/
 
@@ -518,9 +500,6 @@ background-image: url(../img/silk/book.png)
 background-image: url(../img/silk/bricks.png)
 }
 .tb_tutorial {
-background-image: url(../img/silk/wand.png)
-}
-.tb_tip {
 background-image: url(../img/silk/lightbulb.png)
 }
 .tb_donate {

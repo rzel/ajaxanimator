@@ -57,8 +57,10 @@
     margin-left: auto;
     margin-right: auto;
   }
-
   
+  h1.tiptitle {
+    font-size: x-large;
+  }
 	/*Ext bug fix that causes tabPosition:bottom oriented tab icons to fail*/
 	/*from http://extjs.com/forum/showthread.php?p=146135#post146135*/
 	.x-tab-panel-footer .x-tab-strip .x-tab-with-icon .x-tab-right{padding-left:0px;}

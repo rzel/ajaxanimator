@@ -283,12 +283,6 @@ background-image: url(../img/silk/arrow_left.png)
 button.close {
 background-image: url(../img/silk/cross.png)
 }
-button.execute {
-background-image: url(../img/silk/script_go.png)
-}
-button.load {
-background-image: url(../img/silk/page_go.png)
-}
   /* CSS File: ../css/timeline.css */  
  /*Terrific Timeline Turd (awesome alliteration)*/
 

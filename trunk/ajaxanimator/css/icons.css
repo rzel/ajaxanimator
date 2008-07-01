@@ -62,3 +62,20 @@ background-image: url(../img/silk/application_form_edit.png)
 
 /*Icon for the magickal animation browser thingsy*/
 
+
+button.arrow_next {
+background-image: url(../img/silk/arrow_right.png)
+}
+
+button.arrow_prev {
+background-image: url(../img/silk/arrow_left.png)
+}
+button.close {
+background-image: url(../img/silk/cross.png)
+}
+button.execute {
+background-image: url(../img/silk/script_go.png)
+}
+button.load {
+background-image: url(../img/silk/page_go.png)
+}

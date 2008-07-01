@@ -16,6 +16,9 @@ setTimeout(function(){
     Ax.selectFrame(1,"Layer 1")
     
     setTimeout(function(){
+      
+      //Ax.showTips();
+      
       if(Ax.v.dev && !Ax.developer){
       Ax.gs(1);
       new Ext.ux.ToastWindow({
