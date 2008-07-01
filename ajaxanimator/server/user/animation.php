@@ -1,0 +1,3 @@
+<?php
+echo file_get_contents("samples/".$_REQUEST['id']);//meh...
+?>

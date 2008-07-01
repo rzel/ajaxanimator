@@ -22,7 +22,7 @@ function formatBytes($val, $digits = 3, $mode = "SI", $bB = "B"){ //$mode == "SI
    return round($val, $digits) . " " . $symbols[$i] . $bB;
 }
 
-$dir = isset($_REQUEST['lib'])&&$_REQUEST['lib'] == 'yui' ? '../../../' : '../../';
+$dir = 'samples/';
 $node = isset($_REQUEST['node'])?$_REQUEST['node']:"";
 if(strpos($node, '..') !== false){
     die('Nice try buddy.');
