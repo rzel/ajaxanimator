@@ -37,15 +37,10 @@ Ext.apply(this,{
             layout:"fit",
             
 			tbar: [
-     " Name: ",{xtype: "textfield", id: "namefield",
+     " Name: ",{xtype: "textfield",
        value: Ax.animation.name,
        listeners: {
-        "change": function(field){
-            if(field.getValue().replace(/ /g,"") == ""){
-                field.setValue("Untitled Production")
-            }
-            Ax.animation.name = field.getValue()
-        }
+        "change": function(field){Ax.setAnimationName(field.getValue())}
         }, width: 200}   ,{xtype: "tbfill"},{text:"Zoom"},
       {xtype: "slider", width: 120, maxValue: 300, value: 100, increment: 5,plugins: new Ext.ux.SliderTip({
       getText: function(slider){return String.format('Canvas Zoom: {0}%', slider.getValue())}
@@ -65,7 +60,11 @@ Ext.apply(this,{
 			id: "preview",
             xtype:"panel",
             title:"Preview",
-			tbar: [{text: "stuff"},{xtype: "tbfill"},{text:"Zoom"},
+			tbar: [" Name: ",{xtype: "textfield",
+       value: Ax.animation.name,
+       listeners: {
+        "change": function(field){Ax.setAnimationName(field.getValue())}
+        }, width: 200},{xtype: "tbfill"},{text:"Zoom"},
       {xtype: "slider", width: 120, maxValue: 300, value: 100, increment: 5,plugins: new Ext.ux.SliderTip({
       getText: function(slider){return String.format('Canvas Zoom: {0}%', slider.getValue())}
         })}],
@@ -83,6 +82,7 @@ Ext.apply(this,{
 			listeners: {
 				'activate' : function(){
 					Ax.gs(7);
+        Ax.setAnimationName(Ax.animation.name)
 					Ax.init_preview();
 					Ax.controls.play();
 				},
@@ -98,6 +98,7 @@ Ext.apply(this,{
 		  tabTip: "Share and View other user's animations",
 		  listeners: {
 				'activate' : function(){
+
 					Ax.gs(8)
 				},
 				'deactivate' : function(){
@@ -112,3 +113,16 @@ Ext.apply(this,{
   })
   
   Ext.reg("layoutcenter",Ax.LayoutCenterPanel)
+  
+  
+  Ax.setAnimationName = function(name){
+    if(!name || name.replace(/ /g,"") == ""){
+      name = "Untitled Production"
+    }
+    Ax.animation.name = name;
+    
+    if(Ax.viewport.findById("canvas").getTopToolbar().items){
+        Ax.viewport.findById("canvas" ).getTopToolbar().items.item(1).getEl().value = name}
+    if(Ax.viewport.findById("preview").getTopToolbar().items){
+        Ax.viewport.findById("preview").getTopToolbar().items.item(1).getEl().value = name}
+  }
