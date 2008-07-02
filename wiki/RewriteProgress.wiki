@@ -8,8 +8,13 @@ As of 7/01/08 the new version is reasonably stable, there are only a few areas o
 
 * server code
 * exporting
+
 * clipboard
+
 * keyboard shortcuts
+
 * documentation (help, Faq,manual, tutorials, etc.)
+
 * stability
+
 * 
