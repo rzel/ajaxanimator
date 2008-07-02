@@ -14,4 +14,14 @@ As of 7/01/08 the new version is reasonably stable, there are only a few main  a
   * stability - tedious, lazy
   * library - unsure
   * user-related community/social aspect, unsure
-  * idk
+  * history (undo/redo) - unsure
+
+Quite possibly more, but this is all that ce to my head. It is largely more usable than 0.14.7 already, but some features are not here yet.
+
+PATH elements are complex and I'm debating whetheror not to put it as a
+goal
+
+IE support is hard, nearly impossible, despite extreme advancement since previously
+the vmlrenderer is flawed and incomplete. It really feels pointless to work n a dead platfom (vml) and spend time knowing it'll only run on a single crappy browser.
+
+Speed is really an issue. It caused a 200mb memeak on Fx3. Yes.... 3. Can u imagine it on IE?
