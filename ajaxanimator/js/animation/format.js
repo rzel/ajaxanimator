@@ -39,9 +39,9 @@ ALEON/Axff/Xff
 Ax.format = {
   support: {//format support. minimum version, maximum version
     min: 1,
-    max: 6
+    max: 7
   },
-  revision: 6 //the version the app exports
+  revision: 7 //the version the app exports
 }
 
 
@@ -77,6 +77,8 @@ Ax.export_animation = function(input, format){
     input = {};
   }
   
+  input.name = Ax.animation.name; //quite important to have this up here so you can easily identify the animation from a quick glance
+	
   if(!input.creation){
     input.creation = (new Date()).getTime()
   }
@@ -98,7 +100,7 @@ Ax.export_animation = function(input, format){
   
   input.layers = Ax.export_animation_core(); //the most important part: the data
   
-  input.name = Ax.animation.name
+
   
   if(format == "json"){
     return Ext.util.JSON.encode(input);
@@ -111,11 +113,12 @@ Ax.import_animation = function(markup){
   if(typeof markup == typeof "tehkooliest"){ //if its in json, then decode it first
     markup = Ext.util.JSON.decode(markup)
   }
-Ax.setAnimationName(markup.name)
+  Ax.setAnimationName(markup.name)
   //set the name for the animation in that little box in the toolbar. overly hackish, I know. Seriously, acessing dom?
+  Ax.animation.markup = markup;
   
   Ax.import_animation_core(markup.layers);
-  //Ax.selectFrame((markup.tcframe)?markup.tcframe:1,(markup.tclayer)?markup.tclayer:"Layer 1");
+  Ax.selectFrame((markup.tcframe)?markup.tcframe:1,(markup.tclayer)?markup.tclayer:"Layer 1");
   
 }
 
@@ -145,14 +148,17 @@ Ax.import_animation_core = function(layers){
   Ax.viewport.findById("layers").getStore().removeAll(); //remove all entries from layers panel
   Ax.initTimeline(); //reset timeline
   Ax.canvas_storage = {}; //empty canvas storage
-  Ax.canvas.unselect();
+  Ax.canvas.unselect();//unselect the canvas, saves a nasty bug
   Ax.canvas.renderer.removeAll(); //clear canvas
+  
+  
   Ax.layers = {};//reset layers object
   for(var layer in layers){ //loop through layers
     Ax.addLayer(layer); //add layer
     Ax.layers[layer].keyframes = layers[layer].keyframes; //set keyframes
     Ax.canvas_storage[layer] = layers[layer].src; //load canvas src
     Ax.loadframe(1, layer); //note: this is a hack!
+	console.log(layers[layer].src);
     for(var i = 0; i < layers[layer].keyframes.sort(function(a,b){return b-a})[0]; i++){
       Ax.selectFrame(i + 1,layer); //render frame to timeline, (renderFrame may be better)
     }
