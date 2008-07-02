@@ -39,7 +39,6 @@ Ax.MainToolbar = [
 ]},
 {text:"Tools", menu: [
   //{text: "Color Picker", iconCls: "tb_color"},
-  {text: "Reload Canvas", iconCls: "tb_reload", handler: function(){Ax.reloadCanvas()}},
   {text: "Drawing", iconCls: "tb_tools", menu: [{text: "Select", iconCls: "tx_select", handler: function(){Ax.setTool("select")}},
                                                 {text: "Rectangle", iconCls: "tx_rectangle", handler: function(){Ax.setTool("rect")}},
                                                 {text: "Rounded Rectangle", iconCls: "tx_roundrect", handler: function(){Ax.setTool("roundrect")}},
@@ -49,11 +48,13 @@ Ax.MainToolbar = [
                                                 {text: "Polygon", iconCls: "tx_polygon", handler: function(){Ax.setTool("polygon")}},
                                                 {text: "Text", iconCls: "tx_text", handler: function(){Ax.setTool("text")}},
                                                 {text: "Image", iconCls: "tx_image", handler: function(){Ax.setTool("image")}}]},
-  {text: "Debug Console", iconCls: "tb_debug", handler: function(){Ext.log("Opening Console")}},
+  {text: "Recovery", iconCls: "tb_shield", menu: [
+                            {text: "Reload Canvas", iconCls: "tb_canvas", handler: function(){Ax.reloadCanvas()}},
+                            {text: "Reload Animation", iconCls: "tb_animation", handler: function(){Ax.reload_animation()}},
+                            {text: "Reload Application", iconCls: "tb_application", handler: function(){window.location.reload(true)}}
+  ]},
   {text: "Script Executor", iconCls: "tb_script", handler: function(){Ax.macroExec()}},
-  {text: "Plugin Settings", iconCls: "tb_plugin_conf"},
-  {text: "Reload Application", iconCls: "tb_reload", handler: function(){window.location.reload(true)}},
-  {text: "Benchmark", iconCls: "tb_benchmark"}
+  {text: "Plugin Settings", iconCls: "tb_plugin_conf"}
 ]},
 {text:"Timeline", menu: [
   {text: "New Layer",iconCls: "tb_newlayer", handler: function(){Ax.addLayer()}},
