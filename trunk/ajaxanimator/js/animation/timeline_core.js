@@ -51,6 +51,8 @@ Ax.addLayer = function(layername){
   for(var frame = 0; frame < Ax.tstat.frames; frame++){
     Ax.addFrame_core(frame+1,layername)
   }
+
+
   //Ext.log(f_layer.innerHTML)
   return f_layer;
 }

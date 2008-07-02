@@ -9,12 +9,7 @@ Ext.Ajax.request({
 url: "../server/dev/compile/compile.php",
 failure: dev_fail,
 success: function(e){
-Ext.Msg.show({
-   title:'Compilier Status',
-   msg: 'Application has been compiled sucessfully.<br /><br /><br />'+e.responseText,
-   buttons: Ext.Msg.OK,
-   icon: Ext.MessageBox.INFO
-});
+Ax.toastMsg('Compilier Status',e.responseText);
 }
 })
 }},
@@ -61,12 +56,6 @@ var NeXTSTEP = [0,"b","j","c","h",0][step+1]; //never had one of them, but they 
 Ax.showBusy();
 Ax.setStatus({text:"Sending Update "+step+" (mode: "+mode+")"});
 sendUpdate(mode,function(e){
-	new Ext.ux.ToastWindow({
-    title: 'Auto Deploy',
-    html: 'Step '+step+" of Auto Deploy has been completed sucessfully<br />",
-	width: 400,
-	height: 300
-	}).show(document);
 		setTimeout(function(){
 		if(NeXTSTEP != 0){
 	autoDeployPartial(NeXTSTEP)
@@ -78,15 +67,9 @@ sendUpdate(mode,function(e){
     html: 'Auto Deploy Completed Sucessfully'
 	}).show(document);
 	
-	Ext.Msg.show({
-   title:'Auto Deploy Status',
-   msg: 'Application has been Deployed sucessfully.',
-   buttons: Ext.Msg.OK,
-   icon: Ext.MessageBox.INFO
-	});
 
 	}
-	},2000);
+	},500);
 })
 	
 }

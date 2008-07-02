@@ -153,16 +153,35 @@ Ax.import_animation_core = function(layers){
   
   
   Ax.layers = {};//reset layers object
-  for(var layer in layers){ //loop through layers
+  //Ax.tstat = {layers: 0, frames: 0}
+  Ax.tstat.layers = 0;
+
+for(var layer in layers){
+  Ax.tcurrent.layer = layer;
+  Ax.tcurrent.frame = 1;
+  Ax.loadShapes(layers[layer].src[1]);
+  break;
+}  
+
+for(var layer in layers){ //loop through layers
     Ax.addLayer(layer); //add layer
     Ax.layers[layer].keyframes = layers[layer].keyframes; //set keyframes
     Ax.canvas_storage[layer] = layers[layer].src; //load canvas src
-    Ax.loadframe(1, layer); //note: this is a hack!
-	console.log(layers[layer].src);
-    for(var i = 0; i < layers[layer].keyframes.sort(function(a,b){return b-a})[0]; i++){
+    //Ax.loadframe(1, layer); //note: this is a hack!
+    //console.log(layers[layer].src);
+    for(var i = 0; i < layers[layer].keyframes.sort(function(a,b){return b-a})[0] + 1; i++){
       Ax.selectFrame(i + 1,layer); //render frame to timeline, (renderFrame may be better)
     }
   }
 
+}
+
+Ax.reload_animation = function(){
+  try{
+    Ax.import_animation(Ax.export_animation(Ax.animation.markup))
+  }catch(err){
+    return Ax.msg("Animation Recovery","Animation recovery has failed due to error: "+err)
+  }
+  Ax.msg("Animation Reloaded","The current animation was reloaded. This hopefully has resolved most issues related to the timeline and other components.")
 }
 

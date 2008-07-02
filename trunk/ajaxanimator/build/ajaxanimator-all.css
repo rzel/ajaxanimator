@@ -399,14 +399,8 @@ background-image: url(../img/silk/page_white_flash.png)
 background-image: url(../img/silk2/theme.png)
 }
 /*---------------Tools Menu---------------*/
-.tb_color {
-background-image: url(../img/silk/color_wheel.png)
-}
 .tb_tools {
 background-image: url(../img/silk/paintbrush.png)
-}
-.tb_debug {
-background-image: url(../img/silk/bug_go.png)
 }
 .tb_script {
 background-image: url(../img/silk/script_code_red.png)
@@ -414,15 +408,24 @@ background-image: url(../img/silk/script_code_red.png)
 .tb_plugin_conf {
 background-image: url(../img/silk/plugin_edit.png)
 }
-.tb_benchmark {
-background-image: url(../img/silk/report.png)
-}
 .tb_reload {
 background-image: url(../img/silk/arrow_refresh.png)
 }
-.tb_preload {
-background-image: url(../img/silk/hourglass.png)
+.tb_shield {
+background-image: url(../img/silk/shield.png)
 }
+
+
+.tb_canvas {
+background-image: url(../img/silk/paintbrush.png)
+}
+.tb_animation {
+background-image: url(../img/silk/film.png)
+}
+.tb_application {
+background-image: url(../img/silk/page_refresh.png)
+}
+
 
 /*---------------Timeline Menu---------------*/
 
