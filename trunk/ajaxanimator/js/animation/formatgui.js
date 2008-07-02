@@ -96,10 +96,10 @@ Ax.animationinfo = function(){
       iconCls: "tb_about",
       width: 300,
       height: 200,
-      html: "<b>"+Ax.animation.name+":</b><br />Generator: "+
-      "<br />Creation Date: "+
-      "<br />Last Modified Date: "+
-      "<br />Contributors: "
+      html: "<b>"+Ax.animation.name+":</b><br />Generator: "+ Ext.util.JSON.encode(Ax.animation.markup.generator) +
+      "<br />Creation Date: "+ ((Ax.animation.markup.creation)?Ax.animation.markup.creation:"Unknown") +
+      "<br />Last Modified Date: "+ ((Ax.animation.markup.modified)?Ax.animation.markup.modified:"Unknown") +
+      "<br />Contributors: " + ((Ax.animation.markup.contrib)?Ax.animation.markup.contrib:['Unknown']).join(",")
       
       })).show(document.body)
 }
