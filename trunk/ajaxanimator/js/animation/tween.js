@@ -29,8 +29,8 @@ Ax.getSFTween = function (frame, frame1, frame2, layer, store){//get single fram
       frame2_dump = store[frame2], //load dumps
       tween_frame = Ext.ux.clone(frame2_dump); //clone frame2
   if(!frame1_dump || !frame2_dump){
-    Ax.toastMsg("Sorry","Ajax Animator has encountered an critical error in the tweening engine.");
-    return []
+    Ax.toastMsg("Sorry","Ajax Animator has encountered an critical error in the tweening engine."+Ext.util.JSON.encode([frame1_dump, frame2_dump]));
+    return;
   }
   for(var o = 0; o < frame1_dump.length; o++){//loop through shapes
     if(frame2_dump[o]){ //continue only if the second frame has it too
