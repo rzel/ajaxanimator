@@ -13,9 +13,9 @@ Ax.toastMsg('Compilier Status',e.responseText);
 }
 })
 }},
-{text: "Push Updates", iconCls: "dev_push", menu: [
 {text: "Auto Deploy", iconCls: "dev_deploy",handler: autoDeploy},
 "-",
+{text: "Push Updates", iconCls: "dev_push", menu: [
 {text: "1. Show Update Mask", iconCls: "dev_step", handler: function(){sendUpdate("b")}},
 {text: "2. Update Javascript", iconCls: "dev_step",  handler: function(){sendUpdate("j")}},
 {text: "3. Update HTML", iconCls: "dev_step", handler: function(){sendUpdate("h")}}

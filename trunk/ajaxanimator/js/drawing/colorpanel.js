@@ -2,7 +2,7 @@ Ax.defaultcolor = {
   line: "000000",
   fill:"FF0000",
   width: 1, //okay, so width isn't really a color..
-  grid: 15 //this isn't really a color either
+  grid: 5 //this isn't really a color either
 }
 
 Ax.Color = {
@@ -10,7 +10,7 @@ Ax.Color = {
   line: Ax.defaultcolor.line,
   fill: Ax.defaultcolor.fill,
   width: Ax.defaultcolor.width,//okay, so width isn't really a color
-  grid: Ax.defaultcolor.grid   //this isn't really a color either
+  grid: Ax.defaultcolor.grid   //this is *my* _fav_ color.
 }                           
 
 Ax.setColors = function(c){

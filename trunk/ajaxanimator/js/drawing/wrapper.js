@@ -225,6 +225,10 @@ Ax.loadShape = function(shape,noattachlistener,instance){
 }
 
 Ax.dumpshape = function(shape){
+    if(!shape.getAttribute("transform")){
+    var box = shape.getBBox()
+      shape.setAttributeNS(null,'transform', 'rotate(0, '+(box.x+(box.width/2))+', '+(box.y+(box.height/2))+')'); 
+    }
   return Ax.canvas.info(shape)
 }
 

@@ -799,9 +799,6 @@ SVGRenderer.prototype.moveToBottom( svgNode )
 
 */
 
-
-
-
      
 var xshe=0; //bad
 var yshe=0;  
@@ -813,11 +810,12 @@ SVGRenderer.prototype.move = function(shape, left, top,fromX,fromY) {
  var angle=0;
  var dist=0;  
  var rotated=false;
+ var rot = 0;
 
   if (shape.hasAttributeNS(null,'transform')) { 
     var tran=shape.getAttributeNS(null, 'transform'); 
     //var h=shape.getAttributeNS(null, SVG_TRANSFORM_ROTATE ); 
-    var rot= GetString(tran, 'rotate(', ',');
+    rot= GetString(tran, 'rotate(', ',');
    
    var xy= GetString(tran, ',', ')');
      xy +=')';
@@ -825,11 +823,7 @@ SVGRenderer.prototype.move = function(shape, left, top,fromX,fromY) {
    var y= GetString(xy, x+', ', ')');      
    x= parseFloat(x); 
     y= parseFloat(y);  
-    angle=parseFloat(rot);
-    var centerx=box.x+(box.width/2);
-    var centery=box.y+(box.height/2);  
-    shape.setAttributeNS(null,'transform', 'rotate('+(angle)+', '+centerx+', '+centery+')'); 
-   
+
     var angleRad=angle*Math.PI/180; 
    
    
@@ -839,6 +833,12 @@ SVGRenderer.prototype.move = function(shape, left, top,fromX,fromY) {
    rotated=true;
    
  }
+ 
+     angle=parseFloat(rot);
+    var centerx=box.x+(box.width/2);
+    var centery=box.y+(box.height/2);  
+    shape.setAttributeNS(null,'transform', 'rotate('+(angle)+', '+centerx+', '+centery+')'); 
+   
  
     contmove++;
 
@@ -2363,7 +2363,7 @@ SVGRenderer.prototype.showTracker = function(shape,pathsEdit) {
       
         circle1.addEventListener("mouseover", function(event) {circle1.setAttributeNS(null, 'cursor', 's-resize');  circle1.setAttributeNS(null, 'fill', colorin ); typeTransform='Rotate'; scaleType='nw'; }, false);
      circle1.addEventListener("mouseout", function(event) {circle1.setAttributeNS(null, 'cursor', 'default');  circle1.setAttributeNS(null, 'fill', colorout ); typeTransform='Rotate'; }, false); //typeTransform='rotate'
-     circleCenter.addEventListener("mouseover", function(event) {circleCenter.setAttributeNS(null, 'cursor', 'move');  circleCenter.setAttributeNS(null, 'fill', colorin ); typeTransform='spìnCenter'; scaleType='nw'; }, false);
+     circleCenter.addEventListener("mouseover", function(event) {circleCenter.setAttributeNS(null, 'cursor', 'move');  circleCenter.setAttributeNS(null, 'fill', colorin ); typeTransform='spï¿½nCenter'; scaleType='nw'; }, false);
      circleCenter.addEventListener("mouseout", function(event) {circleCenter.setAttributeNS(null, 'cursor', 'default');  circleCenter.setAttributeNS(null, 'fill', colorout ); typeTransform=''; }, false); //typeTransform='rotate'
  
       

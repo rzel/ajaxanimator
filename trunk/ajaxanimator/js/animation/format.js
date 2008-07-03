@@ -156,10 +156,10 @@ Ax.import_animation_core = function(layers){
   //Ax.tstat = {layers: 0, frames: 0}
   Ax.tstat.layers = 0;
 
-for(var layer in layers){
-  Ax.tcurrent.layer = layer;
+for(var firstlayer in layers){
+  Ax.tcurrent.layer = firstlayer;
   Ax.tcurrent.frame = 1;
-  Ax.loadShapes(layers[layer].src[1]);
+  Ax.loadShapes(layers[firstlayer].src[1]);
   break;
 }  
 

@@ -13,6 +13,7 @@ Ax.aboutWindow = new Ext.Window({
     layout: 'border',
     buttons: [{
         text: 'Close',
+        iconCls: "close",
         handler: function(){
             Ax.aboutWindow.hide();
         }
