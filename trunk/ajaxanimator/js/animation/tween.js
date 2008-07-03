@@ -53,6 +53,9 @@ Ax.tweenAttribute = function(name, frame1, frame2, value1, value2, index){
   if(name == "transform"){
     return Ax.tweenTransform(frame1,frame2,value1,value2, index); //round to 3 decimal places
   }
+  if(name == "points"){
+    return Ax.tweenPath(frame1,frame2,value1,value2,index);
+  }
 /*
 Now:
 Width,Height, Line Width, x, y
@@ -107,6 +110,25 @@ Ax.parseTransform = function(transform){
   return [Math.round(parseFloat(transform[0])*1000)/1000,
           Math.round(parseFloat(transform[1])*1000)/1000,
           Math.round(parseFloat(transform[2])*1000)/1000]
+}
+
+Ax.tweenPath = function(frame1, frame2, value1, value2, index){
+value1 = Ax.parsePath(value1);
+value2 = Ax.parsePath(value2);
+for(var i = 0; i < value2.length; i++){
+if(parseFloat(value2[i]).toString() == value2[i]){
+value2[i] = Ax.tweenNumber(frame1, frame2, parseFloat(value1[i]), parseFloat(value2[i]), index);
+} 
+}
+
+return value2.join(" ")
+}
+
+Ax.parsePath = function(points){
+points = points.replace(/,/g, " , "); //replace commas with space+comma+space
+points = points.replace(/  /g, " "); //replace double-spaces
+points = points.replace(/  /g, " "); //replace double-spaces
+return points.split(" ")
 }
 
 Ax.tweenNumber = function(frame1, frame2, value1, value2, index){//frame1, frame2, first number, second number, index (from first)
