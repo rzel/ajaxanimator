@@ -80,9 +80,11 @@ Ext.apply(this,{
 			
 			}],
 			listeners: {
+      'render' : function(){
+              Ax.setAnimationName(Ax.animation.name);
+      },
 				'activate' : function(){
 					Ax.gs(7);
-        Ax.setAnimationName(Ax.animation.name)
 					Ax.init_preview();
 					Ax.controls.play();
 				},
