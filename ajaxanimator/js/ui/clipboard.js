@@ -1,6 +1,15 @@
 /*
 Grid for Clipboard panel
 */
+Ax.clipboard_store = [];
+
+Ax.clipboard_add = function(){
+  Ax.clipboard_store.push(Ax.canvas.renderer.copy());
+}
+
+Ax.clipboard_load = function(index, x, y){
+  Ax.canvas.renderer.paste(Ax.clipboard_store[index], x, y)
+}
 
  Ax.Clipboard = Ext.extend(Ext.grid.GridPanel, {
  initComponent:function() {

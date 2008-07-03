@@ -80,13 +80,13 @@ background-image: url(../img/silk/shield.png)
 }
 
 
-.tb_canvas {
+.tb_recover_canvas {
 background-image: url(../img/silk/paintbrush.png)
 }
-.tb_animation {
+.tb_recover_animation {
 background-image: url(../img/silk/film.png)
 }
-.tb_application {
+.tb_recover_application {
 background-image: url(../img/silk/page_refresh.png)
 }
 

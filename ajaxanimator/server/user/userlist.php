@@ -39,7 +39,8 @@ while($f = $d->read()){
         $size = formatBytes(filesize($dir.$node.'/'.$f), 2);
         $qtip = 'Type: JavaScript File<br />Last Modified: '.$lastmod.'<br />Size: '.$size;
         $nodes[] = array('text'=>$f, 'id'=>$node.'/'.$f, 'leaf'=>true, 'qtip'=>$qtip, 'qtipTitle'=>$f, 'cls'=>'file');
-    }
+    
+}
 }
 $d->close();
 echo json_encode($nodes);

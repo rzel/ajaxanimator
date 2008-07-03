@@ -49,9 +49,9 @@ Ax.MainToolbar = [
                                                 {text: "Text", iconCls: "tx_text", handler: function(){Ax.setTool("text")}},
                                                 {text: "Image", iconCls: "tx_image", handler: function(){Ax.setTool("image")}}]},
   {text: "Recovery", iconCls: "tb_shield", menu: [
-                            {text: "Reload Canvas", iconCls: "tb_canvas", handler: function(){Ax.reloadCanvas()}},
-                            {text: "Reload Animation", iconCls: "tb_animation", handler: function(){Ax.reload_animation()}},
-                            {text: "Reload Application", iconCls: "tb_application", handler: function(){window.location.reload(true)}}
+                            {text: "Reload Canvas", iconCls: "tb_recover_canvas", handler: function(){Ax.reloadCanvas()}},
+                            {text: "Reload Animation", iconCls: "tb_recover_animation", handler: function(){Ax.reload_animation()}},
+                            {text: "Reload Application", iconCls: "tb_recover_application", handler: function(){window.location.reload(true)}}
   ]},
   {text: "Script Executor", iconCls: "tb_script", handler: function(){Ax.macroExec()}},
   {text: "Plugin Settings", iconCls: "tb_plugin_conf"}

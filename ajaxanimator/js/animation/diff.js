@@ -1,7 +1,7 @@
 //This is a file that is virtually the core of the tweening engine
 //not really. it just detects what frames are keyframes. automatically.
 
-Ax.diff_exclude = ["id","transform"]
+Ax.diff_exclude = ["id"]
 
 Ax.autodiff = function(){
   //save canvas state
@@ -56,6 +56,8 @@ Ax.smallest_nonempty = function(frame,layer,object){
   return nonempty.sort(function(a,b){return a - b})[0];//sort descending and pull the first result (largest)
 }
 
+
+//oh crap. this following function is sooo hacked together....
 Ax.diff_core = function(shapedump1,shapedump2){
   //It takes two arguments, one with the shape dump of the first frame
   // ( you can find it in the canvas_storage object, or dump it fresh)
@@ -77,9 +79,15 @@ Ax.diff_core = function(shapedump1,shapedump2){
 		  shapedump2[i][x] = Math.round(shapedump2[i][x]*100)/100
 		  shapedump1[i][x] = Math.round(shapedump1[i][x]*100)/100
 		  }
+      if(x == "transform"){
+        if(Math.round(Ax.parseTransform(shapedump2[i][x])[0]) != Math.round(Ax.parseTransform(shapedump1[i][x])[0])){
+          return false
+        }
+      }else{
 		  if(shapedump2[i][x] != shapedump1[i][x]){//for everything else, there's mastercrap
 		    return false;//not same
 		  }
+      }
 		  
         }
       }

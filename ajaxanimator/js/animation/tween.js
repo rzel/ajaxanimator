@@ -28,7 +28,10 @@ Ax.getSFTween = function (frame, frame1, frame2, layer, store){//get single fram
   var frame1_dump = store[frame1], //load dumps
       frame2_dump = store[frame2], //load dumps
       tween_frame = Ext.ux.clone(frame2_dump); //clone frame2
-  if(!frame1_dump || !frame2_dump){Ax.toastMsg("Sorry","Ajax Animator has encountered an error.");return []}
+  if(!frame1_dump || !frame2_dump){
+    Ax.toastMsg("Sorry","Ajax Animator has encountered an critical error in the tweening engine.");
+    return []
+  }
   for(var o = 0; o < frame1_dump.length; o++){//loop through shapes
     if(frame2_dump[o]){ //continue only if the second frame has it too
       for(var a in frame1_dump[o]){//loop attributes
@@ -86,14 +89,19 @@ third magical edit:
 Ax.tweenTransform = function(frame1, frame2, value1, value2, index){//same as tweenNumber
   value1 = Ax.parseTransform(value1); //parse stuff
   value2 = Ax.parseTransform(value2);
-  return "rotate("+[Ax.tweenNumber(frame1,frame2,value1[0],value2[0],index),
-                    Ax.tweenNumber(frame1,frame2,value1[1],value2[1],index),
-                    Ax.tweenNumber(frame1,frame2,value1[2],value2[1],index)].join(", ")+")"
+  //console.log(value1,value2);
+   return "rotate("+[Ax.tweenNumber(frame1,frame2,value1[0],value2[0],index),
+                     Ax.tweenNumber(frame1,frame2,value1[1],value2[1],index),
+                     Ax.tweenNumber(frame1,frame2,value1[2],value2[2],index)].join(", ")+")"
+//     return "rotate("+[Ax.tweenNumber(frame1,frame2,value1[0],value2[0],index),
+//                     value2[1],
+//                     value2[2]].join(", ")+")"
 }
 
 Ax.parseTransform = function(transform){
-  if(!transform){
-    return [0, 0, 0];
+  if(!transform || typeof transform != "string"){
+    //Ax.msg("Error","Something Strange Happened")
+    return [0,0,0];
   }
   transform = transform.replace(")","").replace("rotate(","").split(",");
   return [Math.round(parseFloat(transform[0])*1000)/1000,
