@@ -957,13 +957,18 @@ var angy = Math.sin(ang);
 */ 
 
  var path=shape.getAttributeNS(null, 'd');
+ 
+
+ 
  path=path.replace(/, /g, ','); 
  path=path.replace(/ ,/g, ',');
  var ps =path.split(" ")
  var pcc = "";
 
-var xinc=left-xshe;
-var yinc=top-yshe;
+
+
+var xinc=left-parseFloat(box.x)//xshe;
+var yinc=top-parseFloat(box.y)//yshe;
    
     var re = /^[-]?\d*\.?\d*$/;
  for(var i = 0; i < ps.length; i++)
