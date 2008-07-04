@@ -20,15 +20,7 @@ Ax.clipboard_load = function(index, x, y){
  {name: 'id', type: 'float'},
  {name: 'type'}
  ],
- data:[
-[0,"poop"],
-[1,"poop1"],
-[2,"poop2"],
-[3,"poop3"],
-[4,"poop4"],
-[5,"poop5"],
-[6,"poop6"]
- ]
+ data:[]
  }),
  columns:[
  {id:'id',header: "#", width: 20, sortable: true, dataIndex: 'id'},

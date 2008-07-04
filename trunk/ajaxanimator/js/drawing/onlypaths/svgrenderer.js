@@ -967,8 +967,8 @@ var angy = Math.sin(ang);
 
 
 
-var xinc=left-parseFloat(box.x)//xshe;
-var yinc=top-parseFloat(box.y)//yshe;
+var xinc=parseFloat(left)-parseFloat(box.x)//xshe;
+var yinc=parseFloat(top)-parseFloat(box.y)//yshe;
    
     var re = /^[-]?\d*\.?\d*$/;
  for(var i = 0; i < ps.length; i++)

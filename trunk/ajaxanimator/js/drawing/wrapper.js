@@ -27,6 +27,10 @@ function $(e){//this is a little hack since OnlyPaths used to be based off of Ri
 clockdata = function(){};
 
   
+Ax.onlypaths = {
+  version: "Symply Web 0.1.02 Modified"
+}
+
 var zoominit='0 0 '+Ax.canvasWidth+' '+Ax.canvasHeight; //some OnlyPaths stuffs
 var centerZoomx=Math.round(Ax.canvasWidth/2); //some OnlyPaths stuffs
 var centerZoomy=Math.round(Ax.canvasHeight/2); //some OnlyPaths stuffs
