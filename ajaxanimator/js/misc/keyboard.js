@@ -31,17 +31,17 @@ Ext.onReady(function(){
     {
       key: "c", //Ctrl+C
       ctrl: true,
-      fn: function(code, event){if(!Ax.verify_keydown(code, event)){return};Ax.clipboard_add()}
+      fn: function(code, event){if(!Ax.verify_keydown(code, event)){return};Ax.clipboard_copy()}
     },
     {
       key: "x", //Ctrl+X
       ctrl: true,
-      fn: function(code, event){if(!Ax.verify_keydown(code, event)){return};Ax.toastMsg("keyboard","I jacked ur ride")}
+      fn: function(code, event){if(!Ax.verify_keydown(code, event)){return};Ax.clipboard_cut()}
     },
     {
       key: "v", //Ctrl+V
       ctrl: true,
-      fn: function(code, event){if(!Ax.verify_keydown(code, event)){return};Ax.toastMsg("keyboard","Paste")}
+      fn: function(code, event){if(!Ax.verify_keydown(code, event)){return};Ax.clipboard_paste()}
     },
     {
       key: "z", //Ctrl+Z

@@ -20,10 +20,11 @@ Ax.MainToolbar = [
   {text: "Undo", iconCls: "tb_undo"},
   {text: "Redo", iconCls: "tb_redo"},
   "-", //seperator, i hope when i run this through a formatter the comments arent stripped.
-  {text: "Cut", iconCls: "tb_cut"},
-  {text: "Copy", iconCls: "tb_copy"},
-  {text: "Paste", iconCls: "tb_paste"},
-  {text: "Delete", iconCls: "tb_delete", handler: function(){Ax.Ax.setTool("delete")}}
+  {text: "Cut", iconCls: "tb_cut", handler: function(){Ax.clipboard_cut()}}, //woah! look! the whole thing is progressively 2 characters more!
+  {text: "Copy", iconCls: "tb_copy", handler: function(){Ax.clipboard_copy()}}, //that's freaking cool!
+  {text: "Paste", iconCls: "tb_paste", handler: function(){Ax.clipboard_paste()}}, //awesomeness
+  {text: "Delete", iconCls: "tb_delete", handler: function(){Ax.setTool("delete")}} //wootyness
+  //i wonder what woudl be here? "explode"?
 ]},
 {text:"View", menu: [
   //Add some check item stuff for visible panels
