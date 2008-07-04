@@ -38,6 +38,7 @@ Ax.aboutWindow = new Ext.Window({
 		"Build: "+Ax.v.build+"<br />"+
     "Format revision: "+Ax.format.revision+"<br />"+
     "Format Revision Support: "+Ax.format.support.min + " - "+Ax.format.support.max+"<br />"+
+    "OnlyPaths Version: "+Ax.onlypaths.version+"<br />"+
 		"Testing: "+Ax.v.dev+"<br />"+
 		"Release Date: "+Date.parseDate(Math.round(Ax.v.date),"U")+" ("+Ax.v.date+")<br />"+
 		""
