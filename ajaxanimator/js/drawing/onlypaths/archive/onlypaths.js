@@ -52,13 +52,7 @@ var zoomscale=1;
 var zoommode='frame'; //more minus frame
 
 //
- 
-var data_path_close=true;
-var data_text_family='';
-var data_text_size=19
-var data_text_messaje='';
-var data_image_href='';   
- 
+
 var numClics=0;  
 
 ////////////
@@ -209,12 +203,6 @@ RichDrawEditor.prototype.setGrid = function(horizontal, vertical) {
 // ++
 RichDrawEditor.prototype.actualStyle = function()
 {
- this.textMessaje=$('option_text_message').value;
- this.textSize=parseFloat($('option_text_size').value);
- this.textFamily=$('option_text_family').value;
- this.pathClose = $('option_path_close').checked; 
- this.imageHref = $('option_image_href').value;
-
  return;
 };
 
@@ -447,6 +435,8 @@ RichDrawEditor.prototype.overShape = function(event) {
 */
 RichDrawEditor.prototype.onMouseDown = function(event) {  
  
+ if(event.button != 0){return}; //ignore if it's not a left-click
+ 
  clockdata();
  
  //MODE NO SELECT
@@ -474,7 +464,7 @@ RichDrawEditor.prototype.onMouseDown = function(event) {
    if (this.mode == 'controlpath') 
     {
      this.actualStyle(); 
-     //onColorChange();         
+     ////onColorChange();         
      if(numClics<=0)
       {     
        this.nowDraw=true;
@@ -589,16 +579,13 @@ RichDrawEditor.prototype.onMouseDown = function(event) {
        inout='move';//true;   
        //Event.observe(this.selected, "mousedown", this.onHit,this);  
        //Ext.get(this.container).on( "mousemove", this.onDrag,this);  
-       this.renderer.remove(this.container.ownerDocument.getElementById('tracker')); 
-
       }
      if(typeTransform=='Scale'  || typeTransform=='Rotate') 
       {
        inout='rotate_escale';//false  
        Ext.get(this.container).on( "mousemove", this.onDrag,this);         
        Ext.get(this.selected).on( "mousedown", this.onHit,this);  
-       this.renderer.remove(this.container.ownerDocument.getElementById('tracker')); 
-
+       
        //Ext.get(this.container).on( "mouseover", this.onTranslate,this);  
        //Ext.get(this.container).on( "mouseout", this.onRotate,this); 
        //this.unselect();   
@@ -639,18 +626,13 @@ RichDrawEditor.prototype.onMouseUp = function(event)
    contmove=0; 
    // if(inout=='move' || inout=='rotate_scale' ){
    if(typeTransform=="Rotate" || typeTransform=="Scale" ) 
-    {  
-      //this.renderer.remove(this.container.ownerDocument.getElementById('tracker'));
-      this.renderer.showTracker(this.selected,this.pathsEdit); 
-   
+    {         
      //inout='move';//true; 
      //this.renderer.restruct(this.selected);
      typeTransform=='';
     } 
    if(typeTransform=="Translate" ) 
-    { 
-              
-     this.renderer.showTracker(this.selected,this.pathsEdit); 
+    {  
      //Ext.get(this.container).un("mousemove", this.renderer.move);    
      //Ext.get(this.container).un("mousemove", this.onDrag);  
      typeTransform=='';   
@@ -710,7 +692,7 @@ RichDrawEditor.prototype.onDrag = function(event) {
 	   //var moveY=parseFloat(coord[1]); 
                this.log(this.mouseDownX+' '+event.getXY()[0]+' '+ this.selectedBounds.x +'contmove'+contmove); 
                this.renderer.move(this.selected, this.selectedBounds.x + deltaX, this.selectedBounds.y +deltaY,this.clicX,this.clicY);
-                //this.renderer.showTracker(this.selected,this.pathsEdit); 
+                this.renderer.showTracker(this.selected,this.pathsEdit); 
                  
             }  
           
@@ -718,14 +700,14 @@ RichDrawEditor.prototype.onDrag = function(event) {
                if(typeTransform=="Rotate") 
                  { 
                    this.renderer.rotateShape(this.selected, this.previusBox,deltaX, deltaY);
-                   //this.renderer.showTracker(this.selected,this.pathsEdit);
+                   this.renderer.showTracker(this.selected,this.pathsEdit);
                  }
 
               	//if(typeTransform=="Scale") {this.renderer.scale(this.selected, this.previusBox, deltaX, deltaY); }
           	if(typeTransform=="Scale") 
           	 {
           	      this.renderer.scaleShape(this.selected, this.previusBox, this.selectedBounds.x + deltaX, this.selectedBounds.y + deltaY); 
-          	      //this.renderer.showTracker(this.selected,this.pathsEdit);
+          	      this.renderer.showTracker(this.selected,this.pathsEdit);
           	 }
           	//if(typeTransform=="Scale") {this.renderer.scale(this.selected, this.previusBox, this.selectedBounds.width + deltaX, this.selectedBounds.height + deltaY); }
           	
@@ -777,9 +759,7 @@ RichDrawEditor.prototype.onRotate = function(event) {
    {
      
    }else{      
-         //   this.renderer.remove(this.container.ownerDocument.getElementById('tracker')); 
-        //document.getElementById('richdraw').style.cursor='e-resize';
-         
+         document.getElementById('richdraw').style.cursor='e-resize';
          //alert('chao');
          //inout=false; 
           
@@ -840,6 +820,7 @@ RichDrawEditor.prototype.onTranslate = function(event) {
 
 RichDrawEditor.prototype.onHit = function(event) {
 //console.log("AAH HIT!!!!")
+
  if(this.mode == 'select') 
   {   
     ;
@@ -900,11 +881,7 @@ RichDrawEditor.prototype.onHit = function(event) {
     this.mouseDownX = Math.round((event.getXY()[0] - offset[0]) / this.gridX) * this.gridX;
     this.mouseDownY = Math.round((event.getXY()[1] - offset[1]) / this.gridY) * this.gridY;
     this.log(this.gridX);
-    this.renderer.info(this.selected); 
-    if(this.container.ownerDocument.getElementById('tracker'))
-    {
-     this.renderer.remove(this.container.ownerDocument.getElementById('tracker')); 
-    } 
+    this.renderer.info(this.selected);
     Ext.get(this.container).on( "mousemove", this.onDrag,this);   
 
     
@@ -1145,6 +1122,3 @@ var st = source.indexOf(start) + start.length;
 var en = source.indexOf(end, start);
  return source.substring(st, en);//trimAll(source.substring(st, en));
 } 
-function deg2rad(angle){
-return (angle/180) * Math.PI;
-}

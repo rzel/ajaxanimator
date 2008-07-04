@@ -53,6 +53,7 @@ SVGRenderer.prototype.init = function(elem) {
   this.svgRoot.setAttributeNS(null,'viewBox', zoominit);
   this.svgRoot.setAttributeNS(null,'preserveAspectRatio','none');
   this.container.appendChild(this.svgRoot);
+  this.control_codebase = '';
 }
 
 
@@ -717,8 +718,7 @@ SVGRenderer.prototype.index = function(shape,order) {
     
 }
 SVGRenderer.prototype.remove = function(shape) {
-  //shape.parentNode.removeChild(shape);
-  this.svgRoot.removeChild(shape);
+  shape.parentNode.removeChild(shape);
 }
 
 SVGRenderer.prototype.removeAll = function() {  
@@ -799,14 +799,10 @@ SVGRenderer.prototype.moveToBottom( svgNode )
 
 */
 
-
-
-
      
 var xshe=0; //bad
 var yshe=0;  
-var isArc=false;
-var contArc=0;
+
 SVGRenderer.prototype.move = function(shape, left, top,fromX,fromY) {  
  //typeTransform='Translate';   
  
@@ -814,11 +810,12 @@ SVGRenderer.prototype.move = function(shape, left, top,fromX,fromY) {
  var angle=0;
  var dist=0;  
  var rotated=false;
+ var rot = 0;
 
   if (shape.hasAttributeNS(null,'transform')) { 
     var tran=shape.getAttributeNS(null, 'transform'); 
     //var h=shape.getAttributeNS(null, SVG_TRANSFORM_ROTATE ); 
-    var rot= GetString(tran, 'rotate(', ',');
+    rot= GetString(tran, 'rotate(', ',');
    
    var xy= GetString(tran, ',', ')');
      xy +=')';
@@ -826,11 +823,7 @@ SVGRenderer.prototype.move = function(shape, left, top,fromX,fromY) {
    var y= GetString(xy, x+', ', ')');      
    x= parseFloat(x); 
     y= parseFloat(y);  
-    angle=parseFloat(rot);
-    var centerx=box.x+(box.width/2);
-    var centery=box.y+(box.height/2);  
-    shape.setAttributeNS(null,'transform', 'rotate('+(angle)+', '+centerx+', '+centery+')'); 
-   
+
     var angleRad=angle*Math.PI/180; 
    
    
@@ -840,6 +833,12 @@ SVGRenderer.prototype.move = function(shape, left, top,fromX,fromY) {
    rotated=true;
    
  }
+ 
+     angle=parseFloat(rot);
+    var centerx=box.x+(box.width/2);
+    var centery=box.y+(box.height/2);  
+    shape.setAttributeNS(null,'transform', 'rotate('+(angle)+', '+centerx+', '+centery+')'); 
+   
  
     contmove++;
 
@@ -900,7 +899,7 @@ SVGRenderer.prototype.move = function(shape, left, top,fromX,fromY) {
   }
   if (shape.tagName == 'text'){  
    var size=parseFloat(shape.getAttributeNS(null, 'font-size')); 
-   //$('code').value=size;
+   this.editor.log(size);
     shape.setAttributeNS(null, 'x', left + 'px');
     shape.setAttributeNS(null, 'y', parseFloat(top+size) + 'px');
     //$('option_text_trx').value= left;  
@@ -932,68 +931,73 @@ SVGRenderer.prototype.move = function(shape, left, top,fromX,fromY) {
 
    if(contmove==1){ 
       xshe=left;
-      yshe=top; 
-   }    
+      yshe=top;  
+    
+         }    
+//x=parseFloat(x);
+//y=parseFloat(y); 
+//var dist= dist2p(left,top,xshe,yshe) 
+
+ 
+ //atanX = (left - xshe);
+//atanY = (top - yshe);     
+//dist = Math.sqrt(atanX * atanX + atanY * atanY);  // distance from start to finish
+//var nX = atanX / dist;  // normalized x vector
+//var nY = atanY / dist; 
+
+//ang = Math.atan2(atanY, atanX);
+/*
+var dist= dist2p(left,top,xshe,yshe) 
+
+var ang= ang2v(xshe,yshe,left,top) ;
+var angle = Math.round((ang/Math.PI* 2)* 360);
+
+var angx = Math.cos(ang); 
+var angy = Math.sin(ang);  
+*/ 
+
  var path=shape.getAttributeNS(null, 'd');
+ 
+
+ 
  path=path.replace(/, /g, ','); 
  path=path.replace(/ ,/g, ',');
  var ps =path.split(" ")
  var pcc = "";
- var point =ps[0].split(","); 
 
 
- var num0= parseFloat(point[0].substring(1));
- var num1= parseFloat(point[1]); 
- 
- var ang= ang2v(box.x,box.y,left,top) ;
- var angle = Math.round((ang/Math.PI* 2)* 360);
- var angx = Math.cos(ang); 
- var angy = Math.sin(ang);          
- var dist= dist2p(left,top,box.x,box.y);
- var xinc=dist*angx;
- var yinc=dist*angy;   
+
+var xinc=parseFloat(left)-parseFloat(box.x)//xshe;
+var yinc=parseFloat(top)-parseFloat(box.y)//yshe;
+   
     var re = /^[-]?\d*\.?\d*$/;
  for(var i = 0; i < ps.length; i++)
   { 
    if(ps[i].indexOf(',')>0){  
      
       var point =ps[i].split(","); 
-       var char1=point[0].substring(0,1); 
-       if(char1=='A' || char1=='a'){isArc=true; contArc=0;}
-       if(isArc==true){contArc++}
-       if(contArc==4){contArc=0; isArc=false}
+       var char1=point[0].substring(0,1);
+       point[1]= parseFloat(point[1]); 
        
-       //if (isNaN(valnum)) 
-      if (!char1.match(re))        
-       { 
-           var num0= parseFloat(point[0].substring(1));
-           var text=char1;
-       }else{ 
-         if(isArc==true && contArc==2  )
-          {
-            var num0= point[0];
-          }else{  
-            var num0= parseFloat(point[0]);
-          }  
+       // var valnum =char1.charAt(0); 
+       //if (isNaN(valnum))
+       if (!char1.match(re)) 
+        
+       {
+         var num0= parseFloat(point[0].substring(1));
+         var text=char1;
+       }else{
+         var num0= parseFloat(point[0]);
          var text='';
 
        }
+       //num0+=dist*angx;
+       //point[1]+=dist*angy;
  
-       
-       if(isArc==true && contArc==2)
-        {   
-           point[1]= point[1].toString() ;
-        }
-        else
-        {    
-         
-          num0+=xinc;    
-          point[1]= parseFloat(point[1]);
-          point[1]+=yinc;
-
-        }  
-        var cx=num0; 
-         
+       num0+=xinc;
+       point[1]+=yinc;
+ 
+        var cx=num0;
         var cy=point[1]; 
         pcc+=text+cx+','+cy+' ';
    }else{
@@ -1001,7 +1005,12 @@ SVGRenderer.prototype.move = function(shape, left, top,fromX,fromY) {
    }
   }
   
-  shape.setAttributeNS(null,'d', pcc);
+   // $('code').value=dist+' '+ ang+' '+'__'+x+'= '+left+'/ '+y+'= ' +top+'';
+    
+       //shape.setAttributeNS(null,'transform', "rotate("+left+")");
+       
+       // shape.setAttributeNS(null,'transform', "translate("+trax+","+tray+") rotate("+0+") scale(1,1)");
+         shape.setAttributeNS(null,'d', pcc);
 
  }                                                                                                                            
                                                                                                                            
@@ -1036,7 +1045,7 @@ SVGRenderer.prototype.clic = function(shape) {
          	var path=thispath+end;
        
          	shape.setAttributeNS(null,'d',path);
-          //      $('control_codebase').value=path;
+                this.control_codebase=path;
  
 }
 
@@ -1204,7 +1213,7 @@ SVGRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
         var path=thispath+'L'+toX+','+toY+end;
           //var pointshape=shape.getAttributeNS(null,"d");
          	shape.setAttributeNS(null,'d',path);
-               //document.forms[0].control_codebase.value=path;
+//               document.forms[0].control_codebase.value=path;
      }
       else
      { 
@@ -1218,8 +1227,8 @@ SVGRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
                   var maxcont=xpArray.length;
       
         for(var conta=2;conta< maxcont;conta++){        
-          //thispath1+=' '+xpArray[conta]+' '+ypArray[conta];
-          thispath2+=' '+xpArray[conta]+','+ypArray[conta];  
+          thispath1+=' '+xpArray[conta]+' '+ypArray[conta];
+          thispath2+=' '+xpArray[conta]+', '+ypArray[conta];  
 	  //if((conta+2)%3==0){thispath2+=' C';}
         }
         var end='';
@@ -1289,7 +1298,7 @@ SVGRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
 }; 
 SVGRenderer.prototype.tocurve = function()  
 {
-  var points=$('control_codebase').value.split('L');
+  var points=this.control_codebase.split('L');
      var chain='';
      chain+=points[0]+'C';
      var numpoints=points.length-1;
@@ -1323,8 +1332,8 @@ SVGRenderer.prototype.tocurve = function()
         chain+=points[numpoints]+'';
       } 
 
-//       $('someinfo').value=numpoints+ ' '+ numpoints%3;
-//       $('control_codebase').value=chain; 
+      //$('someinfo').value=numpoints+ ' '+ numpoints%3;
+      this.control_codebase=chain; 
       setShape(); 
  }; 
 SVGRenderer.prototype.info = function(shape)
@@ -1802,7 +1811,9 @@ SVGRenderer.prototype.queryCommand = function(shape, cmd)
   return result;
 }
 
-SVGRenderer.prototype.getProperties = function(shape){}
+SVGRenderer.prototype.getProperties = function(shape)
+{
+}
 
 
 SVGRenderer.prototype.showMultiSelect = function(iniX,iniY) { 
@@ -1850,7 +1861,7 @@ function nodeUp(node)
 
 function nodeMove(node)
 {                                           
-   var mypath=$('control_codebase').value; 
+   var mypath=this.control_codebase; 
    var  x= $('option_path_x').value;
    var y= $('option_path_y').value; 
    var precoord=x+','+y; 
@@ -1870,9 +1881,9 @@ function nodeMove(node)
       var result=mypath.replace(cad1, coord);
       
      
-      $('control_codebase').value=result; 
+      this.control_codebase=result; 
       
-      $('someinfo').value=precoord;
+      //$('someinfo').value=precoord;
       setShape();
 
     
@@ -1883,7 +1894,7 @@ var memoNode=null;
 var memoPrevControl=new Array();
 var memoNextControl=new Array();
 SVGRenderer.prototype.nodeMove = function(newx,newy) { 
-    var mypath=$('control_codebase').value; 
+  var mypath=this.control_codebase; 
    var  x= $('option_path_x').value;
    var y= $('option_path_y').value; 
    var precoord=x+','+y; 
@@ -1901,7 +1912,7 @@ SVGRenderer.prototype.nodeMove = function(newx,newy) {
       var result=mypath.replace(cad1, coord);
       
      
-      //$('control_codebase').value=result; 
+      this.control_codebase=result; 
       
       //$('someinfo').value=precoord;
       setShape();
@@ -1965,147 +1976,6 @@ SVGRenderer.prototype.showNodesCurve = function(path,controlNodeNum){
        }
        */
 
-  var points=path.split(' ');
-     var chain='';
-     var segment=' ';  
-     prevControl=' ';
-     nextControl=' ';
-     nodePoint=' ';
-      var init=points[0].split('M'); 
-      var allcoords=init[1].split(' ');
-      var point=allcoords[0].split(',');
-          var rect1 = document.createElementNS(svgNamespace, 'rect');  
-        rect1.setAttributeNS(null, 'x', point[0]-2);
-        rect1.setAttributeNS(null, 'y', point[1]-2);
-          
-        rect1.setAttributeNS(null, 'width', 4);
-        rect1.setAttributeNS(null, 'height', 4);
-        rect1.setAttributeNS(null, 'fill', '#ff7700');
-        rect1.setAttributeNS(null, 'stroke', '#000000');
-        rect1.setAttributeNS(null, 'stroke-width', '0');  
-        rect1.setAttributeNS(null, 'id', '0'); 
-        //rect1.addEventListener("mouseover", function(event) {this.setAttributeNS(null, 'stroke-width', 1 ); }, false);
-      rect1.addEventListener("mousedown", function(event) {if(memoNode != null){memoNode.setAttributeNS(null, 'stroke-width', 0 );} memoNode=this; this.setAttributeNS(null, 'fill-color', '#ffff00' );this.setAttributeNS(null, 'stroke-width', 1 );$('option_path_num').value=this.getAttributeNS(null,'id'); $('option_path_x').value=parseFloat(this.getAttributeNS(null,'x'))+2; $('option_path_y').value=parseFloat(this.getAttributeNS(null,'y'))+2;  }, false);
-
-        //rect1.addEventListener("mouseout", function(event) {this.setAttributeNS(null, 'stroke-width', 0 );}, false);
-
-        svg.appendChild(rect1);                                    
-      
-          if(controlNodeNum==0){ var color='#ffff00';}  
-         if(controlNodeNum==1){var color='#00ffff';}  
-         if(controlNodeNum==2){var color='#00cc00';}  
-         var color1='#ffff00';
-      
-     var numpoints=points.length-1;  
-     var recalls='';
-     var re = /^[-]?\d*\.?\d*$/;
-     for(var a=1;a<=numpoints;a++)
-      { 
-        
-        var ini=points[a].substring(0,1);
-        if (!ini.match(re))        
-        {                          
-          var end=points[a].substring(1); 
-          color='#0000ff';
-          if(ini=='L' || ini=='M')
-           {
-             color='#ffff00';
-           }
-          
-          if(ini=='C')
-          { 
-             recall=a+2;
-             //color='#ffff00';
-          }
-
-        }else
-        { 
-          var end=points[a];
-          var ini='';  
-          color='#ff00ff'; 
-          if(a==recalls)
-          { 
-             color='#ffff00';
-          }
-        } 
-        
-            
-        //segment=points[a].split(',');
-         /*prevControl=segment[0]+' '; 
-         nextControl=segment[1]+' '; 
-         nodePoint=segment[2]+' ';     
-         memoPrevControl[a]=prevControl;
-         memoNextControl[a]=nextControl;
-         if(controlNodeNum==0){chain+=prevControl; var point=prevControl.split(',');}  
-         if(controlNodeNum==1){chain+=nextControl; var point=nextControl.split(',');}  
-         if(controlNodeNum==2){chain+=nodePoint; var point=nodePoint.split(',');}  
-         if(controlNodeNum==3){chain+=nodePoint; var point=nodePoint.split(',');}
-           
-         */    
-               //if (isNaN(valnum))         
-
-         //if(ini=='C'){color='#ff00ff';}
-         
-         var point=end.split(',');
-         if(memoNode!=null){
-         }
-          var rect1 = document.createElementNS(svgNamespace, 'rect');  
-        rect1.setAttributeNS(null, 'x', point[0]-2);
-        rect1.setAttributeNS(null, 'y', point[1]-2);
-          
-        rect1.setAttributeNS(null, 'width', 4);
-        rect1.setAttributeNS(null, 'height', 4);
-        rect1.setAttributeNS(null, 'fill', color);
-        rect1.setAttributeNS(null, 'stroke', '#000000');
-        rect1.setAttributeNS(null, 'stroke-width', '0'); 
-        rect1.setAttributeNS(null, 'id', ''+a); 
-        rect1.addEventListener("mousedown", function(event) {if(memoNode != null){memoNode.setAttributeNS(null, 'stroke-width', 0 );}drawNodeControl(svg,this.getAttributeNS(null,'id')); memoNode=this; this.setAttributeNS(null, 'fill-color', '#ffff00' );this.setAttributeNS(null, 'stroke-width', 1 );$('option_path_num').value=this.getAttributeNS(null,'id'); $('option_path_x').value=parseFloat(this.getAttributeNS(null,'x'))+2; $('option_path_y').value=parseFloat(this.getAttributeNS(null,'y'))+2;  }, false);
-
-        //rect1.addEventListener("mouseover", function(event) {this.setAttributeNS(null, 'stroke-width', 1 );$('option_path_num').value=this.getAttributeNS(null,'id'); $('option_path_x').value=parseFloat(this.getAttributeNS(null,'x'))+2; $('option_path_y').value=parseFloat(this.getAttributeNS(null,'y'))+2; }, false);
-        // rect1.addEventListener("mousedown", function(event) {nodeHit(this);if(memoNode != null){memoNode.setAttributeNS(null, 'stroke-width', 0 );} memoNode=this; this.setAttributeNS(null, 'fill-color', '#ffff00' );this.setAttributeNS(null, 'stroke-width', 1 );$('option_path_num').value=this.getAttributeNS(null,'id'); $('option_path_x').value=parseFloat(this.getAttributeNS(null,'x'))+2; $('option_path_y').value=parseFloat(this.getAttributeNS(null,'y'))+2; document.forms[0].option_path_x.focus(); }, false);
-         //rect1.addEventListener("mousedown", function(event) { if(memoNode != null){memoNode.setAttributeNS(null, 'stroke-width', 0 );} nodeHit(this); memoNode=this;this.setAttributeNS(null, 'stroke-width', 1 );$('option_path_num').value=this.getAttributeNS(null,'id'); $('option_path_x').value=parseFloat(this.getAttributeNS(null,'x'))+2; $('option_path_y').value=parseFloat(this.getAttributeNS(null,'y'))+2; }, false);
-         //rect1.addEventListener("mousedown", function(event) {if(memoNode != null){memoNode.setAttributeNS(null, 'stroke-width', 0 );} addControlPoints(segment[0],segment[1],svg); memoNode=this; this.setAttributeNS(null, 'fillColor', '#ffff00' );this.setAttributeNS(null, 'stroke-width', 1 );$('option_path_num').value=this.getAttributeNS(null,'id'); $('option_path_x').value=parseFloat(this.getAttributeNS(null,'x'))+2; $('option_path_y').value=parseFloat(this.getAttributeNS(null,'y'))+2; }, false);
-         //rect1.addEventListener("mouseup", function(event) {nodeUp(this); }, false);
-         //rect1.addEventListener("mouseover", function(event) {this.setAttributeNS(null, 'fillColor', '#ffcc00' ); }, false);
-         //rect1.addEventListener("mouseout", function(event) {this.setAttributeNS(null, 'fillColor', '#00cc00' ); }, false);
-         
-
-         //rect1.addEventListener("mouseout", function(event) {this.setAttributeNS(null, 'stroke-width', 0 ); }, false);
-
-        svg.appendChild(rect1);                                    
-         
-      }                     
-      var info='';
-       
-         if(controlNodeNum==0){info='prev Control'}  
-         if(controlNodeNum==1){info='next Control'}  
-         if(controlNodeNum==2){info='points node'}   
-        // $('someinfo').value=numpoints+ ' '+info+':'+ chain;
-//         $('someinfo').value='Crtl+Arrow to move';
-    //return chain;                                          
-    
-
-      //this.svgRoot.appendChild(svg);   
-    
-    return svg;  
-        
-};
-
-SVGRenderer.prototype.showNodesCurve1 = function(path,controlNodeNum){ 
-     memoNextControl=new Array();
-     memoPrevControl=new Array();
-     var svgNamespace = 'http://www.w3.org/2000/svg';
-    // tracker = document.createElementNS(svgNamespace, 'g');   
-     var svg = this.container.ownerDocument.createElementNS(svgNamespace, 'g'); 
-      svg.setAttributeNS(null, 'id', 'editNodesPath'); 
-
-     /* var group = document.getElementById('editNodesPath');
-      if (group) 
-       {
-           this.remove(group);
-       }
-       */
-
   var points=path.split('C');
      var chain='';
      var segment=' ';  
@@ -2152,8 +2022,7 @@ SVGRenderer.prototype.showNodesCurve1 = function(path,controlNodeNum){
          if(controlNodeNum==0){chain+=prevControl; var point=prevControl.split(',');}  
          if(controlNodeNum==1){chain+=nextControl; var point=nextControl.split(',');}  
          if(controlNodeNum==2){chain+=nodePoint; var point=nodePoint.split(',');}  
-         if(controlNodeNum==3){chain+=nodePoint; var point=nodePoint.split(',');}  
-      
+         
          if(memoNode!=null){
          }
           var rect1 = document.createElementNS(svgNamespace, 'rect');  
@@ -2187,8 +2056,8 @@ SVGRenderer.prototype.showNodesCurve1 = function(path,controlNodeNum){
          if(controlNodeNum==0){info='prev Control'}  
          if(controlNodeNum==1){info='next Control'}  
          if(controlNodeNum==2){info='points node'}   
-        // $('someinfo').value=numpoints+ ' '+info+':'+ chain;
-       // $('someinfo').value='Crtl+Arrow to move';
+        // //$('someinfo').value=numpoints+ ' '+info+':'+ chain;
+        //$('someinfo').value='Crtl+Arrow to move';
     //return chain;                                          
     
 
@@ -2197,6 +2066,8 @@ SVGRenderer.prototype.showNodesCurve1 = function(path,controlNodeNum){
     return svg;  
         
 };
+
+
 SVGRenderer.prototype.showTracker = function(shape,pathsEdit) {  
 
   var box = shape.getBBox();
@@ -2213,21 +2084,24 @@ SVGRenderer.prototype.showTracker = function(shape,pathsEdit) {
     //if (currentTransform != null) alert(currentTransform.t);
  
   if (shape.tagName == 'rect') { 
-     
-//      $('option_rect_rot').value= T.b* (Math.PI * 2 / 360); 
-//      $('option_rect_trx').value= box.x;  
-//      $('option_rect_try').value= box.y;
-//      $('option_rect_sclx').value= box.width;  
-//      $('option_rect_scly').value= box.height;
+     /*
+     $('option_rect_rot').value= T.b* (Math.PI * 2 / 360); 
+     $('option_rect_trx').value= box.x;  
+     $('option_rect_try').value= box.y;
+     $('option_rect_sclx').value= box.width;  
+     $('option_rect_scly').value= box.height;
+		 */
 
   }  
 
   if (shape.tagName == 'image'){
-//     $('option_img_trx').value= box.x; 
-//     $('option_img_try').value= box.y;
-//     $('option_img_sclx').value= box.width;  
-//     $('option_img_scly').value= box.height;
-//     $('option_img_rot').value= T.b* (Math.PI * 2 / 360);
+		/*
+    $('option_img_trx').value= box.x; 
+    $('option_img_try').value= box.y;
+    $('option_img_sclx').value= box.width;  
+    $('option_img_scly').value= box.height;
+    $('option_img_rot').value= T.b* (Math.PI * 2 / 360);
+		*/
   }
   if (shape.tagName == 'text'){
    /* f$('option_text_trx').value= box.x; 
@@ -2279,12 +2153,10 @@ SVGRenderer.prototype.showTracker = function(shape,pathsEdit) {
      $('option_path_rot').value= T.b* (Math.PI * 2 / 360);
      */                                        
      var path=shape.getAttributeNS(null, 'd');
-//       $('control_codebase').value=path;  
-       
-       //controlPoints=this.showNodesCurve(path,0);
-       //controlPoints=this.showNodesCurve(path,1); 
-       controlPoints=this.showNodesCurve(path,2);
-       
+      this.control_codebase=path;  
+      
+       controlPoints=this.showNodesCurve(path,2); 
+   
            
         /*   controlPoints=this.showNodesCurve(path,1); 
    
@@ -2531,12 +2403,7 @@ SVGRenderer.prototype.showTracker = function(shape,pathsEdit) {
   
     svg.appendChild(circle1);    
     //tracker.appendChild(circleCenter);  
-   if (shape.tagName == 'text'){   
-    svg.appendChild(rect1); 
-    svg.appendChild(rect2);   
-    svg.appendChild(rect3); 
-    svg.appendChild(rect4);  
-  }else{
+   if (shape.tagName != 'text'){   
     svg.appendChild(rect1); 
     svg.appendChild(rect2);   
     svg.appendChild(rect3); 
@@ -2545,7 +2412,7 @@ SVGRenderer.prototype.showTracker = function(shape,pathsEdit) {
     svg.appendChild(rectmid23);
     svg.appendChild(rectmid34);
     svg.appendChild(rectmid41);                                    
-
+  
   }  
     if(pathsEdit)
      {    
@@ -3003,27 +2870,15 @@ SVGRenderer.prototype.scaleShape = function(shape,previus, toX, toY) {
   }
    else 
  if(shape.tagName == 'text')
-  { 
-    
-    var tsize=shape.getAttributeNS(null, 'font-size') ;
-    tsize=eval(tsize);
-    //shape.setAttributeNS(null, 'x', tx + 'px');
-    //shape.setAttributeNS(null, 'y', ty + 'px'); 
-    //var mysize=box.height+1 ;
-    var mysize=parseInt(Math.round(th));
-    
-    if(scaleType== 'ne'){ shape.setAttributeNS(null, 'font-size',tsize+1);}  
-      //shape.setAttributeNS(null, 'font-size', mysize);  
-      
-   
-   /*
+  {
+    /*
     shape.setAttributeNS(null,'x',tx);
     shape.setAttributeNS(null,'y',ty);   
     shape.setAttributeNS(null, 'width', tw);     
     shape.setAttributeNS(null, 'height', th); 
     
     //previus.setAttributeNS(null,'transform', "scale("+trans_ShareScale+")");
-    shape.setAttributeNS(null, 'x', tx + 'px');
+     shape.setAttributeNS(null, 'x', tx + 'px');
     shape.setAttributeNS(null, 'y', ty + 'px');
 
     shape.setAttributeNS(null, 'textLength', parseInt(Math.round(tw)));    
@@ -3067,170 +2922,10 @@ SVGRenderer.prototype.scaleShape = function(shape,previus, toX, toY) {
    else 
  if (shape.tagName == 'path')
   {     
-     // var xscale=  box.width/tw;
-     // var yscale=  box.height/th;  
-      var xscale=  tw/box.width;
-      var yscale=  th/box.height;  
-      var xinc=xscale;//dist*angx;
-      var yinc=yscale/ty;//dist*angy;   
-
-   if(scaleType== 'n')
-    {
-       tx=box.x+(box.width/2);
-       ty=box.y+box.height; 
-       var xinc=1;
-       var yinc=box.y/toY;//dist*angy;   
-
-    } 
-   if(scaleType== 's')
-    {
-       tx=box.x+(box.width/2);
-       ty=box.y; 
-       var xinc=1;
-       var yinc=toY/(box.y+box.height);//dist*angy;   
-    }    
-   if(scaleType== 'e')
-    {
-       tx=box.x;
-       ty=box.y+(box.height/2);  
-       var xinc=toX/(box.x+box.width);
-       var yinc=1;   
-
-    }         
-   if(scaleType== 'w')
-    {
-       tx=box.x+box.width;
-       ty=box.y+(box.height/2); 
-       var xinc=box.x/toX;
-       var yinc=1;   
-
-    }
-   if(scaleType== 'ne')
-    {
-       tx=box.x;
-       ty=box.y+box.height; 
-       var xinc=toX/(box.x+box.width);
-       var yinc=xinc;   
-    }  
-  if(scaleType== 'nw')
-    {
-       tx=box.x+box.width;
-       ty=box.y+box.height; 
-       var xinc=box.x/toX;
-       var yinc=xinc;   
-    } 
-   if(scaleType== 'se')
-    {
-       tx=box.x;
-       ty=box.y; 
-       var xinc=toX/(box.x+box.width);
-       var yinc=xinc;   
-    }    
-   if(scaleType== 'sw')
-    {
-       tx=(box.x+box.width);
-       ty=box.y; 
-       var xinc=box.x/toX;
-       var yinc=xinc;   
-    }        
-      if(xinc==0){ xinc= 0.0000001;}
-      if(yinc==0){ yinc= 0.0000001; }
+      var xscale=  prevbox.width/tw;
+      var yscale=  prevbox.height/th;
       var prevpath=previus.getAttributeNS(null, 'd');
      var path=shape.getAttributeNS(null, 'd');
-////////////
-
-
-      //xshe=left;
-      //yshe=top;
-       
- path=path.replace(/, /g, ','); 
- path=path.replace(/ ,/g, ',');
- var ps =path.split(" ")
- var pcc = "";
- var point =ps[0].split(","); 
-
-
- var num0= parseFloat(point[0].substring(1));
- var num1= parseFloat(point[1]);     
- 
-
- var ang= ang2v(box.x,box.y,tx,ty) ;
- var angle = Math.round((ang/Math.PI* 2)* 360);
- var angx = Math.cos(ang); 
- var angy = Math.sin(ang);          
- var dist= dist2p(tx,ty,box.x,box.y);
- //var xinc=xscale;//dist*angx;
- //var yinc=yscale;//dist*angy;   
-    var re = /^[-]?\d*\.?\d*$/; 
-    var axis = $V([tx,ty]);
- for(var i = 0; i < ps.length; i++)
-  { 
-   if(ps[i].indexOf(',')>0){  
-     
-      var point =ps[i].split(","); 
-       var char1=point[0].substring(0,1); 
-       if(char1=='A' || char1=='a'){isArc=true; contArc=0;}
-       if(isArc==true){contArc++}
-       if(contArc==4){contArc=0; isArc=false}
-       
-       //if (isNaN(valnum)) 
-      if (!char1.match(re))        
-       { 
-           var num0= parseFloat(point[0].substring(1));
-           var text=char1;
-       }else{ 
-         if(isArc==true && contArc==2  )
-          {
-            var num0= point[0];
-          }else{  
-            var num0= parseFloat(point[0]);
-          }  
-         var text='';
-
-       }
- 
-       
-       if(isArc==true && contArc==2)
-        {   
-           point[1]= point[1].toString() ;
-        }
-        else
-        {    
-         
-          //num0*=xinc;    
-          point[1]= parseFloat(point[1]);
-          //point[1]*=yinc;
-          var pointIni=$V([num0,point[1],1]);
-          var matrT = $M([[1,0,-tx],[0,1,-ty],[0,0,1]]);
-          var matrS = $M([[xinc,0,0],[0,yinc,0],[0,0,1]]); 
-          var matrR = $M([[1,0,tx],[0,1,ty],[0,0,1]]);
-          var matr1= matrT.x(pointIni);  
-          var matr2= matrS.x(matr1);
-          //var pointR=pointIni.Random(1) 
-          //var pointR=pointIni.rotate(Math.PI/180,axis);
-          //var pointRc=pointIni.cross(axis); 
-          //var pointR=matr2;
-          var pointR=matrR.x(matr2);  
-          num0=pointR.elements[0];
-           point[1]=pointR.elements[1];
-//           $('code').value=pointIni.elements[0]+','+pointR.elements[1]+' ';
-        }  
-       var cx=num0; 
-        var cy=point[1];   
-        pcc+=text+cx+','+cy+' ';
-        //pcc+=text+cx+','+cy+' '; 
-       
-   }else{
-      pcc+=ps[i]+' ';
-   }
-  }
-  
-  shape.setAttributeNS(null,'d', pcc);
-
-
-
-//////////////
-/*
  path=path.replace(/, /g, ','); 
  path=path.replace(/ ,/g, ',');
  var ps =path.split(" ")
@@ -3297,7 +2992,6 @@ SVGRenderer.prototype.scaleShape = function(shape,previus, toX, toY) {
     
        //document.forms[0].code.value='';
        //shape.setAttributeNS(null,'transform', "scale("+trans_ShareScale+")"); 
- */      
 
   }  
    	                             
@@ -3428,6 +3122,11 @@ SVGRenderer.prototype.rotateShape = function(shape, previus, toX, toY) {
 // x(u) = x0*(1-u) + x1*u = x0 + (x1-x0)*u
 // y(u) = y0*(1-u) + y1*u = y0 + (y1-y0)*u
       
+//http://xml-utils.com/conferencia-svg.html#d0e527
+//http://www.xml.com/lpt/a/1321
+//http://phrogz.net/objjob/object.asp?id=101
+//http://admisource.gouv.fr/plugins/scmcvs/cvsweb.php/Cassini-ihm/js-yosemite/mapApp.js?rev=1.1;cvsroot=cassini
+//http://groups.google.com/group/prototype-graphic/msg/0547c0caea8869c6 
 
 
 SVGRenderer.prototype.getshapes = function(){
@@ -3461,11 +3160,4 @@ function generateJSON(cssEnv)
   strJSON += '}';
 
   return strJSON;
-}
-
-//http://xml-utils.com/conferencia-svg.html#d0e527
-//http://www.xml.com/lpt/a/1321
-//http://phrogz.net/objjob/object.asp?id=101
-//http://admisource.gouv.fr/plugins/scmcvs/cvsweb.php/Cassini-ihm/js-yosemite/mapApp.js?rev=1.1;cvsroot=cassini
-//http://groups.google.com/group/prototype-graphic/msg/0547c0caea8869c6 
-//http://sylvester.jcoglan.com/ 
+} 

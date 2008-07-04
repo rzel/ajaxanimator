@@ -28,7 +28,7 @@ clockdata = function(){};
 
   
 Ax.onlypaths = {
-  version: "Symply Web 0.1.02 Modified"
+  version: "Symply Web 0.1.03 Modified"
 }
 
 var zoominit='0 0 '+Ax.canvasWidth+' '+Ax.canvasHeight; //some OnlyPaths stuffs
