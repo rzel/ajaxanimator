@@ -27,7 +27,7 @@ Ext.onReady(function(){
     {
       key: "c", //Ctrl+C
       ctrl: true,
-      fn: function(code, event){if(!Ax.verify_keydown(code, event)){return};Ax.toastMsg("keyboard","Iz T0t4lly p1r4t3d ur clypboardz")}
+      fn: function(code, event){if(!Ax.verify_keydown(code, event)){return};Ax.clipboard_add()}
     },
     {
       key: "x", //Ctrl+X
