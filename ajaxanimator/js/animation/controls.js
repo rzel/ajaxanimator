@@ -5,7 +5,9 @@ Ax.controls = {
   },
   pause: function(){
     Ax.viewport.findById("maintabpanel").activate(1)
-	clearTimeout(Ax.preview_timeout)
+	  clearTimeout(Ax.preview_timeout);
+    clearTimeout(Ax.preview_timeout);
+    clearTimeout(Ax.preview_timeout);
   },
   next: function(){
     Ax.selectFrame(Ax.tcurrent.frame+1,Ax.tcurrent.layer)

@@ -4,7 +4,12 @@ Grid for Clipboard panel
 Ax.clipboard_store = [];
 
 Ax.clipboard_add = function(){
-  Ax.clipboard_store.push(Ax.canvas.renderer.copy());
+  if(!Ax.canvas.selected){return Ax.msg("Error","Nothing's selected...")}
+  Ax.clipboard_store.push(Ax.canvas.renderer.copy(Ax.canvas.selected));
+  Ax.viewport.findById("clipboard").getStore().add(new Ext.data.Record({
+  id: Ax.clipboard_store.length - 1,
+  type: Ax.clipboard_store[Ax.clipboard_store.length-1].nodeName
+  }))
 }
 
 Ax.clipboard_load = function(index, x, y){
@@ -14,8 +19,8 @@ Ax.clipboard_load = function(index, x, y){
  Ax.Clipboard = Ext.extend(Ext.grid.GridPanel, {
  initComponent:function() {
  Ext.apply(this, {
+ id: "clipboard",
  store: new Ext.data.SimpleStore({
- id:0,
  fields:[
  {name: 'id', type: 'float'},
  {name: 'type'}

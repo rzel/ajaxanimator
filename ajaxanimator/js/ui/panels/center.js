@@ -86,7 +86,8 @@ Ext.apply(this,{
 				'activate' : function(){
 					Ax.gs(7);
 					Ax.init_preview();
-					Ax.controls.play();
+          clearTimeout(Ax.preview_timeout);
+					Ax.preview_increment();
 				},
 				'deactivate' : function(){
 					Ax.controls.pause()
