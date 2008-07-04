@@ -21,6 +21,10 @@ Ext.onReady(function(){
       fn: function(code, event){if(!Ax.verify_keydown(code, event)){return};Ax.controls.previous()}
     },
     {
+      key: 46, //Delete
+      fn: function(code, event){if(!Ax.verify_keydown(code, event)){return};Ax.setTool("delete")}
+    },
+    {
       key: 34, //Page Down
       fn: function(code, event){if(!Ax.verify_keydown(code, event)){return};Ax.controls.next()}
     },
