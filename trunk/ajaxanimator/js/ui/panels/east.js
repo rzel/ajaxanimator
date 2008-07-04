@@ -43,7 +43,7 @@ Ext.apply(this,{
                     title:"Clipboard",
                     autoHeight:true,
 					iconCls: "clipboard_icon",
-					tools: [{id: "close", qtip: "Clear Clipboard"}],
+					tools: [{id: "close", qtip: "Clear Clipboard", handler: function(){Ax.clipboard_clear()}}],
                     border:false,
                     items:[{xtype:"clipboard"}]
                   },{

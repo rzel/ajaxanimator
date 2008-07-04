@@ -1,17 +1,17 @@
 Ax.toolConfig={
-	"select":      ["tx_select","Select Shapes"],
-	"rect":        ["tx_rectangle","Draw Rectangle"],
-	"roundrect":   ["tx_roundrect","Draw Rounded Rectangle"],
-	"ellipse":     ["tx_circle","Draw Ellipse/Circle"],
-	"line":        ["tx_line","Draw Line"],
-	"path":        ["tx_path","Draw freeform path"],
-	"controlpath": ["tx_polygon","Draw Polygon"],
-	"text":        ["tx_text","Draw text"],
-	"image":       ["tx_image", "Draw Image/Picture"],
+	"select":      ["tx_select","Select Shapes","Select"],
+	"rect":        ["tx_rectangle","Draw Rectangle","Rectangle"],
+	"roundrect":   ["tx_roundrect","Draw Rounded Rectangle","Round Rectangle"],
+	"ellipse":     ["tx_circle","Draw Ellipse/Circle","Ellipse/Circle"],
+	"line":        ["tx_line","Draw Line","Line"],
+	"path":        ["tx_path","Draw freeform path","Freeform Path"],
+	"controlpath": ["tx_polygon","Draw Polygon","Polygon"],
+	"text":        ["tx_text","Draw text","Text"],
+	"image":       ["tx_image", "Draw Image/Picture","Image"],
 
-	"shape":       ["tx_shape","Draw Shape from library"],
-	"reset":       ["tx_reset","Reset/Clear/Empty Frame"],
-	"delete":      ["tx_delete","Delete selected shape"]
+	"shape":       ["tx_shape","Draw Shape from library","Library"],
+	"reset":       ["tx_reset","Reset/Clear/Empty Frame","Reset"],
+	"delete":      ["tx_delete","Delete selected shape","Delete"]
 }
 
 Ax.ToolsPanel = Ext.extend(Ext.Panel,{
