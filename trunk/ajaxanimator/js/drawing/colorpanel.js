@@ -2,7 +2,7 @@ Ax.defaultcolor = {
   line: "000000",
   fill:"FF0000",
   width: 1, //okay, so width isn't really a color..
-  grid: 5 //this isn't really a color either
+  grid: 1 //this isn't really a color either
 }
 
 Ax.Color = {

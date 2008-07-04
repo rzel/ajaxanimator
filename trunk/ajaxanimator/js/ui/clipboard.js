@@ -25,7 +25,7 @@ Ax.clipboard_load = function(index, x, y){
  {name: 'id', type: 'float'},
  {name: 'type'}
  ],
- data:[]
+ data:[[0,"Nothing"]]
  }),
  columns:[
  {id:'id',header: "#", width: 20, sortable: true, dataIndex: 'id'},

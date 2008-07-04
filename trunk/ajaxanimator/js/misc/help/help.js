@@ -6,6 +6,7 @@ Ax.keys = { //An object with the key arrays that will be generated and converted
   "Enter": "Preview/Play",
   "Page Up": "Go to Previous Frame",
   "Page Down": "Go to Next frame",
+  "Delete":"Delete Selection",
   "Ctrl+C": "Copy",
   "Ctrl+X": "Cut",
   "Ctrl+V": "Paste",

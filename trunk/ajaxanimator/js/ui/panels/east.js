@@ -21,6 +21,7 @@ Ext.apply(this,{
             layout:"fit",
             items:[{
                 layout:"accordion",
+                autoScroll: true,
                 layoutConfig:{
                   activeOnTop:false,
                   animate:true,

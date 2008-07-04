@@ -99,7 +99,8 @@ Ax.animationinfo = function(){
       html: "<b>"+Ax.animation.name+":</b><br />Generator: "+ Ext.util.JSON.encode(Ax.animation.markup.generator) +
       "<br />Creation Date: "+ ((Ax.animation.markup.creation)?Ax.animation.markup.creation:"Unknown") +
       "<br />Last Modified Date: "+ ((Ax.animation.markup.modified)?Ax.animation.markup.modified:"Unknown") +
-      "<br />Contributors: " + ((Ax.animation.markup.contrib)?Ax.animation.markup.contrib:['Unknown']).join(",")
+      "<br />Contributors: " + ((Ax.animation.markup.contrib)?Ax.animation.markup.contrib:['Unknown']).join(",") +
+      "<br />Size: "+  Ax.export_animation(Ax.animation.markup,"json").length
       
       })).show(document.body)
 }
