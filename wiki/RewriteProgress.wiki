@@ -2,26 +2,6 @@
 
 = Introduction =
 
-As you may know from the previous article, I'm rewriting the ajaxanimator.
+The Ajax Animator 0.2 rewrite is relatively stable, especially compared to the previous (considered "stable" version). It likely is much _more_ stable than the current "stable" version.
 
-As of 7/01/08 the new version is reasonably stable, there are only a few main  areas of improvent.
-
-  * server code, unsure, GAE?
-  * exporting - complex, unsure
-  * clipboard - need to examine onlypaths' implementation 
-  * keyboard shortcuts - easy, procrastinating
-  * documentation (help, Faq,manual, tutorials, etc.) - boring
-  * stability - tedious, lazy
-  * library - unsure
-  * user-related community/social aspect, unsure
-  * history (undo/redo) - unsure
-
-Quite possibly more, but this is all that ce to my head. It is largely more usable than 0.14.7 already, but some features are not here yet.
-
-PATH elements are complex and I'm debating whetheror not to put it as a
-goal
-
-IE support is hard, nearly impossible, despite extreme advancement since previously
-the vmlrenderer is flawed and incomplete. It really feels pointless to work n a dead platfom (vml) and spend time knowing it'll only run on a single crappy browser.
-
-Speed is really an issue. It caused a 200mb memeak on Fx3. Yes.... 3. Can u imagine it on IE?
+The main reason why the release is not considered "stable" yet, is the lack of features in some areas. While in certain areas such as tweening and editing, the development rewrite is already much more stable and feature-filled. Such areas are the History, ~~Clipboard~~, Users, and server scripting.
