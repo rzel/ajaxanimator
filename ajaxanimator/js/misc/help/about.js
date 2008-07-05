@@ -55,7 +55,6 @@ Ax.aboutWindow = new Ext.Window({
 		'Ext 2.x themes by Galdaka, J.C., madrabaz, and elyxr<br />'+
 		'Ext.ux.ToastWindow by efattal<br />'+
 		'Ext.ux.Crypto by vtswingkid<br />'+
-		'php.js by Kevin van Zonneveld<br />'+
 		'<b>Patches/Bugfixes</b><br />'+
 		'http://extjs.com/forum/showthread.php?p=146135<br />'+
 		'http://outroot.com/extjs/bug1/<br />'+ 
@@ -63,9 +62,12 @@ Ax.aboutWindow = new Ext.Window({
 		'Logo by Antimatter15<br />'+
 		'Icons from silk by famfamfam<br />'+
 		'Icons from richdraw by Mark Finkle<br />'+
-		'Icons from OnlyPaths by josep_ssv<br />'+
-		'Icons from Nuvola<br />'+
-		'Loading icon from ajaxload.info<br />'
+		'Loading icon from ajaxload.info<br />'+
+    '<b>OnlyPaths</b><br />'+
+    'Icons from OnlyPaths by josep_ssv<br />'+
+    'OnlyPaths by josep_ssv<br />'+
+    'RichDraw by Mark Finkle<br />'+
+    'Sylvester by James Coglan<br />'
     },{
 	title: "Special Thanks",
 	html: "<b>Organizations</b><br />"+

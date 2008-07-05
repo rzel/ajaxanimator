@@ -195,7 +195,10 @@ Ax.insertFrame = function(frame,layer){
   }
   
   if(Ax.isTween(frame,layer)){
-    Ax.tween(Ax.largest_nonempty(frame,layer),Ax.smallest_nonempty(frame,layer),layer); //tween from previous keyframe to now
+    Ax.tween(Ax.largest_nonempty(frame,layer),Ax.smallest_nonempty(frame,layer),layer); //tween from previous keyframe to no
+    if(frame == Ax.tcurrent.frame && layer = Ax.tcurrent.layer){
+      Ax.loadframe(frame, layer)
+    }
   }
   
 }
