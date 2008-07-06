@@ -49,5 +49,8 @@ Ax.api = {
 Ax.exec = function(name){
   if(typeof Ax.plugins[name] == "function"){
     Ax.plugins[name]();
+    Ax.autodiff();
+  }else{
+    Ax.toastMsg("Error!","Plugin Not Found!")
   }
 }
