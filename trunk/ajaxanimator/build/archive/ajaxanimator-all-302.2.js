@@ -334,7 +334,7 @@ Ext.ux.ToastWindow = Ext.extend(Ext.Window, {
  *
  * @author    Ing. Jozef Sakáloš
  * @date      22. March 2008
- * @version   $Id$
+ * @version   $Id: Ext.ux.grid.CellActions.js 163 2008-06-18 17:24:54Z antimatter15 $
  *
  * @license Ext.ux.grid.CellActions is licensed under the terms of
  * the Open Source LGPL 3.0 license.  Commercial use is permitted to the extent
