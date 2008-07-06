@@ -1,5 +1,5 @@
 /*
- * those random helpful usage tips window(s) that pops up for no apparent reason. demonstrating common sense.
+ * those random (un)helpful usage tips windows that pops up for no apparent reason demonstrating common sense.
  * i donno, they're probably somewhat helpful. and guessing that nobody other than me really uses it as much
  * as me, or nobody really knows special tricks that I know..... whatever. anyway. this isn't really helpful
  * is it?
