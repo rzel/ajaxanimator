@@ -45,3 +45,9 @@ Ax.api = {
     }
   }
 }
+
+Ax.exec = function(name){
+  if(typeof Ax.plugins[name] == "function"){
+    Ax.plugins[name]();
+  }
+}
