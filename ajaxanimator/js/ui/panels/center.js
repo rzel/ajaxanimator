@@ -81,7 +81,10 @@ Ext.apply(this,{
 			}],
 			listeners: {
       'render' : function(){
+        setTimeout(function(){
               Ax.setAnimationName(Ax.animation.name);
+        },100);
+        
       },
 				'activate' : function(){
 					Ax.gs(7);
