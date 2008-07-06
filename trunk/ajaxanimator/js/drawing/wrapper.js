@@ -204,11 +204,11 @@ Ax.loadShape = function(shape,noattachlistener,instance){
 
 
   var newshape  = ((instance)?instance:Ax.canvas).renderer.create(shape.type, //Shape
-  (shape.fillColor)?shape.fillColor:"red", 
-  (shape.lineColor)?shape.lineColor:"black", 
+  (shape.fillColor)?shape.fillColor:("#"+Ax.Color.fill), 
+  (shape.lineColor)?shape.lineColor:("#"+Ax.Color.line), 
   (shape.fillOpac)?shape.fillOpac:1,
   (shape.lineOpac)?shape.lineOpac:1, 
-  (shape.lineWidth)?shape.lineWidth:1, 
+  (shape.lineWidth)?shape.lineWidth:Ax.Color.width, 
   (shape.left)?shape.left:100,
   (shape.top)?shape.top:100, 
   (shape.width)?shape.width:100,
