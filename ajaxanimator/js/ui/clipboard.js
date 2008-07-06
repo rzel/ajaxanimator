@@ -29,6 +29,7 @@ Ax.clipboard_clear = function(){
 Ax.clipboard_paste = function(index){
   if(!index){index = Ax.clipboard_store.length-1}
   Ext.get(Ax.canvas.renderer.paste(Ax.clipboard_store[index].cloneNode(true))).on("mousedown", Ax.canvas.onHit, Ax.canvas);
+  Ax.autodiff();
 }
 
  Ax.Clipboard = Ext.extend(Ext.grid.GridPanel, {
