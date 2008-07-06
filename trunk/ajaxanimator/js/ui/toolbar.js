@@ -81,8 +81,8 @@ Ax.MainToolbar = [
 {text:"Plugins", menu: [
   {text: "Add Plugins", iconCls: "tb_plugin_add"},
   "-", //split
-  {text: "Explode",iconCls: "tb_plugin"},
-  {text: "Random Shape",iconCls: "tb_plugin"}
+  {text: "Explode",iconCls: "tb_plugin", handler: function(el){Ax.exec(el.initialConfig.text)}},
+  {text: "Random Shape",iconCls: "tb_plugin", handler: function(el){Ax.exec(el.initialConfig.text)}}
 ]},
 {text:"User", menu: [
   {text: "Login", iconCls: "tb_login"},
