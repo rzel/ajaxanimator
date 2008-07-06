@@ -25,3 +25,9 @@ Ax.plugins["brick"] = function(height, width){
   }
 }
 
+Ax.plugins["explode"] = function(){
+  Ax.api.loop.frame(function(shape){
+    return Ax.api.transform.absolute(shape, Math.round(Math.random()*Ax.canvasHeight), Math.round(Math.random()*Ax.canvasWidth));  
+  })
+}
+
