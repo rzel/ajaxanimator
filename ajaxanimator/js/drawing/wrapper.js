@@ -221,7 +221,7 @@ Ax.loadShape = function(shape,noattachlistener,instance){
   (shape.transform)?shape.transform:'',
   (shape.parent)?shape.parent:''); 
  
-  newshape.id = shape.id;
+  newshape.id = (shape.id)?shape.id:createUUID()
 
   if(!noattachlistener){
   Ext.get(newshape).on("mousedown", Ax.canvas.onHit, Ax.canvas);
