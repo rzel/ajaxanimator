@@ -23,6 +23,8 @@ Ax.showTips = function(){
             {region: "north", html: "<center><h1 class='tiptitle'>Did you know...?</h1></center><br>", border: false},
             {region: "center", html: "<center>woah, this stuffs are interestings</center>", border: false}
             ],
-    buttons: [{text: "Previous", iconCls: "arrow_prev"},{text: "Next", iconCls: "arrow_next"},{text: "Close", iconCls: "close"}]
+    buttons: [{text: "Previous", iconCls: "arrow_prev"},
+              {text: "Next", iconCls: "arrow_next"},
+              {text: "Close", iconCls: "close", handler: function(){this.ownerCt.close()}}]
     })).show(document.body)
 }
