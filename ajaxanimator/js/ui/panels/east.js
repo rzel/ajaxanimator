@@ -35,17 +35,18 @@ Ext.apply(this,{
                 items:[{
                     title:"History",
                     autoHeight:true,
+					xtype: "history",
 					iconCls: "history_icon",
                     border:false,
-					tools: [{id: "close", qtip: "Clear History"}],
-                    items:[{xtype: "history"}]
+					tools: [{id: "close", qtip: "Clear History", handler: function(){Ax.history_clear()}}]
                   },{
                     title:"Clipboard",
                     autoHeight:true,
+					xtype: "clipboard",
+					layout: "fit",
 					iconCls: "clipboard_icon",
 					tools: [{id: "close", qtip: "Clear Clipboard", handler: function(){Ax.clipboard_clear()}}],
-                    border:false,
-                    items:[{xtype:"clipboard"}]
+                    border:false
                   },{
                     title:"Library",
                     autoHeight:true,
