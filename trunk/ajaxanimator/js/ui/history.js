@@ -6,7 +6,7 @@ Ax.history_store = [{}];
 Ax.history_add = function(summary){
     Ax.history_store.push(Ax.export_animation());
     Ax.viewport.findById("history").getStore().add(new Ext.data.Record({
-        id: Ax.clipboard_store.length - 1,
+        id: Ax.history_store.length - 1,
         type: (summary) ? summary : "Edit" //I fear this is not cross-platform
     }))
     return Ax.history_store.length - 1
@@ -25,15 +25,15 @@ Ax.history_revert = function(){
 }
 
 Ax.History = Ext.extend(Ext.grid.GridPanel, {
-    initComponent: function(){
+	    initComponent: function(){
         Ext.apply(this, {
+            id: "history",
             store: new Ext.data.SimpleStore({
-                id: 0,
                 fields: [{
                     name: 'id',
                     type: 'float'
                 }, {
-                    name: 'action'
+                    name: 'type'
                 }],
                 data: [[0, "Nothing"]]
             }),
@@ -48,18 +48,18 @@ Ax.History = Ext.extend(Ext.grid.GridPanel, {
                 sortable: true,
                 dataIndex: 'id'
             }, {
-                header: "Action",
+                header: "Type",
                 sortable: true,
-                dataIndex: 'action'
+                dataIndex: 'type'
             }],
-            
             viewConfig: {
                 forceFit: true,
                 autoFill: true
             },
             border: false
         }); // eo apply
-        this.on("rowclick", function(grid, rowindex, event){
+
+                this.on("rowclick", function(grid, rowindex, event){
             grid.getSelectionModel().clearSelections()
 			if (rowindex == 0) {
                 return Ax.msg("Are You Sure?","If you really want to, the <b>File->New</b> button is there for you.")
@@ -69,6 +69,9 @@ Ax.History = Ext.extend(Ext.grid.GridPanel, {
         // call parent
         Ax.History.superclass.initComponent.apply(this, arguments);
     } // eo function initComponent
+    
+	
+
 });
 
 Ext.reg('history', Ax.History);
