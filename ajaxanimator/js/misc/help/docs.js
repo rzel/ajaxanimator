@@ -26,7 +26,7 @@ Ext.apply(this,{
 	border: false,
 	items: {
 	title: "FAQ",
-	border: false,
+	border: true,
 	iconCls: "tb_docs",
 	html: "SUM FAQ STUFF HERE!!!"
 	}
@@ -49,7 +49,7 @@ Ext.apply(this,{
 	border: false,
 	items: {
 	title: "Manual",
-	border: false,
+	border: true,
 	iconCls: "tb_docs",
 	html: "SUM Manual STUFF HERE!!!"
 	}
