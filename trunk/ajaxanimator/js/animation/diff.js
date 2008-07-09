@@ -6,8 +6,15 @@ Ax.diff_exclude = ["id"]
 Ax.autodiff = function(){
   //save canvas state
   if(Ax.tcurrent.layer && Ax.tcurrent.frame){ //..only if the current frame *exists*
+  	
+	if(Ax.canvas_storage[Ax.tcurrent.layer] && 
+	Ax.canvas_storage[Ax.tcurrent.layer][Ax.tcurrent.frame] && 
+	Ax.diff_core(Ax.dumpshapes(),Ax.canvas_storage[Ax.tcurrent.layer][Ax.tcurrent.frame]) != true){
+		Ax.history_add(Ax.canvas.queryCommand("mode"));//needs work
+	}
     Ax.dumpframe(); //dump current canvas to current layer
     //check for diff
+
     if(Ax.isTween() == true && Ax.diff_core(Ax.dumpshapes(),Ax.getSFTween()) != true){
       //Ax.msg("Sorry!","For some reason, this feature isn't working at all. So, no editing tweens yet. Pity.")
       //console.log("specialtotweenness")
