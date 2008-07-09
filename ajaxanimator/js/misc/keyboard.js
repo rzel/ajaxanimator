@@ -47,13 +47,13 @@ Ext.onReady(function(){
       key: "z", //Ctrl+Z
       ctrl: true,
       shift: false,
-      fn: function(code, event){if(!Ax.verify_keydown(code, event)){return};if(event.shiftKey==false){Ax.toastMsg("keyboard","you wish you could undo this")}}
+      fn: function(code, event){if(!Ax.verify_keydown(code, event)){return};if(event.shiftKey==false){Ax.history_undo()}}
     },
     {
       key: "z", //Ctrl+Shift+Z 
       ctrl: true,
       shift: true,
-      fn: function(code, event){if(!Ax.verify_keydown(code, event)){return};Ax.toastMsg("keyboard","redo")}
+      fn: function(code, event){if(!Ax.verify_keydown(code, event)){return};Ax.history_redo()}
     }
   ])
   })

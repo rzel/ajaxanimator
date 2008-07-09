@@ -15,6 +15,10 @@ Ax.msg = function(title, format){
     Ax.msgCt.alignTo(document, 't-t');
     var s = String.format.apply(String, Array.prototype.slice.call(arguments, 1));
     var m = Ext.DomHelper.append(Ax.msgCt, {html:Ax.createBox(title, s)}, true);
+	m.on("click",function(){
+		Ext.get(m).remove();
+		//console.log(arguments)
+	})
     m.slideIn('t').pause(10).ghost("t", {remove:true});
 }
 
