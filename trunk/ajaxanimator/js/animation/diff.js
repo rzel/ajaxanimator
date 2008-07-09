@@ -7,11 +7,14 @@ Ax.autodiff = function(){
   //save canvas state
   if(Ax.tcurrent.layer && Ax.tcurrent.frame){ //..only if the current frame *exists*
   	
+	//here is the magical code that does the history revision saving stuffs
+	var createdump = false;
 	if(Ax.canvas_storage[Ax.tcurrent.layer] && 
 	Ax.canvas_storage[Ax.tcurrent.layer][Ax.tcurrent.frame] && 
 	Ax.diff_core(Ax.dumpshapes(),Ax.canvas_storage[Ax.tcurrent.layer][Ax.tcurrent.frame]) != true){
-		Ax.history_add(Ax.canvas.queryCommand("mode"));//needs work
+		createdump = true;
 	}
+	
     Ax.dumpframe(); //dump current canvas to current layer
     //check for diff
 
@@ -21,11 +24,16 @@ Ax.autodiff = function(){
       Ax.toKeyframe(Ax.tcurrent.frame,Ax.tcurrent.layer)
     }else if(Ax.diff(Ax.largest_nonempty(Ax.tcurrent.frame,Ax.tcurrent.layer),Ax.tcurrent.frame,Ax.tcurrent.layer) != true &&
       Ax.layers[Ax.tcurrent.layer].tweens.indexOf(Ax.tcurrent.frame) == -1){
-      Ax.toKeyframe(Ax.tcurrent.frame,Ax.tcurrent.layer)
+      Ax.toKeyframe(Ax.tcurrent.frame,Ax.tcurrent.layer);
     }else if(Ax.isKeyframe() == false){
       //Ax.toBlank_core(Ax.tcurrent.frame,Ax.tcurrent.layer)
       delete Ax.canvas_storage[Ax.tcurrent.layer][Ax.tcurrent.frame];
     }
+	
+	//here actually stores the revisions stuffs
+	if(createdump == true){
+		Ax.history_add(Ax.toolConfig[Ax.canvas.queryCommand("mode")][2]);//needs work
+	}
   }
 }
 

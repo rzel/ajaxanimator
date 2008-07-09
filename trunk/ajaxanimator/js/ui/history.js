@@ -2,15 +2,28 @@
  Grid for History panel
  */
 Ax.history_store = [{}];
+Ax.history_cursor = 0;
 
 Ax.history_add = function(summary){
     Ax.history_store.push(Ext.ux.clone(Ax.export_animation()));
+    //console.log(Ax.canvas.getshapes())
     Ax.viewport.findById("history").getStore().add(new Ext.data.Record({
         id: Ax.history_store.length - 1,
         type: (summary) ? summary : "Edit" //I fear this is not cross-platform
     }))
+    Ax.history_cursor = Ax.history_store.length - 1
     return Ax.history_store.length - 1
 }
+
+Ax.history_undo = function(){
+    Ax.history_revert(Ax.history_cursor - 1);
+}
+
+
+Ax.history_redo = function(){
+    Ax.history_revert(Ax.history_cursor + 1);
+}
+
 
 Ax.history_clear = function(){
     Ax.history_store = [{}];//blah!
@@ -21,13 +34,16 @@ Ax.history_clear = function(){
 }
 
 Ax.history_revert = function(revision){
-	//poop
-	console.log(revision);
-	Ax.import_animation(Ax.history_store[revision])
+    if (revision < Ax.history_store.length && revision > 0) { //check if valid
+        //poop
+        //console.log(revision);
+        Ax.history_cursor = revision;
+        Ax.import_animation(Ax.history_store[revision])
+    }
 }
 
 Ax.History = Ext.extend(Ext.grid.GridPanel, {
-	    initComponent: function(){
+    initComponent: function(){
         Ext.apply(this, {
             id: "history",
             store: new Ext.data.SimpleStore({
@@ -60,20 +76,16 @@ Ax.History = Ext.extend(Ext.grid.GridPanel, {
             },
             border: false
         }); // eo apply
-
-                this.on("rowclick", function(grid, rowindex, event){
+        this.on("rowclick", function(grid, rowindex, event){
             grid.getSelectionModel().clearSelections()
-			if (rowindex == 0) {
-                return Ax.msg("Are You Sure?","If you really want to, the <b>File->New</b> button is there for you.")
+            if (rowindex == 0) {
+                return Ax.msg("Are You Sure?", "If you really want to, the <b>File->New</b> button is there for you.")
             }
             Ax.history_revert(rowindex);
         })
         // call parent
         Ax.History.superclass.initComponent.apply(this, arguments);
     } // eo function initComponent
-    
-	
-
 });
 
 Ext.reg('history', Ax.History);

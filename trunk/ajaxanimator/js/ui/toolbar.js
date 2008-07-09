@@ -17,8 +17,8 @@ Ax.MainToolbar = [
   {text: "Offline", iconCls: "tb_offline"}
 ]},
 {text:"Edit", menu: [
-  {text: "Undo", iconCls: "tb_undo"},
-  {text: "Redo", iconCls: "tb_redo"},
+  {text: "Undo", iconCls: "tb_undo", handler: function(){Ax.history_undo()}},
+  {text: "Redo", iconCls: "tb_redo", handler: function(){Ax.history_redo()}},
   "-", //seperator, i hope when i run this through a formatter the comments arent stripped.
   {text: "Cut", iconCls: "tb_cut", handler: function(){Ax.clipboard_cut()}}, //woah! look! the whole thing is progressively 2 characters more!
   {text: "Copy", iconCls: "tb_copy", handler: function(){Ax.clipboard_copy()}}, //that's freaking cool!
