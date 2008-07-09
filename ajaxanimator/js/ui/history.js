@@ -4,7 +4,7 @@
 Ax.history_store = [{}];
 
 Ax.history_add = function(summary){
-    Ax.history_store.push(Ax.export_animation());
+    Ax.history_store.push(Ext.ux.clone(Ax.export_animation()));
     Ax.viewport.findById("history").getStore().add(new Ext.data.Record({
         id: Ax.history_store.length - 1,
         type: (summary) ? summary : "Edit" //I fear this is not cross-platform
@@ -20,8 +20,10 @@ Ax.history_clear = function(){
     }
 }
 
-Ax.history_revert = function(){
+Ax.history_revert = function(revision){
 	//poop
+	console.log(revision);
+	Ax.import_animation(Ax.history_store[revision])
 }
 
 Ax.History = Ext.extend(Ext.grid.GridPanel, {

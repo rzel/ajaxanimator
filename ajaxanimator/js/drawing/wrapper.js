@@ -22,7 +22,7 @@ function $(e){//this is a little hack since OnlyPaths used to be based off of Ri
   //prototypednessity... well anywhoo, this dollar sign makes the application seem worth
   //more.... so what bad could that do?
   return document.getElementById(e);
-}
+}//pwahappydoo. who cares. i'm bored. crap. poo. wee. doo. poo. moo. woot
 
 clockdata = function(){};
 
