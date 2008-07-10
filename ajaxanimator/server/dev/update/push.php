@@ -3,9 +3,13 @@
 Pushes new updated to servers
 */
 
-$servers = array(
-"antimatter15.110mb.com/ajaxanimator default"
-);
+include "../../../../axconfig.php";
+
+/*format for axconfig.php:
+  $servers = array(
+    "SERVER_URL PASSWORD"
+  );
+ */
 
  function send($file,$type,$ssi_fo){
  $server = $ssi_fo[0];
