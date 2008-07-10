@@ -2,22 +2,7 @@
  * @author antimatter15
  */
 
-/*This is the *old* tweening engine, it is buggy and not very good. The next one is vastly superior theoretically*/
-Ax.getSFTween_old_core = function(frame, frame1, frame2, layer, store){//get single frame tween
-    var frame1_dump = store[frame1], //load dumps
- 		frame2_dump = store[frame2], //load dumps
- 		tween_frame = Ext.ux.clone(frame2_dump); //clone frame2
- 	if(!frame1_dump || !frame2_dump){return};
-    for (var o = 0; o < frame1_dump.length; o++) {//loop through shapes
-        if (frame2_dump[o]) { //continue only if the second frame has it too
-            for (var a in frame1_dump[o]) {//loop attributes
-                tween_frame[o][a] = Ax.tweenAttribute(a, frame1, frame2, frame1_dump[o][a], frame2_dump[o][a], frame)
-            }
-        }
-    }
-    
-    return tween_frame;
-}
+
 
 /*Alternate Tweening Engine. Theoretically Vastly Superior*/
 Ax.getSFTween_core = function(frame, frame1, frame2, layer, store){//get single frame tween

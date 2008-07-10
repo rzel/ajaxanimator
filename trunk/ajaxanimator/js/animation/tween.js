@@ -37,11 +37,7 @@ Ax.getSFTween = function (frame, frame1, frame2, layer, store){//get single fram
 */
   
   
-  if (Ax.animation.markup.tween_engine == "old") {
-  	return Ax.getSFTween_old_core(frame, frame1, frame2, layer, store);
-  }
-  else {
   	return Ax.getSFTween_core(frame, frame1, frame2, layer, store);
-  }
+  
 }
 
