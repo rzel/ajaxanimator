@@ -21,14 +21,14 @@ Ax.getSFTween_old_core = function(frame, frame1, frame2, layer, store){//get sin
 
 /*Alternate Tweening Engine. Theoretically Vastly Superior*/
 Ax.getSFTween_core = function(frame, frame1, frame2, layer, store){//get single frame tween
-    var frame1_data = {}, //load dumps
- 		frame2_data = {}, //load dumps
+    var frame1_data = {}, //where all the organized data goes
+ 		frame2_data = {}, //read above
  		frames_comp = {}, //an array of stuffs 
- 		tween_frame = {},
-		tween_axout = [] //xkcd reference
+ 		tween_frame = {}, //the tweens stuffs
+		tween_axout = [] //xkcd reference (woah, its lining up!)
 
 	
-	for(var i = 0; i < store[frame1].length; i++){
+	for(var i = 0; i < store[frame1].length; i++){ //loopy
 		frame1_data[store[frame1][i].id] = store[frame1][i];
 		frames_comp[store[frame1][i].id] = null
 	}
