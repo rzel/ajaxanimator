@@ -13,7 +13,7 @@ include "../../../../axconfig.php";
 
  function send($file,$type,$ssi_fo){
  $server = $ssi_fo[0];
-$key = $ssi_fo[1];
+ $key = $ssi_fo[1];
  echo "Loaded Update Data... ";
  $update = gzdeflate(file_get_contents($file));
  echo "cLength: ".strlen($update)."<br>";
@@ -30,11 +30,7 @@ $key = $ssi_fo[1];
 }
 
 foreach($servers as $serv_info){
-
-//$serv_info = "antimatter15.110mb.com/animator/Animator2 default";
 $ssi_fo = explode(" ",$serv_info);
-
-
 switch($_REQUEST["action"]){
 case "j":
 echo "<b>Updating Javascript</b><br>";
