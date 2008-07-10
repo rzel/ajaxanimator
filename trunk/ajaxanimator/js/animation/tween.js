@@ -25,115 +25,23 @@ Ax.getSFTween = function (frame, frame1, frame2, layer, store){//get single fram
   //tween a single frame and get a single frame (framedump) in return
   store = (store)?store:Ax.canvas_storage[layer];
   
-  var frame1_dump = store[frame1], //load dumps
-      frame2_dump = store[frame2], //load dumps
-      tween_frame = Ext.ux.clone(frame2_dump); //clone frame2
-  if(!frame1_dump || !frame2_dump){
-    Ax.toastMsg("Sorry","Ajax Animator has encountered an critical error in the tweening engine."+Ext.util.JSON.encode([frame1_dump, frame2_dump]));
-    return;
-  }
-  for(var o = 0; o < frame1_dump.length; o++){//loop through shapes
-    if(frame2_dump[o]){ //continue only if the second frame has it too
-      for(var a in frame1_dump[o]){//loop attributes
-        tween_frame[o][a] = Ax.tweenAttribute(a,frame1,frame2,frame1_dump[o][a],frame2_dump[o][a], frame)
-		//set attribute to be whatever pooped up by the Ax.tweenAttribute function which takes some special argumetnts that i dont feel like documenting
-		//as hopefully the function argument names are detailed enough, even though i would probably spend less time typing up a clear and simple
-		//idiotproof documentation of the function than write this pointless super long comment but idk.
-      }
-    }
-  }
-
-  return tween_frame;
-}
-
-Ax.tweenAttribute = function(name, frame1, frame2, value1, value2, index){
-  if(typeof value2 == "number"){ //currently only numbers are tweenable
-    return Math.round(Ax.tweenNumber(frame1,frame2,value1,value2, index)*1000)/1000; //round to 3 decimal places
-  }
-  if(name == "transform"){
-    return Ax.tweenTransform(frame1,frame2,value1,value2, index); //round to 3 decimal places
-  }
-  if(name == "points"){
-    return Ax.tweenPath(frame1,frame2,value1,value2,index);
-  }
-/*
-Now:
-Width,Height, Line Width, x, y
-
-Future: 
-rotation transform, find out the rotation value, run them through the magickal Ax.tweenNumber function
-color tween: split hex string into 3 segments, turn that into a number, run it throught he magical function and re-hexify
-
-Stuff that isn't possible through the current toolset, but should work automagically:
-opacity tweening (i think they're stored in numbers) 
-
-Fun:
-I donno, maybe some text tweening (i dont have any idea how that'd work. maybe changing a character every frame or something.
+ /*some random benchmarking stuffs, evidently, the engines are roughly the same in speed
+ var first = (new Date()).getTime();
+  Ax.getSFTween_old_core(frame, frame1, frame2, layer, store);
+  first = ((new Date()).getTime() - first)
+  var second = (new Date()).getTime();
+  Ax.getSFTween_core(frame, frame1, frame2, layer, store);
+  second = ((new Date()).getTime() - second )
+  
+  console.log(first,second)
 */
   
-  return value2; //return the second if no tweening possible.
-}
-
-
-/*
-Woot!!!!!! I FIXED THE ALGORITHIM!!!!!! TWICE!!!!!
-
-changelog:
-
-frs0t ps0t:
-  return (index/(frame2-frame1))*(value2-value1); //just hope this works!
-second edit:
-  return value1+(index/(frame2-frame1))*(value2-value1); //just hope this works!
-third magical edit:
-  return value1+((index-frame1)/(frame2-frame1))*(value2-value1); //just hope this works!
   
-*/
-
-Ax.tweenTransform = function(frame1, frame2, value1, value2, index){//same as tweenNumber
-  value1 = Ax.parseTransform(value1); //parse stuff
-  value2 = Ax.parseTransform(value2);
-  //console.log(value1,value2);
-   return "rotate("+[Ax.tweenNumber(frame1,frame2,value1[0],value2[0],index),
-                     Ax.tweenNumber(frame1,frame2,value1[1],value2[1],index),
-                     Ax.tweenNumber(frame1,frame2,value1[2],value2[2],index)].join(", ")+")"
-//     return "rotate("+[Ax.tweenNumber(frame1,frame2,value1[0],value2[0],index),
-//                     value2[1],
-//                     value2[2]].join(", ")+")"
-}
-
-Ax.parseTransform = function(transform){
-  if(!transform || typeof transform != "string"){
-    //Ax.msg("Error","Something Strange Happened")
-    return [0,0,0];
+  if (Ax.tween_engine == "old") {
+  	return Ax.getSFTween_old_core(frame, frame1, frame2, layer, store);
   }
-  transform = transform.replace(")","").replace("rotate(","").split(",");
-  return [Math.round(parseFloat(transform[0])*1000)/1000,
-          Math.round(parseFloat(transform[1])*1000)/1000,
-          Math.round(parseFloat(transform[2])*1000)/1000]
+  else {
+  	return Ax.getSFTween_core(frame, frame1, frame2, layer, store);
+  }
 }
 
-Ax.tweenPath = function(frame1, frame2, value1, value2, index){
-value1 = Ax.parsePath(value1);
-value2 = Ax.parsePath(value2);
-for(var i = 0; i < value2.length; i++){
-if(parseFloat(value2[i]).toString() == value2[i]){
-value2[i] = Ax.tweenNumber(frame1, frame2, parseFloat(value1[i]), parseFloat(value2[i]), index);
-} 
-}
-
-return value2.join(" ")
-}
-
-Ax.parsePath = function(points){
-points = points.replace(/,/g, " , "); //replace commas with space+comma+space
-points = points.replace(/  /g, " "); //replace double-spaces
-points = points.replace(/  /g, " "); //replace double-spaces
-return points.split(" ")
-}
-
-Ax.tweenNumber = function(frame1, frame2, value1, value2, index){//frame1, frame2, first number, second number, index (from first)
-  //no type checking yet, cause i dont feel like it
-  return value1+((index-frame1)/(frame2-frame1))*(value2-value1); //just hope this works!
-  
-  //blah!
-}//he he!!!!!!!!!!!!!!!!!!!!!! mua ha ah ha ha
