@@ -41,6 +41,9 @@ Ax.getSFTween_core = function(frame, frame1, frame2, layer, store){//get single 
 
 
 Ax.tweenAttribute = function(name, frame1, frame2, value1, value2, index){
+	if (value1 == value2){//if they are the same, why bother?
+		return value1;
+	}
     if (typeof value2 == "number") { //currently only numbers are tweenable
         return Math.round(Ax.tweenNumber(frame1, frame2, value1, value2, index) * 1000) / 1000; //round to 3 decimal places
     }
