@@ -8,7 +8,7 @@ Ax.MainToolbar = [
     {text: "From Text", iconCls: "tb_text", handler: function(){Ax.open.text()}}
   ]},
   {text: "Save", iconCls: "tb_save",menu: [
-    {text: "To Computer", iconCls: "tb_comp"},
+    {text: "To Computer", iconCls: "tb_comp", handler: function(){Ax.save.computer()}},
     {text: "To Webserver", iconCls: "tb_server"},
     {text: "To Text", iconCls: "tb_text", handler: function(){Ax.save.text()}}
   ]},
