@@ -61,6 +61,39 @@ Ax.save = {
           }
           }]
       })).show(document.body)
+  },
+  computer: function(){
+  	Ext.Ajax.request({
+		url: Ax.files.save_proxy,
+		params: {
+			action: "test"
+		},
+		success: function(e){
+			//console.log(e)
+			if(e.responseText = "working"){
+				Ax.save.comp_iframe(); //server connection works, try the iframe awesomeness
+			}else{
+				Ax.save.comp_datauri(); //apparently the server doesn't work
+			}
+		},
+		failure: function(){
+			Ax.save.comp_datauri(); //the connection failed, so try the datauri method
+		}
+	})
+  	
+  },
+  comp_datauri: function(){
+  	window.location = "data:application/octetstream;base64,"+Ext.ux.base64.encode(Ax.export_animation(Ax.animation.markup,"json"));
+  },
+  comp_iframe: function(){
+  	Ax.msg("Saving...","The request is being processed by the server and may take a long time depending on the size of the animation."+
+	"<form id=\"save_form\" method=\"POST\" action=\""+Ax.files.save_proxy+"\"><input type=\"hidden\" name=\"name\" value=\""+Ax.animation.name+"\" /><input type=\"hidden\" name=\"action\" value=\"save\" /></form>");
+	var new_input = document.createElement("input")
+	new_input.type = "hidden";
+	new_input.name = "data";
+	new_input.value = Ax.export_animation(Ax.animation.markup,"json");
+	Ext.get("save_form").dom.appendChild(new_input); //waste of Ext, I know
+	Ext.get("save_form").dom.submit();
   }
 }
 
