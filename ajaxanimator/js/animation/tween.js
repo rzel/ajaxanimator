@@ -25,6 +25,16 @@ Ax.getSFTween = function (frame, frame1, frame2, layer, store){//get single fram
   //tween a single frame and get a single frame (framedump) in return
   store = (store)?store:Ax.canvas_storage[layer];
   
+  
+  if(!store[frame1]){
+  	Ax.toastMsg("Error!","Ajax Animator's Tweening Engine has encountered a potentially critical error because store[frame1] is non-existant.")
+  	store[frame1] = [];
+  }
+  if(!store[frame2]){
+  	Ax.toastMsg("Error!","Ajax Animator's Tweening Engine has encountered a potentially critical error because store[frame2] is non-existant.")
+  	store[frame2] = [];
+  }
+  
  /*some random benchmarking stuffs, evidently, the engines are roughly the same in speed
  var first = (new Date()).getTime();
   Ax.getSFTween_old_core(frame, frame1, frame2, layer, store);
