@@ -34,7 +34,7 @@ Ax.onlypaths = {
 var zoominit='0 0 '+Ax.canvasWidth+' '+Ax.canvasHeight; //some OnlyPaths stuffs
 var centerZoomx=Math.round(Ax.canvasWidth/2); //some OnlyPaths stuffs
 var centerZoomy=Math.round(Ax.canvasHeight/2); //some OnlyPaths stuffs
-var selectmode=''; //I have a feeling these comments aren't helping anyone
+//var selectmode=''; //I have a feeling these comments aren't helping anyone
 var data_path_close = false;
   
 
@@ -157,12 +157,13 @@ controlpath:16,text:17,image:18,
 shape:19,reset:20,"delete":21})[tool])
 /**///*//for my text editor (notepad2, though i normally use notepad++ which doesn't face this issue)
 
+/*
 if(tool == "controlpath"){
 selectmode = "controlpath"
+}else{
+	selectmode = null;
 }
-if(tool == "path"){
-selectmode = "path"
-}
+*/
   switch(tool){
   case "delete":
     Ax.canvas.deleteSelection();

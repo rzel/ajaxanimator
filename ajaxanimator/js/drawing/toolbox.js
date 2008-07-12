@@ -5,11 +5,11 @@ Ax.toolConfig={
 	"ellipse":     ["tx_circle","Draw Ellipse/Circle","Ellipse/Circle"],
 	"line":        ["tx_line","Draw Line","Line"],
 	"path":        ["tx_path","Draw freeform path","Freeform Path"],
-	"controlpath": ["tx_polygon","Draw Polygon","Polygon"],
+	//"controlpath": ["tx_polygon","Draw Polygon","Polygon"],
 	"text":        ["tx_text","Draw text","Text"],
 	"image":       ["tx_image", "Draw Image/Picture","Image"],
 
-	"shape":       ["tx_shape","Draw Shape from library","Library"],
+	//"shape":       ["tx_shape","Draw Shape from library","Library"],
 	"reset":       ["tx_reset","Reset/Clear/Empty Frame","Reset"],
 	"delete":      ["tx_delete","Delete selected shape","Delete"]
 }

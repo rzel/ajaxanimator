@@ -25,8 +25,10 @@ Ax.getSFTween_core = function(frame, frame1, frame2, layer, store){//get single 
 	tween_frame = Ext.ux.clone(frame2_data)
 	
 	for(var i in frames_comp){
-		for(var a in frame2_data[i]){
-			tween_frame[i][a] = Ax.tweenAttribute(a, frame1, frame2, frame1_data[i][a], frame2_data[i][a], frame)
+		if (frame2_data[i] && frame1_data[i]) {
+			for (var a in frame2_data[i]) {
+				tween_frame[i][a] = Ax.tweenAttribute(a, frame1, frame2, frame1_data[i][a], frame2_data[i][a], frame)
+			}
 		}
 		
 	}
@@ -80,12 +82,27 @@ Ax.tweenAttribute = function(name, frame1, frame2, value1, value2, index){
  
  */
 Ax.tweenTransform = function(frame1, frame2, value1, value2, index){//same as tweenNumber
-    value1 = Ax.parseTransform(value1); //parse stuff
+	value1 = Ax.parseTransform(value1); //parse stuff
     value2 = Ax.parseTransform(value2);
-    //console.log(value1,value2);
-    return "rotate(" +[Ax.tweenNumber(frame1,frame2,value1[0],value2[0],index),Ax.tweenNumber(frame1,frame2,value1[1],value2[1],index),Ax.tweenNumber(frame1,frame2,value1[2],value2[2],index)]
-    .join(", ") +
-    ")"
+	
+	var degree = Ax.tweenNumber(frame1,frame2, value1[0], value2[0],index),
+		xcoord = Ax.tweenNumber(frame1,frame2, value1[1], value2[1],index),
+		ycoord = Ax.tweenNumber(frame1,frame2, value1[2], value2[2],index)
+    
+	if(isNaN(degree) == true){
+		degree = 0;
+	}
+	if(isNaN(xcoord) == true){
+		xcoord = 0;
+	}
+	if(isNaN(ycoord) == true){
+		ycoord = 0;
+	}
+	
+	
+	//console.log(value1,value2);
+	
+    return "rotate(" +[degree,xcoord,ycoord].join(", ") +")";
     //     return "rotate("+[Ax.tweenNumber(frame1,frame2,value1[0],value2[0],index),
     //                     value2[1],
     //                     value2[2]].join(", ")+")"
@@ -114,6 +131,8 @@ Ax.tweenPath = function(frame1, frame2, value1, value2, index){
 
 Ax.parsePath = function(points){
     points = points.replace(/,/g, " , "); //replace commas with space+comma+space
+    points = points.replace(/L/g, " L "); //replace commas with space+comma+space
+    points = points.replace(/M/g, " M "); //replace commas with space+comma+space
     points = points.replace(/  /g, " "); //replace double-spaces
     points = points.replace(/  /g, " "); //replace double-spaces
     return points.split(" ")
