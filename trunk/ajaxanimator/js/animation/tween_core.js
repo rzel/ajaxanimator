@@ -19,7 +19,7 @@ Ax.getSFTween_core = function(frame, frame1, frame2, layer, store){//get single 
 	}
 	for(var i = 0; i < store[frame2].length; i++){
 		frame2_data[store[frame2][i].id] = store[frame2][i];
-		frames_comp[store[frame1][i].id] = null
+		frames_comp[store[frame2][i].id] = null
 	}
 	
 	tween_frame = Ext.ux.clone(frame2_data)
