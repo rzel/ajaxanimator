@@ -105,7 +105,7 @@ Ext.apply(this,{
 		  listeners: {
 				'activate' : function(){
 
-					Ax.gs(8)
+					//Ax.gs(8)
 				},
 				'deactivate' : function(){
 					Ax.player_pause()

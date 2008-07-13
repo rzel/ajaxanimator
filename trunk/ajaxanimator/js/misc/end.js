@@ -20,7 +20,7 @@ setTimeout(function(){
       //Ax.showTips();
       
       if(Ax.v.dev && !Ax.developer){
-      Ax.gs(1);
+      //Ax.gs(1);
       new Ext.ux.ToastWindow({
         title: 'Testing Release',
         html: 'You are running an unstable testing release. '+
