@@ -1,5 +1,5 @@
 Ax.BugReport = function(){
-Ax.gs(4);
+//Ax.gs(4);
 var ErrorWindow = new Ext.Window({
     closable: true,
     width: 410,

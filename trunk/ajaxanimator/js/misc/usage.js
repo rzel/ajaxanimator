@@ -1,5 +1,6 @@
 //Usage statistics of the applicaiton
 
+/*
 Ax.ustat = [];
 
 Ax.gs = function(){
@@ -15,3 +16,5 @@ Ax.ustat.push(arguments[i])
 Ax.ls = function(){
 return Ax.ustat
 }
+
+*/

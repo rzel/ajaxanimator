@@ -22,7 +22,7 @@ Ext.apply(this,{
              border:false,
 			listeners: {
 				'activate' : function(){
-					Ax.gs(9)
+					//Ax.gs(9)
 				}
 			},
 			items: [{
@@ -87,7 +87,7 @@ Ext.apply(this,{
         
       },
 				'activate' : function(){
-					Ax.gs(7);
+					//Ax.gs(7);
 					Ax.init_preview();
           clearTimeout(Ax.preview_timeout);
 					Ax.preview_increment();

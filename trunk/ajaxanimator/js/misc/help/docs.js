@@ -8,11 +8,11 @@ Ax.viewport.findById("maintabpanel").add(object).show()
 
 Ax.loadFAQ = function(){
 Ax.loadTab({xtype: "faq"})
-Ax.gs(2);
+//Ax.gs(2);
 }
 Ax.loadManual = function(){
 Ax.loadTab({xtype: "manual"})
-Ax.gs(3);
+//Ax.gs(3);
 }
 
 

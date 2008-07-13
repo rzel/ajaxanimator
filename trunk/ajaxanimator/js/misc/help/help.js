@@ -16,7 +16,7 @@ Ax.keys = { //An object with the key arrays that will be generated and converted
 //..... hey.... wait.... what? I can read this.... Does this mean I'm not human?
 
 Ax.keyGuide = function(){ //magickallyawesome function
-Ax.gs(5); //report user statistics
+//Ax.gs(5); //report user statistics
 var generatedguide = "";
 for(var x in Ax.keys){ //generate the magical human-readable stuff
   generatedguide += "<b>"+x+"</b> "+Ax.keys[x]+"<br>";
