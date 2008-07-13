@@ -150,7 +150,7 @@ Ax.viewport.findById("tool_"+tool_id).unselect()
 }
 
 //report usage statistics
-//* take out that first "/" to disable
+/* take out that first "/" to disable
 Ax.gs(({select:10,rect:11,roundrect:12,
 ellipse:13,line:14,path:15,
 controlpath:16,text:17,image:18,

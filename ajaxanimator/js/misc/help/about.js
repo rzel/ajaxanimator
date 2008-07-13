@@ -1,5 +1,5 @@
 Ax.About = function(){
-Ax.gs(6);
+//Ax.gs(6);
 if(!Ax.aboutWindow){
 Ax.aboutWindow = new Ext.Window({
     closable: true,
