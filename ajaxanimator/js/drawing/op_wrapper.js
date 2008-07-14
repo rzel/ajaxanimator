@@ -144,7 +144,7 @@ Ax.reloadCanvas = function(){//now a very very robust function, should be able t
 
 Ax.setTool = function(tool){
  
-  
+ 
 for(var tool_id in Ax.toolConfig){
 Ax.viewport.findById("tool_"+tool_id).unselect()
 }
@@ -165,30 +165,34 @@ if(tool == "controlpath"){
 	selectmode = "";
 }
 
-  switch(tool){
-  case "delete":
-    Ax.canvas.deleteSelection();
-    (function(){
-    Ax.viewport.findById("tool_"+tool).unselect();
-    Ax.setTool("select")
-    }).defer(200);
-    break;
-  case "reset":
-   Ax.canvas.renderer.removeAll();
-    
-    (function(){
-    Ax.viewport.findById("tool_"+tool).unselect();
-    Ax.setTool("select")
-    }).defer(200);
-    break;
-  default:
-  
-    Ax.canvas.unselect();
-    Ax.viewport.findById("tool_"+tool).select(true);
-    Ax.canvas.editCommand('mode', tool);
-    break;
-  }
-  
+try {
+	switch (tool) {
+		case "delete":
+			Ax.canvas.deleteSelection();
+			(function(){
+				Ax.viewport.findById("tool_" + tool).unselect();
+				Ax.setTool("select")
+			}).defer(200);
+			break;
+		case "reset":
+			Ax.canvas.renderer.removeAll();
+			
+			(function(){
+				Ax.viewport.findById("tool_" + tool).unselect();
+				Ax.setTool("select")
+			}).defer(200);
+			break;
+		default:
+			
+			Ax.canvas.unselect();
+			Ax.viewport.findById("tool_" + tool).select(true);
+			Ax.canvas.editCommand('mode', tool);
+			break;
+	}
+} 
+catch (err) {
+	Ax.toastMsg("Error","OnlyPaths, the drawing component of the Ajax Animator has crashed. To attempt to fix this, go to <b>Tools->Recovery->Reload Canvas</b>.")
+}
   
   setTimeout(function(){Ax.autodiff();return true},10); //do some magickal saving.
 }
