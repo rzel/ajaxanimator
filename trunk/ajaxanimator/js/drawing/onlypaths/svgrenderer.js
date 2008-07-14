@@ -1042,6 +1042,7 @@ SVGRenderer.prototype.clic = function(shape) {
 
 
 SVGRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
+
    var deltaX = toX - fromX;
   var deltaY = toY - fromY;  
   
@@ -2615,6 +2616,8 @@ SVGRenderer.prototype.scaleShape = function(shape,previus, toX, toY) {
 
 	var trans_ShareScale='';
 	var tx, ty, tw, yh;
+	
+	
 
 	if(scaleType.length==1){
 		if(scaleType== 'w')

@@ -724,6 +724,7 @@ RichDrawEditor.prototype.onDrag = function(event) {
               	//if(typeTransform=="Scale") {this.renderer.scale(this.selected, this.previusBox, deltaX, deltaY); }
           	if(typeTransform=="Scale") 
           	 {
+
           	      this.renderer.scaleShape(this.selected, this.previusBox, this.selectedBounds.x + deltaX, this.selectedBounds.y + deltaY); 
           	      //this.renderer.showTracker(this.selected,this.pathsEdit);
           	 }
@@ -949,8 +950,13 @@ RichDrawEditor.prototype.onEndLine = function(event) {
             //Event.stopObserving(this.selected, "dblclick", this.onEndLine,this);
             //Event.stopObserving(this.container, "mousemove", this.onDraw,this);  
  
-          this.selected = null;   
+//*
+ //try{
 
+	// }catch(err){}     
+//*/	  
+
+this.selected = null;
 
          //this.unselect(); 
          
