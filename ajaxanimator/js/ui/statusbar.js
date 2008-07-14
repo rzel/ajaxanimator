@@ -1,3 +1,6 @@
+//if i ever look at this file again: http://extjs.com/deploy/dev/docs/?class=Ext.menu.Adapter
+
+
 Ext.onReady(function(){
 
 var xy = new Ext.Toolbar.TextItem('0, 0');
