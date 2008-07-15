@@ -69,7 +69,7 @@ Ax.MainToolbar = [
   {text: "Purge Empty", iconCls: "tb_purge_empty"}
 ]},
 {text:"Animation", menu: [
-  {text: "Draw Mode", disabled: true, id: "animcontroltype"},
+  {text: "Canvas Mode", disabled: true}, //this needs serious work.
   {text: "Play", iconCls: "tb_play", handler: function(){Ax.controls.play()}},
   {text: "Pause", iconCls: "tb_pause", handler: function(){Ax.controls.pause()}},
   {text: "Next Frame", iconCls: "tb_nf", handler: function(){Ax.controls.next()}},
@@ -77,7 +77,7 @@ Ax.MainToolbar = [
   {text: "Last Frame", iconCls: "tb_last", handler: function(){Ax.controls.last()}},
   {text: "First Frame", iconCls: "tb_first", handler: function(){Ax.controls.first()}},
   "-", //not really related...
-  {text: "Recalculate Tweens", iconCls: "tb_recalculate"}
+  {text: "Recalculate Tweens", iconCls: "tb_recalculate", handler: function(){}}
 ]},
 {text:"Plugins", menu: [
   {text: "Add Plugins", iconCls: "tb_plugin_add"},
