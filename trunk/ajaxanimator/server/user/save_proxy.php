@@ -5,7 +5,7 @@
 	 */
 	if($_REQUEST["action"] == "test"){
 		die("working"); //hmm... I don't want to die working... Especially for this project....
-	}elseif($_REQUEST["action"] == "save"){
+	}elseif($_REQUEST["action"] == "work"){
 		//you know how I said I wouldn't reuse code from the old one? well this is sorta an exception.
 		header('Content-type: application/octetstream');
 		header('Content-Length: ' . strlen($_REQUEST['data']));
