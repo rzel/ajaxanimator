@@ -4,8 +4,10 @@ Ax.MainToolbar = [
   {text: "Open", iconCls: "tb_open", menu: [
 	{text: "From Computer", iconCls: "tb_comp", handler: function(){Ax.open.file()}},
     {text: "From Webserver", iconCls: "tb_server"},
-    {text: "From URL", iconCls: "tb_url", handler: function(){Ax.open.url()}},
-    {text: "From Text", iconCls: "tb_text", handler: function(){Ax.open.text()}}]},
+    {text: "From Text", iconCls: "tb_text", handler: function(){Ax.open.text()}},
+	{text: "From URL", iconCls: "tb_url", handler: function(){Ax.open.url()}}
+	]},
+	
   {text: "Save", iconCls: "tb_save",menu: [
     {text: "To Computer", iconCls: "tb_comp", handler: function(){Ax.save.computer()}},
     {text: "To Webserver", iconCls: "tb_server"},
