@@ -15,6 +15,7 @@ Ext.apply(this,{
         activeTab:0,
         items:[{
             xtype:"panel",
+			id: "canvas_tab",
             title:"Canvas",
 			iconCls: "canvas_icon",
             layout:"fit",
@@ -54,6 +55,7 @@ Ext.apply(this,{
           },{
             xtype:"panel",
             title:"Preview",
+			id: "preview_tab",
 			iconCls: "preview_icon",
 			tabTip: "Preview and Export your animations",
 			items: [{
