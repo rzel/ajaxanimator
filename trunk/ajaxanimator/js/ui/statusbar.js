@@ -42,7 +42,7 @@ Ax.CanvasStatusbar = ({
     handler: function(){Ax.controls.previous()}
     },
 	"-",
-	"Frame <input type=\"text\" style=\"width: 30px\" value=\"0\"> of 1",
+	"Frame <input type=\"text\" id=\"cbframe\" style=\"width: 30px\" value=\"0\"> of ?",
 	"-",
 	{
 		iconCls: "x-tbar-page-next",
@@ -82,7 +82,7 @@ Ax.PreviewStatusbar = ({
     handler: function(){Ax.controls.previous()}
     },
 	"-",
-	"Frame <input type=\"text\" id=\"pbframe\" style=\"width: 30px\" value=\"0\"> of 1",
+	"Frame <input type=\"text\" id=\"pbframe\" style=\"width: 30px\" value=\"0\"> of ?",
 	"-",
 	{
 		iconCls: "x-tbar-page-next",

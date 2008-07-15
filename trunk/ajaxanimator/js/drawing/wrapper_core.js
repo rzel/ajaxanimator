@@ -43,7 +43,7 @@ Ax.dumpshape = function(shape){
         	var box = shape.getBBox()
         	shape.setAttributeNS(null, 'transform', 'rotate(0, ' + (box.x + (box.width / 2)) + ', ' + (box.y + (box.height / 2)) + ')');
     	}catch(err){
-			//OMG!
+			//ZOMG! WTF? LOL!
 		}
 	}
     return Ax.canvas.info(shape)

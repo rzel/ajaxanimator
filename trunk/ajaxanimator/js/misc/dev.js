@@ -1,7 +1,7 @@
 developer = true; //YOU ARE A DEVELOPER!!!!!!!!
 
 Ext.onReady(function(){//ext is awesome
-Ax.viewport.findById("north").getTopToolbar().addButton({
+Ax.viewport.findById("toolbar").getTopToolbar().addButton({
 text: "<span class='dev_toolbar'>Dev<span>",
 menu: {items:[
 {text: "Compile", iconCls: "dev_compile", handler: function(){

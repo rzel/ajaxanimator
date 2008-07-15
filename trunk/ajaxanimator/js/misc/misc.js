@@ -2,8 +2,15 @@
 A whole lot of random scripts
 */
 
-
-
+/*
+Ax.len = function(obj){ //really useful...
+	var length;
+	for(var i in obj){
+		length++;
+	}
+	return length;
+}
+*/
 
 Ax.macroExec = function(){
   (new Ext.Window({

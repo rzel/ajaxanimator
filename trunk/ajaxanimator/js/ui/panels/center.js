@@ -23,6 +23,9 @@ Ext.apply(this,{
              border:false,
 			listeners: {
 				'activate' : function(){
+					if(Ax.viewport && Ax.viewport.findById("toolbar")){
+					Ax.viewport.findById("toolbar").getTopToolbar().items.item(5).menu.items.item(0).setText("Canvas Mode")
+					}
 					//Ax.gs(9)
 				}
 			},
@@ -90,6 +93,7 @@ Ext.apply(this,{
       },
 				'activate' : function(){
 					//Ax.gs(7);
+					Ax.viewport.findById("toolbar").getTopToolbar().items.item(5).menu.items.item(0).setText("Preview Mode")
 					Ax.init_preview();
           clearTimeout(Ax.preview_timeout);
 					Ax.preview_increment();

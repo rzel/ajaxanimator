@@ -76,24 +76,7 @@ Ax.create_timeline_mask = function(){
   Ax.timeline.el.appendChild(Ax.timeline.mask)
 }
 
-Ax.addFrameListeners = function(frame_cell,frame,layer){
-  new Ext.ToolTip({
-   target: frame_cell,
-   trackMouse: true,
-   shadow: false,
-   title: 'Frame '+frame.toString()+", "+layer.toString(),
-   html: 'A very simple tooltip'
-  });
- 
-  Ext.get(frame_cell.firstChild).on("mousedown",function(event,target){
-    for(var layer in Ax.layers){
-      if(target.parentNode.parentNode == Ax.layers[layer].el){
-        Ax.selectFrame(parseInt(target.innerHTML),layer)
-        break;
-      }
-    }
-  })
-}
+
 
 Ax.addFrame_core = function(frame,layer){
   //console.log(layer)
@@ -144,6 +127,10 @@ Ax.getFrame = function(frame,layer){
 
 Ax.selectFrame = function(frame,layer){
   if(frame < 1){return false;}; //OMG!! PONIES!
+  
+  if(Ext.get("cbframe")){
+  	Ext.get("cbframe").dom.value = frame;
+  }
   
   Ax.viewport.findById("layers").getSelectionModel().selectRecords([Ax.layers[layer].record], false)
   //select the layer
@@ -287,7 +274,31 @@ Ax.toBlank_core = function(frame,layer){
   Ax.frameClass(frame,layer)
 }
 
+Ax.addFrameListeners = function(frame_cell,frame,layer){
+  new Ext.ToolTip({
+   target: frame_cell,
+   trackMouse: true,
+   shadow: false,
+   title: 'Frame '+frame.toString()+", "+layer.toString(),
+   rframe: frame,
+   rlayer: layer,
+   listeners: {
+   	"show":function(tooltip	){
+		var dataformat = {
+			"Shapes": Ax.getshapes(tooltip.layer, tooltip.frame).length
+		}, dataoutput = "";
+		for(var label in dataformat){
+			dataoutput += "<tr><td align=\"left\">"+label+"</td><td align=\"right\">"+dataformat[label]+"</td></tr>"
+		}
+		
+		tooltip.body.update("<table style=\"width: 100%\"><tbody>"+dataoutput+"</tbody></table>")
+		
+	}
+   },
+   html: 'Loading...'
+  });
 
+}
 
 
 Ax.initTimeline = function(){
@@ -303,12 +314,27 @@ Ax.initTimeline = function(){
   frameTable.appendChild(frameTBody)
   Ext.get("timeline_core").dom.appendChild(frameTable)
   Ax.timeline.el = frameTBody;
-  Ext.get("timeline_core").on("selectstart",function(){return false})
-
-  Ext.get("timeline_core").on("contextmenu",function(event,target){
+  
+  Ext.get("timeline_core").parent().on("selectstart",function(event){event.stopEvent();return false})
+  Ext.get("timeline_core").parent().on("mousedown", function(event, target){
+  	if(target.className == "frame"){
+	for(var layer in Ax.layers){
+      if(target.parentNode.parentNode == Ax.layers[layer].el){
+        Ax.selectFrame(parseInt(target.innerHTML),layer)
+        break;
+      }
+    }
+	}
+	if(event.button == 2){
+		
+	}
+  //	console.log(event,target)
+  })
+  Ext.get("timeline_core").parent().on("contextmenu",function(event,target){
     //console.log(event,target)
     event.stopEvent();
-    if(target.className == "fselect_mask"){
+//console.log(Ax.tcurrent)
+    if(target.className == "fselect_mask" ||( target.innerHTML == Ax.tcurrent.frame.toString() )){
       new Ext.menu.Menu({
         items: [
         {text: "Add Layer", iconCls: "tb_newlayer", handler: function(){Ax.addLayer()}},
@@ -324,6 +350,7 @@ Ax.initTimeline = function(){
       }).showAt(event.xy)
     }
   })
+  
   Ax.create_timeline_mask();
 }
 
