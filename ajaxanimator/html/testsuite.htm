@@ -1,0 +1,21 @@
+<span>Open Proxy Test</span>
+<form method="post" action="../server/user/open_proxy.php">
+<input type="hidden" name="action" value="test">
+<input type="submit" value="Test (should result in 'working')">
+</form>
+<span>Open Proxy Work</span>
+<form method="post" action="../server/user/open_proxy.php" enctype="multipart/form-data">
+<input type="file" name="file">
+<input type="hidden" name="action" value="work">
+<input type="submit" value="Test (should result in file contents)">
+</form>
+<span>Save Proxy Test</span>
+<form method="post" action="../server/user/save_proxy.php">
+<input type="hidden" name="action" value="test">
+<input type="submit" value="Test (should result 'working')">
+</form>
+<span>Save Proxy Work</span>
+<form method="post" action="../server/user/save_proxy.php">
+<input type="hidden" name="action" value="work">
+<input type="submit" value="Test (should result save dialog)">
+</form>

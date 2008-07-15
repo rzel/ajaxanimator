@@ -53,8 +53,33 @@ Ax.open = {
                 text: "Load",
                 iconCls: "load",
                 handler: function(){
-					//console.log(this.ownerCt.findById("loadform"))
-                    this.ownerCt.findById("loadform").form.submit({url: Ax.files.open_proxy})
+                    //console.log(this.ownerCt.findById("loadform"))
+                    this.ownerCt.findById("loadform").form.submit({
+                        url: Ax.files.open_proxy,
+                        success: function(form, action){
+                            Ax.autoimport(Ext.util.JSON.encode(action.result.data))
+                        },
+                        failure: function(form, action){
+                            Ax.toastMsg("Upload Failed", action.failureType + action.result.error +
+                            " Animation could not be loaded. If trying again fails, try pasting the file's contents into the Open from Text dialog.")
+                        }
+                    })
+                    Ext.Ajax.request({
+                        url: Ax.files.open_proxy,
+                        params: {
+                            action: "test"
+                        },
+                        success: function(e){
+                     
+                            if (e.responseText != "working") {                   
+                                Ax.toastMsg("Probable Failure", "Upload handling server appears not to be working")
+                            }
+                        },
+                        failure: function(){
+                            Ax.toastMsg("Probable Failure", "Upload handling server appears not to be working")
+                        }
+                    })
+                                       
                 }
             }, {
                 text: "Close",
@@ -65,26 +90,29 @@ Ax.open = {
             }],
             border: false,
             items: [{
-				layout: "fit",
-				html: "Please locate the saved animation from your computer.",
-				border: false
-			},{
-				border: false,
-				id: "loadform",
-				xtype: "form",
-				fileUpload: true,
-				listeners: {
-					beforeaction: function(){
-						Ax.msg("Uploading Data","The animation file is being uploaded to the server.")
-					},
-					actioncomplete: function(form, action){
-						console.log(action.response.responseText)
-					},
-					actionfailed: function(form, action){
-						Ax.toastMsg("Upload Failed","Animation could not be loaded. If trying again fails, try pasting the file's contents into the Open from text dialog.")
-					}
-				},
-				items: {xtype: "field", fieldLabel: "Animation File", inputType: "file"}
+                layout: "fit",
+                html: "Please locate the saved animation from your computer.",
+                border: false
+            }, {
+                border: false,
+                id: "loadform",
+                xtype: "form",
+                fileUpload: true,
+                listeners: {
+                    beforeaction: function(){
+                        Ax.msg("Uploading Data", "The animation file is being uploaded to the server.")
+                    },
+                },
+                items: [{
+                    name: "file",
+                    xtype: "field",
+                    fieldLabel: "Animation File",
+                    inputType: "file"
+                },{
+					name: "action",
+					xtype: "hidden",
+					value: "work"
+				}]
             }]
         })).show(document.body)
     },
@@ -110,14 +138,14 @@ Ax.open = {
             //layout: "border",
             border: false,
             items: [{
-				layout: "fit",
-				html: "Place the location of the online resource to load from.",
-				border: false
-			},{
-                    label: "URL",
-                    id: "loadurl",
-					style: "width: 100%",
-                    xtype: "textfield"
+                layout: "fit",
+                html: "Place the location of the online resource to load from.",
+                border: false
+            }, {
+                label: "URL",
+                id: "loadurl",
+                style: "width: 100%",
+                xtype: "textfield"
             }]
         })).show(document.body)
     }
@@ -191,7 +219,7 @@ Ax.save = {
         Ax.files.save_proxy +
         "\"><input type=\"hidden\" name=\"name\" value=\"" +
         Ax.animation.name +
-        "\" /><input type=\"hidden\" name=\"action\" value=\"save\" /></form>");
+        "\" /><input type=\"hidden\" name=\"action\" value=\"work\" /></form>");
         var new_input = document.createElement("input")
         new_input.type = "hidden";
         new_input.name = "data";
