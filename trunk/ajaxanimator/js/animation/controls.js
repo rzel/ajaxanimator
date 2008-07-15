@@ -5,20 +5,41 @@ Ax.controls = {
   },
   pause: function(){
     Ax.viewport.findById("maintabpanel").activate(1)
-	  clearTimeout(Ax.preview_timeout);
+	clearTimeout(Ax.preview_timeout);
     clearTimeout(Ax.preview_timeout);
     clearTimeout(Ax.preview_timeout);
   },
   next: function(){
-    Ax.selectFrame(Ax.tcurrent.frame+1,Ax.tcurrent.layer)
+	  	switch(Ax.viewport.findById("maintabpanel").getActiveTab().getId()){
+		case "canvas_tab":
+		Ax.selectFrame(Ax.tcurrent.frame + 1, Ax.tcurrent.layer)
+		break;
+		case "preview_tab":
+		Ax.preview_frame++;
+		break;
+	}
   },
   previous: function(){
-    Ax.selectFrame(Ax.tcurrent.frame-1,Ax.tcurrent.layer)
+	  	switch(Ax.viewport.findById("maintabpanel").getActiveTab().getId()){
+		case "canvas_tab":
+		Ax.selectFrame(Ax.tcurrent.frame-1,Ax.tcurrent.layer)
+		break;
+		case "preview_tab":
+		Ax.preview_frame--;
+		break;
+	}
   },
   last: function(){
     Ax.msg("No worky","this doesn't work yet.")
   },
   first: function(){
-    Ax.selectFrame(1,Ax.tcurrent.layer)
+  	switch(Ax.viewport.findById("maintabpanel").getActiveTab().getId()){
+		case "canvas_tab":
+		Ax.selectFrame(1, Ax.tcurrent.layer);
+		break;
+		case "preview_tab":
+		Ax.preview_frame = 1;
+		break;
+	}
   }
 }
