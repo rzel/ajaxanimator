@@ -275,11 +275,13 @@ Ax.toBlank_core = function(frame,layer){
 }
 
 Ax.addFrameListeners = function(frame_cell,frame,layer){
+  //not very memory friendlyish. stuffs dont get removed when unneeded/unused.
   new Ext.ToolTip({
    target: frame_cell,
    trackMouse: true,
    shadow: false,
-   title: 'Frame '+frame.toString()+", "+layer.toString(),
+   //width: 120,
+   title: 'Frame '+frame.toString()+" "+layer.toString(),
    rframe: frame,
    rlayer: layer,
    listeners: {
@@ -293,6 +295,22 @@ Ax.addFrameListeners = function(frame_cell,frame,layer){
 		
 		tooltip.body.update("<table style=\"width: 100%\"><tbody>"+dataoutput+"</tbody></table>")
 		
+		var preview_tip = document.createElement("div"); //im not good with Ext dom stuffs
+		preview_tip.className = "preview_tip"
+		Ext.get(preview_tip).setHeight((tooltip.getBox().width * Ax.canvasHeight)/Ax.canvasWidth)
+		Ext.get(preview_tip).setWidth(tooltip.getBox().width)
+		
+		tooltip.body.dom.appendChild(preview_tip)
+		
+		Ax.viewer_load_frame(tooltip.rframe, Ax.export_animation_core(), Ax.init_view_core(preview_tip))
+
+		//console.log((tooltip.getBox().width * Ax.canvasHeight)/Ax.canvasWidth)
+		
+		//
+	},
+	"hide": function(tooltip){
+		//make more memory friendlyish
+		tooltip.body.dom.innerHTML = "";
 	}
    },
    html: 'Loading...'
