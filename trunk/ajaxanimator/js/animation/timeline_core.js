@@ -1,31 +1,34 @@
 Ax.timeline = {el: null, mask: null};
-Ax.layers = {};
-Ax.keyframes = [];
+Ax.layers = {}; //this stores all the data for layer stuff
 
-Ax.timeline_contextmenu = null;
-Ax.tstat = {
-  layers: 0,
-  frames: 0
+
+Ax.tstat = { //statistics for the count of frames and layers (displayed in timeline, not animation)
+  layers: 0, //layers
+  frames: 0  //frames.
 }
 
-Ax.tcurrent = {
-  layer: null,
-  frame: null
+Ax.tcurrent = { //currently selected frame/layer
+  layer: null, //btw layers are strings (their ID)
+  frame: null //im trying to decide whether this shoudl be 0 or null
 }
 
-Ax.renameLayer = function(oldname,newname){
-  Ax.layers[newname]=Ax.layers[oldname];
-  delete Ax.layers[oldname]
+Ax.renameLayer = function(oldname,newname){ //pretty neat. eh?
+  Ax.layers[newname]=Ax.layers[oldname]; //we didn't have cusom layer names in the old version
+  delete Ax.layers[oldname]; //...just random numbers
   
-  Ax.canvas_storage[newname] = Ax.canvas_storage[oldname]
-  delete Ax.canvas_storage[oldname]
+  Ax.canvas_storage[newname] = Ax.canvas_storage[oldname]; //but this seems nicer
+  delete Ax.canvas_storage[oldname]; //right?
   
-  return Ax.layers
+  return Ax.layers; //ok.
 }
 
-Ax.deleteLayer = function(name){
-  delete Ax.layers[name]
-  
+Ax.deleteLayer = function(name){//Sorta works.... anyone wanna test?
+
+  Ext.get(Ax.layers[name].el).remove(); //remove the table element
+  Ax.viewport.findById("layers").getStore().remove(Ax.viewport.findById("layers").getStore().find("comment",name));
+  //remoe the stuff from the little editable grid witht he titles
+   
+  delete Ax.layers[name]; //delete the entry
 }
 
 Ax.addLayer = function(layername){

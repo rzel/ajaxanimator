@@ -28,7 +28,13 @@ Ax.Timeline = Ext.extend(Ext.Panel,{
       callbacks: {
         "tb_delete":function(grid,record,action,value){
           Ext.MessageBox.confirm("Delete "+value+" OMG!!!!",
-          "Are you positively super duper sure you want to do this action that your life depends on?!?!?!")
+          "Are you positively super duper sure you want to do this action that your life depends on?!?!?!", function(result){
+		  	if(result == "ok"){
+				Ax.msg("Testing Functionality: Delete "+value,"Attempting to delete the layer using super duper untested tech");
+				
+				Ax.deleteLayer(value)
+			}
+		  })
           Ax.msg('Callback: delete layer', 'You have clicked: <b>{0}</b>, action: <b>{1}</b>', value, action);
         }
       }
