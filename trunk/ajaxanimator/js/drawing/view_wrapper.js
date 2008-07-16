@@ -16,11 +16,14 @@ to a flexible implementation that probably should work standalone.
 Ax.framerate = 12;
 //*
 
-Ax.init_view_core = function(element){
+Ax.init_view = function(element){
   element.innerHTML = "";
   element.style.height = Ax.canvasHeight+"px";
   element.style.width = Ax.canvasWidth+"px"
-  
+  return Ax.init_view_core(element)
+}
+
+Ax.init_view_core = function(element){
   if(Ext.isIE == true){
     var renderer = new VMLRenderer();
   }else{
@@ -28,7 +31,6 @@ Ax.init_view_core = function(element){
   }
   return new RichDrawViewer(element, renderer);
 }
-
 Ax.viewer_load_frame = function(frame, layers, canvas){
   //note: this function is not multi-layer friendly yet.
   //un-note: this function should be multi-layer friendly, but layers aren't even really supported so i donno

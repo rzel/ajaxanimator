@@ -110,6 +110,11 @@
     margin-right: auto;
   }
   
+  div.preview_tip {
+  	background-color: #ffffff;
+	border: 1px solid black;
+  }
+  
   h1.tiptitle {
     font-size: x-large;
   }

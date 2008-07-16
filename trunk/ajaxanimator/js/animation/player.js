@@ -23,7 +23,7 @@ Ax.init_player = function(markup){
     markup = Ext.util.JSON.decode(markup)
   }
   $("playercanvas").innerHTML = "";
-  Ax.player = Ax.init_view_core($("playercanvas"));
+  Ax.player = Ax.init_view($("playercanvas"));
   Ax.player_markup = markup;
   Ax.player_frame = null;
 }
