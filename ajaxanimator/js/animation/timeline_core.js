@@ -70,11 +70,6 @@ Ax.addFrames = function(frames){ //mind the s, this just loops through whatever 
   }
 }
 
-Ax.create_timeline_mask = function(){
-  Ax.timeline.mask = document.createElement("div")
-  Ax.timeline.mask.className = "fselect_mask"
-  Ax.timeline.el.appendChild(Ax.timeline.mask)
-}
 
 
 
@@ -281,18 +276,22 @@ Ax.addFrameListeners = function(frame_cell,frame,layer){
    trackMouse: true,
    shadow: false,
    //width: 120,
-   title: 'Frame '+frame.toString()+" "+layer.toString(),
+   title: "Loading...",
+   html: 'Loading...',
    rframe: frame,
    rlayer: layer,
    listeners: {
    	"show":function(tooltip){
+		
 		var dataformat = {
 			"Shapes": Ax.getshapes(tooltip.rframe, tooltip.rlayer).length
 		}, dataoutput = "";
+		
 		for(var label in dataformat){
 			dataoutput += "<tr><td align=\"left\">"+label+"</td><td align=\"right\">"+dataformat[label]+"</td></tr>"
 		}
 		
+		tooltip.setTitle('Frame '+tooltip.rframe.toString()+" "+tooltip.rlayer.toString())
 		tooltip.body.update("<table style=\"width: 100%\"><tbody>"+dataoutput+"</tbody></table>")
 		
 		var preview_tip = document.createElement("div"); //im not good with Ext dom stuffs
@@ -312,10 +311,32 @@ Ax.addFrameListeners = function(frame_cell,frame,layer){
 		//make more memory friendlyish
 		tooltip.body.dom.innerHTML = "";
 	}
-   },
-   html: 'Loading...'
+   }
   });
 
+}
+
+
+Ax.create_timeline_mask = function(){
+  Ax.timeline.mask = document.createElement("div")
+  Ax.timeline.mask.className = "fselect_mask"
+  Ax.timeline.el.appendChild(Ax.timeline.mask)
+  
+   new Ext.ToolTip({
+   target: Ax.timeline.mask,
+   trackMouse: true,
+   shadow: false,
+   //width: 120,
+   title: 'Loading...',
+   html: "Loading...",
+   listeners: {
+   	"show": function(tooltip){
+		tooltip.setTitle('Frame '+Ax.tcurrent.frame.toString()+" "+Ax.tcurrent.layer.toString())
+		tooltip.body.update("Selected Frame")
+		
+	}
+   }
+   })
 }
 
 
