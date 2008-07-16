@@ -285,7 +285,7 @@ Ax.addFrameListeners = function(frame_cell,frame,layer){
    rframe: frame,
    rlayer: layer,
    listeners: {
-   	"show":function(tooltip	){
+   	"show":function(tooltip){
 		var dataformat = {
 			"Shapes": Ax.getshapes(tooltip.rlayer, tooltip.rframe).length
 		}, dataoutput = "";
