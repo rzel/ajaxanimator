@@ -23,12 +23,17 @@ Ax.renameLayer = function(oldname,newname){ //pretty neat. eh?
 }
 
 Ax.deleteLayer = function(name){//Sorta works.... anyone wanna test?
+  if(Ax.tcurrent.layer == name){
+  	return Ax.toastMsg("Delete Error","You can not delect the current selected layer.")
+  }
 
   Ext.get(Ax.layers[name].el).remove(); //remove the table element
   Ax.viewport.findById("layers").getStore().remove(Ax.layers[name].record);
   //remoe the stuff from the little editable grid witht he titles
    
   delete Ax.layers[name]; //delete the entry
+  Ax.tstat.layers--; //we removed a frame...
+  
 }
 
 Ax.addLayer = function(layername){
