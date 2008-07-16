@@ -271,7 +271,8 @@ Ax.animationinfo = function(){
         "<br />Contributors: " +
         ((Ax.animation.markup.contrib) ? Ax.animation.markup.contrib : ['Unknown']).join(",") +
         "<br />Size: " +
-        Ax.export_animation(Ax.animation.markup, "json").length
+        Ax.export_animation(Ax.animation.markup, "json").length + 
+		"<br />Layers: " + Ax.tstat.layers
     
     })).show(document.body)
 }
