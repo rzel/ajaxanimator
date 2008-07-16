@@ -287,7 +287,7 @@ Ax.addFrameListeners = function(frame_cell,frame,layer){
    listeners: {
    	"show":function(tooltip){
 		var dataformat = {
-			"Shapes": Ax.getshapes(tooltip.rlayer, tooltip.rframe).length
+			"Shapes": Ax.getshapes(tooltip.rframe, tooltip.rlayer).length
 		}, dataoutput = "";
 		for(var label in dataformat){
 			dataoutput += "<tr><td align=\"left\">"+label+"</td><td align=\"right\">"+dataformat[label]+"</td></tr>"
