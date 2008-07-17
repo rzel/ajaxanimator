@@ -13,28 +13,29 @@ to a flexible implementation that probably should work standalone.
 */
 
 //a little hack to get IE to work
-if (!Array.prototype.indexOf)
-{
-  Array.prototype.indexOf = function(elt /*, from*/)
-  {
+/*
+Meh. This one is from Mozilla, but its too big so i'm gonna steal from elsewhere
+if (!Array.prototype.indexOf){
+  Array.prototype.indexOf = function(elt , from){
     var len = this.length;
-
     var from = Number(arguments[1]) || 0;
     from = (from < 0)
          ? Math.ceil(from)
          : Math.floor(from);
-    if (from < 0)
-      from += len;
-
-    for (; from < len; from++)
-    {
-      if (from in this &&
-          this[from] === elt)
-        return from;
+    if (from < 0) from += len;
+    for (; from < len; from++) {
+      if (from in this && this[from] === elt) return from;
     }
     return -1;
   };
 }
+*/
+
+//from http://snippets.dzone.com/posts/show/2437
+[].indexOf || (Array.prototype.indexOf = function(v){
+       for(var i = this.length; i-- && this[i] != v;);
+       return i;
+});
 
 
 Ax.framerate = 12;
