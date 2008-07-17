@@ -15,8 +15,8 @@
             Ext = {
                 ux: {}
             };
-    
-
+            
+            
             Ax.canvasWidth = 480;
             Ax.canvasHeight = 272;
             var zoominit = '0 0 ' + Ax.canvasWidth + ' ' + Ax.canvasHeight; //some OnlyPaths stuffs
@@ -28,7 +28,18 @@
             Ax.init = function(){
                 Ax.playsrc = eval("(" + document.getElementById("source").value + ")");
                 document.getElementById("player").innerHTML = "";
-                Ax.player = new RichDrawViewer(document.getElementById("player"), new SVGRenderer())
+                var renderer;
+                
+                ie = navigator.appVersion.match(/MSIE (\d\.\d)/);
+                opera = (navigator.userAgent.toLowerCase().indexOf("opera") != -1);
+                if ((!ie) || (opera)) {
+                    renderer = new SVGRenderer();
+                }
+                else {
+                    renderer = new VMLRenderer();
+                }
+                
+                Ax.player = new RichDrawViewer(document.getElementById("player"), renderer)
             }
             
             
@@ -43,7 +54,7 @@
                 Ax.tplay = setTimeout(Ax.play, 87)
             }
         </script>
-		   <script type="text/javascript" src="../js/ext/ux/Ext.ux.clone.js">
+        <script type="text/javascript" src="../js/ext/ux/Ext.ux.clone.js">
         </script>
         <script type="text/javascript" src="../js/drawing/onlypaths/op_view.js">
         </script>
@@ -68,10 +79,12 @@
         </textarea>
         <div id="player" style="border: 1px solid black; width: 480px; height: 272px">
         </div>
-		<br>
-		unnecessary funcitons:<br>
-		dumpshape, dumpshapes, dumpshape_core in wrapper_core.js<br>
-		Ax.initview and Ax.initview_core in view_wrapper.js<br>
-		
+        <br>
+        unnecessary funcitons:
+        <br>
+        dumpshape, dumpshapes, dumpshape_core in wrapper_core.js
+        <br>
+        Ax.initview and Ax.initview_core in view_wrapper.js
+        <br>
     </body>
 </html>
