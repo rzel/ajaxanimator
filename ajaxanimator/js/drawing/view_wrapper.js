@@ -31,7 +31,7 @@ Ax.init_view_core = function(element){
   }
   return new RichDrawViewer(element, renderer);
 }
-Ax.viewer_load_frame = function(frame, layers, canvas){
+Ax.viewer_load_frame = function(frame, layers, canvas, tweenfunc){
   //note: this function is not multi-layer friendly yet.
   //un-note: this function should be multi-layer friendly, but layers aren't even really supported so i donno
   canvas.renderer.removeAll();
@@ -39,7 +39,7 @@ Ax.viewer_load_frame = function(frame, layers, canvas){
 		if(layers[layer].keyframes.indexOf(frame) != -1){
 			Ax.loadShapes(layers[layer].src[frame],  true, canvas);
 		}else{
-		  Ax.loadShapes(Ax.getSFTween(frame, 
+		  Ax.loadShapes(((tweenfunc)?tweenfunc:Ax.getSFTween)(frame, 
 											Ax.largest_nonempty(frame,layer,layers), 
 											Ax.smallest_nonempty(frame,layer,layers),
 											layer,layers[layer].src),  true, canvas);
