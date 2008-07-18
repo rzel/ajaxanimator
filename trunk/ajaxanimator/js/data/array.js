@@ -4,7 +4,7 @@
  * It makes making other formats easier
  * Especially those incapable of porting the tweening engine to
  */
-Ax.export_array = function(){ //returns an array of every single frame (single layered) tweened when necessary
+Ax.formats.array = function(){ //returns an array of every single frame (single layered) tweened when necessary
     var layers = Ax.export_animation_core(), output = [], frame = 1
     for (;; frame++) {
         output.push([]);
