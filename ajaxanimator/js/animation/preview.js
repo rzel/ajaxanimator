@@ -21,6 +21,8 @@ Ax.preview_msg = function(){
 
 
 Ax.init_preview = function(){
+  Ax.autodiff(); //insures its the current data.
+	
   $("previewcanvas").innerHTML = "";
   Ext.get("previewcanvas").un("mousedown",Ax.preview_msg);//bai bai lyst3n3rz
   
