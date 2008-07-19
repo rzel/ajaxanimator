@@ -2,8 +2,8 @@
  * @author antimatter15
  */
 
-Ax.formats.processing = function(){
-    var data = Ax.formats.array(), //the magic behind it all;
+Ax.ex.processing = function(){
+    var data = Ax.ex.array(), //the magic behind it all;
  setup = ["//The compilier for this was quickly hacked together", //my little header
  "int frame = 0;\nint frame_total = "+data.length+";", //some variable declarations
  "void setup(){", //the function start
@@ -24,19 +24,19 @@ Ax.formats.processing = function(){
     for (var i = 0; i < data.length; i++) {
 		content = [];
         for (var s = 0; s < data[i].length; s++) {
-            content.push(Ax.formats.processing.stroke(data[i][s]))
-            content.push(Ax.formats.processing.strokewidth(data[i][s]))
-            content.push(Ax.formats.processing.fill(data[i][s]))
+            content.push(Ax.ex.processing.stroke(data[i][s]))
+            content.push(Ax.ex.processing.strokewidth(data[i][s]))
+            content.push(Ax.ex.processing.fill(data[i][s]))
             
             switch (data[i][s].type) {
                 case "line":
-                    content.push(Ax.formats.processing.line(data[i][s]))
+                    content.push(Ax.ex.processing.line(data[i][s]))
                     break;
                 case "rect":
-                    content.push(Ax.formats.processing.rect(data[i][s]))
+                    content.push(Ax.ex.processing.rect(data[i][s]))
                     break;
 				case "ellipse":
-					content.push(Ax.formats.processing.ellipse(data[i][s]))
+					content.push(Ax.ex.processing.ellipse(data[i][s]))
 					break;
             }
         }
@@ -44,26 +44,26 @@ Ax.formats.processing = function(){
     }
     return setup + draw+"}\n}";
 }
-Ax.formats.processing.stroke = function(shape){
+Ax.ex.processing.stroke = function(shape){
     return "stroke(" + shape.lineColor + ");";
 }
 
-Ax.formats.processing.strokewidth = function(shape){
+Ax.ex.processing.strokewidth = function(shape){
     return "strokeWeight(" + shape.lineWidth + ");";
 }
 
-Ax.formats.processing.fill = function(shape){
+Ax.ex.processing.fill = function(shape){
     return "fill(" + shape.fillColor + ");";
 }
 
-Ax.formats.processing.line = function(shape){
+Ax.ex.processing.line = function(shape){
     return "line(" +[shape.left,shape.top,shape.left+shape.width,shape.top+shape.height].join(", ") + ");";
 }
 
-Ax.formats.processing.rect = function(shape){
+Ax.ex.processing.rect = function(shape){
     return "rect(" +[shape.left,shape.top,shape.width,shape.height] .join(", ") + ");";
 }
 
-Ax.formats.processing.ellipse = function(shape){
+Ax.ex.processing.ellipse = function(shape){
     return "ellipse(" +[shape.left,shape.top,shape.width,shape.height] .join(", ") + ");";
 }
