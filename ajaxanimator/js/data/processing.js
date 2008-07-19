@@ -31,11 +31,10 @@
 Ax.formats.processing = function(){
     var data = Ax.formats.array(), //the magic behind it all;
  setup = ["//This is very bad, as it was quickly hacked together.", //my little header
- "int frame = 0; int frame_total = 0", //some variable declarations
+ "int frame = 0; int frame_total = "+(data.length-1), //some variable declarations
  "void setup(){", //the function start
  "size(480, 272)", //set the size of the canvas
  "frameRate(12)", //set the framerate (fps)
- "background(#FFFFFF)", //set the background color
  "}\n"].join("\n"), //end the function
     content = [], //the magical content
     frames = [], //the stuff that contains the content
@@ -57,7 +56,7 @@ Ax.formats.processing = function(){
                     break;
             }
         }
-		frames.push("void frame"+i+"(){\n"+content.join("\n")+"\n}")
+		frames.push("void frame"+i+"(){\nbackground(#FFFFFF);\n"+content.join("\n")+"\n}")
 		draw+= "case "+i+":\nframe"+i+"();\nbreak;\n";
     }
     return setup + draw+"}\n}\n" + frames.join("\n");
