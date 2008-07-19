@@ -1,44 +1,25 @@
 /**
  * @author antimatter15
  */
-/*
- 
- int frame = 0;
- int frame_total = 0;
- 
- void setup()
- {
- size(height, width)
- frameRate(framerate)
- }
- 
- void draw(){
- if(frame < frame_total){
- frame++;
- }else{
- frame=1;
- }
- 
- switch(frame){
- case 1:
- frame1();
- break;
- }
- }
- 
- 
- */
+
 Ax.formats.processing = function(){
     var data = Ax.formats.array(), //the magic behind it all;
- setup = ["//This is very bad, as it was quickly hacked together.", //my little header
- "int frame = 0; int frame_total = "+(data.length-1), //some variable declarations
+ setup = ["//The compilier for this was quickly hacked together", //my little header
+ "int frame = 0;\nint frame_total = "+data.length+";", //some variable declarations
  "void setup(){", //the function start
- "size(480, 272)", //set the size of the canvas
- "frameRate(12)", //set the framerate (fps)
+ "size(480, 272);", //set the size of the canvas
+ "frameRate(12);", //set the framerate (fps)
  "}\n"].join("\n"), //end the function
     content = [], //the magical content
-    frames = [], //the stuff that contains the content
-    draw = "void draw(){\nif(frame!=frame_total){frame++;}else{frame=1;};\nswitch(frame){\n"
+    draw = ["void draw(){", //declare function
+	"if(frame != frame_total){", //if its not the last frmae
+	"frame += 1;", //increment it
+	"}else{", //but itf it is the last frame
+	"frame = 1;", //reset
+	"}", //end if
+	 "background(#FFFFFF);", //reset the canvas
+	 "switch(frame){\n"
+	 ].join("\n")
 	
     for (var i = 0; i < data.length; i++) {
 		content = [];
@@ -54,29 +35,35 @@ Ax.formats.processing = function(){
                 case "rect":
                     content.push(Ax.formats.processing.rect(data[i][s]))
                     break;
+				case "ellipse":
+					content.push(Ax.formats.processing.ellipse(data[i][s]))
+					break;
             }
         }
-		frames.push("void frame"+i+"(){\nbackground(#FFFFFF);\n"+content.join("\n")+"\n}")
-		draw+= "case "+i+":\nframe"+i+"();\nbreak;\n";
+		draw += "case "+(i+1)+":\n"+content.join("\n")+"\nbreak;\n";
     }
-    return setup + draw+"}\n}\n" + frames.join("\n");
+    return setup + draw+"}\n}";
 }
 Ax.formats.processing.stroke = function(shape){
-    return "stroke(" + shape.lineColor + ")";
+    return "stroke(" + shape.lineColor + ");";
 }
 
 Ax.formats.processing.strokewidth = function(shape){
-    return "strokeWeight(" + shape.lineWidth + ")";
+    return "strokeWeight(" + shape.lineWidth + ");";
 }
 
 Ax.formats.processing.fill = function(shape){
-    return "fill(" + shape.fillColor + ")";
+    return "fill(" + shape.fillColor + ");";
 }
 
 Ax.formats.processing.line = function(shape){
-    return "line(" +[shape.left,shape.top,shape.left+shape.width,shape.top+shape.height] .    join(", ") + ")";
+    return "line(" +[shape.left,shape.top,shape.left+shape.width,shape.top+shape.height].join(", ") + ");";
 }
 
 Ax.formats.processing.rect = function(shape){
-    return "rect(" +[shape.left,shape.top,shape.width,shape.height] .join(", ") + ")";
+    return "rect(" +[shape.left,shape.top,shape.width,shape.height] .join(", ") + ");";
+}
+
+Ax.formats.processing.ellipse = function(shape){
+    return "ellipse(" +[shape.left,shape.top,shape.width,shape.height] .join(", ") + ");";
 }

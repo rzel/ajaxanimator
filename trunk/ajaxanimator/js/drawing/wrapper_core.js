@@ -3,12 +3,14 @@
  */
 
 Ax.loadShapes = function(shapes, noattachlistener, instance){ //instance; probably need a better name for this. but its the richdraw/onlypaths/viewer/etc reference. 
-    if (typeof shapes == typeof "aimis5wnaatte1tromese") { //try un-scrabling this!
+    if (typeof shapes == "string") { //try un-scrabling this!
         shapes = Ext.util.JSON.decode(shapes);
-    }
-    for (var i = 0; i < shapes.length; i++) {
-        Ax.loadShape(shapes[i], noattachlistener, instance);
-    }
+    }else if(typeof shapes == "undefined"){
+		return;
+	}
+	for (var i = 0; i < shapes.length; i++) {
+		Ax.loadShape(shapes[i], noattachlistener, instance);
+	}
 }
 
 Ax.loadShape = function(shape, noattachlistener, instance){

@@ -50,12 +50,12 @@ Ext.ux.ToastWindow = Ext.extend(Ext.Window, {
         });    
     },
     animHide: function(){
-           Ext.ux.ToastWindowMgr.positions.remove(this.pos);
+        Ext.ux.ToastWindowMgr.positions.remove(this.pos);
         this.el.ghost("b", {
             duration: 1,
             remove: true,
-        scope: this,
-        callback: this.destroy
-        });    
+        	scope: this,
+        	callback: this.destroy
+        });
     }
 });  
