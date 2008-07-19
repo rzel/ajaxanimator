@@ -6,6 +6,7 @@
  */
 
 Ax.formats.array = function(){ //returns an array of every single frame (single layered) tweened when necessary
+	Ax.autodiff(); //read the comment in player.js
     var layers = Ax.export_animation_core(), output = [], frame = 1
     for (;; frame++) {
         output.push([]);
