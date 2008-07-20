@@ -9,6 +9,7 @@ Ax.ex.processing = function(){
  "void setup(){", //the function start
  "size(480, 272);", //set the size of the canvas
  "frameRate(12);", //set the framerate (fps)
+ "smooth();",
  "}\n"].join("\n"), //end the function
     content = [], //the magical content
     draw = ["void draw(){", //declare function
@@ -66,4 +67,7 @@ Ax.ex.processing.rect = function(shape){
 
 Ax.ex.processing.ellipse = function(shape){
     return "ellipse(" +[shape.left,shape.top,shape.width,shape.height] .join(", ") + ");";
+}
+Ax.ex.processing.save = function(){
+	return Ax.save.computer(Ax.ex.processing(),Ax.animation.name+".pde")
 }
