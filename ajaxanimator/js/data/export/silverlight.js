@@ -39,7 +39,7 @@ Ax.ex.silverlight = function(){
 }
 
 Ax.ex.silverlight.line = function(shape){
-	return new Ext.XTemplate('<Line X1="{left}" Y1="{top}" X2="{[left+width]}" Y2="{[top+height]}" />').apply(shape)
+	return new Ext.XTemplate('<Line X1="{left}" Y1="{top}" X2="{[values.left+values.width]}" Y2="{[values.top+values.height]}" />').apply(shape)
 }
 
 Ax.ex.silverlight.rect = function(shape){
@@ -51,7 +51,7 @@ Ax.ex.silverlight.path = function(shape){
 }
 
 Ax.ex.silverlight.text = function(shape){
-	return new Ext.XTemplate('<TextBlock FontSize="{textSize}" FontFamily="{textFamily}" Canvas.Left="{left}" Canvas.Top="{top}">{text}</TextBlock>')
+	return new Ext.XTemplate('<TextBlock FontSize="{textSize}" FontFamily="{textFamily}" Canvas.Left="{left}" Canvas.Top="{top}">{text}</TextBlock>').apply(shape)
 }
 
 Ax.ex.silverlight.image = function(shape){
