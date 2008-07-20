@@ -17,7 +17,7 @@ Ax.MainToolbar = [
   {text: "Publish", iconCls: "tb_publish", menu: [
   	{text: "Flash", iconCls: "tb_flash"},
 	{text: "Processing", iconCls: "tb_processing", handler: function(){Ax.ex.processing.save()}},
-	{text: "Silverlight", iconCls: "tb_silverlight"},
+	{text: "Silverlight", iconCls: "tb_silverlight", handler: function(){Ax.ex.silverlight.save()}},
 	{text: "Animated GIF", iconCls: "tb_image"}
   ]},
   {text: "Offline", iconCls: "tb_offline"}

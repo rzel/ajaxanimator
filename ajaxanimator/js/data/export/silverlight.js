@@ -22,6 +22,12 @@ Ax.ex.silverlight = function(){
 				case "ellipse":
 					content.push(Ax.ex.silverlight.ellipse(data[i][s]))
 					break;
+				case "path":
+					content.push(Ax.ex.silverlight.path(data[i][s]))
+					break;
+				case "text":
+					content.push(Ax.ex.silverlight.text(data[i][s]))
+					break;
             }
         }
 		draw += content.join("\n")+"\n";
@@ -35,7 +41,15 @@ Ax.ex.silverlight.line = function(shape){
 
 Ax.ex.silverlight.rect = function(shape){
 	return new Ext.XTemplate('<Rectangle Canvas.Left="{left}" Canvas.Top="{top}" Width="{width}" Height="{height}" />').apply(shape)
+}
 
+Ax.ex.silverlight.path = function(shape){
+	return new Ext.XTemplate('<Path Data="{points}" />').apply(shape)
+
+}
+
+Ax.ex.silverlight.text = function(shape){
+	return new Ext.XTemplate('<TextBlock FontSize="{textSize}" FontFamily="{textFamily}" Canvas.Left="{left}" Canvas.Top="{top}">{text}</TextBlock>')
 }
 
 Ax.ex.silverlight.ellipse = function(shape){
