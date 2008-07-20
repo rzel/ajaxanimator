@@ -39,6 +39,9 @@ Ax.ex.processing = function(){
 				case "ellipse":
 					content.push(Ax.ex.processing.ellipse(data[i][s]))
 					break;
+				case "text":
+					content.push(Ax.ex.processing.text(data[i][s]));
+					break;
             }
         }
 		draw += "case "+(i+1)+":\n"+content.join("\n")+"\nbreak;\n";
@@ -59,6 +62,9 @@ Ax.ex.processing.fill = function(shape){
 
 Ax.ex.processing.line = function(shape){
     return "line(" +[shape.left,shape.top,shape.left+shape.width,shape.top+shape.height].join(", ") + ");";
+}
+Ax.ex.processing.text = function(shape){
+    return "text(" +['"'+shape.text+'"',shape.left,shape.top].join(", ") + ");";
 }
 
 Ax.ex.processing.rect = function(shape){
