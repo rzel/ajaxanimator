@@ -19,6 +19,22 @@ background-image: url(../img/silk/disk.png)
 .tb_publish {
 background-image: url(../img/silk/page_white_flash.png)
 }
+
+/*.tb_flash = .tb_publish*/
+.tb_flash {
+background-image: url(../img/silk/page_white_actionscript.png);
+}
+.tb_processing {
+background-image: url(../img/silk/page_white_code.png);
+}
+
+.tb_silverlight {
+background-image: url(../img/silk/page_white_vector.png);
+}
+.tb_image {
+background-image: url(../img/silk/page_white_paint.png);
+}
+
 .tb_offline {
 background-image: url(../img/silk/disconnect.png)
 }

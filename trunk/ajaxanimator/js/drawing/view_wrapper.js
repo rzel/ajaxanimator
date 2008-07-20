@@ -29,13 +29,15 @@
  }
  */
 //from http://snippets.dzone.com/posts/show/2437
-[].indexOf ||
-(Array.prototype.indexOf = function(v){
-    for (var i = this.length; i-- && this[i] != v;) 
-        ;
+//modified to work with my compilier
+//*
+if(![].indexOf){
+Array.prototype.indexOf = function(v){
+    for (var i = this.length; i-- && this[i] != v;){}
     return i;
-});
-
+}
+}  
+//*/
 
 Ax.framerate = 12;
 //*

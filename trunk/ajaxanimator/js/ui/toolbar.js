@@ -14,7 +14,12 @@ Ax.MainToolbar = [
     {text: "To Text", iconCls: "tb_text", handler: function(){Ax.save.text()}}
   ]},
   "-",
-  {text: "Publish", iconCls: "tb_publish"},
+  {text: "Publish", iconCls: "tb_publish", menu: [
+  	{text: "Flash", iconCls: "tb_flash"},
+	{text: "Processing", iconCls: "tb_processing", handler: function(){Ax.ex.processing.save()}},
+	{text: "Silverlight", iconCls: "tb_silverlight"},
+	{text: "Animated GIF", iconCls: "tb_image"}
+  ]},
   {text: "Offline", iconCls: "tb_offline"}
 ]},
 {text:"Edit", menu: [

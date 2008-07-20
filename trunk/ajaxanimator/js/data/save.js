@@ -69,7 +69,7 @@ Ax.save = {
         "<form id=\"save_form\" method=\"POST\" action=\"" +
         Ax.files.save_proxy +
         "\"><input type=\"hidden\" name=\"name\" value=\"" +
-        (name)?name:Ax.animation.name +
+        ((name)?name:Ax.animation.name) +
         "\" /><input type=\"hidden\" name=\"action\" value=\"work\" /></form>");
         var new_input = document.createElement("input")
         new_input.type = "hidden";
