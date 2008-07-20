@@ -39,15 +39,15 @@ Ax.ex.silverlight = function(){
 }
 
 Ax.ex.silverlight.line = function(shape){
-	return new Ext.XTemplate('<Line X1="{left}" Y1="{top}" X2="{[values.left+values.width]}" Y2="{[values.top+values.height]}" />').apply(shape)
+	return new Ext.XTemplate('<Line X1="{left}" Y1="{top}" X2="{[values.left+values.width]}" Y2="{[values.top+values.height]}"  StrokeThickness="{lineWidth}" />').apply(shape)
 }
 
 Ax.ex.silverlight.rect = function(shape){
-	return new Ext.XTemplate('<Rectangle Canvas.Left="{left}" Canvas.Top="{top}" Width="{width}" Height="{height}" />').apply(shape)
+	return new Ext.XTemplate('<Rectangle Canvas.Left="{left}" Canvas.Top="{top}" Width="{width}" Height="{height}" StrokeThickness="{lineWidth}" />').apply(shape)
 }
 
 Ax.ex.silverlight.path = function(shape){
-	return new Ext.XTemplate('<Path Data="{points}" />').apply(shape)
+	return new Ext.XTemplate('<Path Data="{points}" StrokeThickness="{lineWidth}" />').apply(shape)
 }
 
 Ax.ex.silverlight.text = function(shape){
@@ -59,7 +59,7 @@ Ax.ex.silverlight.image = function(shape){
 }
 
 Ax.ex.silverlight.ellipse = function(shape){
-	return new Ext.XTemplate('<Ellipse Canvas.Left="{left}" Canvas.Top="{top}" Width="{width}" Height="{height}" />').apply(shape)
+	return new Ext.XTemplate('<Ellipse Canvas.Left="{left}" StrokeThickness="{lineWidth}" Canvas.Top="{top}" Width="{width}" Height="{height}" />').apply(shape)
 
 }
 Ax.ex.silverlight.save = function(){
