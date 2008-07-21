@@ -40,7 +40,7 @@ Ax.save = {
             }]
         })).show(document.body)
     },
-    computer: function(data, name){
+    computer: function(data, name, base64){
         Ext.Ajax.request({
             url: Ax.files.save_proxy,
             params: {
@@ -49,7 +49,7 @@ Ax.save = {
             success: function(e){
                 //console.log(e)
                 if (e.responseText = "working") {
-                    Ax.save.comp_iframe(data, name); //server connection works, try the iframe awesomeness
+                    Ax.save.comp_iframe(data, name, base64); //server connection works, try the iframe awesomeness
                 }
                 else {
                     Ax.save.comp_datauri(data); //apparently the server doesn't work
@@ -61,14 +61,16 @@ Ax.save = {
         })
         
     },
-    comp_datauri: function(data){
-        window.location = "data:application/octetstream;base64," + Ext.ux.base64.encode((data)?data:Ax.export_animation(Ax.animation.markup, "json"));
+    comp_datauri: function(data, base64){
+        window.location = "data:application/octetstream;base64," + base64?data:(Ext.ux.base64.encode((data)?data:Ax.export_animation(Ax.animation.markup, "json")));
     },
-    comp_iframe: function(data, name){
+    comp_iframe: function(data, name, base64){
         Ax.msg("Saving...", "The request is being processed by the server and may take a long time depending on the size of the animation." +
         "<form id=\"save_form\" method=\"POST\" action=\"" +
         Ax.files.save_proxy +
-        "\"><input type=\"hidden\" name=\"name\" value=\"" +
+        "\"><input type=\"hidden\" name=\"encoding\" value=\"" +
+		(base64)?"base64":"raw"+
+		"\"><input type=\"hidden\" name=\"name\" value=\"" +
         ((name)?name:Ax.animation.name) +
         "\" /><input type=\"hidden\" name=\"action\" value=\"work\" /></form>");
         var new_input = document.createElement("input")
