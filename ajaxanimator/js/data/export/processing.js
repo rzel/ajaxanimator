@@ -75,5 +75,7 @@ Ax.ex.processing.ellipse = function(shape){
     return "ellipse(" +[shape.left,shape.top,shape.width,shape.height] .join(", ") + ");";
 }
 Ax.ex.processing.save = function(){
-	return Ax.save.computer(Ax.ex.processing(),Ax.animation.name+".pde")
+	Ext.MessageBox.alert("Notes on exporting to Processing","Export to processing is not complete, data such as images, paths, polygons, and rotation will not be exported.", function(a){
+	   Ax.save.computer(Ax.ex.processing(),Ax.animation.name+".pde")
+	})
 }

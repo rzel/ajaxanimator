@@ -38,20 +38,21 @@ Ax.ex.silverlight = function(){
     return setup + draw + "</Canvas>";
 }
 
+    
 Ax.ex.silverlight.line = function(shape){
-	return new Ext.XTemplate('<Line X1="{left}" Y1="{top}" X2="{[values.left+values.width]}" Y2="{[values.top+values.height]}"  StrokeThickness="{lineWidth}" />').apply(shape)
+	return new Ext.XTemplate('<Line X1="{left}" Y1="{top}" Fill="{fillColor}" Stroke="{lineColor}" X2="{[values.left+values.width]}" Y2="{[values.top+values.height]}"  StrokeThickness="{lineWidth}" />').apply(shape)
 }
 
 Ax.ex.silverlight.rect = function(shape){
-	return new Ext.XTemplate('<Rectangle Canvas.Left="{left}" Canvas.Top="{top}" Width="{width}" Height="{height}" StrokeThickness="{lineWidth}" />').apply(shape)
+	return new Ext.XTemplate('<Rectangle Canvas.Left="{left}" Canvas.Top="{top}" Fill="{fillColor}" Stroke="{lineColor}" Width="{width}" Height="{height}" StrokeThickness="{lineWidth}"><Rectangle.RenderTransform><RotateTransform Angle="{[Ax.parseTransform(values.transform)[0]]}"/></Rectangle.RenderTransform></Rectangle>').apply(shape)
 }
 
 Ax.ex.silverlight.path = function(shape){
-	return new Ext.XTemplate('<Path Data="{points}" StrokeThickness="{lineWidth}" />').apply(shape)
+	return new Ext.XTemplate('<Path Data="{points}"  Fill="{fillColor}" Stroke="{lineColor}" StrokeThickness="{lineWidth}" />').apply(shape)
 }
 
 Ax.ex.silverlight.text = function(shape){
-	return new Ext.XTemplate('<TextBlock FontSize="{textSize}" FontFamily="{textFamily}" Canvas.Left="{left}" Canvas.Top="{top}">{text}</TextBlock>').apply(shape)
+	return new Ext.XTemplate('<TextBlock FontSize="{textSize}" Fill="{fillColor}" Stroke="{lineColor}"  FontFamily="{textFamily}" Canvas.Left="{left}" Canvas.Top="{top}">{text}</TextBlock>').apply(shape)
 }
 
 Ax.ex.silverlight.image = function(shape){
@@ -59,9 +60,12 @@ Ax.ex.silverlight.image = function(shape){
 }
 
 Ax.ex.silverlight.ellipse = function(shape){
-	return new Ext.XTemplate('<Ellipse Canvas.Left="{left}" StrokeThickness="{lineWidth}" Canvas.Top="{top}" Width="{width}" Height="{height}" />').apply(shape)
+	return new Ext.XTemplate('<Ellipse Canvas.Left="{left}" Fill="{fillColor}" Stroke="{lineColor}" StrokeThickness="{lineWidth}" Canvas.Top="{top}" Width="{width}" Height="{height}" />').apply(shape)
 
 }
 Ax.ex.silverlight.save = function(){
 	return Ax.save.computer(Ax.ex.silverlight(),Ax.animation.name+".xaml")
+	Ext.MessageBox.alert("Notes on exporting to Silverlight (XAML)","Export to Silverlight is not complete, animations will be condensed to a single canvas of overlapping shapes and some shape data will not be exported.", function(a){
+	   Ax.save.computer(Ax.ex.processing(),Ax.animation.name+".pde")
+	})
 }
