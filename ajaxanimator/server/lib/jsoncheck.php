@@ -6,9 +6,10 @@ Checks whether the server has json_encode, and if not, includes
  the Pear JSON package, and creates a json_encode function. 
 */
 
-include "JSON.php"; //use requre_once if needed, but include is faster
 
 if(!function_exists("json_encode")){
+include "JSON.php"; //use requre_once if needed, but include is faster
+
 function json_encode($data){
 	$value = new Services_JSON();
 	return $value->encode($data); 
