@@ -15,14 +15,18 @@ Ax.Color = {
 
 Ax.setColors = function(c){
   //its probably bad to not use those pesky braces
-  if(c.gd)
-    Ax.viewport.findById("fgd").setValue(c.gd)
-  if(c.lw) 
-    Ax.viewport.findById("flw").setValue(c.lw)
-  if(c.lc) 
-    Ax.viewport.findById("flc").setColor(c.lc)
-  if(c.fc) 
+  if (c.gd) { //grid
+  	Ax.viewport.findById("fgd").setValue(c.gd)
+  }
+  if (c.lw) { //linewidth (stoke)
+  	Ax.viewport.findById("flw").setValue(c.lw)
+  }
+  if (c.lc) {//linecolor (stroke)
+  	Ax.viewport.findById("flc").setColor(c.lc)
+  }
+  if(c.fc){ //fill color
    Ax.viewport.findById("ffc").setColor(c.fc)
+  }
 }
 
 Ax.ColorPanel = Ext.extend(Ext.Panel,{
