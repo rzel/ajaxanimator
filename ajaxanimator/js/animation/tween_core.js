@@ -81,14 +81,18 @@ Ax.tweenAttribute = function(name, frame1, frame2, value1, value2, index){
     if (name == "points") {
         return Ax.tweenPath(frame1, frame2, value1, value2, index);
     }
+	if (value1.substr(0,1) == "#" && value2.substr(0,1) == "#"){ //color tweening
+		return Ax.tweenHex(frame1, frame2, value1, value2, index);
+	}
     /*
      Now:
      Width,Height, Line Width, x, y
      Future:
-     rotation transform, find out the rotation value, run them through the magickal Ax.tweenNumber function
-     color tween: split hex string into 3 segments, turn that into a number, run it throught he magical function and re-hexify
-     Stuff that isn't possible through the current toolset, but should work automagically:
-     opacity tweening (i think they're stored in numbers)
+     DONE - rotation transform, find out the rotation value, run them through the magickal Ax.tweenNumber function
+     DONE - color tween: split hex string into 3 segments, turn that into a number, run it throught he magical function and re-hexify
+     
+     DONE - Stuff that isn't possible through the current toolset, but should work automagically:
+     DONE - opacity tweening (i think they're stored in numbers)
      Fun:
      I donno, maybe some text tweening (i dont have any idea how that'd work. maybe changing a character every frame or something.
      */
@@ -162,6 +166,29 @@ Ax.parsePath = function(points){
     points = points.replace(/  /g, " "); //replace double-spaces
     points = points.replace(/  /g, " "); //replace double-spaces
     return points.split(" ")
+}
+
+Ax.tweenHex = function(frame1, frame2, value1, value2, index){
+	value1=Ax.hex2rgb(value1);
+	value2=Ax.hex2rgb(value2);
+
+	return "#"+[Ax.toHex(Ax.tweenNumber(frame1, frame2, parseInt(value1.R), parseInt(value2.R), index)),
+		Ax.toHex(Ax.tweenNumber(frame1, frame2, parseInt(value1.G), parseInt(value2.G), index)),
+		Ax.toHex(Ax.tweenNumber(frame1, frame2, parseInt(value1.B), parseInt(value2.B), index))].join("");
+}
+
+Ax.hex2rgb = function(hex){
+	var match = hex.toLowerCase().match(/^#?([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})$/);
+	if (match){
+		return {R:parseInt(match[1], 16), G:parseInt(match[2], 16), B:parseInt(match[3], 16)};
+	}else{
+		return {R: 0, G: 0, B: 0};
+	}
+}
+
+Ax.toHex = function(color){
+	color=parseInt(color).toString(16);
+	return (color.length<2)?"0"+color:color;
 }
 
 Ax.tweenNumber = function(frame1, frame2, value1, value2, index){//frame1, frame2, first number, second number, index (from first)
