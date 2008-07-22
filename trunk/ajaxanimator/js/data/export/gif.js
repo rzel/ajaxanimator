@@ -48,7 +48,7 @@ Ax.ex.gif.upload = function(){
         url: Ax.files.export_gif,
         params: {
             "action": "work",
-            "animation": Ext.util.JSON.encode(Ax.ex.array())
+            "animation": Ax.ex.array("json")
         },
         success: function(e){
             Ax.save.computer(e.responseText, Ax.animation.name + ".gif", true);

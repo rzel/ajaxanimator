@@ -46,7 +46,7 @@ Ax.ex.swf.upload = function(){ //where the cool stuff happens
         url: Ax.files.export_swf, //uh, same file
         params: {
             "action": "work", //WORK!
-            "animation": Ext.util.JSON.encode(Ax.ex.array()) //gotta make an Ax.ex.array("json") function
+            "animation": Ax.ex.array("json") //okay, so I did it, I made Ax.ex.array("json").
         },
         success: function(e){ //YESs!
             Ax.save.computer(e.responseText, Ax.animation.name + ".swf", true); //save to computer using magikalness

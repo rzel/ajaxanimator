@@ -5,7 +5,7 @@
  * Especially those incapable of porting the tweening engine to
  */
 
-Ax.ex.array = function(){ //returns an array of every single frame (single layered) tweened when necessary
+Ax.ex.array = function(format){ //returns an array of every single frame (single layered) tweened when necessary
 	Ax.autodiff(); //read the comment in player.js
     var layers = Ax.export_animation_core(), output = [], frame = 1
     for (;; frame++) {
@@ -21,7 +21,11 @@ Ax.ex.array = function(){ //returns an array of every single frame (single layer
                 return b - a;
             })[0] ==
             frame) {
-                return output;
+				if (format == "json") {
+					return Ext.util.JSON.encode(output);
+				}else{
+					return output;	
+				}
             }
         }
     }
