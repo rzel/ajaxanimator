@@ -1,17 +1,25 @@
 <?php
-header("Content-type: text/html");
 
-$framerate = 2;
+//header("Content-type: text/html");
+
+if($_REQUEST["action"] == "test"){
+	die("working"); //hmm... I don't want to die working... Especially for this project....
+}
+
+$framerate = 12;
 
 include ("../lib/GIFEncoder.class.php");
-include ("test.php");
+
+include "../lib/jsoncheck.php";
+//include ("test.php");
+
 $animation_array = json_decode(stripslashes($_REQUEST["animation"]),true);
 $gif_array = array();
 $framerate_array = array();
 
 foreach($animation_array as $frame_contents){
 	$im = imagecreatetruecolor(480,272);
-	$background = imagecolorallocate($im, 250, 250, 250);
+	$background = imagecolorallocate($im, 255, 255, 255);
 	imagefill($im, 0, 0, $background);
 
 	foreach($frame_contents as $shape){
@@ -86,7 +94,8 @@ foreach($animation_array as $frame_contents){
 }
 
 $gif = new GIFEncoder($gif_array, $framerate_array, 0, 2, 0, 0, 0, "bin");
+$animation = $gif->GetAnimation();
 
-echo "<img src='data:image/gif;base64,".base64_encode($gif->GetAnimation())."'>";	
+echo base64_encode($animation);
 
 ?>
