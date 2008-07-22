@@ -29,7 +29,6 @@ Ax.ex.array = function(){ //returns an array of every single frame (single layer
 }
 
 Ax.ex.array.save = function(){
-	Ext.MessageBox.alert("Notes on exporting to OnlyPaths JSON Frame List","Export to OnlyPaths JSON Frame List does not contain layer or tween data. Press OK to continue.", function(a){
-	   Ax.save.computer(Ext.util.JSON.encode(Ax.ex.array()),Ax.animation.name+".opf");
-	})
+	Ax.msg("Notes on exporting to OnlyPaths JSON Frame List","Export to OnlyPaths JSON Frame List does not contain layer or tween data.")
+	Ax.save.computer(Ext.util.JSON.encode(Ax.ex.array()),Ax.animation.name+".opf");
 }
