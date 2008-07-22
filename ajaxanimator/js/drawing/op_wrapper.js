@@ -96,6 +96,7 @@ Ax.updatecolors = function(){
   Ax.canvas.editCommand('linecolor', '#'+Ax.Color.line);
   Ax.canvas.editCommand('linewidth', Ax.Color.width.toString()+'px');   
   Ax.canvas.setGrid(Ax.Color.grid, Ax.Color.grid);
+  Ax.autodiff();
 }
 
 
