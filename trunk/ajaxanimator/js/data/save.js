@@ -1,5 +1,7 @@
 /**
  * @author antimatter15
+ * 
+ * This is pretty cool rite?
  */
  
 Ax.save = {
@@ -69,7 +71,7 @@ Ax.save = {
         "<form id=\"save_form\" method=\"POST\" action=\"" +
         Ax.files.save_proxy +
         "\"><input type=\"hidden\" name=\"encoding\" value=\"" +
-		(base64)?"base64":"raw"+
+		((base64)?"base64":"raw")+
 		"\"><input type=\"hidden\" name=\"name\" value=\"" +
         ((name)?name:Ax.animation.name) +
         "\" /><input type=\"hidden\" name=\"action\" value=\"work\" /></form>");

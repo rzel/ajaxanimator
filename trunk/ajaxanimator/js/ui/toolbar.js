@@ -15,10 +15,10 @@ Ax.MainToolbar = [
   ]},
   "-",
   {text: "Publish", iconCls: "tb_publish", menu: [
-  	{text: "Flash", iconCls: "tb_flash"},
+  	{text: "Flash", iconCls: "tb_flash", handler: function(){Ax.ex.swf.save()}},
 	{text: "Processing", iconCls: "tb_processing", handler: function(){Ax.ex.processing.save()}},
 	{text: "Silverlight", iconCls: "tb_silverlight", handler: function(){Ax.ex.silverlight.save()}},
-	{text: "Animated GIF", iconCls: "tb_image"}
+	{text: "Animated GIF", iconCls: "tb_image", handler: function(){Ax.ex.gif.save()}}
   ]},
   {text: "Offline", iconCls: "tb_offline"}
 ]},

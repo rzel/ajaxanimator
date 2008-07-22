@@ -1,5 +1,8 @@
 /**
  * @author antimatter15
+ * I'm only making this because this is a cool language
+ * I wouldn't even know about Processing if not for John Resig's Processing.JS
+ * so yeah, this is sorta intended to be played on processing.js
  */
 
 Ax.ex.processing = function(){
@@ -75,7 +78,7 @@ Ax.ex.processing.ellipse = function(shape){
     return "ellipse(" +[shape.left,shape.top,shape.width,shape.height] .join(", ") + ");";
 }
 Ax.ex.processing.save = function(){
-	Ext.MessageBox.alert("Notes on exporting to Processing","Export to processing is not complete, data such as images, paths, polygons, and rotation will not be exported.", function(a){
+	Ext.MessageBox.alert("Notes on exporting to Processing","Export to processing is not complete, data such as images, paths, polygons, and rotation will not be exported. Press OK to continue.", function(a){
 	   Ax.save.computer(Ax.ex.processing(),Ax.animation.name+".pde")
 	})
 }

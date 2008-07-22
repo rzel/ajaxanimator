@@ -1,5 +1,7 @@
 /**
  * @author antimatter15
+ * 
+ * I really don't care about silverlight, but its a nifty feature to brag about
  */
 
 
@@ -64,8 +66,8 @@ Ax.ex.silverlight.ellipse = function(shape){
 
 }
 Ax.ex.silverlight.save = function(){
-	return Ax.save.computer(Ax.ex.silverlight(),Ax.animation.name+".xaml")
-	Ext.MessageBox.alert("Notes on exporting to Silverlight (XAML)","Export to Silverlight is not complete, animations will be condensed to a single canvas of overlapping shapes and some shape data will not be exported.", function(a){
+	//return Ax.save.computer(Ax.ex.silverlight(),Ax.animation.name+".xaml")
+	Ext.MessageBox.alert("Notes on exporting to Silverlight (XAML)","Export to Silverlight is not complete, animations will be condensed to a single canvas of overlapping shapes and some shape data may not be exported. Press OK to continue.", function(a){
 	   Ax.save.computer(Ax.ex.processing(),Ax.animation.name+".pde")
 	})
 }
