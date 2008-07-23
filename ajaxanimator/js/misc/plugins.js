@@ -29,7 +29,7 @@ Ax.plugins["Brick Wall"] = function(sx, sy, height, width, brickheight, brickwid
 
 Ax.plugins["Explode"] = function(){
   Ax.api.loop.frame(function(shape){
-    return Ax.api.transform.absolute(shape, Math.round(Math.random()*Ax.canvasHeight), Math.round(Math.random()*Ax.canvasWidth));  
+    return Ax.api.transform.absolute(shape, Math.round(Math.random()*(Ax.canvasHeight-shape.height)), Math.round(Math.random()*(Ax.canvasWidth-shape.width)));  
   })
 }
 
@@ -39,7 +39,10 @@ Ax.plugins["Random Shape"] = function(){
     top: Math.random()*Ax.canvasHeight,
     left: Math.random()*Ax.canvasWidth,
     width: Math.random()*Ax.canvasHeight,
-    height: Math.random()*Ax.canvasHeight
+    height: Math.random()*Ax.canvasHeight,
+	fillColor: "#"+Ax.toHex(Math.random()*255)+Ax.toHex(Math.random()*255)+Ax.toHex(Math.random()*255),
+	lineColor: "#"+Ax.toHex(Math.random()*255)+Ax.toHex(Math.random()*255)+Ax.toHex(Math.random()*255),
+	lineWidth: Math.random() * 20
   });
 }
 

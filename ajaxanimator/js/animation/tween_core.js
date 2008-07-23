@@ -204,7 +204,7 @@ Ax.hex2rgb = function(hex){
 }
 
 Ax.toHex = function(color){
-	color=parseInt(color).toString(16);
+	color=parseInt(Math.floor(color)).toString(16);
 	return (color.length<2)?"0"+color:color;
 }
 
