@@ -52,7 +52,8 @@ Ax.animationinfo = function(){
         ((Ax.animation.markup.contrib) ? Ax.animation.markup.contrib : ['Unknown']).join(",") +
         "<br />Size: " +
         Ax.export_animation(Ax.animation.markup, "json").length + 
-		"<br />Layers: " + Ax.tstat.layers
+		"<br />Layers: " + Ax.tstat.layers + 
+		"<br />Frames: " + Ax.count_frames()
     
     })).show(document.body)
 }

@@ -9,7 +9,7 @@ if($_REQUEST["action"] == "test"){
 $framerate = 12;
 
 include ("../lib/GIFEncoder.class.php");
-
+include "../lib/path.php"; //my insanely great path parser
 include "../lib/jsoncheck.php";
 //include ("test.php");
 
@@ -80,6 +80,22 @@ foreach($animation_array as $frame_contents){
 				$fill = imagecolorallocate($im, $fillArray[0], $fillArray[1], $fillArray[2]);
 				imagettftext($im, $size/1.3, 0, $x, $y, $fill, "FONT/times.ttf", $text);
 			break;	
+				case "path":
+				$points = parse_path($shape["points"]);
+				
+				//echo count($points).";";
+				$fillArray = sscanf($shape['fillColor'], '#%2x%2x%2x');
+				$fill = imagecolorallocate($im, $fillArray[0], $fillArray[1], $fillArray[2]);
+				imagefilledpolygon($im, $points, count($points)/2, $fill);
+				imagesetthickness($im, $shape["lineWidth"]);
+				
+				$strokeArray = sscanf($shape['lineColor'], '#%2x%2x%2x');
+				$stroke = imagecolorallocate($im, $strokeArray[0], $strokeArray[1], $strokeArray[2]);
+				
+				imagepolygon($im, $points, count($points)/2, $stroke);
+				$points = array();
+				
+			break;
 		}
 
 	}
