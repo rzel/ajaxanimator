@@ -1,3 +1,4 @@
+
 /*
  /   wrapper : onlypaths :: view_wrapper : op_view
  */
@@ -31,12 +32,13 @@
 //from http://snippets.dzone.com/posts/show/2437
 //modified to work with my compilier
 //*
-if(![].indexOf){
-Array.prototype.indexOf = function(v){
-    for (var i = this.length; i-- && this[i] != v;){}
-    return i;
+if (![].indexOf) {
+    Array.prototype.indexOf = function(v){
+        for (var i = this.length; i-- && this[i] != v;) {
+        }
+        return i;
+    }
 }
-}  
 //*/
 
 Ax.framerate = 12;
@@ -65,6 +67,7 @@ Ax.viewer_load_frame = function(frame, layers, canvas, tweenfunc){
     //note: this function is not multi-layer friendly yet.
     //un-note: this function should be multi-layer friendly, but layers aren't even really supported so i donno
     canvas.renderer.removeAll();
+    var total_frames = 0; //starting point
     for (var layer in layers) {
         //alert([1, 2, 3, 4, 5].indexOf(2))
         if (layers[layer].keyframes.indexOf(frame) != -1) {
@@ -73,14 +76,30 @@ Ax.viewer_load_frame = function(frame, layers, canvas, tweenfunc){
         else 
             if (Ax.largest_nonempty(frame, layer, layers) && Ax.smallest_nonempty(frame, layer, layers)) {
                 Ax.loadShapes(((tweenfunc) ? tweenfunc : Ax.getSFTween)(frame, Ax.largest_nonempty(frame, layer, layers), Ax.smallest_nonempty(frame, layer, layers), layer, layers[layer].src), true, canvas);
-            }else{
-				//console.log("Blank Frame")
-			}
+            }
+            else 
+                if (Ax.largest_nonempty(frame, layer, layers)) {
+                    //console.log("Blank Frame")
+                    Ax.loadShapes(layers[layer].src[Ax.largest_nonempty(frame, layer, layers)], true, canvas);
+                }
+                else {
+                //console.log("blank frame")
+                }
+        
+        //calculate the biggest frame	
         if (layers[layer].keyframes.sort(function(a, b){
-            return b - a
-        })[0] == frame) {
-            return 0;
+            return b - a; //sort the keyframe from largest to smallest and pull out the biggest number
+        })[0] >
+        total_frames) {
+            total_frames = layers[layer].keyframes.sort(function(a, b){
+                return b - a; //sort the keyframe from largest to smallest and pull out the biggest number
+            })[0];
         }
+    }
+    
+    if (frame >= total_frames) {
+        console.log(total_frames);
+        return 0;
     }
     return frame
 }
