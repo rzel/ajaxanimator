@@ -13,7 +13,7 @@ Ax.ex.gif = function(){
 }
 
 Ax.ex.gif.save = function(){
-    Ax.msg("Notes on exporting to Animated GIF", "Export to Animated GIF is not complete, data such as images, paths, polygons, and rotation will not be exported.")
+    Ax.msg("Notes on exporting to Animated GIF", "Export to Animated GIF is not complete, data such as images and rotation will not be exported.")
     Ax.ex.gif.check(); //start the process
 }
 
