@@ -67,7 +67,6 @@ Ax.viewer_load_frame = function(frame, layers, canvas, tweenfunc){
     //note: this function is not multi-layer friendly yet.
     //un-note: this function should be multi-layer friendly, but layers aren't even really supported so i donno
     canvas.renderer.removeAll();
-    var total_frames = 0; //starting point
     for (var layer in layers) {
         //alert([1, 2, 3, 4, 5].indexOf(2))
         if (layers[layer].keyframes.indexOf(frame) != -1) {
@@ -85,20 +84,8 @@ Ax.viewer_load_frame = function(frame, layers, canvas, tweenfunc){
                 else {
                 //console.log("blank frame")
                 }
-        
-        //calculate the biggest frame	
-        if (layers[layer].keyframes.sort(function(a, b){
-            return b - a; //sort the keyframe from largest to smallest and pull out the biggest number
-        })[0] >
-        total_frames) {
-            total_frames = layers[layer].keyframes.sort(function(a, b){
-                return b - a; //sort the keyframe from largest to smallest and pull out the biggest number
-            })[0];
-        }
     }
-    
-    if (frame >= total_frames) {
-        console.log(total_frames);
+    if (frame >= Ax.count_frames(layers)) {
         return 0;
     }
     return frame
