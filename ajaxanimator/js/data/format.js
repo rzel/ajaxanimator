@@ -39,9 +39,9 @@ ALEON/Axff/Xff
 Ax.format = {
   support: {//format support. minimum version, maximum version
     min: 1,
-    max: 9
+    max: 10
   },
-  revision: 9 //the version the app exports
+  revision: 10 //the version the app exports
 }
 
 
