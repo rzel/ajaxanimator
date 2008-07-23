@@ -30,6 +30,23 @@ Ax.smallest_nonempty = function(frame,layer,object){
   return nonempty.sort(function(a,b){return a - b})[0];//sort descending and pull the first result (largest)
 }
 
+Ax.count_frames = function(layers, startAt){
+	startAt = (startAt)?startAt:0; //set starting point
+	layers = (layers)?layers:Ax.layers; //set layers object
+	
+	for (var layer in layers) { //loop through layers
+	    //calculate the biggest frame
+		var layer_frames = layers[layer].keyframes.sort(function(a, b){
+            return b - a; //sort the keyframe from largest to smallest and pull out the biggest number
+        })[0]; //the largest
+		
+        if (layer_frames > startAt) { //if this is bigger than current value
+            startAt = layer_frames; //set current value
+        }//end if
+	}//end loop
+	return startAt; //return last known frame
+}
+
 /*Alternate Tweening Engine. Theoretically Vastly Superior*/
 Ax.getSFTween_core = function(frame, frame1, frame2, layer, store, clonefunc){//get single frame tween
     var frame1_data = {}, //where all the organized data goes
