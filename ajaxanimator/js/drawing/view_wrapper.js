@@ -64,9 +64,7 @@ Ax.init_view_core = function(element){
 
 
 Ax.viewer_load_frame = function(frame, layers, canvas, tweenfunc){
-    //note: this function is not multi-layer friendly yet.
-    //un-note: this function should be multi-layer friendly, but layers aren't even really supported so i donno
-    canvas.renderer.removeAll();
+    canvas.renderer.removeAll(); //clear viewerstuff
     for (var layer in layers) {
         //alert([1, 2, 3, 4, 5].indexOf(2))
         if (layers[layer].keyframes.indexOf(frame) != -1) {
@@ -82,7 +80,7 @@ Ax.viewer_load_frame = function(frame, layers, canvas, tweenfunc){
                     Ax.loadShapes(layers[layer].src[Ax.largest_nonempty(frame, layer, layers)], true, canvas);
                 }
                 else {
-                //console.log("blank frame")
+               	     //console.log("blank frame")
                 }
     }
     if (frame >= Ax.count_frames(layers)) {
