@@ -37,3 +37,7 @@ Ax.macroExec = function(){
         }]
     })).show(document.body)
 }
+
+Ax.offline = function(){
+	Ext.MessageBox.alert("Offline Functionality Not Availiable","Offline is not availiable but most of the application should operate fine while using your browser's offline feature (if available) if icons, CSS, and scripts are properly cached. While offline, some functionality that require a server will not work such as anything User/Login, browsing user animations, and publishing to Flash/GIF.")
+}

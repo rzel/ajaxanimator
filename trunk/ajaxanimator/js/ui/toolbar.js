@@ -20,7 +20,7 @@ Ax.MainToolbar = [
 	{text: "Silverlight", iconCls: "tb_silverlight", handler: function(){Ax.ex.silverlight.save()}},
 	{text: "Animated GIF", iconCls: "tb_image", handler: function(){Ax.ex.gif.save()}}
   ]},
-  {text: "Offline", iconCls: "tb_offline"}
+  {text: "Offline", iconCls: "tb_offline", handler: function(){Ax.offline()}}
 ]},
 {text:"Edit", menu: [
   {text: "Undo", iconCls: "tb_undo", handler: function(){Ax.history_undo()}},
@@ -69,7 +69,7 @@ Ax.MainToolbar = [
   {text: "To Keyframe",iconCls: "tb_addkeyframe", handler: function(){Ax.toKeyframe()}},
   {text: "Clear Frame",iconCls: "tb_clearframe"},
   "-", //organized from stuff you might actually use, compared to stuff you have a slight change if any of using
-  {text: "Reload Data", iconCls: "tb_reload"},
+  {text: "Reload Data", iconCls: "tb_reload", handler: function(){Ax.reloadTimeline()}},
   {text: "Set Last Frame", iconCls: "tb_setlast"},
   {text: "Purge Empty", iconCls: "tb_purge_empty"}
 ]},
@@ -106,7 +106,7 @@ Ax.MainToolbar = [
   {text: "Comments", iconCls: "tb_comment"},
   {text: "Donate", iconCls: "tb_donate"},
   {text: "Interactive Tutorials", iconCls: "tb_tutorial", menu: [
-    {text: "Beginner's Tutorial", iconCls: "tb_info"}
+    {text: "Beginner's Tutorial", iconCls: "tb_info", handler: function(){Ax.tutorials_unavailiable()}}
   ]}
   ]}
 ]

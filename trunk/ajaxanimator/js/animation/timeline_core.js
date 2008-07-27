@@ -348,6 +348,15 @@ Ax.create_timeline_mask = function(){
 }
 
 
+Ax.reloadTimeline = function(){
+	for(var layer in Ax.layers){
+		for(var frame = 0; frame < Ax.tstat.frames; frame++){
+			Ax.renderFrame(frame, layer);
+		}
+	}
+	Ax.msg("Timeline Reloaded","All frames have been sucessfully rendered")
+}
+
 Ax.initTimeline = function(){
   Ax.layers = {};
   
