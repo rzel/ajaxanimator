@@ -3438,32 +3438,15 @@ return this.svgRoot.childNodes;
 } 
 
 
-function generateJSON(cssEnv)
-{    
- //string=string.replace(/;/g,'",') ;
- //string=string.replace(/:/g,':"') ; 
- //style="fill:#7e0000;fill-opacity:1" 
- 
- var css=cssEnv.split(';')
-
-  var strJSON = '{';
-  ch = ',';
-  for (i = 0 ; i < css.length; i++)
-  { 
-   var data=css[i].split(':'); 
-   if(data[0]!=''){ 
-     //if(i == (css.length-2)){   ch = ''; }   
-     strJSON += "'"+data[0].trim()+"':'"+data[1].trim()+"'"+",";
-   } 
-      
-   
-  } 
-  var num=  strJSON.length;
-  strJSON=strJSON.substr(0, num-1);
-
-  strJSON += '}';
-
-  return strJSON;
+function generateJSON(cssEnv){
+ var css = cssEnv.trim().split(";"), styleArray = [], currentStyle = "";
+ for(var i = 0; i < css.length; i++){
+ 	currentStyle = css[i].trim().split(":");
+	if (currentStyle[0] && currentStyle[1] && currentStyle[0].length > 1 && currentStyle[1].length > 1) {
+		styleArray.push(['"', currentStyle[0].toString().trim(), '": "', currentStyle[1].toString().trim(), '"'].join(""))
+	}
+ }
+ return "{"+styleArray.join(",")+"}";
 }
 
 //http://xml-utils.com/conferencia-svg.html#d0e527
