@@ -1,0 +1,11 @@
+Fix safari:
+function generateJSON(cssEnv){
+ var css = cssEnv.trim().split(";"), styleArray = [], currentStyle = "";
+ for(var i = 0; i < css.length; i++){
+ 	currentStyle = css[i].trim().split(":");
+	if (currentStyle[0] && currentStyle[1] && currentStyle[0].length > 1 && currentStyle[1].length > 1) {
+		styleArray.push(['"', currentStyle[0].toString().trim(), '": "', currentStyle[1].toString().trim(), '"'].join(""))
+	}
+ }
+ return "{"+styleArray.join(",")+"}";
+}
