@@ -1,0 +1,3 @@
+<?php
+echo file_get_contents("library/".$_REQUEST['id']);//meh...
+?>
