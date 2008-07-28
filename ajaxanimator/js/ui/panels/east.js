@@ -3,6 +3,7 @@ initComponent: function(){
 Ext.apply(this,{
     region:"east",
     title:"Misc",
+    id: "misc",
 	iconCls: "misc_panel_icon",
     split:true,
     collapsible:true,
@@ -80,3 +81,9 @@ Ext.apply(this,{
   })
   
   Ext.reg("layouteast",Ax.LayoutEastPanel)
+  
+  Ax.misc_setcollapse = function(item){
+if(Ax.viewport.findById("misc").collapsed != item.checked){
+Ax.viewport.findById("misc").toggleCollapse();
+}
+}
