@@ -63,6 +63,7 @@ Ext.apply(this,{
                   }]
               }]
           },{
+		  	disabled: true,
             xtype:"panel",
             title:"User",
 			iconCls: "user_icon",
