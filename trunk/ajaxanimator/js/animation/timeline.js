@@ -68,3 +68,9 @@ Ax.Timeline = Ext.extend(Ext.Panel, {
 
 Ext.reg("timeline", Ax.Timeline)
 
+
+Ax.timeline_setcollapse = function(item){
+if(Ax.viewport.findById("timeline").collapsed != item.checked){
+Ax.viewport.findById("timeline").toggleCollapse();
+}
+}

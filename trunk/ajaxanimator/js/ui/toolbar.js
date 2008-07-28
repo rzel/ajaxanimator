@@ -39,10 +39,10 @@ Ax.MainToolbar = [
   {text: "Information", iconCls: "tb_about", handler: function(){Ax.animationinfo()}},
   {text: "Theme", iconCls: "tb_theme", menu: new Ext.ux.ThemeMenu},
   "-",
-  {text: "Timeline", xtype: "checkitem", checked: true},
-  {text: "Tools", xtype: "checkitem", checked: true},
-  {text: "Misc", xtype: "checkitem", checked: true},
-  {text: "Properties", xtype: "checkitem", checked: true}
+  {text: "Timeline", xtype: "checkitem", checked: true, handler: function(item){Ax.timeline_setcollapse(item)}},
+  {text: "Tools", xtype: "checkitem", checked: true, handler: function(item){Ax.tools_setcollapse(item)}},
+  {text: "Misc", xtype: "checkitem", checked: true, handler: function(item){Ax.misc_setcollapse(item)}},
+  {text: "Properties", xtype: "checkitem", checked: true, handler: function(item){Ax.properties_setcollapse(item)}}
 ]},
 {text:"Tools", menu: [
   //{text: "Color Picker", iconCls: "tb_color"},

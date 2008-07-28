@@ -3,6 +3,7 @@ initComponent: function(){
 Ext.apply(this,{
     region:"west",
     title:"Tools",
+    id: "tools",
     split:true,
     collapsible:true,
     titleCollapse:true,
@@ -20,4 +21,8 @@ Ext.apply(this,{
   Ext.reg("layoutwest",Ax.LayoutWestPanel)
 
   
-  
+  Ax.tools_setcollapse = function(item){
+if(Ax.viewport.findById("tools").collapsed != item.checked){
+Ax.viewport.findById("tools").toggleCollapse();
+}
+}

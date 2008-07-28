@@ -3,6 +3,7 @@ initComponent: function(){
 Ext.apply(this,{
 	collapsedTitle: "Properties",
     region:"south",
+    id: "properties",
 	iconCls: "app_settings",
     title:"Properties",
     split:true,
@@ -47,3 +48,9 @@ Ext.apply(this,{
   })
   
   Ext.reg("layoutsouth",Ax.LayoutSouthPanel)
+  
+  Ax.properties_setcollapse = function(item){
+if(Ax.viewport.findById("properties").collapsed != item.checked){
+Ax.viewport.findById("properties").toggleCollapse();
+}
+}
