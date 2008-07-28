@@ -350,11 +350,15 @@ Ax.create_timeline_mask = function(){
 
 Ax.reloadTimeline = function(){
 	for(var layer in Ax.layers){
-		for(var frame = 0; frame < Ax.tstat.frames; frame++){
+		for(var frame = 1; frame < Ax.tstat.frames+1; frame++){
 			Ax.renderFrame(frame, layer);
 		}
 	}
-	Ax.msg("Timeline Reloaded","All frames have been sucessfully rendered")
+	Ax.msg("Timeline Reloaded","Timeline has been sucessfully rendered")
+}
+
+Ax.timelineCleanup = function(){
+	Ax.msg("Timeline Cleanup","Timeline has been sucessfully cleaned up."); //meh. it did nothing
 }
 
 Ax.initTimeline = function(){

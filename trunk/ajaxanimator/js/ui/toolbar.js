@@ -70,8 +70,7 @@ Ax.MainToolbar = [
   {text: "Clear Frame",iconCls: "tb_clearframe"},
   "-", //organized from stuff you might actually use, compared to stuff you have a slight change if any of using
   {text: "Reload Data", iconCls: "tb_reload", handler: function(){Ax.reloadTimeline()}},
-  {text: "Set Last Frame", iconCls: "tb_setlast"},
-  {text: "Purge Empty", iconCls: "tb_purge_empty"}
+  {text: "Purge Empty", iconCls: "tb_purge_empty", handler: function(){Ax.timelineCleanup()}}
 ]},
 {text:"Animation", menu: [
   {text: "Canvas Mode", disabled: true}, //this needs serious work.

@@ -12,8 +12,12 @@
 
 //.... yes i did..... i totally copied Kate :P
 
+Ax.tips_array = ["Tips Not Loaded"];
+
+
 Ax.showTips = function(){
-  (new Ext.Window({
+if(!Ax.tipsWindow){
+  Ax.tipsWindow = new Ext.Window({
     title: "Tip of the Day - Ajax Animator",
     iconCls: "tb_tip",
     layout: "border",
@@ -21,10 +25,30 @@ Ax.showTips = function(){
     height: 250,
     items: [
             {region: "north", html: "<center><h1 class='tiptitle'>Did you know...?</h1></center><br>", border: false},
-            {region: "center", html: "<center>woah, this stuffs are interestings</center>", border: false}
+            {region: "center", html: "<center>Loading...</center>", border: false}
             ],
     buttons: [{text: "Previous", iconCls: "arrow_prev"},
-    {text: "Next", iconCls: "arrow_next"},
+    {text: "Next", iconCls: "arrow_next", handler: function(){
+    this.ownerCt.layout.center.panel.body.update(Ax.getTipData())
+    }},
     {text: "Close", iconCls: "close", handler: function(){this.ownerCt.close()}}]
-    })).show(document.body)
+    })
+    }
+    Ax.tipsWindow.show(document.body)
+}
+
+
+Ax.getTipData = function(){
+if(!Ax.tipsWindow){
+Ax.showTips();
+}
+if(!Ax.tipIndex){
+  Ax.tipIndex = Math.floor(Ax.tips_array.length*Math.random())
+}
+return "<center>"+Ax.tips_array[Ax.tipIndex]+"</center>";
+}
+
+Ax.tipsNext = function(){
+
+return Ax.getTipData();
 }
