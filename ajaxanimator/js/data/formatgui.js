@@ -35,7 +35,9 @@ Ax.animationinfo = function(type){
     
     if (type == "core") {
         return "<b>" + Ax.animation.name + ":</b><br />Generator: " + (Ax.animation.markup.generator ? (Ax.animation.markup.generator.app+" build "+Ax.animation.markup.generator.build) : "Unknown") +
-        "<br />Creation Date: " +
+        "<br />Format Version: " +
+		(Ax.animation.markup.revision ? Ax.animation.markup.revision : "Unknown") + 
+		"<br />Creation Date: " +
         ((Ax.animation.markup.creation) ? Ax.animation.markup.creation : "Unknown") +
         "<br />Last Modified Date: " +
         ((Ax.animation.markup.modified) ? Ax.animation.markup.modified : "Unknown") +
