@@ -6,10 +6,6 @@
  * that stuff that goes on that tries to carpetbomb your desktop with random aliens :P
  * yep, all that magic takes place..... here.
  */
-
-
-
-
 Ax.autoimport = function(markup){
     var jsonmarkup = Ax.test_animation_markup(markup);
     if (jsonmarkup != false) {
@@ -34,16 +30,11 @@ Ax.autoimport = function(markup){
 }
 
 
-Ax.animationinfo = function(){
+Ax.animationinfo = function(type){
     //graphically displays metadata in animation, also some statistics, etc.
     
-    
-    (new Ext.Window({
-        title: "Animation Info - " + Ax.animation.name,
-        iconCls: "tb_about",
-        width: 300,
-        height: 200,
-        html: "<b>" + Ax.animation.name + ":</b><br />Generator: " + Ext.util.JSON.encode(Ax.animation.markup.generator) +
+    if (type == "core") {
+        return "<b>" + Ax.animation.name + ":</b><br />Generator: " + (Ax.animation.markup.generator ? (Ax.animation.markup.generator.app+" build "+Ax.animation.markup.generator.build) : "Unknown") +
         "<br />Creation Date: " +
         ((Ax.animation.markup.creation) ? Ax.animation.markup.creation : "Unknown") +
         "<br />Last Modified Date: " +
@@ -51,9 +42,37 @@ Ax.animationinfo = function(){
         "<br />Contributors: " +
         ((Ax.animation.markup.contrib) ? Ax.animation.markup.contrib : ['Unknown']).join(",") +
         "<br />Size: " +
-        Ax.export_animation(Ax.animation.markup, "json").length + 
-		"<br />Layers: " + Ax.tstat.layers + 
-		"<br />Frames: " + Ax.count_frames()
+        Ax.export_animation(Ax.animation.markup, "json").length +
+        "<br />Layers: " +
+        Ax.tstat.layers +
+        "<br />Frames: " +
+        Ax.count_frames()
+    }
+    
+    (new Ext.Window({
+        title: "Animation Info - " + Ax.animation.name,
+        iconCls: "tb_about",
+        width: 300,
+        height: 200,
+		layout: "fit",
+		items: {
+			border: false,
+ 	        html: Ax.animationinfo("core")
+		},
+        buttons: [{
+            text: "Update",
+            iconCls: "reload_icon",
+            handler: function(){
+                this.ownerCt.items.first().body.update(Ax.animationinfo("core"));
+				//this.ownerCt.layout.body.update(Ax.animationinfo("core"))
+            }
+        }, {
+            text: "Close",
+            iconCls: "close",
+            handler: function(){
+                this.ownerCt.close()
+            }
+        }]
     
     })).show(document.body)
 }

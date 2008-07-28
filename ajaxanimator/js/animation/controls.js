@@ -30,8 +30,16 @@ Ax.controls = {
         }
     },
     last: function(){
-        Ax.msg("No worky", "this doesn't work yet.")
-    },
+        //Ax.msg("No worky", "this doesn't work yet.")
+        switch (Ax.viewport.findById("maintabpanel").getActiveTab().getId()) {
+            case "canvas_tab":
+                Ax.selectFrame(Ax.count_frames(), Ax.tcurrent.layer);
+                break;
+            case "preview_tab":
+                Ax.preview_frame = Ax.count_frames();
+                break;
+        }
+	},
     first: function(){
         switch (Ax.viewport.findById("maintabpanel").getActiveTab().getId()) {
             case "canvas_tab":
