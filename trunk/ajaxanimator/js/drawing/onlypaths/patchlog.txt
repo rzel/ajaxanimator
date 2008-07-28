@@ -9,3 +9,11 @@ function generateJSON(cssEnv){
  }
  return "{"+styleArray.join(",")+"}";
 }
+
+
+Do Not Draw On Right-Click:
+
+(add to RichDrawEditor.prototype.onMouseDown = function(event) { in onlypaths.js)
+
+ if(event.button != 1){return}
+ 

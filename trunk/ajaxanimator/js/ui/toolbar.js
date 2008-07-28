@@ -2,15 +2,15 @@ Ax.MainToolbar = [
   {text:"File", menu: [
   {text: "New", iconCls: "tb_new", handler: function(){Ax.new_animation()}},
   {text: "Open", iconCls: "tb_open", menu: [
+    {text: "From Webserver", iconCls: "tb_server", disabled: true},
 	{text: "From Computer", iconCls: "tb_comp", handler: function(){Ax.open.file()}},
-    {text: "From Webserver", iconCls: "tb_server"},
     {text: "From Text", iconCls: "tb_text", handler: function(){Ax.open.text()}},
 	{text: "From URL", iconCls: "tb_url", handler: function(){Ax.open.url()}}
 	]},
 	
   {text: "Save", iconCls: "tb_save",menu: [
+    {text: "To Webserver", iconCls: "tb_server", disabled: true},
     {text: "To Computer", iconCls: "tb_comp", handler: function(){Ax.save.computer()}},
-    {text: "To Webserver", iconCls: "tb_server"},
     {text: "To Text", iconCls: "tb_text", handler: function(){Ax.save.text()}}
   ]},
   "-",
@@ -90,10 +90,10 @@ Ax.MainToolbar = [
   {text: "Random Shape",iconCls: "tb_plugin", handler: function(el){Ax.exec(el.initialConfig.text)}}
 ]},
 {text:"User", menu: [
-  {text: "Login", iconCls: "tb_login"},
-  {text: "Logout", iconCls: "tb_logout"},
-  {text: "Browse Animations", iconCls: "tb_browse", handler: function(){Ax.showanimationbrowser()}},
-  {text: "Profile", iconCls: "tb_profile"}
+  {text: "Login", iconCls: "tb_login", disabled: true},
+  {text: "Logout", iconCls: "tb_logout", disabled: true},
+  {text: "Profile", iconCls: "tb_profile", disabled: true},
+  {text: "Browse Animations", iconCls: "tb_browse", handler: function(){Ax.showanimationbrowser()}}
 ]},
 {text:"Help", menu: [
   {text: "About", iconCls: "tb_about", handler: function(){Ax.About()}},

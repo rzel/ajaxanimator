@@ -446,6 +446,7 @@ RichDrawEditor.prototype.overShape = function(event) {
 } 
 */
 RichDrawEditor.prototype.onMouseDown = function(event) {  
+ if(event.button != 1){return}
  
  clockdata();
  
