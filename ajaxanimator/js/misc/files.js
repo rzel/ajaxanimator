@@ -3,6 +3,7 @@
  */
 Ax.files = {
     userlist: "../server/user/userlist.php",
+	test: "../server/user/test.php",
     animations: "../server/user/animation.php?id=",
 	library: "../server/user/library.php",
 	libraryitem: "../server/user/libraryitem.php?id=",
