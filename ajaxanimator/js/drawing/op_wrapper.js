@@ -183,6 +183,14 @@ try {
 				Ax.setTool("select")
 			}).defer(200);
 			break;
+		case "shape":
+			Ax.canvas.unselect();
+			(function(){
+				Ax.viewport.findById("tool_" + tool).unselect();
+				Ax.setTool("select")
+			}).defer(200);
+			Ax.viewport.findById("library").expand();
+			break;
 		default:
 			
 			Ax.canvas.unselect();

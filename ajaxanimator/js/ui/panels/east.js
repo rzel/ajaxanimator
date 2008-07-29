@@ -21,6 +21,7 @@ Ext.apply(this,{
 			iconCls: "misc_icon",
             layout:"fit",
             items:[{
+				//id: "misc_accordian",
                 layout:"accordion",
                 autoScroll: true,
                 layoutConfig:{
@@ -50,6 +51,7 @@ Ext.apply(this,{
                     border:false
                   },{
                     title:"Library",
+					id: "library",
                     autoHeight:true,
 					iconCls: "library_icon",
                     border:false,
@@ -58,7 +60,7 @@ Ext.apply(this,{
                     title:"Misc",
                     autoHeight:true,
 					iconCls: "misc_icon",
-                    html:"None Yet :P",
+                    html:"Unavailable",
                     border:false
                   }]
               }]

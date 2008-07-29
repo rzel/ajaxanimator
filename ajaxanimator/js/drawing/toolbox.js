@@ -9,7 +9,7 @@ Ax.toolConfig={
 	"text":        ["tx_text","Draw text","Text"],
 	"image":       ["tx_image", "Draw Image/Picture","Image"],
 
-	"shape":       ["tx_shape","Draw Shape from library","Library"],
+	"shape":       ["tx_shape","Add a Shape from library","Library"],
 	"reset":       ["tx_reset","Reset/Clear/Empty Frame","Reset"],
 	"delete":      ["tx_delete","Delete selected shape","Delete"]
 }
