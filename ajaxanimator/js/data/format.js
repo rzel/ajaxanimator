@@ -1,4 +1,5 @@
 /*The magickal ALEON (Animation Lightweight Ecmascript Object Notation Format)*/
+//or maybe AXON woudl be better.
 //you can call it Awesome Lightweight Extreme Online New-animation-format if you like
 //or other countless bacronyms
 //sorry for the ridiculous name
@@ -163,6 +164,7 @@ for(var firstlayer in layers){
   break;
 }  
 
+
 for(var layer in layers){ //loop through layers
     Ax.addLayer(layer); //add layer
     Ax.layers[layer].keyframes = layers[layer].keyframes; //set keyframes
@@ -171,6 +173,9 @@ for(var layer in layers){ //loop through layers
     //console.log(layers[layer].src);
     for(var i = 0; i < layers[layer].keyframes.sort(function(a,b){return b-a})[0] + 1; i++){
       Ax.selectFrame(i + 1,layer); //render frame to timeline, (renderFrame may be better)
+      	if(layers[layer].keyframes.indexOf(i+1) != -1){
+		Ax.toKeyframe(i+1, layer)
+	}
     }
   }
 
