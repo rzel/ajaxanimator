@@ -33,6 +33,10 @@ setTimeout(function(){
       }
 	 
     },100)
+	
+	setTimeout(function(){
+		Ax.testserver();
+	},500)
   },150);
 
 }, 250);

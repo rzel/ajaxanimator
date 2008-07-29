@@ -98,7 +98,7 @@
                 listeners: {
                     beforeaction: function(){
                         Ax.msg("Uploading Data", "The animation file is being uploaded to the server.")
-                    },
+                    }
                 },
                 items: [{
                     name: "file",
