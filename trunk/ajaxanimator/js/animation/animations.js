@@ -57,8 +57,7 @@ Ax.AnimationBrowser = Ext.extend(Ext.Panel, {
                     }, {
                         region: "center",
                         border: false,
-                        html: "<div class=\"x-border-layout-ct canvas_container\">" +
-                        "<div id=\"playercanvas\" class=\"canvas\"></div>"
+                        html: "<div class=\"x-border-layout-ct canvas_container\"><div id=\"playercanvas\" class=\"canvas\"></div></div>"
                     }],
                     autoScroll: true,
                     tools: [{
