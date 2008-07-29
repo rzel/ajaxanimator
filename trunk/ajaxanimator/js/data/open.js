@@ -123,7 +123,8 @@
                 text: "Load",
                 iconCls: "load",
                 handler: function(){
-                    Ax.autoimport(this.ownerCt.findById("loadtext").getValue())
+					Ext.MessageBox.alert("Functionality Disabled","Loading an animation from an external server has been disabled for (pseudo) security purposes.")
+                    //Ax.autoimport(this.ownerCt.findById("loadtext").getValue())
                 }
             }, {
                 text: "Close",

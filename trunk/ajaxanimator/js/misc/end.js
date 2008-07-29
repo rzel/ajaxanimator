@@ -19,7 +19,7 @@ setTimeout(function(){
       
       //Ax.showTips();
       
-      if(Ax.v.dev && !Ax.developer){
+      if(Ax.v.dev && !window.developer){
       //Ax.gs(1);
       new Ext.ux.ToastWindow({
         title: 'Testing Release',
@@ -28,8 +28,8 @@ setTimeout(function(){
               'comments about this release (build '+Ax.v.build+') frequently. Happy Testing!',
         iconCls: 'error'
       }).show(document);  
-      }else{
-
+      Ax.showTips();
+	  }else{
       }
 	 
     },100)

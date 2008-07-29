@@ -54,7 +54,7 @@ Ax.CanvasStatusbar = ({
     handler: function(){Ax.controls.last()}
 	},'-',{
 	text: "More",
-	menu: [{text : "sum stuff"}]
+	menu: [{text : "Preview", handler: function(){Ax.controls.play()}}]
 	}, " "]
 })
 
@@ -95,7 +95,7 @@ Ax.PreviewStatusbar = ({
 	},
 	'-', {
 	text: "More",
-	menu: [{text : "sum stuff"}]
+	menu: [{text : "Canvas", handler: function(){Ax.viewport.findById("maintabpanel").activate(0)}}]
 	}," "]
 })
 
