@@ -283,7 +283,7 @@ Ax.addFrameListeners = function(frame_cell,frame,layer){
    target: frame_cell,
    trackMouse: true,
    shadow: false,
-   //width: 120,
+   width: 120,
    title: "Loading...",
    html: 'Loading...',
    rframe: frame,
@@ -296,16 +296,22 @@ Ax.addFrameListeners = function(frame_cell,frame,layer){
 		}, dataoutput = "";
 		
 		for(var label in dataformat){
-			dataoutput += "<tr><td align=\"left\">"+label+"</td><td align=\"right\">"+dataformat[label]+"</td></tr>"
+			dataoutput += "<span style=\"float: left\">"+label+"</span><span style=\"float: right\">"+dataformat[label]+"</span><br>"
 		}
 		
-		tooltip.setTitle('Frame '+tooltip.rframe.toString()+" "+tooltip.rlayer.toString())
-		tooltip.body.update("<table style=\"width: 100%\"><tbody>"+dataoutput+"</tbody></table>")
 		
 		var preview_tip = document.createElement("div"); //im not good with Ext dom stuffs
 		preview_tip.className = "preview_tip"
-		Ext.get(preview_tip).setHeight((tooltip.getBox().width * Ax.canvasHeight)/Ax.canvasWidth)
-		Ext.get(preview_tip).setWidth(tooltip.getBox().width)
+		Ext.get(preview_tip).setHeight(((tooltip.getBox().width - 12) * Ax.canvasHeight)/Ax.canvasWidth)
+		Ext.get(preview_tip).setWidth(tooltip.getBox().width - 12)
+		
+		
+		tooltip.setTitle('Frame '+tooltip.rframe.toString()+" "+tooltip.rlayer.toString())
+		tooltip.body.update(dataoutput)
+		
+		if(Ext.isIE){
+			preview_tip.innerHTML = "Preview Tips Not Available For Microsoft Internet Explorer"
+		}
 		
 		tooltip.body.dom.appendChild(preview_tip)
 		

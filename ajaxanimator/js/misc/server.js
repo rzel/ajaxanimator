@@ -4,13 +4,14 @@
  * @author Kevin
  */
 
-Ax.serverinfo = function(){
+Ax.testserver = function(reset){
+	if(reset){
+		Ax.server_working = null;
+	}
     if (!Ax.server_working) {
         Ext.Ajax.request({
-            url: Ax.files.test,
-            params: {
-                "message": "working"
-            },
+            url: Ax.files.test+"?m=working",
+			method: "get",
             success: function(e){
                 if (e.responseText.indexOf("working") != -1) {
                     Ax.server_working = true;

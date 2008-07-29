@@ -1,3 +1,3 @@
-<?php
-    echo $_REQUEST["message"];
-?>
+STARTTEST<?php
+    echo $_REQUEST["m"];
+?>ENDTEST

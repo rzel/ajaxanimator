@@ -971,18 +971,41 @@ function noselect(){
     //typeTransform="";    
 }
 
+if (!Array.prototype.map)
+{
+  Array.prototype.map = function(fun /*, thisp*/)
+  {
+    var len = this.length;
+    if (typeof fun != "function")
+      throw new TypeError();
+
+    var res = new Array(len);
+    var thisp = arguments[1];
+    for (var i = 0; i < len; i++)
+    {
+      if (i in this)
+        res[i] = fun.call(thisp, this[i], i, this);
+    }
+
+    return res;
+  };
+}
+
+
 function createUUID()
 {
-  return [4, 2, 2, 2, 6].map(function(length) {
-    var uuidpart = "";
-    for (var i=0; i<length; i++) {
+	var uuid = [];
+for(var x = 0; x < 5; x++){
+	uuid.push("");
+    for (var i=0; i<[4, 2, 2, 2, 6][x]; i++) {
       var uuidchar = parseInt((Math.random() * 256)).toString(16);
       if (uuidchar.length == 1)
         uuidchar = "0" + uuidchar;
-      uuidpart += uuidchar;
+      uuid[x] += uuidchar;
     }
-    return uuidpart;
-  }).join('-');
+}
+return uuid.join("-")
+
 }
 
 
