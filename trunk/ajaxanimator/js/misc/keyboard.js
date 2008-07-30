@@ -69,7 +69,7 @@ Ax.verify_keydown = function(code, event){ //koolio! this is sssooooooo much bet
   if (window.getSelection) {
     selectedText = window.getSelection().toString();
   }else if (document.selection) { //I3 suxx0rz
-    selectedText = document.selection.createRange().toString();
+    selectedText = document.selection.createRange();
   }
   if(selectedText.length > 1){return} //don't continue if there's anything in the selection
   

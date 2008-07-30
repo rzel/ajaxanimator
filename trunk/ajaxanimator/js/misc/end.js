@@ -31,7 +31,7 @@ setTimeout(function(){
       }).show(document);  
       Ax.showTips();
 	  
-	        if(Ext.isIE){
+	  if(Ext.isIE){
 	  	Ext.MessageBox.alert("Notes on Microsoft Internet Explorer",
 		"Currently, support for Microsoft Internet Explorer (6/7/8) are only experimental. Some features do not work properly such as animation and playback of some specific animations. The issues are being resolved, but in the mean time, you may try out another browser such as <a href='http://getfirefox.com'>Firefox</a>, <a href='http://opera.com'>Opera</a>, or <a href='http://apple.com/safari'>Safari</a>.")
 	  }
