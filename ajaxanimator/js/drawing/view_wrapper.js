@@ -2,8 +2,8 @@
 /* some analogies for engresh!
  * 
  */
- /   wrapper : onlypaths :: view_wrapper : op_view
- */
+ //  wrapper : onlypaths :: view_wrapper : op_view
+
 //so basically this is a set of wrapper stuff for op_view, or RichDrawViewer. Its a simplified version of onlypaths that has no dependencies
 //for sole drawing of crap
 
