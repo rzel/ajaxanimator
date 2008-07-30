@@ -633,7 +633,7 @@ VMLRenderer.prototype.clic = function(shape) {
 
        
          	shape.children[0].setAttribute("v",path);
-               document.forms[0].control_codebase.value=path;
+              // document.forms[0].control_codebase.value=path;
  
 }
 
@@ -723,7 +723,7 @@ VMLRenderer.prototype.resize = function(shape, fromX, fromY, toX, toY) {
         shape.style.top="0px";    
 
          	shape.children[0].setAttribute("v",path);
-               document.forms[0].control_codebase.value=path;
+               //document.forms[0].control_codebase.value=path;
 
           
      }
@@ -854,7 +854,7 @@ shInfo.id = shape.id;
    {  
        if(shape.children[0].tagName=='path') {
               shInfo.d = shape.getAttribute('v'); 
-             document.forms[0].codebase.value=shape.getAttribute('v'); 
+             //document.forms[0].codebase.value=shape.getAttribute('v'); 
              
        }
        if(shape.children[0].tagName=='textpath') {
@@ -1676,7 +1676,7 @@ VMLRenderer.prototype.scaleShape = function(shape, previus,toX, toY) {
                         var dx= toX+10*Math.cos(angle_diagonal+(Math.PI/2)); 
                         var dy= toY+10*Math.sin(angle_diagonal+(Math.PI/2)); 
                       var section_a=ntrsccn2rb(ax,ay,bx,by,cx,cy,dx,dy); 
-                 document.forms[0].code.value=angle_diagonal* 180 / Math.PI;       
+                 //document.forms[0].code.value=angle_diagonal* 180 / Math.PI;       
 
                 var tx= section_a[1];
                 var ty= section_a[2];
@@ -1829,7 +1829,7 @@ VMLRenderer.prototype.scaleShape = function(shape, previus,toX, toY) {
                         var dy= toY+10*Math.sin(angle_diagonal+(Math.PI/2)); 
 
 
-                      document.forms[0].code.value=angle_diagonal;
+                      //document.forms[0].code.value=angle_diagonal;
 
       
                 var section_a=ntrsccn2rb(ax,ay,bx,by,cx,cy,dx,dy);   
@@ -1916,7 +1916,7 @@ VMLRenderer.prototype.scaleShape = function(shape, previus,toX, toY) {
                         var dy= toY+10*Math.sin(angle_diagonal+(Math.PI/2)); 
 
 
-                      document.forms[0].code.value=angle_diagonal;
+                      //document.forms[0].code.value=angle_diagonal;
 
       
                 var section_a=ntrsccn2rb(ax,ay,bx,by,cx,cy,dx,dy);   
