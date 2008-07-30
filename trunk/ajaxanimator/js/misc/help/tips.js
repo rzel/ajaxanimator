@@ -33,7 +33,7 @@ Ax.showTips = function(){
                 text: "Previous",
                 iconCls: "arrow_prev",
 				handler: function(){
-					Ax.tipIndex = (Ax.tipIndex-1) % Ax.tips_array.length;
+					Ax.tipIndex--;
 					this.ownerCt.layout.center.panel.body.update(Ax.getTipData())
 				}
             }, {
@@ -68,7 +68,6 @@ Ax.getTipData = function(){
 	)/( //divide it by
 	1000*60*60*24//A Day
 	) % Ax.tips_array.length); //and get the remainder
-	
     }
     return "<center>" + Ax.tips_array[Ax.tipIndex] + "</center>";
 }
