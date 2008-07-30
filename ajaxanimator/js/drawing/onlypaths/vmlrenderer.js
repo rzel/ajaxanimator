@@ -807,10 +807,10 @@ shInfo.id = shape.id;
  shInfo.type = shape.tagName;
  if (shape.tagName == 'rect') 
    {
-    shInfo.left = parseFloat(shape.getAttribute( 'x'));
-    shInfo.top = parseFloat(shape.getAttribute( 'y'));
-    shInfo.width = parseFloat(shape.getAttribute('width'));
-    shInfo.height = parseFloat(shape.getAttribute('height'));   
+    shInfo.left = parseFloat(shape.style.left);
+    shInfo.top = parseFloat(shape.style.top);
+    shInfo.width = parseFloat(shape.style.width);
+    shInfo.height = parseFloat(shape.style.height);   
     //++
     //shInfo.rotate = parseFloat(shape.getAttribute('rotation'));  
    }
@@ -1173,6 +1173,7 @@ VMLRenderer.prototype.showTracker = function(shape) {
        }        
    }     
   if (shape.tagName == 'rect') { 
+/*
      
      $('option_rect_rot').value= shape.getAttribute('rotation');
      $('option_rect_trx').value= box.x;  
@@ -1180,6 +1181,7 @@ VMLRenderer.prototype.showTracker = function(shape) {
      $('option_rect_sclx').value= box.width;  
      $('option_rect_scly').value= box.height;
 
+*/
   }  
 
   if (shape.tagName == 'image'){
