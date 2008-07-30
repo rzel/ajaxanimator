@@ -19,6 +19,10 @@ Ax.player_pause = function(){
 }
 
 Ax.init_player = function(markup){
+  if(Ext.isIE==true){ //yes. i know. browser sniffing is bad
+    $("playercanvas").style.position = "absolute";
+    $("playercanvas").style.left = "5%";
+  }
   if(typeof markup == typeof "insanelygreat"){
     markup = Ext.util.JSON.decode(markup)
   }
