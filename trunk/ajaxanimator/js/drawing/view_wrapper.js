@@ -47,6 +47,7 @@ Ax.framerate = 12;
 
 Ax.init_view = function(element){
     element.innerHTML = "";
+    element.style.overflow = "hidden";
     element.style.height = Ax.canvasHeight + "px";
     element.style.width = Ax.canvasWidth + "px"
     return Ax.init_view_core(element)
