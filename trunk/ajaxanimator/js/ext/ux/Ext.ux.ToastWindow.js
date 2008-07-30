@@ -57,5 +57,7 @@ Ext.ux.ToastWindow = Ext.extend(Ext.Window, {
         	scope: this,
         	callback: this.destroy
         });
-    }
+    },
+	  focus: Ext.emptyFn 
+
 });  
