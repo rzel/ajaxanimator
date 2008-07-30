@@ -1,5 +1,7 @@
 
-/*
+/* some analogies for engresh!
+ * 
+ */
  /   wrapper : onlypaths :: view_wrapper : op_view
  */
 //so basically this is a set of wrapper stuff for op_view, or RichDrawViewer. Its a simplified version of onlypaths that has no dependencies
@@ -46,10 +48,11 @@ Ax.framerate = 12;
 
 
 Ax.init_view = function(element){
-    element.innerHTML = "";
+    element.innerHTML = ""; //I wish I could make a witty comment here. Something like those guys at SMF
+	//http://www.simplemachines.org/community/index.php?topic=243341.0
     element.style.overflow = "hidden";
     element.style.height = Ax.canvasHeight + "px";
-    element.style.width = Ax.canvasWidth + "px"
+    element.style.width = Ax.canvasWidth + "px";
     return Ax.init_view_core(element)
 }
 
