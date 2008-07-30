@@ -34,7 +34,7 @@ Ext.onReady(function(){
                         iconCls: 'error'
                     }).show(document);
                     if (Ext.isIE) {//you know I miss the days of saying "Error: YOUR BROWSER SUCKS!"
-                        Ext.MessageBox.alert("Notes on Microsoft Internet Explorer", "Currently, support for Microsoft Internet Explorer (6/7/8) are only experimental. Some features do not work properly such as animation and playback of some specific animations. The issues are being resolved, but in the mean time, you may try out another browser such as <a href='http://getfirefox.com'>Firefox</a>, <a href='http://opera.com'>Opera</a>, or <a href='http://apple.com/safari'>Safari</a>.")
+                        Ext.MessageBox.alert("Notes on Microsoft Internet Explorer", "Currently, support for Microsoft Internet Explorer (6/7/8) are only experimental. Some features do not work properly such as animation and playback of some specific animations. The issues are being fixed, but in the mean time, you may try out another browser such as <a href='http://getfirefox.com'>Firefox</a>, <a href='http://opera.com'>Opera</a>, or <a href='http://apple.com/safari'>Safari</a>.")
                     }
                     else {
                         Ax.showTips();
