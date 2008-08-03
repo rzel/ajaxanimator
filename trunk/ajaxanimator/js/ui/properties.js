@@ -114,7 +114,7 @@ Ax.PropertiesPanel = Ext.extend(Ext.Panel, {
 									field.setValue(19);
 									value = field.getValue();
 								}
-								Ax.canvas.fontSize = value;
+								Ax.canvas.textSize = value;
 							
 							}
 						},

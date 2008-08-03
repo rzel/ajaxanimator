@@ -5,9 +5,10 @@ Ext.ux.ToastWindowMgr = {
 Ext.ux.ToastWindow = Ext.extend(Ext.Window, {
     initComponent: function(){
           Ext.apply(this, {
-              iconCls: this.iconCls || 'information',
+            iconCls: this.iconCls || 'information',
             width: 200,
             height: 100,
+			delay: 4000,
             autoScroll: true,
             autoDestroy: true,
             plain: false
@@ -34,7 +35,7 @@ Ext.ux.ToastWindow = Ext.extend(Ext.Window, {
                Ext.ux.ToastWindowMgr.positions.remove(this.pos);
             this.task.cancel();}
         , this);
-        this.task.delay(4000);
+        this.task.delay(this.delay);
     },
     animShow: function(){
         this.pos = 0;
