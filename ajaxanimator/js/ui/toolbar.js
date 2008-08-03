@@ -102,8 +102,8 @@ Ax.MainToolbar = [
   {text: "Manual", iconCls: "tb_docs", handler: function(){Ax.loadManual()}},
   {text: "FAQ", iconCls: "tb_docs", handler: function(){Ax.loadFAQ()}},
   {text: "Bug Reports", iconCls: "tb_bug", handler: function(){Ax.BugReport()}},
-  {text: "Comments", iconCls: "tb_comment"},
-  {text: "Donate", iconCls: "tb_donate"},
+  {text: "Comments", iconCls: "tb_comment", handler: function(){Ax.comment()}},
+  {text: "Contribute", iconCls: "tb_donate", handler: function(){Ax.donate()}},
   {text: "Interactive Tutorials", iconCls: "tb_tutorial", menu: [
     {text: "Beginner's Tutorial", iconCls: "tb_info", handler: function(){Ax.tutorials_unavailable()}}
   ]}

@@ -1,4 +1,6 @@
 Ax.BugReport = function(){
+	return Ax.msg("Not Available","This feature is not available");
+	
 //Ax.gs(4);
 var ErrorWindow = new Ext.Window({
     closable: true,
@@ -46,4 +48,10 @@ ErrorWindow.show();
 
 //onerror = Ax.Error
 
+Ax.comment = function(){
+Ax.msg("Not Available","This feature is not available");
+}
 
+Ax.donate = function(){
+Ext.MessageBox.alert("Helping the Ajax Animator","If you enjoy using the Ajax Animator and would like to help assist the project, please use the ad-supported version, report bugs, comment on desired features and spread the word.");
+}

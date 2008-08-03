@@ -20,6 +20,7 @@ Ax.FAQ = Ext.extend(Ext.Panel,{
 initComponent: function(){
 Ext.apply(this,{
 	title: "FAQ",
+
 	closable: true,
 	iconCls: "tb_docs",
 	layout: "fit",
@@ -27,12 +28,15 @@ Ext.apply(this,{
 	items: {
 	title: "FAQ",
 	border: true,
+		cls: "docs",
 	iconCls: "tb_docs",
-	html: "SUM FAQ STUFF HERE!!!"
+	bodyStyle: "overflow: auto; padding-left: 10px",
+	autoLoad: {
+		url: Ax.files.faq
+	}
 	}
 	
   })
-
    Ax.FAQ.superclass.initComponent.apply(this, arguments);
   }
   })
@@ -51,7 +55,10 @@ Ext.apply(this,{
 	title: "Manual",
 	border: true,
 	iconCls: "tb_docs",
-	html: "SUM Manual STUFF HERE!!!"
+	cls: "docs",
+	autoLoad: {
+		url: Ax.files.manual
+	}
 	}
 	
   })

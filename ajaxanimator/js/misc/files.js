@@ -10,5 +10,9 @@ Ax.files = {
     save_proxy: "../server/user/save_proxy.php",
     open_proxy: "../server/user/open_proxy.php",
 	export_gif: "../server/export/gif.php",
-	export_swf: "../server/export/swf.php"
+	export_swf: "../server/export/swf.php",
+	faq: "../server/doc/faq.htm",
+	manual: "../server/doc/manual.htm"
 }
+
+
