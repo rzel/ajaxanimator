@@ -24,10 +24,10 @@ Ax.AnimationBrowser = Ext.extend(Ext.Panel, {
                         region: "north",
                         border: false,
                         tbar: [{
-                            text: "By:&nbsp;Hardcoded&nbsp;Name"
+                            text: "By:&nbsp;Unavailable"
                         }, {
                             xtype: "tbfill"
-                        }, "Rating&nbsp;System"],
+                        }, "Unavailable"],
                         height: 27
                     }, {
                         region: "south",
@@ -52,7 +52,7 @@ Ax.AnimationBrowser = Ext.extend(Ext.Panel, {
                             }
                         }, {
                             xtype: "tbfill"
-                        }, "0/1337 0FPS"],
+                        }, "?/? ?FPS"],
                         height: 27
                     }, {
                         region: "center",
