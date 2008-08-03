@@ -27,7 +27,8 @@ Ext.ux.ThemeMenu = function(config){
 
 Ext.extend(Ext.ux.ThemeMenu, Ext.menu.Menu, {
 
-cssPath: "../theme/css/", //mind the trailing slash
+cssPath: Ax.files.themes, //mind the trailing slash
+
 themeconfig:[ //array of stuff
  ['xtheme-default.css','Ext Blue Theme',true] //t3h default
 ,['xtheme-gray.css', 'Gray Theme']

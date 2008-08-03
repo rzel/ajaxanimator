@@ -8,13 +8,15 @@ Ext.ux.ToastWindow = Ext.extend(Ext.Window, {
             iconCls: this.iconCls || 'information',
             width: 200,
             height: 100,
-			delay: 4000,
+			delay: this.delay?this.delay:4000,
             autoScroll: true,
             autoDestroy: true,
             plain: false
           });
         this.task = new Ext.util.DelayedTask(this.hide, this);
         Ext.ux.ToastWindow.superclass.initComponent.call(this);
+		
+		//console.log(this.delay)
     },
     setMessage: function(msg){
         this.body.update(msg);
