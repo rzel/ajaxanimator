@@ -40,9 +40,9 @@ ALEON/Axff/Xff
 Ax.format = {
   support: {//format support. minimum version, maximum version
     min: 1,
-    max: 10
+    max: 11
   },
-  revision: 10 //the version the app exports
+  revision: 11 //the version the app exports
 }
 
 
@@ -101,7 +101,8 @@ Ax.export_animation = function(input, format){
   
   input.layers = Ax.export_animation_core(); //the most important part: the data
   
-
+  input.width = Ax.canvasWidth;
+  input.height = Ax.canvasHeight;
   
   if(format == "json"){
     return Ext.util.JSON.encode(input);
@@ -117,6 +118,10 @@ Ax.import_animation = function(markup){
   Ax.setAnimationName(markup.name)
   //set the name for the animation in that little box in the toolbar. overly hackish, I know. Seriously, acessing dom?
   Ax.animation.markup = markup;
+  
+  Ax.canvasWidth = markup.width?markup.width:480
+  Ax.canvasHeight = markup.height?markup.height:272
+  Ax.canvasSize_core();
   
   Ax.import_animation_core(markup.layers);
   Ax.selectFrame((markup.tcframe)?markup.tcframe:1,(markup.tclayer)?markup.tclayer:"Layer 1");
@@ -146,6 +151,9 @@ Ax.test_animation_markup = function(markup){
 }
 
 Ax.import_animation_core = function(layers){
+	
+	
+	
   Ax.viewport.findById("layers").getStore().removeAll(); //remove all entries from layers panel
   Ax.initTimeline(); //reset timeline
   Ax.canvas_storage = {}; //empty canvas storage
