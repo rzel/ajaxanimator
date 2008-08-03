@@ -35,6 +35,8 @@ $input = str_replace("<!--COMPILIER INFO-->","<!--".file_get_contents("compilier
 
 $input =  sanitize_output($input);
 
+$input = str_replace("<!--ADS-->",file_get_contents("ads.txt"),$input);
+
 return $input;
 }
 
