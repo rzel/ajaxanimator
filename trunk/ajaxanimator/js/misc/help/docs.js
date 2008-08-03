@@ -55,6 +55,7 @@ Ext.apply(this,{
 	title: "Manual",
 	border: true,
 	iconCls: "tb_docs",
+	bodyStyle: "overflow: auto; padding-left: 10px",
 	cls: "docs",
 	autoLoad: {
 		url: Ax.files.manual

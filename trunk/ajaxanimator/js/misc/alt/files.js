@@ -2,6 +2,8 @@
  files and direcories used via ajax
  */
 
+Ext.BLANK_IMAGE_URL = 'http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/theme/images/default/s.gif';
+
 Ax.files = {
     userlist: "../server/user/userlist.php",
 	test: "../server/user/test.php",

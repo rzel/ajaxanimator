@@ -1,6 +1,9 @@
 /*
  files and direcories used via ajax
  */
+
+Ext.BLANK_IMAGE_URL = '../theme/images/default/s.gif';
+
 Ax.files = {
     userlist: "../server/user/userlist.php",
 	test: "../server/user/test.php",

@@ -55,8 +55,8 @@ Ext.onReady(function(){
             }, 100)
             
             setTimeout(function(){
-                Ax.testserver();
-                
+               // Ax.testserver();
+                //really, this does nothing, so it shouldn't be used.
             }, 500)
         }, 150);
         

@@ -20,7 +20,7 @@ Ax.aboutWindow = new Ext.Window({
     }],
     items: [{
 	region: "north",
-	html: "<img src='../img/logo/logo4.png' alt='Ajax Animator' />",
+	baseCls: "ajaxanimator_logo",
 	height: 70
 	},{
 	xtype: "tabpanel",
