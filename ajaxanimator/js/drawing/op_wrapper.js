@@ -47,8 +47,10 @@ Ax.canvasSize_core(); //set the stuffs
 Ax.canvasSize = function(){
 	Ax.canvasSize_core(); //doo the important things
 	
+
 	//refresh the canvaseses
 	try{
+		Ax.selectFrame(1, Ax.tcurrent.layer)
 		Ax.reloadCanvas_core();
 	}catch(err){}
 		
