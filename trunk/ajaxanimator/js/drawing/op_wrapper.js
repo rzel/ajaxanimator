@@ -73,11 +73,10 @@ Ax.drawinit_core = function(){
   Ax.canvas.actualStyle = function(){}; //this is a hack so it doesn't replace some stuff that i'm about to set now
   
   
-  Ax.canvas.textMessaje = "Ajax Animator+OnlyPaths"
+  Ax.canvas.textMessaje = "Ajax Animator"
   Ax.canvas.textSize = 19;
   Ax.canvas.fontFamily = "Arial";
-  Ax.canvas.imageHref = "http://tavmjong.free.fr/INKSCAPE/MANUAL/images/QUICKSTART/SOUPCAN/SoupCan_SoupedUp.png"
-  
+  Ax.canvas.imageHref = "http://osflash.org/_media/ajaxanimator.png?w=&h=&cache=cache"
   
   
   Ax.canvas.onselect  = Ax.loadcolors;
@@ -200,7 +199,22 @@ if(tool == "controlpath"){
 	selectmode = "";
 }
 
+
+
 try {
+	
+	switch(tool){
+		case "text":
+		Ax.setPropertiesMode("Text",1)
+		break;
+		case "image":
+		Ax.setPropertiesMode("Image",2)
+		break;
+		default:
+		Ax.setPropertiesMode("Animation",0)
+		break;
+	}
+	
 	switch (tool) {
 		case "delete":
 			Ax.canvas.deleteSelection();
