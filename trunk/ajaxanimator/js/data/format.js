@@ -40,9 +40,9 @@ ALEON/Axff/Xff
 Ax.format = {
   support: {//format support. minimum version, maximum version
     min: 1,
-    max: 11
+    max: 13
   },
-  revision: 11 //the version the app exports
+  revision: 13 //the version the app exports
 }
 
 
@@ -104,6 +104,8 @@ Ax.export_animation = function(input, format){
   input.width = Ax.canvasWidth;
   input.height = Ax.canvasHeight;
   
+  input.framerate = Ax.framerate;
+  
   if(format == "json"){
     return Ext.util.JSON.encode(input);
   }else{
@@ -122,6 +124,8 @@ Ax.import_animation = function(markup){
   Ax.canvasWidth = markup.width?markup.width:480
   Ax.canvasHeight = markup.height?markup.height:272
   Ax.canvasSize_core();
+  
+  Ax.framerate = markup.framerate?markup.framerate:12;
   
   Ax.import_animation_core(markup.layers);
   Ax.selectFrame((markup.tcframe)?markup.tcframe:1,(markup.tclayer)?markup.tclayer:"Layer 1");
