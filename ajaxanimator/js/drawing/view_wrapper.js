@@ -47,15 +47,21 @@ Ax.framerate = 12;
 //*
 
 
-Ax.init_view = function(element){
+Ax.init_view = function(element, width, height){
     element.innerHTML = ""; //I wish I could make a witty comment here. Something like those guys at SMF
 	//http://www.simplemachines.org/community/index.php?topic=243341.0
     element.style.overflow = "hidden";
     
-	element.style.height = Ax.canvasHeight + "px";
-    element.style.width = Ax.canvasWidth + "px";
+	element.style.height = (height?height:272) + "px";
+    element.style.width = (width?width:480) + "px";
 	
-    return Ax.init_view_core(element)
+	Ax.canvasSize_core();
+	var zoomcache = zoominit;
+	zoominit = '0 0 '+(width?width:480)+' '+(height?height:272);
+	
+    var output =  Ax.init_view_core(element); //stupid onlypaths hacks!
+	zoominit = zoomcache;
+	return output;
 }
 
 Ax.init_view_core = function(element){

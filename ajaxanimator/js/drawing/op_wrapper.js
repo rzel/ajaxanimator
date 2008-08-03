@@ -55,12 +55,7 @@ Ax.canvasSize = function(){
 	try{
 		Ax.init_preview()
 	}catch(err){}
-	
-	try{
-		Ax.init_player()
-	}catch(err){
-		
-	}
+
 }
 
 
