@@ -26,6 +26,9 @@ Ax.Timeline = Ext.extend(Ext.Panel, {
                     plugins: [new Ext.ux.grid.CellActions({
                         callbacks: {
                             "tb_delete": function(grid, record, action, value){
+								if (Ax.tcurrent.layer == value) {
+									return Ax.toastMsg("Error!","You can't delete the current selected layer!")
+								}
                                 Ext.MessageBox.confirm("Delete " + value + "?", "Are you sure you want to delete " + value + "?", function(result){
                                     if (result == "yes") {
                                         Ax.deleteLayer(value)
