@@ -28,7 +28,7 @@ exec("dos2unix ../../../build/ajaxanimator-all.js");
 echo "Compressing CSS...";
 
 $css = css_compile("../../../html/ajaxanimator.htm");
-file_put_contents("../../../build/ajaxanimator-all.css",str_replace("../img","http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img",$css));
+file_put_contents("../../../build/ajaxanimator-all.css",str_replace("../","http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/",$css));
 exec("dos2unix ../../../build/ajaxanimator-all.css");
 
 

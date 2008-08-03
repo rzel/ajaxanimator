@@ -75,6 +75,11 @@
 padding:10px 10px 10px 38px;
  text-align:left;
 }
+
+.loading-icon {
+	background-image: url(../img/icon/loading.gif);
+	background-repeat: no-repeat;
+}
   
   .ajaxanimator_logo {
   	background-image: url(../img/logo/logo4.png);
