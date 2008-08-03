@@ -31,12 +31,37 @@ Ax.onlypaths = {
   version: "Symply Web 0.1.03 Modified"
 }
 
-var zoominit='0 0 '+Ax.canvasWidth+' '+Ax.canvasHeight; //some OnlyPaths stuffs
-var centerZoomx=Math.round(Ax.canvasWidth/2); //some OnlyPaths stuffs
-var centerZoomy=Math.round(Ax.canvasHeight/2); //some OnlyPaths stuffs
+var zoominit, centerZoomx, centerZoomy;
 var selectmode=''; //I have a feeling these comments aren't helping anyone
 var data_path_close = false;
-  
+
+
+Ax.canvasSize_core = function(){ //this function really does nothing.
+	zoominit='0 0 '+Ax.canvasWidth+' '+Ax.canvasHeight; //some OnlyPaths stuffs
+	centerZoomx=Math.round(Ax.canvasWidth/2); //some OnlyPaths stuffs
+	centerZoomy=Math.round(Ax.canvasHeight/2); //some OnlyPaths stuffs
+}
+
+Ax.canvasSize_core(); //set the stuffs
+
+Ax.canvasSize = function(){
+	Ax.canvasSize_core(); //doo the important things
+	
+	//refresh the canvaseses
+	try{
+		Ax.reloadCanvas_core();
+	}catch(err){}
+		
+	try{
+		Ax.init_preview()
+	}catch(err){}
+	
+	try{
+		Ax.init_player()
+	}catch(err){
+		
+	}
+}
 
 
 Ax.drawinit_core = function(){
@@ -124,7 +149,7 @@ Ax.reloadCanvas = function(){//now a very very robust function, should be able t
   }catch(err){log.push("FO5: "+err)}
   try{
   Ax.drawinit_core();
-  }catch(err){log.push("FO6: "+err)}
+  }catch(err){log.push("FO6: "+err);console.log(err)}
   try{
   Ax.setTool(mode)
   }catch(err){log.push("FO7: "+err);Ax.msg("Sorry","Recovery might have failed. You may have to restart the application.")}
@@ -142,6 +167,18 @@ Ax.reloadCanvas = function(){//now a very very robust function, should be able t
   }
 }
 
+
+Ax.reloadCanvas_core = function(){
+	//hey, I figure we need something faster and silenter than the debugging rekovry one
+	//reKovery iK aweKome Kright? Kno, Kis is Knot a KDE ProKegt
+	var backup = Ax.dumpshapes();
+	Ax.canvas.renderer.removeAll(); //die
+	Ax.canvas.container.innerHTML = null;//die
+ 	Ax.canvas = null;//die again
+	Ax.drawinit(); //here does the resizing
+	Ax.loadShapes(backup);
+	
+}
 
 Ax.setTool = function(tool){
  

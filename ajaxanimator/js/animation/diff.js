@@ -32,7 +32,9 @@ Ax.autodiff = function(){
 	
 	//here actually stores the revisions stuffs
 	if(createdump == true){
-		Ax.history_add(Ax.toolConfig[Ax.canvas.queryCommand("mode")][2]);//needs work
+		if (Ax.canvas && Ax.canvas.queryCommand("mode")) {
+			Ax.history_add(Ax.toolConfig[Ax.canvas.queryCommand("mode")][2]);//needs work
+		}
 	}
   }
 }
