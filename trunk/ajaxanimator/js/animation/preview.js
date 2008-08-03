@@ -24,9 +24,10 @@ Ax.init_preview = function(){
   Ax.autodiff(); //insures its the current data.
 	
   $("previewcanvas").innerHTML = "";
+  
   Ext.get("previewcanvas").un("mousedown",Ax.preview_msg);//bai bai lyst3n3rz
   
-  Ax.preview = Ax.init_view($("previewcanvas"));
+  Ax.preview = Ax.init_view($("previewcanvas"), Ax.canvasWidth, Ax.canvasHeight);
   
   Ext.get("previewcanvas").on("mousedown",Ax.preview_msg);
   
