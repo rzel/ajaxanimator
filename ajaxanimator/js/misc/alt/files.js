@@ -1,6 +1,7 @@
 /*
  files and direcories used via ajax
  */
+
 Ax.files = {
     userlist: "../server/user/userlist.php",
 	test: "../server/user/test.php",
@@ -13,7 +14,6 @@ Ax.files = {
 	export_swf: "../server/export/swf.php",
 	faq: "../server/doc/faq.htm",
 	manual: "../server/doc/manual.htm",
-	themes: "../theme/css/"
+	
+	themes: "http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/theme/css/"
 }
-
-

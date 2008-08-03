@@ -16,7 +16,8 @@ Ext.onReady(function(){
             //Main Timeline initialization stuff, create, add alyer, add frames, select first one..
             
             Ax.selectFrame(1, "Layer 1")
-            
+            //new Ext.ux.ToastWindow({delay: 1000});
+			
             setTimeout(function(){
             
                 //Ax.showTips();

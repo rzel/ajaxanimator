@@ -21,14 +21,14 @@ file_put_contents("../../../build/nohotlink.htm",nohotlink($html));
 
 echo "Compressing Javascript...";
 
-$js = js_compile("../../../html/ajaxanimator.htm");
+$js = js_compile("../../../html/ajaxanimator.htm",array("../js/misc/files.js"=>"../js/misc/alt/files.js"));
 file_put_contents("../../../build/ajaxanimator-all.js",$js);
 exec("dos2unix ../../../build/ajaxanimator-all.js");
 
 echo "Compressing CSS...";
 
 $css = css_compile("../../../html/ajaxanimator.htm");
-file_put_contents("../../../build/ajaxanimator-all.css",$css);
+file_put_contents("../../../build/ajaxanimator-all.css",str_replace("../img","../img",$css));
 exec("dos2unix ../../../build/ajaxanimator-all.css");
 
 

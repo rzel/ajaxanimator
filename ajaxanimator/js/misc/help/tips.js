@@ -19,7 +19,7 @@ Ax.showTips = function(){
             iconCls: "tb_tip",
             layout: "border",
             width: 300,
-            height: 250,
+            height: 200,
             items: [{
                 region: "north",
                 html: "<center><h1 class='tiptitle'>Did you know...?</h1></center><br>",

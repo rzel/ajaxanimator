@@ -1,4 +1,6 @@
 <?php
+
+
 function js_include_parse($js_includes){
 
 $xml_inc = '<?xml version="1.0"?><xmlroot>'.$js_includes."</xmlroot>";
@@ -34,22 +36,25 @@ function js_end_tag(){}
 
 
 
-function concatenate_js($array,$dir){
+function concatenate_js($array,$dir, $js_replace){
 $merged_js = "";
-foreach($array as $file){
 
+foreach($array as $file){
+if($js_replace[$file]){
+	$file = $js_replace[$file];
+}
 
 $merged_js .= "\n //JS File: $file \n ".file_get_contents("$dir/$file");
 }
 return $merged_js;
 }
 
-function js_compile($file){
+function js_compile($file, $js_replace){
 $filedata = file_get_contents($file); //load file
 $js_includes = get_string_between($filedata,"<!--JS Compile Start-->","<!--JS Compile Stop-->");
 
 $script_array = js_include_parse($js_includes);
-return concatenate_js($script_array,dirname($file));
+return concatenate_js($script_array,dirname($file), $js_replace);
 
 }
 ?>
