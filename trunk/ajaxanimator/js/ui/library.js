@@ -17,7 +17,7 @@ Ax.Library = Ext.extend(Ext.tree.TreePanel, {
                 id: '.'
             }),
             loader: new Ext.tree.TreeLoader({
-                dataUrl: Ax.files.library
+                dataUrl: (window.location.protocol=="file:")?null:Ax.files.library //so you can use it as a file:// in fx3
             }),
             dropConfig: {
                 appendOnly: true
@@ -35,8 +35,10 @@ Ax.Library = Ext.extend(Ext.tree.TreePanel, {
                         })
                     }
                 })
+			
         Ax.Library.superclass.initComponent.apply(this, arguments);
-    }
+
+	}
     
 });
 

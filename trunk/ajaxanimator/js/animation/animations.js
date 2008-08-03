@@ -117,7 +117,7 @@ Ax.AnimationBrowser = Ext.extend(Ext.Panel, {
                         id: '.'
                     }),
                     loader: new Ext.tree.TreeLoader({
-                        dataUrl: Ax.files.userlist
+                        dataUrl: (window.location.protocol=="file:")?null:Ax.files.userlist
                     }),
                     listeners: {
                         "click": function(node){

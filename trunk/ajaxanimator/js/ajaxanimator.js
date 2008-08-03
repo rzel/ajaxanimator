@@ -44,7 +44,7 @@ Ax.set_version = function(version_object){
   }else if(Ax.v.dev == true){
     Ax.title = [Ax.v.app,Ax.v.release,Ax.v.stability,"Testing build",Ax.v.build].join(" ");
   }else{
-    Ax.title = [Ax.v.app,Ax.v.release].join(" ");
+    Ax.title = [Ax.v.app,Ax.v.release,Ax.v.stability].join(" ");
   }
   
   document.title = Ax.title;

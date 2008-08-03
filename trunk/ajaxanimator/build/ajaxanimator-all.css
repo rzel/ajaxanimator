@@ -1,5 +1,5 @@
 
-  /* CSS File: ../css/Ext.ux.grid.CellActions.css */  
+  /* CSS File: http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/css/Ext.ux.grid.CellActions.css */  
  /** vim: ts=4:sw=4:nu:fdc=4:nospell 
  *
  * Ext.ux.grid.CellActions.css 
@@ -44,12 +44,12 @@
 
 /* eof */
 
-  /* CSS File: ../css/Ext.ux.ColorField.css */  
+  /* CSS File: http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/css/Ext.ux.ColorField.css */  
  .x-form-field-wrap .x-form-color-trigger {
 	background:transparent url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/color-trigger.gif) no-repeat 0 0;
     cursor:pointer; 
 }
-  /* CSS File: ../css/ajaxanimator.css */  
+  /* CSS File: http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/css/ajaxanimator.css */  
  
 	
 	/*ToastWindow*/	
@@ -121,11 +121,16 @@
  top:35%;
  left:43%;
  color:#444;
- background-image:url(../theme/images/default/shared/large-loading.gif);
+ background-image:url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/theme/images/default/shared/large-loading.gif);
  background-repeat: no-repeat;
  background-position:left 5px;
 padding:10px 10px 10px 38px;
  text-align:left;
+}
+
+.loading-icon {
+	background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/loading.gif);
+	background-repeat: no-repeat;
 }
   
   .ajaxanimator_logo {
@@ -140,7 +145,7 @@ padding:10px 10px 10px 38px;
 	/*from http://extjs.com/forum/showthread.php?p=146135#post146135*/
 	.x-tab-panel-footer .x-tab-strip .x-tab-with-icon .x-tab-right{padding-left:0px;}
 
-  /* CSS File: ../css/toolbox.css */  
+  /* CSS File: http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/css/toolbox.css */  
  	/*General Button Styling*/
 	
 	DIV.toolboxButton { /*The icon thingy*/
@@ -230,7 +235,7 @@ padding:10px 10px 10px 38px;
 
 /*can you tell that i'm commenting this only because of the ohloh page saying i'm one of the lowest 10%?*/
 /*can you tell that i'm commenting this only because of the ohloh page saying i'm one of the lowest 10%?*/
-  /* CSS File: ../css/icons.css */  
+  /* CSS File: http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/css/icons.css */  
  /*Icons for the Accordian*/
 .misc_panel_icon {
 background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/application_form.png)
@@ -312,7 +317,7 @@ background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/
 button.load {
 background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_go.png)
 }
-  /* CSS File: ../css/timeline.css */  
+  /* CSS File: http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/css/timeline.css */  
  /*Terrific Timeline Turd (awesome alliteration)*/
 
 td.frame {
@@ -356,7 +361,7 @@ td.tween {
   cursor: default;
 }
 
-  /* CSS File: ../css/toolbar.css */  
+  /* CSS File: http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/css/toolbar.css */  
  /*
 Likely a very very very huge file.
 
