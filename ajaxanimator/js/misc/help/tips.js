@@ -52,7 +52,7 @@ Ax.showTips = function(){
             }]
         })
     }
-    Ax.tipsWindow.show(document.body)
+    Ax.tipsWindow.show(/*document.body*/)
 }
 
 
