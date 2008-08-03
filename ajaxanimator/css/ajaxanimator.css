@@ -76,6 +76,11 @@ padding:10px 10px 10px 38px;
  text-align:left;
 }
   
+  .ajaxanimator_logo {
+  	background-image: url(../img/logo/logo4.png);
+	background-repeat: no-repeat;
+  }
+  
   h1.tiptitle {
     font-size: x-large;
   }

@@ -46,7 +46,7 @@
 
   /* CSS File: ../css/Ext.ux.ColorField.css */  
  .x-form-field-wrap .x-form-color-trigger {
-	background:transparent url(../img/icon/color-trigger.gif) no-repeat 0 0;
+	background:transparent url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/color-trigger.gif) no-repeat 0 0;
     cursor:pointer; 
 }
   /* CSS File: ../css/ajaxanimator.css */  
@@ -54,8 +54,8 @@
 	
 	/*ToastWindow*/	
 	
-	.error {background-image:url(../img/silk/exclamation.png);}
-	.information {background-image:url(../img/silk/information.png) ! important;}
+	.error {background-image:url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/exclamation.png);}
+	.information {background-image:url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/information.png) ! important;}
 	
   a:link, a:visited, a:active {
     color: #0464BB;
@@ -128,6 +128,11 @@ padding:10px 10px 10px 38px;
  text-align:left;
 }
   
+  .ajaxanimator_logo {
+  	background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/logo/logo4.png);
+	background-repeat: no-repeat;
+  }
+  
   h1.tiptitle {
     font-size: x-large;
   }
@@ -156,7 +161,7 @@ padding:10px 10px 10px 38px;
 	width: 22px;
 	height: 22px;
 	overflow: hidden; 
-	background-image: url(../img/icon/buttonSprite.png); /*the magical sprite*/
+	background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/buttonSprite.png); /*the magical sprite*/
 	background-repeat: no-repeat;
 	background-position: 44px 0px; /*by default, set to idle (aka, blank)*/
 	} /*can you tell that i'm commenting this only because of the ohloh page saying i'm one of the lowest 10%?*/
@@ -174,51 +179,51 @@ padding:10px 10px 10px 38px;
 
   /*Button Icons*/
 	.tx_select {
-		background-image: url(../img/icon/select.gif)
+		background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/select.gif)
 	}
 	
 	.tx_rectangle {
-		background-image: url(../img/icon/rectangle.gif)
+		background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/rectangle.gif)
 	}
 	
 	.tx_roundrect {
-		background-image: url(../img/icon/roundrect.gif)
+		background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/roundrect.gif)
 	}
 	
 	.tx_circle {
-		background-image: url(../img/icon/circle.gif)
+		background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/circle.gif)
 	}
 	
 	.tx_line {
-		background-image: url(../img/icon/line.gif)
+		background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/line.gif)
 	}
 	
 	.tx_path {
-		background-image: url(../img/icon/path.gif)
+		background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/path.gif)
 	}
 	
 	.tx_polygon {
-		background-image: url(../img/icon/polygon.gif)
+		background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/polygon.gif)
 	}
 	
 	.tx_text {
-		background-image: url(../img/icon/text.gif)
+		background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/text.gif)
 	}
 	
 	.tx_image {
-		background-image: url(../img/icon/image.gif)
+		background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/image.gif)
 	}
 	
 	.tx_shape {
-		background-image: url(../img/icon/shape.gif)
+		background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/shape.gif)
 	}
 	
 	.tx_reset {
-		background-image: url(../img/icon/reset.gif)
+		background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/reset.gif)
 	}
 	
 	.tx_delete {
-		background-image: url(../img/icon/delete.gif)
+		background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/icon/delete.gif)
 	}
 
 /*start all those random comments*/
@@ -228,63 +233,63 @@ padding:10px 10px 10px 38px;
   /* CSS File: ../css/icons.css */  
  /*Icons for the Accordian*/
 .misc_panel_icon {
-background-image: url(../img/silk/application_form.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/application_form.png)
 }
 .history_icon {
-background-image: url(../img/silk/clock.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/clock.png)
 }
 .clipboard_icon {
-background-image: url(../img/silk/paste_plain.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/paste_plain.png)
 }
 .library_icon {
-background-image: url(../img/silk/book.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/book.png)
 }
 .misc_icon {
-background-image: url(../img/silk/tux.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/tux.png)
 }
 .user_icon {
-background-image: url(../img/silk/user.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/user.png)
 }
 /*Icons for the center panel titles*/
 .canvas_icon {
-background-image: url(../img/silk/paintbrush.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/paintbrush.png)
 }
 .preview_icon {
-background-image: url(../img/silk/zoom.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/zoom.png)
 }
 .animations_icon {
-background-image: url(../img/silk/control_play.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/control_play.png)
 }
 
 
 /* Icons for the animation browser */
 
 .player_icon {
-background-image: url(../img/silk/control_play.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/control_play.png)
 }
 .browse_icon {
-background-image: url(../img/silk/folder_go.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/folder_go.png)
 }
 
 button.play_icon {
-background-image: url(../img/silk/control_play_blue.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/control_play_blue.png)
 }
 
 button.stop_icon {
-background-image: url(../img/silk/control_stop_blue.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/control_stop_blue.png)
 }
 button.import_icon {
-background-image: url(../img/silk/pencil_go.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/pencil_go.png)
 }
 button.reload_icon {
-background-image: url(../img/silk/arrow_refresh.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/arrow_refresh.png)
 }
 
 
 /*icons for random panels */
 
 .app_settings {
-background-image: url(../img/silk/application_form_edit.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/application_form_edit.png)
 }
 
 
@@ -292,20 +297,20 @@ background-image: url(../img/silk/application_form_edit.png)
 
 
 button.arrow_next {
-background-image: url(../img/silk/arrow_right.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/arrow_right.png)
 }
 
 button.arrow_prev {
-background-image: url(../img/silk/arrow_left.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/arrow_left.png)
 }
 button.close {
-background-image: url(../img/silk/cross.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/cross.png)
 }
 button.execute {
-background-image: url(../img/silk/script_go.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/script_go.png)
 }
 button.load {
-background-image: url(../img/silk/page_go.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_go.png)
 }
   /* CSS File: ../css/timeline.css */  
  /*Terrific Timeline Turd (awesome alliteration)*/
@@ -361,103 +366,103 @@ All the icons in the toolbar (basically the majority of them)
 
 /*---------------File Menu---------------*/
 .tb_new {
-background-image: url(../img/silk/page_add.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_add.png)
 }
 .tb_open {
-background-image: url(../img/silk/folder_go.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/folder_go.png)
 }
 .tb_save {
-/*background-image: url(../img/silk/drive_go.png)*/
-background-image: url(../img/silk/disk.png)
+/*background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/drive_go.png)*/
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/disk.png)
 }
 .tb_publish {
-background-image: url(../img/silk/page_white_flash.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_white_flash.png)
 }
 
 /*.tb_flash = .tb_publish*/
 .tb_flash {
-background-image: url(../img/silk/page_white_actionscript.png);
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_white_actionscript.png);
 }
 .tb_processing {
-background-image: url(../img/silk/page_white_code.png);
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_white_code.png);
 }
 
 .tb_silverlight {
-background-image: url(../img/silk/page_white_vector.png);
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_white_vector.png);
 }
 .tb_image {
-background-image: url(../img/silk/page_white_paint.png);
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_white_paint.png);
 }
 
 .tb_offline {
-background-image: url(../img/silk/disconnect.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/disconnect.png)
 }
 
 .tb_comp {
-background-image: url(../img/silk/computer_go.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/computer_go.png)
 }
 .tb_server {
-background-image: url(../img/silk/drive_web.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/drive_web.png)
 }
 .tb_url {
-background-image: url(../img/silk/world_link.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/world_link.png)
 }
 .tb_text {
-background-image: url(../img/silk/textfield.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/textfield.png)
 }
 
 /*---------------Edit Menu---------------*/
 .tb_undo {
-background-image: url(../img/silk/arrow_undo.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/arrow_undo.png)
 }
 .tb_redo {
-background-image: url(../img/silk/arrow_redo.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/arrow_redo.png)
 }
 .tb_cut {
-background-image: url(../img/silk/cut_red.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/cut_red.png)
 }
 .tb_copy {
-background-image: url(../img/silk/page_copy.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_copy.png)
 }
 .tb_paste {
-background-image: url(../img/silk/page_paste.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_paste.png)
 }
 .tb_delete {
-background-image: url(../img/silk/delete.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/delete.png)
 }
 /*---------------View Menu---------------*/
 .tb_animation {
-background-image: url(../img/silk/page_white_flash.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_white_flash.png)
 }
 .tb_theme {
-background-image: url(../img/silk2/theme.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk2/theme.png)
 }
 /*---------------Tools Menu---------------*/
 .tb_tools {
-background-image: url(../img/silk/paintbrush.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/paintbrush.png)
 }
 .tb_script {
-background-image: url(../img/silk/script_code_red.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/script_code_red.png)
 }
 .tb_plugin_conf {
-background-image: url(../img/silk/plugin_edit.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/plugin_edit.png)
 }
 .tb_reload {
-background-image: url(../img/silk/arrow_refresh.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/arrow_refresh.png)
 }
 .tb_shield {
-background-image: url(../img/silk/shield.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/shield.png)
 }
 
 
 .tb_recover_canvas {
-background-image: url(../img/silk/paintbrush.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/paintbrush.png)
 }
 .tb_recover_animation {
-background-image: url(../img/silk/film.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/film.png)
 }
 .tb_recover_application {
-background-image: url(../img/silk/page_refresh.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_refresh.png)
 }
 
 
@@ -465,10 +470,10 @@ background-image: url(../img/silk/page_refresh.png)
 
 
 .tb_clearframe {
-background-image: url(../img/silk/page_delete.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_delete.png)
 }
 .tb_newlayer {
-background-image: url(../img/silk/add.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/add.png)
 }
 /*
 .tb_reload {
@@ -476,92 +481,92 @@ See Tools Menu
 }
 */
 .tb_addkeyframe {
-background-image: url(../img/silk/key_add.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/key_add.png)
 }
 .tb_insertframe {
-background-image: url(../img/silk/page_add.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_add.png)
 }
 .tb_setlast {
-background-image: url(../img/silk/resultset_last.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/resultset_last.png)
 }
 .tb_purge_empty {
-background-image: url(../img/silk/bin.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/bin.png)
 }
 /*---------------Animation Menu---------------*/
 .tb_play {
-background-image: url(../img/silk/control_play.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/control_play.png)
 }
 .tb_pause {
-background-image: url(../img/silk/control_pause.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/control_pause.png)
 }
 .tb_nf { /*next frame */
-background-image: url(../img/silk/control_fastforward.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/control_fastforward.png)
 }
 .tb_pf { /*previeous frame */
-background-image: url(../img/silk/control_rewind.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/control_rewind.png)
 }
 .tb_last {
-background-image: url(../img/silk/control_end.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/control_end.png)
 }
 .tb_first {
-background-image: url(../img/silk/control_start.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/control_start.png)
 }
 .tb_recalculate {
-background-image: url(../img/silk/database_refresh.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/database_refresh.png)
 }
 /*---------------Plugin Menu---------------*/
 
 .tb_plugin {
-background-image: url(../img/silk/plugin.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/plugin.png)
 }
 
 .tb_plugin_add {
-background-image: url(../img/silk/package_add.png) /*Uses package versus plugin because it is more destinct*/
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/package_add.png) /*Uses package versus plugin because it is more destinct*/
 }
 
 /*---------------User Menu---------------*/
 .tb_login {
-background-image: url(../img/silk/key_go.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/key_go.png)
 }
 .tb_register {
-background-image: url(../img/silk/user_add.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/user_add.png)
 }
 .tb_logout {
-background-image: url(../img/silk/door_out.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/door_out.png)
 }
 .tb_browse {
-background-image: url(../img/silk/folder_explore.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/folder_explore.png)
 }
 .tb_profile {
-background-image: url(../img/silk/vcard.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/vcard.png)
 }
 /*---------------Help Menu---------------*/
 .tb_keyboard {
-background-image: url(../img/silk/keyboard.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/keyboard.png)
 }
 .tb_about {
-background-image: url(../img/silk/information.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/information.png)
 }
 .tb_comment {
-background-image: url(../img/silk/comments.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/comments.png)
 }
 .tb_bug {
-background-image: url(../img/silk/bug.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/bug.png)
 }
 .tb_docs {
-background-image: url(../img/silk/book.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/book.png)
 }
 .tb_info {
-background-image: url(../img/silk/bricks.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/bricks.png)
 }
 .tb_tutorial {
-background-image: url(../img/silk/wand.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/wand.png)
 }
 .tb_tip {
-background-image: url(../img/silk/lightbulb.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/lightbulb.png)
 }
 .tb_donate {
-background-image: url(../img/silk/money.png)
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/money.png)
 }
 
 

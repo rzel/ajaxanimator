@@ -61,7 +61,7 @@ Ax.MainToolbar = [
                             {text: "Reload Application", iconCls: "tb_recover_application", handler: function(){window.location.reload(true)}}
   ]},
   {text: "Script Executor", iconCls: "tb_script", handler: function(){Ax.macroExec()}},
-  {text: "Plugin Settings", iconCls: "tb_plugin_conf"}
+  {text: "Plugin Settings", iconCls: "tb_plugin_conf", handler: function(){Ax.plugins_unavailable()}}
 ]},
 {text:"Timeline", menu: [
   {text: "New Layer",iconCls: "tb_newlayer", handler: function(){Ax.addLayer()}},
@@ -84,7 +84,7 @@ Ax.MainToolbar = [
   {text: "Recalculate Tweens", iconCls: "tb_recalculate", handler: function(){}}
 ]},
 {text:"Plugins", menu: [
-  {text: "Add Plugins", iconCls: "tb_plugin_add"},
+  {text: "Add Plugins", iconCls: "tb_plugin_add", handler: function(){Ax.plugins_unavailable()}},
   "-", //split
   {text: "Explode",iconCls: "tb_plugin", handler: function(el){Ax.exec(el.initialConfig.text)}},
   {text: "Random Shape",iconCls: "tb_plugin", handler: function(el){Ax.exec(el.initialConfig.text)}}

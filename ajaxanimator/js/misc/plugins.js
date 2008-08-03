@@ -46,3 +46,7 @@ Ax.plugins["Random Shape"] = function(){
   });
 }
 
+Ax.plugins_unavailable = function(){
+	Ax.msg("Not Available","This feature is not available.")
+}
+
