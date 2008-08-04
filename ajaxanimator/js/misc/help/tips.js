@@ -53,7 +53,7 @@ Ax.showTips = function(){
             }]
         })
     	Ax.tipsWindow.on("minimize", function(){
-			Ax.tipsWindow.minimize();
+			aboutWindow.toggleCollapse();
 		})
 		Ax.tipsWindow.on("beforeclose", function(){
 			Ax.tipsWindow.hide();
