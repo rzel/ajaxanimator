@@ -18,6 +18,7 @@ Ax.MainToolbar = [
   	{text: "Flash", iconCls: "tb_flash", handler: function(){Ax.ex.swf.save()}},
 	{text: "Processing", iconCls: "tb_processing", handler: function(){Ax.ex.processing.save()}},
 	{text: "Silverlight", iconCls: "tb_silverlight", handler: function(){Ax.ex.silverlight.save()}},
+	{text: "JavaFX", iconCls: "tb_javafx", handler: function(){Ax.ex.javafx.save()}},
 	{text: "Animated GIF", iconCls: "tb_image", handler: function(){Ax.ex.gif.save()}}
   ]},
   {text: "Offline", iconCls: "tb_offline", handler: function(){Ax.offline()}}
