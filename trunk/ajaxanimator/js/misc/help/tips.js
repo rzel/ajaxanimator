@@ -20,6 +20,7 @@ Ax.showTips = function(){
             layout: "border",
             width: 300,
             height: 200,
+			minimizable: true,
             items: [{
                 region: "north",
                 html: "<center><h1 class='tiptitle'>Did you know...?</h1></center><br>",
@@ -51,7 +52,14 @@ Ax.showTips = function(){
                 }
             }]
         })
-    }
+    	Ax.tipsWindow.on("minimize", function(){
+			Ax.tipsWindow.minimize();
+		})
+		Ax.tipsWindow.on("beforeclose", function(){
+			Ax.tipsWindow.hide();
+			return false;
+		})
+	}
     Ax.tipsWindow.show(/*document.body*/)
 }
 
