@@ -1,7 +1,7 @@
 Ax.About = function(){
 //Ax.gs(6);
-if(!Ax.aboutWindow){
-Ax.aboutWindow = new Ext.Window({
+
+var aboutWindow = new Ext.Window({
     closable: true,
 	iconCls: "tb_about",
     width: 410,
@@ -15,7 +15,7 @@ Ax.aboutWindow = new Ext.Window({
         text: 'Close',
         iconCls: "close",
         handler: function(){
-            Ax.aboutWindow.hide();
+            aboutWindow.close();
         }
     }],
     items: [{
@@ -92,11 +92,11 @@ Ax.aboutWindow = new Ext.Window({
 }]
 });
  
-Ax.aboutWindow.on('minimize', function(){
-    Ax.aboutWindow.toggleCollapse();
+aboutWindow.on('minimize', function(){
+    aboutWindow.toggleCollapse();
 });
-}
-Ax.aboutWindow.show();
+
+aboutWindow.show();
 }
 
 Ax.gpl = 
