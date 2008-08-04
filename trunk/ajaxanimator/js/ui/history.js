@@ -38,7 +38,7 @@ Ax.history_revert = function(revision){
         //poop
         //console.log(revision);
         Ax.history_cursor = revision;
-        Ax.import_animation(Ax.history_store[revision])
+        Ax.import_animation(Ext.ux.clone(Ax.history_store[revision]))
     }
 }
 
