@@ -156,9 +156,8 @@ Ax.test_animation_markup = function(markup){
 }
 
 Ax.import_animation_core = function(layers){
-	
-	
-	
+  Ax.reloadCanvas_core(); //try resolving some issues;
+  
   Ax.viewport.findById("layers").getStore().removeAll(); //remove all entries from layers panel
   Ax.initTimeline(); //reset timeline
   Ax.canvas_storage = {}; //empty canvas storage

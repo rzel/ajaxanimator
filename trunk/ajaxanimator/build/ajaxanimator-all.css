@@ -384,7 +384,7 @@ background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/
 background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_white_flash.png)
 }
 
-/*.tb_flash = .tb_publish*/
+/*START PUBLISH*/
 .tb_flash {
 background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_white_actionscript.png);
 }
@@ -398,6 +398,10 @@ background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/
 .tb_image {
 background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_white_paint.png);
 }
+.tb_javafx {
+background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/page_white_cup.png);
+}
+/*END PUBLISH*/
 
 .tb_offline {
 background-image: url(http://ajaxanimator.googlecode.com/svn-history/r444/trunk/ajaxanimator/img/silk/disconnect.png)

@@ -718,7 +718,11 @@ SVGRenderer.prototype.index = function(shape,order) {
 }
 SVGRenderer.prototype.remove = function(shape) {
   //shape.parentNode.removeChild(shape);
+  try{
   this.svgRoot.removeChild(shape);
+  }catch(err){
+  	//OMG!
+  }
 }
 
 SVGRenderer.prototype.removeAll = function() {  

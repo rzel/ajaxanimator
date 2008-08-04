@@ -167,13 +167,17 @@ Ax.reloadCanvas = function(){//now a very very robust function, should be able t
 Ax.reloadCanvas_core = function(){
 	//hey, I figure we need something faster and silenter than the debugging rekovry one
 	//reKovery iK aweKome Kright? Kno, Kis is Knot a KDE ProKegt
-	var backup = Ax.dumpshapes();
-	Ax.canvas.renderer.removeAll(); //die
-	Ax.canvas.container.innerHTML = null;//die
- 	Ax.canvas = null;//die again
-	Ax.drawinit(); //here does the resizing
-	Ax.loadShapes(backup);
-	
+	try{
+		var backup = Ax.dumpshapes();
+		Ax.canvas.renderer.removeAll(); //die
+		Ax.canvas.container.innerHTML = null;//die
+	 	Ax.canvas = null;//die again
+		Ax.drawinit(); //here does the resizing
+		Ax.loadShapes(backup);
+	}catch(err){
+		return false;
+	}
+	return true;
 }
 
 Ax.setTool = function(tool){
