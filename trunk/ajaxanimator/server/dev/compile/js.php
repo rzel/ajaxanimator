@@ -37,14 +37,14 @@ function js_end_tag(){}
 
 
 function concatenate_js($array,$dir, $js_replace){
-$merged_js = "";
+$merged_js = "/*COMPILED*/\n\n\n";
 
 foreach($array as $file){
 if($js_replace[$file]){
 	$file = $js_replace[$file];
 }
 
-$merged_js .= "\n //JS File: $file \n ".file_get_contents("$dir/$file");
+$merged_js .= "\n\n\n /*JS File: $file*/ \n\n\n ".file_get_contents("$dir/$file");
 }
 return $merged_js;
 }

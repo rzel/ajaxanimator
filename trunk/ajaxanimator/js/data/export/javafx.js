@@ -15,5 +15,7 @@ Ax.ex.javafx = function(){
 }
 
 Ax.ex.javafx.save = function(){
-	
+
+	Ext.MessageBox.alert("JavaFX Export Not Available","We have not finished implementing JavaFX export.")	
 }
+

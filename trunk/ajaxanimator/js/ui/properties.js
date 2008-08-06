@@ -50,7 +50,7 @@ Ax.PropertiesPanel = Ext.extend(Ext.Panel, {
 								Ax.canvasHeight = value;
 								Ax.canvasSize();
 							}
-						},
+						}
                     }]
                 }, {
                     layout: "form",
@@ -70,7 +70,7 @@ Ax.PropertiesPanel = Ext.extend(Ext.Panel, {
 								Ax.framerate = value;
 							
 							}
-						},
+						}
                     }]
                 }]
             }, { ////////////////////////////////////////Textystuff////////////////////////////////////////////
@@ -97,7 +97,7 @@ Ax.PropertiesPanel = Ext.extend(Ext.Panel, {
 								}
 								Ax.canvas.textMessaje = value;
 							}
-						},
+						}
                     }]
                 }, {
                     layout: "form",
@@ -117,7 +117,7 @@ Ax.PropertiesPanel = Ext.extend(Ext.Panel, {
 								Ax.canvas.textSize = value;
 							
 							}
-						},
+						}
                     }]
                 }]
             },{ ////////////////////////////////////////Imagoo////////////////////////////////////////////
@@ -143,7 +143,7 @@ Ax.PropertiesPanel = Ext.extend(Ext.Panel, {
 								}
 								Ax.canvas.imageHref = value;
 							}
-						},
+						}
                     }]
                 }]
             }]
