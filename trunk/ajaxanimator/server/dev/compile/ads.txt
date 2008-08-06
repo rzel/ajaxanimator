@@ -2,7 +2,6 @@
 
 <!--Please use this ad-supported version, It helps the project-->
 <div id="ads-window" class="x-hidden">
-    <div class="x-window-header">Ads - Please Don't Close Me</div>
     	<div id="content-ads">
 			<script type="text/javascript"><!--
 			google_ad_client = "pub-9279109908159341";
@@ -30,6 +29,8 @@ Ext.onReady(function(){
 	    plain: true,
 	    items: {contentEl: "content-ads"}
 	});
+	
+	adwin.setTitle("Ads - Please Don't Close Me");
 	
 	if(document.getElementsByName("google_ads_frame").length == 0){
 		adwin.setTitle("Please Disable AdBlock")
