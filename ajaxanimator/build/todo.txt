@@ -1,0 +1,21 @@
+New Version Procedure:
+
+Redirect Old (Only in major change)
+Place Updating Page
+
+Compile:
+do a Dev->Compile
+do a Dev->Auto Deploy
+
+Run compress.bat
+in ajaxanimator-cmp.css, replace http://aj.../img/silk/ with ../img/silk/
+do a SVN commit (Log Version)
+
+Copy ajaxanimator-cmp.js to Google App Engine development directory
+do an appconfig.py update ajaxanimator
+
+Modify deployindex.htm to hotlink AppEngine for Ext.js, ajaxanimator-cmp.js
+Modify deployindex.htm to hotlink Google Code for CSS
+
+Copy deployindex.htm to deploy server
+Delete Updating page
