@@ -1381,9 +1381,9 @@ if(shape.id != "tracker"){
       var data;  
    
       var estilo=generateJSON(mystyle);
-      eval("data="+estilo);
-      //var data=eval('"'+estilo+'"'); 
-      //var data=estilo.evalJSON(); 
+      //eval("data="+estilo);
+      //var data=//eval('"'+estilo+'"'); 
+      //var data=estilo.//evalJSON(); 
     
       (data["font-size"])?shInfo.textSize=data["font-size"]:shInfo.textSize; 
       (data["font-family"])?shInfo.textFamily=data["font-family"]:shInfo.textFamily; 
@@ -1445,7 +1445,7 @@ if(shape.id != "tracker"){
     if(mystyle!= null){
       var data;  
       var estilo=generateJSON(mystyle);
-      eval("data="+estilo);
+      //eval("data="+estilo);
       (data["stop-color"])?shInfo.fillColor=data["stop-color"]:shInfo.fillColor;
       (data["stop-opacity"])?shInfo.fillOpac=data["stop-opacity"]:shInfo.fillOpac;
       document.getElementById("someinfo").value +=data["stop-color"]+' '; 
@@ -3013,7 +3013,7 @@ SVGRenderer.prototype.scaleShape = function(shape,previus, toX, toY) {
   { 
     
     var tsize=shape.getAttributeNS(null, 'font-size') ;
-    tsize=eval(tsize);
+    tsize=parseFloat(tsize);
     //shape.setAttributeNS(null, 'x', tx + 'px');
     //shape.setAttributeNS(null, 'y', ty + 'px'); 
     //var mysize=box.height+1 ;
