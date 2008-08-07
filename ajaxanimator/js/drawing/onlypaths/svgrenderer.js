@@ -2501,7 +2501,7 @@ SVGRenderer.prototype.showTracker = function(shape,pathsEdit) {
       
         circle1.addEventListener("mouseover", function(event) {circle1.setAttributeNS(null, 'cursor', 's-resize');  circle1.setAttributeNS(null, 'fill', colorin ); typeTransform='Rotate'; scaleType='nw'; }, false);
      circle1.addEventListener("mouseout", function(event) {circle1.setAttributeNS(null, 'cursor', 'default');  circle1.setAttributeNS(null, 'fill', colorout ); typeTransform='Rotate'; }, false); //typeTransform='rotate'
-     circleCenter.addEventListener("mouseover", function(event) {circleCenter.setAttributeNS(null, 'cursor', 'move');  circleCenter.setAttributeNS(null, 'fill', colorin ); typeTransform='sp�nCenter'; scaleType='nw'; }, false);
+     circleCenter.addEventListener("mouseover", function(event) {circleCenter.setAttributeNS(null, 'cursor', 'move');  circleCenter.setAttributeNS(null, 'fill', colorin ); typeTransform='spï¿½nCenter'; scaleType='nw'; }, false);
      circleCenter.addEventListener("mouseout", function(event) {circleCenter.setAttributeNS(null, 'cursor', 'default');  circleCenter.setAttributeNS(null, 'fill', colorout ); typeTransform=''; }, false); //typeTransform='rotate'
  
       
