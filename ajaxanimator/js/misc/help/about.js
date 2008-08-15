@@ -48,7 +48,8 @@ var aboutWindow = new Ext.Window({
 		'Antimatter15<br />'+
 		"<b>Documentation</b><br />"+
 		"Antimatter15<br />"+
-		//'<b>Richdraw/OnlyPaths</b>'+ //not used yet
+		"Bruce Wainer (Brwainer) - Manual<br />"+
+		"RandomProductions - FAQ<br />"+		
 		"<b>Libraries/Extensions</b><br />"+
 		'<i>Note: This is not a fully comprehensive list of everything used</i><br />'+
 		'Ext v2.1 (http://extjs.com)<br />'+
