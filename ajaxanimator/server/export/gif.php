@@ -18,7 +18,7 @@ $gif_array = array();
 $framerate_array = array();
 
 foreach($animation_array as $frame_contents){
-	$im = imagecreatetruecolor(480,272);
+	$im = imagecreatetruecolor($_REQUEST["width"]?$_REQUEST["width"]:480,$_REQUEST["height"]?$_REQUEST["height"]:272);
 	$background = imagecolorallocate($im, 255, 255, 255);
 	imagefill($im, 0, 0, $background);
 
