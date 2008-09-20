@@ -48,6 +48,8 @@ Ax.ex.gif.upload = function(){
         url: Ax.files.export_gif,
         params: {
             "action": "work",
+            "width": Ax.canvasWidth,
+            "height": Ax.canvasHeight,
             "animation": Ax.ex.array("json")
         },
         success: function(e){
