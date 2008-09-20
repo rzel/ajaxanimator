@@ -46,6 +46,8 @@ Ax.ex.swf.upload = function(){ //where the cool stuff happens
         url: Ax.files.export_swf, //uh, same file
         params: {
             "action": "work", //WORK!
+            "width": Ax.canvasWidth,
+            "height": Ax.canvasHeight,
             "animation": Ax.ex.array("json") //okay, so I did it, I made Ax.ex.array("json").
         },
         success: function(e){ //YESs!
