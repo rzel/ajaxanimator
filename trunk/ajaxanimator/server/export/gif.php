@@ -78,7 +78,11 @@ foreach($animation_array as $frame_contents){
 				
 				$fillArray = sscanf($shape['fillColor'], '#%2x%2x%2x');
 				$fill = imagecolorallocate($im, $fillArray[0], $fillArray[1], $fillArray[2]);
+				
 				imagettftext($im, $size/1.3, 0, $x, $y, $fill, "FONT/times.ttf", $text);
+				
+        //$font = imageloadfont('./04b.gdf');
+        //imagestring($im, $font, $x, $y, $text, $fill);
 			break;	
 				case "path":
 				$points = parse_path($shape["points"]);
