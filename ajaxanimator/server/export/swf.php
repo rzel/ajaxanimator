@@ -37,6 +37,7 @@ foreach($animation_array as $frame_contents){
 	foreach($frame_contents as $shape){
 			switch($shape["type"]){
 			case "rect":
+      case "roundrect":
 				$x1 = $shape["left"];
 				$y1 = $cheight-$shape["top"];
 				$x2 = $shape["left"]+$shape["width"];

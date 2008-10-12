@@ -26,6 +26,7 @@ foreach($animation_array as $frame_contents){
 		imagesetthickness($im, 1);
 		switch($shape["type"]){
 			case "rect":
+			case "roundrect":
 				$x1 = $shape["left"];
 				$y1 = $shape["top"];
 				$x2 = $shape["left"]+$shape["width"];
