@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Standalone Animation Player</title>
+    </head>
+    <body>
+
+		<div id="player" style="border: 1px solid black; width: 480px; height: 272px">
+        </div>
+        <button onclick="Ax.play()">
+            play
+        </button>
+        <button onclick="Ax.pause()">
+            pause
+        </button>
+        <textarea id="source" style="width: 100%; height: 300px">
+            {"name":"Untitled Production","creation":1216250457133,"contrib":["anonymous"],"modified":1216250457133,"generator":{"app":"Ajax Animator","build":352,"release":"0.2","dev":true,"stability":"Alpha","date":1216239320.8},"revision":8,"tcframe":11,"tclayer":"Layer 1","layers":{"Layer 1":{"keyframes":[23,1],"src":{"1":[{"id":"shape:77b8dd14-e00a-d2c0-eae0-fc5035ec651d","type":"rect","transform":"rotate(0, 49, 36)","fillColor":"#FF0000","lineColor":"#000000","fillOpac":1,"lineOpac":1,"lineWidth":1,"left":23,"top":17,"width":52,"height":38},{"id":"shape:e3c9732f-ecc5-14e4-4a53-b27ecfb2e4d9","type":"ellipse","transform":"rotate(0, 54, 91.5)","fillColor":"#FF0000","lineColor":"#000000","fillOpac":1,"lineOpac":1,"lineWidth":1,"width":38,"height":15,"left":35,"top":84},{"id":"shape:85de034d-e664-9fd9-f780-e9dabfa0d8d6","type":"line","transform":"rotate(0, 170.5, 121.5)","fillColor":"#FF0000","lineColor":"#000000","fillOpac":1,"lineOpac":1,"lineWidth":1,"left":106,"top":160,"width":129,"height":-77},{"id":"shape:f69f9875-1c0b-654e-625c-9414d12fe587","type":"text","transform":"rotate(0, 289, 40)","textFamily":"undefined","textSize":19,"top":45,"left":164,"text":"Ajax Animator+OnlyPaths","lineWidth":1,"fillColor":"#FF0000","lineColor":"#000000","fillOpac":1,"lineOpac":1},{"id":"shape:509ba2b1-de31-4651-677d-9b9913ad4c1a","type":"image","transform":"rotate(0, 255.5, 180)","fillColor":"#FF0000","lineColor":"#000000","fillOpac":1,"lineOpac":1,"lineWidth":1,"left":211,"top":130,"width":89,"height":100,"href":"http://tavmjong.free.fr/INKSCAPE/MANUAL/images/QUICKSTART/SOUPCAN/SoupCan_SoupedUp.png"},{"id":"shape:e89fcf58-c6ad-9089-9283-f6dc78af7f01","type":"rect","transform":"rotate(0, 427, 244)","fillColor":"#339966","lineColor":"#000000","fillOpac":1,"lineOpac":1,"lineWidth":1,"left":398,"top":224,"width":58,"height":40}],"23":[{"id":"shape:77b8dd14-e00a-d2c0-eae0-fc5035ec651d","type":"rect","transform":"rotate(0, 440, 241)","fillColor":"#FF0000","lineColor":"#000000","fillOpac":1,"lineOpac":1,"lineWidth":1,"left":415,"top":222,"width":52,"height":38},{"id":"shape:e3c9732f-ecc5-14e4-4a53-b27ecfb2e4d9","type":"ellipse","transform":"rotate(0, 324, 166.5)","fillColor":"#FF0000","lineColor":"#000000","fillOpac":1,"lineOpac":1,"lineWidth":1,"width":38,"height":15,"left":306,"top":159},{"id":"shape:85de034d-e664-9fd9-f780-e9dabfa0d8d6","type":"line","transform":"rotate(0, 170.5, 121.5)","fillColor":"#FF0000","lineColor":"#000000","fillOpac":1,"lineOpac":1,"lineWidth":1,"left":106,"top":160,"width":129,"height":-77},{"id":"shape:f69f9875-1c0b-654e-625c-9414d12fe587","type":"text","transform":"rotate(-46.3972, 178, 205)","textFamily":"undefined","textSize":19,"top":210,"left":53,"text":"Ajax Animator+OnlyPaths","lineWidth":1,"fillColor":"#FF0000","lineColor":"#000000","fillOpac":1,"lineOpac":1},{"id":"shape:509ba2b1-de31-4651-677d-9b9913ad4c1a","type":"image","transform":"rotate(0, 419.5, 78)","fillColor":"#FF0000","lineColor":"#000000","fillOpac":1,"lineOpac":1,"lineWidth":1,"left":375,"top":27,"width":89,"height":100,"href":"http://tavmjong.free.fr/INKSCAPE/MANUAL/images/QUICKSTART/SOUPCAN/SoupCan_SoupedUp.png"},{"id":"shape:e89fcf58-c6ad-9089-9283-f6dc78af7f01","type":"rect","transform":"rotate(0, 44, 30)","fillColor":"#339966","lineColor":"#000000","fillOpac":1,"lineOpac":1,"lineWidth":1,"left":14,"top":10,"width":58,"height":40}]}}}}
+        </textarea>
+        <br>
+		
+		        <script type="text/javascript">
+            //if (!Ax) {
+            Ax = {};
+            //};
+            AbstractRenderer = function(){
+            }
+            
+            Ext = {
+                ux: {}
+            };
+            
+            
+            Ax.canvasWidth = 480;
+            Ax.canvasHeight = 272;
+            var zoominit = '0 0 ' + Ax.canvasWidth + ' ' + Ax.canvasHeight; //some OnlyPaths stuffs
+            var centerZoomx = Math.round(Ax.canvasWidth / 2); //some OnlyPaths stuffs
+            var centerZoomy = Math.round(Ax.canvasHeight / 2); //some OnlyPaths stuffs
+            var selectmode = ''; //I have a feeling these comments aren't helping anyone
+            var data_path_close = false;
+            
+            Ax.init = function(){
+                Ax.playsrc = eval("(" + document.getElementById("source").value + ")");
+                
+                document.getElementById("player").innerHTML = "";
+                
+                //var renderer;
+                
+                //ie = navigator.appVersion.match(/MSIE (\d\.\d)/);
+                //opera = (navigator.userAgent.toLowerCase().indexOf("opera") != -1);
+                //if ((!ie) || (opera)) {
+                //    renderer = new SVGRenderer();
+                //}
+                //else {
+                //    renderer = new VMLRenderer();
+                //}
+                
+                Ax.player = new VectorViewer(document.getElementById("player"))
+            }
+            
+            
+            Ax.pause = function(){
+                clearTimeout(Ax.tplay)
+            }
+            Ax.play = function(){
+                if (!Ax.player) {
+                    Ax.init()
+                }
+                Ax.pframe = Ax.viewer_load_frame((Ax.pframe) ? Ax.pframe : 1, Ax.playsrc.layers, Ax.player, Ax.getSFTween_core) + 1
+                Ax.tplay = setTimeout(Ax.play, 87)
+            }
+        </script>
+        <script type="text/javascript" src="../js/ext/ux/Ext.ux.clone.js">
+        </script>
+        <script type="text/javascript" src="../js/drawing/vectoreditor/raphael.js">
+        </script>
+        <!--
+        <script type="text/javascript" src="../js/drawing/onlypaths/op_view.js">
+        </script>
+        <script type="text/javascript" src="../js/drawing/onlypaths/svgrenderer_mini.js">
+        </script>
+        <script type="text/javascript" src="../js/drawing/onlypaths/vmlrenderer_mini.js">
+        </script>
+        -->
+        <script type="text/javascript" src="../js/drawing/wrapper_core.js">
+        </script>
+        <script type="text/javascript" src="../js/drawing/view_wrapper.js">
+        </script>
+        <script type="text/javascript" src="../js/animation/tween_core.js">
+        </script>
+    </body>
+</html>

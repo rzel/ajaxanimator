@@ -1,0 +1,19 @@
+.dev_toolbar {
+color: red
+}
+
+.dev_compile {
+background-image: url(../img/silk/package.png)
+}
+
+.dev_push {
+background-image: url(../img/silk/arrow_up.png)
+}
+
+.dev_deploy {
+background-image: url(../img/silk/arrow_out.png)
+}
+
+.dev_step {
+background-image: url(../img/silk/bullet_blue.png)
+}

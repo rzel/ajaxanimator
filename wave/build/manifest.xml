@@ -1,0 +1,12 @@
+<extension 
+    name="Ajax Animator"
+    thumbnailUrl="http://ajaxanimator.googlecode.com/svn-history/r481/trunk/ajaxanimator/img/screenshot/gadget-small3.png"
+    description="A fully integrated multi-user web based vector graphic animation authoring environment. Animations can be exported to SWF, GIF, or hosted with a standalone shareable animation player."
+    infoUrl="http://antimatter15.com/wp/ajax-animator/"
+    version="0.20.04 Beta">
+  <author name="antimatter15" email="antimatter15@gmail.com" />
+  <menuHook location="toolbar" text="Insert an Ajax Animator gadget." 
+      iconUrl="http://ajaxanimator.googlecode.com/svn-history/r480/trunk/ajaxanimator/img/icon/video-x-generic.png">
+    <insertGadget url="http://antimatter15.com/ajaxanimator/wave/wave.xml"/>
+  </menuHook>
+</extension>

@@ -1,0 +1,1 @@
+Ax.urlprefs = Ext.urlDecode(window.location.search.substr(1));

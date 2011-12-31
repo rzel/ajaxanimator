@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Animation Player</title>
+    </head>
+    <body>
+
+        <div id="loading">Loading Animation... (If nothing happens in a few seconds, check the URL)</div>
+<div id="chrome" style="display:none">
+		<div id="player" style="border: 1px solid black; width: 480px; height: 272px">
+        </div>
+          <div id="progress" style="height: 2px; width: 0px;background-color: blue"></div>
+        <button onclick="toggle_playback(this)">Pause</button> 
+        <button onclick="window.location='data:text/plain,'+escape(Ax.playjson)">Source</button> 
+        <button onclick="window.location=editorurl+'?load='+animationid">Edit</button> 
+        <span id="status">0/0 at 0 fps</span>
+        <br>
+        </div>
+		        <script type="text/javascript">
+            //does this code win the award for messiest crap ever yet?
+            
+            Ax = {};
+            
+            var editorurl = "http://antimatter15.com/ajaxanimator/wave/"
+            
+            var animationid = '';
+            var playmode = "play"
+        
+            Ext = {
+                ux: {}
+            };
+            
+            
+            Ax.framerate = 15
+            
+            
+            
+            function toggle_playback(button){
+              if(playmode == "play"){
+              button.innerHTML = "Play"
+              Ax.pause()
+            }else{
+              button.innerHTML = "Pause";
+              Ax.play()
+            }
+              
+            }
+            
+            Ax.canvasWidth = 480;
+            Ax.canvasHeight = 272;
+            
+            window.onload = function(){
+            
+              window.ds = new Datastore("ajaxanimator")
+              animationid = window.location.search.substr(1);
+              if(animationid == ""){
+                //document.getElementById("loading").innerHTML = "URL is missing animation ID!"
+                
+                animationid = '78b339f5576021'
+              }//else{
+              ds.first(animationid, function(data){
+                document.getElementById("loading").style.display = "none"
+                document.getElementById("chrome").style.display = ""
+                Ax.playsrc = eval("(" + data.data + ")");
+                Ax.framerate = Ax.playsrc.framerate?Ax.playsrc.framerate:15
+                Ax.playjson = data.data;
+                Ax.canvasWidth = Ax.playsrc.width?Ax.playsrc.width:480
+                Ax.canvasHeight = Ax.playsrc.height?Ax.playsrc.height:272
+                document.getElementById("player").style.width = Ax.canvasWidth+'px'
+                document.getElementById("player").style.height = Ax.canvasHeight+'px'
+                Ax.play()
+              })
+            //}
+            }
+            Ax.init = function(){
+                
+                document.getElementById("player").innerHTML = "";
+                
+                Ax.player = new VectorViewer(document.getElementById("player"))
+            }
+            
+            
+            Ax.pause = function(){
+               playmode = "pause"
+                clearTimeout(Ax.tplay)
+            }
+            
+            var framecount = 0;
+            var lasttime = 0;
+            
+            Ax.play = function(){
+                if (!Ax.player) {
+                    Ax.init()
+                }
+                playmode = "play";
+                
+                if(!Ax.framecount){
+                  Ax.framecount = Ax.count_frames(Ax.playsrc.layers);
+                }
+                
+                Ax.pframe = Ax.viewer_load_frame((Ax.pframe) ? Ax.pframe : 1, Ax.playsrc.layers, Ax.player, Ax.getSFTween_core, Ax.framecount) + 1
+                
+                document.getElementById("progress").style.width = Ax.pframe/Ax.framecount * Ax.canvasWidth + "px";
+                
+                var speed = (new Date).getTime() - lasttime;
+                lasttime = (new Date).getTime()
+                
+                if(speed > 1000)speed=0;
+                
+                document.getElementById("status").innerHTML = Ax.pframe+"/"+Ax.framecount+" at "+Math.round(1000/speed)+" fps (intended "+Ax.framerate+" fps, offset "+Math.round((speed-(1000/Ax.framerate)))+" fps)"
+                
+                //speed = time it took to do the last frame
+                
+                Ax.tplay = setTimeout(Ax.play, 1000/Ax.framerate)
+            }
+        </script>
+        <script type="text/javascript" src="js/datastore.js">
+        </script>
+        <script type="text/javascript" src="js/Ext.ux.clone.js">
+        </script>
+        <script type="text/javascript" src="js/raphael.js">
+        </script>
+        <script type="text/javascript" src="js/wrapper_core.js">
+        </script>
+        <script type="text/javascript" src="js/view_wrapper.js">
+        </script>
+        <script type="text/javascript" src="js/tween_core.js">
+        </script>
+    </body>
+</html>
