@@ -1,0 +1,246 @@
+/*
+Likely a very very very huge file.
+
+All the icons in the toolbar (basically the majority of them)
+*/
+
+
+/*---------------File Menu---------------*/
+.tb_new {
+background-image: url(../img/silk/page_add.png) !important;
+}
+.tb_open {
+background-image: url(../img/silk/folder_go.png) !important;
+}
+.tb_save {
+/*background-image: url(../img/silk/drive_go.png)*/
+background-image: url(../img/silk/disk.png) !important;
+}
+.tb_publish {
+background-image: url(../img/silk/page_white_flash.png) !important;
+}
+
+/*START PUBLISH*/
+.tb_flash {
+background-image: url(../img/silk/page_white_actionscript.png) !important;
+}
+.tb_processing {
+background-image: url(../img/silk/page_white_code.png) !important;
+}
+
+.tb_silverlight {
+background-image: url(../img/silk/page_white_vector.png) !important;
+}
+.tb_smil {
+background-image: url(../img/silk/page_white_vector.png) !important;
+}
+.tb_image {
+background-image: url(../img/silk/page_white_paint.png) !important;
+}
+.tb_javafx {
+background-image: url(../img/silk/page_white_cup.png) !important;
+}
+/*END PUBLISH*/
+
+.tb_offline {
+background-image: url(../img/silk/disconnect.png) !important;
+}
+
+.tb_comp {
+background-image: url(../img/silk/computer_go.png) !important;
+}
+.tb_server {
+background-image: url(../img/silk/drive_web.png) !important;
+}
+.tb_url {
+background-image: url(../img/silk/world_link.png) !important;
+}
+.tb_text {
+background-image: url(../img/silk/textfield.png) !important;
+}
+
+/*---------------Edit Menu---------------*/
+.tb_undo {
+background-image: url(../img/silk/arrow_undo.png) !important;
+}
+.tb_redo {
+background-image: url(../img/silk/arrow_redo.png) !important;
+}
+.tb_cut {
+background-image: url(../img/silk/cut_red.png) !important;
+}
+.tb_copy {
+background-image: url(../img/silk/page_copy.png) !important;
+}
+.tb_paste {
+background-image: url(../img/silk/page_paste.png) !important;
+}
+.tb_delete {
+background-image: url(../img/silk/delete.png) !important;
+}
+.tb_visible {
+background-image: url(../img/silk/eye.png) !important;
+}
+.tb_invisible {
+background-image: url(../img/icon/eye_closed.png) !important;
+}
+.tb_up {
+background-image: url(../img/silk/arrow_up.png) !important;
+}
+.tb_down {
+background-image: url(../img/silk/arrow_down.png) !important;
+}
+.tb_fast {
+background-image: url(../img/silk/lightning.png) !important;
+}
+.tb_wave {
+background-image: url(../img/icon/wave.gif) !important;
+}
+.tb_size {
+background-image: url(../img/silk/shape_handles.png) !important;
+}
+.tb_cursor {
+background-image: url(../img/silk/cursor.png)
+}
+
+/*---------------View Menu---------------*/
+.tb_animation {
+background-image: url(../img/silk/page_white_flash.png) !important;
+}
+.tb_theme {
+background-image: url(../img/silk2/theme.png) !important;
+}
+/*---------------Tools Menu---------------*/
+.tb_tools {
+background-image: url(../img/silk/paintbrush.png) !important;
+}
+.tb_script {
+background-image: url(../img/silk/script_code_red.png) !important;
+}
+.tb_plugin_conf {
+background-image: url(../img/silk/plugin_edit.png) !important;
+}
+.tb_reload {
+background-image: url(../img/silk/arrow_refresh.png) !important;
+}
+.tb_shield {
+background-image: url(../img/silk/shield.png) !important;
+}
+
+
+.tb_recover_canvas {
+background-image: url(../img/silk/paintbrush.png) !important;
+}
+.tb_recover_animation {
+background-image: url(../img/silk/film.png) !important;
+}
+.tb_recover_application {
+background-image: url(../img/silk/page_refresh.png) !important;
+}
+
+
+/*---------------Timeline Menu---------------*/
+
+
+.tb_clearframe {
+background-image: url(../img/silk/page_delete.png) !important;
+}
+.tb_newlayer {
+background-image: url(../img/silk/add.png) !important;
+}
+/*
+.tb_reload {
+See Tools Menu
+}
+*/
+.tb_addkeyframe {
+background-image: url(../img/silk/key_add.png) !important;
+}
+.tb_insertframe {
+background-image: url(../img/silk/page_add.png) !important;
+}
+.tb_setlast {
+background-image: url(../img/silk/resultset_last.png) !important;
+}
+.tb_purge_empty, .tb_delframe {
+background-image: url(../img/silk/bin.png) !important;
+}
+/*---------------Animation Menu---------------*/
+.tb_play {
+background-image: url(../img/silk/control_play.png) !important;
+}
+.tb_pause {
+background-image: url(../img/silk/control_pause.png) !important;
+}
+.tb_nf { /*next frame */
+background-image: url(../img/silk/control_fastforward.png) !important;
+}
+.tb_pf { /*previeous frame */
+background-image: url(../img/silk/control_rewind.png) !important;
+}
+.tb_last {
+background-image: url(../img/silk/control_end.png) !important;
+}
+.tb_first {
+background-image: url(../img/silk/control_start.png) !important;
+}
+.tb_recalculate {
+background-image: url(../img/silk/database_refresh.png) !important;
+}
+/*---------------Plugin Menu---------------*/
+
+.tb_plugin {
+background-image: url(../img/silk/plugin.png) !important;
+}
+
+.tb_plugin_add {
+background-image: url(../img/silk/package_add.png) /*Uses package versus plugin because it is more destinct*/
+}
+
+/*---------------User Menu---------------*/
+.tb_login {
+background-image: url(../img/silk/key_go.png) !important;
+}
+.tb_register {
+background-image: url(../img/silk/user_add.png) !important;
+}
+.tb_logout {
+background-image: url(../img/silk/door_out.png) !important;
+}
+.tb_browse {
+background-image: url(../img/silk/folder_explore.png) !important;
+}
+.tb_profile {
+background-image: url(../img/silk/vcard.png) !important;
+}
+/*---------------Help Menu---------------*/
+.tb_keyboard {
+background-image: url(../img/silk/keyboard.png) !important;
+}
+.tb_about {
+background-image: url(../img/silk/information.png) !important;
+}
+.tb_comment {
+background-image: url(../img/silk/comments.png) !important;
+}
+.tb_bug {
+background-image: url(../img/silk/bug.png) !important;
+}
+.tb_docs {
+background-image: url(../img/silk/book.png) !important;
+}
+.tb_info {
+background-image: url(../img/silk/bricks.png) !important;
+}
+.tb_tutorial {
+background-image: url(../img/silk/wand.png) !important;
+}
+.tb_tip {
+background-image: url(../img/silk/lightbulb.png) !important;
+}
+.tb_donate {
+background-image: url(../img/silk/money.png) !important;
+}
+
+
+

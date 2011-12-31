@@ -1,0 +1,82 @@
+/*Icons for the Accordian*/
+.misc_panel_icon {
+background-image: url(../img/silk/application_form.png)
+}
+.history_icon {
+background-image: url(../img/silk/clock.png)
+}
+.clipboard_icon {
+background-image: url(../img/silk/paste_plain.png)
+}
+.library_icon {
+background-image: url(../img/silk/book.png)
+}
+.misc_icon {
+background-image: url(../img/silk/tux.png)
+}
+.user_icon {
+background-image: url(../img/silk/user.png)
+}
+/*Icons for the center panel titles*/
+.canvas_icon {
+background-image: url(../img/silk/paintbrush.png)
+}
+.preview_icon {
+background-image: url(../img/silk/zoom.png)
+}
+.animations_icon {
+background-image: url(../img/silk/control_play.png)
+}
+
+
+/* Icons for the animation browser */
+
+.player_icon {
+background-image: url(../img/silk/control_play.png)
+}
+.browse_icon {
+background-image: url(../img/silk/folder_go.png)
+}
+
+button.play_icon {
+background-image: url(../img/silk/control_play_blue.png)
+}
+
+button.stop_icon {
+background-image: url(../img/silk/control_stop_blue.png)
+}
+button.import_icon {
+background-image: url(../img/silk/pencil_go.png)
+}
+button.reload_icon {
+background-image: url(../img/silk/arrow_refresh.png)
+}
+
+
+/*icons for random panels */
+
+.app_settings {
+background-image: url(../img/silk/application_form_edit.png)
+}
+
+
+
+/*Icon for the magickal animation browser thingsy*/
+
+
+button.arrow_next {
+background-image: url(../img/silk/arrow_right.png)
+}
+
+button.arrow_prev {
+background-image: url(../img/silk/arrow_left.png)
+}
+button.close {
+background-image: url(../img/silk/cross.png)
+}
+button.execute {
+background-image: url(../img/silk/script_go.png)
+}
+button.load {
+background-image: url(../img/silk/page_go.png)
+}
