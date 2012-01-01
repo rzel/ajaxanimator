@@ -1,5 +1,5 @@
 developer = true; //YOU ARE A DEVELOPER!!!!!!!!
-/*
+//*
 Ext.onReady(function(){//ext is awesome
 Ax.viewport.findById("canvas").getTopToolbar().addButton({
 text: "<span class='dev_toolbar'>Dev<span>",
@@ -77,4 +77,4 @@ sendUpdate(mode,function(e){
 function autoDeploy(){
 autoDeployPartial("b");
 }
-* */
+//* */

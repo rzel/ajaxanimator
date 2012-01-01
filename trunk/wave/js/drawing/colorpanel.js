@@ -1,9 +1,9 @@
 Ax.defaultcolor = {
   line: "000000",
-  fill:"FF0000",
+  fill:"FFFFFF",
   fillopacity: 100,
   lineopacity: 100,
-  width: 1, //okay, so width isn't really a color..
+  width: 5, //okay, so width isn't really a color..
   grid: 1 //this isn't really a color either
 }
 
