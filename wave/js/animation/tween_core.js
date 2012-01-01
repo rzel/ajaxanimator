@@ -184,6 +184,8 @@ Ax.toHex = function(color){
 
 Ax.tweenNumber = function(frame1, frame2, value1, value2, index){//frame1, frame2, first number, second number, index (from first)
     //no type checking yet, cause i dont feel like it
-    return value1 + ((index - frame1) / (frame2 - frame1)) * (value2 - value1); //just hope this works!
+    var raw = ((index - frame1) / (frame2 - frame1));
+    var smoothed = 1-(Math.cos(Math.PI*raw)+1)/2;
+    return value1 + smoothed * (value2 - value1); //just hope this works!
     //blah!
 }//he he!!!!!!!!!!!!!!!!!!!!!! mua ha ah ha ha

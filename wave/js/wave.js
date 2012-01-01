@@ -380,7 +380,8 @@ wave2.statechange = function(){
 }
 
 wave2.garbagecollect = function(force){
-  var list = wave2.keys(true/*ALL YOUR O ARE BELONG TO US*/);
+  /*
+  var list = wave2.keys(true); //ALL YOUR O ARE BELONG TO US
   var state = {}
   for(var i = 0, l = list.length; i < l; i++){
     if(wave2._get(list[i]).indexOf("DEL/") == 0){
@@ -390,7 +391,7 @@ wave2.garbagecollect = function(force){
       }
     }
   }
-  wave2.delta(state);
+  wave2.delta(state);*/
 }
 
 wave2.del = function(name, no_mark){
@@ -437,7 +438,7 @@ wave2.loop = function(func){
 function is_locked(name){
   //return index_of(name,get_subkeys("locked:")) != -1;
   //return wave2.me();
-  
+  /*
   var state = wave2.get(["l",Ax.tcurrent.frame,Ax.tcurrent.layer,name]);
   if(state == null){
     return false;
@@ -456,7 +457,7 @@ function is_locked(name){
           return false;
         }
     }
-  }
+  }*/
   return false
 }
 
@@ -464,13 +465,13 @@ function is_locked(name){
 
 function lock_shape(name){
   //console.log("Locking:",name)
-  wave2.set(["l",Ax.tcurrent.frame,Ax.tcurrent.layer,name], wave2.me()+"!t"+(new Date).getTime());
+  //wave2.set(["l",Ax.tcurrent.frame,Ax.tcurrent.layer,name], wave2.me()+"!t"+(new Date).getTime());
   Ax.lastselect = (new Date).getTime();
 }
 
 function unlock_shape(name){  
   //console.log("Unlocking:",name)
-  wave2.del(["l",Ax.tcurrent.frame,Ax.tcurrent.layer,name]); //delete
+  //wave2.del(["l",Ax.tcurrent.frame,Ax.tcurrent.layer,name]); //delete
   Ax.lastselect = (new Date).getTime();
 }
 
